@@ -28,7 +28,7 @@
  *  \authors Raphaël Doursenaud <rdoursenaud@gpcsolutions.fr>
  */
 include_once(DOL_DOCUMENT_ROOT . "/includes/boxes/modules_boxes.php");
-require_once (DOL_DOCUMENT_ROOT . "/oauthgooglecontacts/classe/DoliOauth.php");
+require_once (DOL_DOCUMENT_ROOT . "/oauthgooglecontacts/class/DoliOauth.php");
 
 /**
  * \class box_oauthusers

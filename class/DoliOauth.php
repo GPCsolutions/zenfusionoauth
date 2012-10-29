@@ -19,7 +19,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 /**
- * \file htdocs/oauthgooglecontacts/classe/DoliOauth.php
+ * \file htdocs/oauthgooglecontacts/class/DoliOauth.php
  * \brief Oauth authentication and requests
  *
  * Defines the ways to communicate with Google contacts API.
@@ -77,8 +77,8 @@ define('GOOGLE_CONTACTS_REVOQUE_TOKEN', 'https://www.google.com/accounts/AuthSub
  * Gmail revoke token URI
  */
 define('GOOGLE_CONTACTS_TOKEN_INFO', 'https://www.google.com/accounts/AuthSubTokenInfo');
-require_once (DOL_DOCUMENT_ROOT . "/googlecontacts/classe/EntreeGroupes.php");
-require_once (DOL_DOCUMENT_ROOT . "/googlecontacts/classe/EntreeTiers.php");
+require_once (DOL_DOCUMENT_ROOT . "/googlecontacts/class/EntreeGroupes.php");
+require_once (DOL_DOCUMENT_ROOT . "/googlecontacts/class/EntreeTiers.php");
 
 /**
  * \class DoliOauth
