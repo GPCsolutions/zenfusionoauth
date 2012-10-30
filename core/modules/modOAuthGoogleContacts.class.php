@@ -73,8 +73,8 @@ class modOAuthGoogleContacts extends DolibarrModules
 		$this->config_page_url = array("config.php@oauthgooglecontacts");
 		$this->depends = array();
 		$this->requiredby = array("modGoogleContacts");
-		$this->phpmin = array(4, 3);
-		$this->need_dolibarr_version = array(3, 0);
+		$this->phpmin = array(5, 3);
+		$this->need_dolibarr_version = array(3, 2);
 		$this->langfiles = array("@oauthgooglecontacts");
 		$this->const = array(0 => array('OAUTHGOOGLECONTACTS_VERSION', 'chaine', '1.0', 'Version du module', 0),
 			1 => array('ZF_CONTRAT_ASSISTANCE', 'chaine', '0', 'Type de contrat', 0));
