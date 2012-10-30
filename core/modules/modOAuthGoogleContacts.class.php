@@ -43,7 +43,7 @@
  * \authors Cédric Salvador <csalvador@gpcsolutions.fr>
  * \todo Implement English (default) and French translations
  */
-include_once (DOL_DOCUMENT_ROOT . "/core/modules/DolibarrModules.class.php");
+include_once DOL_DOCUMENT_ROOT . '/core/modules/DolibarrModules.class.php';
 
 /**
  * \class modOAuthGoogleContacts

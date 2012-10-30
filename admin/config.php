@@ -34,9 +34,9 @@ if ( ! $res && file_exists("../../../main.inc.php"))
 		$res = @include("../../../main.inc.php");
 if ( ! $res) die("Main include failed");
 
-dol_include_once("/oauthgooglecontacts/lib/zf_oauth.lib.php");
-require_once(DOL_DOCUMENT_ROOT . "/core/lib/admin.lib.php");
-require_once(DOL_DOCUMENT_ROOT . "/core/class/html.form.class.php");
+require_once '../lib/zf_oauth.lib.php';
+require_once DOL_DOCUMENT_ROOT . '/core/lib/admin.lib.php';
+require_once DOL_DOCUMENT_ROOT . '/core/class/html.form.class.php';
 
 $langs->load("oauthgooglecontacts@oauthgooglecontacts");
 $langs->load("admin");

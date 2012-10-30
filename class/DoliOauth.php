@@ -88,8 +88,8 @@ define('GOOGLE_CONTACTS_REVOQUE_TOKEN',
 define('GOOGLE_CONTACTS_TOKEN_INFO',
 	'https://www.google.com/accounts/AuthSubTokenInfo');
 
-dol_include_once("/googlecontacts/class/EntreeGroupes.php");
-dol_include_once("/googlecontacts/class/EntreeTiers.php");
+include_once '../googlecontacts/class/EntreeGroupes.php';
+include_once '../googlecontacts/class/EntreeTiers.php';
 
 /**
  * \class DoliOauth

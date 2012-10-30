@@ -26,8 +26,8 @@
  *  \authors Sebastien Bodrero <sbodrero@gpcsolutions.fr>
  *  \authors Raphaël Doursenaud <rdoursenaud@gpcsolutions.fr>
  */
-include_once(DOL_DOCUMENT_ROOT . "/core/boxes/modules_boxes.php");
-dol_incude_once("/oauthgooglecontacts/class/DoliOauth.php");
+include_once DOL_DOCUMENT_ROOT . '/core/boxes/modules_boxes.php';
+include_once '../../class/DoliOauth.php';
 
 /**
  * \class box_oauthusers
