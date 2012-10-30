@@ -66,13 +66,13 @@ dol_fiche_head($head, 'stats', $langs->trans("Module150Name"), 0, 'oauth@oauthgo
 
 print_titre($langs->trans("SynchronizedContactsNumber"));
 
-print "<table class=\"noborder\" width=\"40%\">\n";
-print "<tr class=\"liste_titre\">\n";
-print '  <td>' . $langs->trans("FirstName") . '</td>';
-print '  <td>' . $langs->trans("Name") . '</td>';
-print '  <td>' . $langs->trans("Email") . '</td>';
-print '  <td align="center">' . $langs->trans("SynchronizedContacts") . '</td>';
-print "</tr>\n";
+echo '<table class="noborder" width="40%">';
+echo '<tr class="liste_titre">';
+echo '<td>', $langs->trans("FirstName"), '</td>';
+echo '<td>', $langs->trans("Name"), '</td>';
+echo '<td>', $langs->trans("Email"), '</td>';
+echo '<td align="center">', $langs->trans("SynchronizedContacts"), '</td>';
+echo '</tr>';
 
 if ($result) {
 	$num = $db->num_rows($result);
@@ -93,18 +93,18 @@ if ($result) {
 			$total+= $objbis->contacts;
 		}
 
-		print "<tr>";
-		print "<td>" . $obj->firstname . "</td>";
-		print "<td>" . $obj->name . "</td>";
-		print "<td>" . $obj->email . "</td>";
-		print "<td align=\"center\">" . $total . "</td>";
-		print "</tr>";
+		echo '<tr>';
+		echo '<td>', $obj->firstname, '</td>';
+		echo '<td>', $obj->name, '</td>';
+		echo '<td>', $obj->email, '</td>';
+		echo '<td align="center">', $total, '</td>';
+		echo '</tr>';
 		$i ++;
 	}
 } else {
 	dol_syslog("statistiques::select error", LOG_ERR);
 }
-print "</table>";
+echo '</table>';
 
 $db->close();
 llxFooter();

@@ -55,58 +55,63 @@ print_fiche_titre("ZenFusion", $linkback, 'setup');
 
 $head = zf_prepare_head();
 
-dol_fiche_head($head, 'about', $langs->trans("Module150Name"), 0, 'oauth@oauthgooglecontacts');
+dol_fiche_head($head, 'about', $langs->trans("Module150Name"), 0,
+	'oauth@oauthgooglecontacts');
 
-print '<h3>' . $langs->trans("Version") . ' ' . $conf->global->OAUTHGOOGLECONTACTS_VERSION . '</h3>';
+echo '<h3>', $langs->trans("Module150Name"), '</h3>';
+echo '<em>', $langs->trans("Version"), ' ',
+ $conf->global->OAUTHGOOGLECONTACTS_VERSION, '</em><br>';
+echo '<em>&copy;2011-2012 GPC.solutions<br><em>';
+echo '<a target="_blank" href="http://www.zenfusion.net/">',
+ '<img src="../img/logo_zf.png" alt="Logo ZenFusion"></a>';
 
-print '<a target="_blank" href="http://www.zenfusion.net/"><img src="../img/logo_zf.png" alt="Logo ZenFusion"></a>';
+echo '<h3>', $langs->trans("OauthGoogleContactsProjectContact"), '</h3>';
+echo '<a target="_blank" href="http://www.gpcsolutions.fr">',
+ '<img src="../img/logo_gpc.png" alt="GPC.solutions"></a>';
+echo '<address>Technopole Hélioparc<br>',
+ '2 avenue du Président Pierre Angot<br>',
+ '64053 PAU CEDEX 9<br>+33 (0)5 35 53 97 12</address>';
 
-print '<h3>' . $langs->trans("OauthGoogleContactsProjectContact") . '</h3>';
-print '<a target="_blank" href="http://www.gpcsolutions.fr"><img src="../img/logo_gpc.png" alt="GPC.solutions"></a>';
-print '<address>Pau Cité Multimédia - Bâtiment A<br>2 rue Thomas Edison<br>64054 PAU CEDEX 9<br>+33 (0)5 35 53 97 12</address>';
+echo '<h3>', $langs->trans("DolibarrLicense"), '</h3>';
+echo '<a target="_blank" href="http://www.gnu.org/licenses/gpl-3.0.html">',
+ '<img src="../img/logo_gpl.png" alt="GPL v.3"></a>';
 
-print '<h3>' . $langs->trans("DolibarrLicense") . '</h3>';
-print '&copy;2011 GPC.solutions<br>';
-print '<a target="_blank" href="http://www.gnu.org/licenses/gpl-3.0.html"><img src="../img/logo_gpl.png" alt="GPL v.3"></a>';
+echo '<h3>', $langs->trans("OauthGoogleContactsCredits"), '</h3>';
 
-print '<h3>' . $langs->trans("OauthGoogleContactsCredits") . '</h3>';
+echo '<h4>', $langs->trans("OauthGoogleContactsDev"), '</h4>';
 
-print '<h4>' . $langs->trans("OauthGoogleContactsDev") . '</h4>';
+echo '<ul>';
+echo '<li>Raphaël Doursenaud, ', $langs->trans('ProjectManager'), '</li>';
+echo '<li>Sebastien Bodrero, ', $langs->trans('SoftwareEngineer'), '</li>';
+echo '<li>Cédric Salvador, ', $langs->trans('SoftwareEngineer'), '</li>';
+echo '</ul>';
 
-print '<ul>';
-print '<li>Cédric Salvador, Software Engineer</li>';
-print '<li>Sebastien Bodrero, Software Engineer</li>';
-print '<li>Raphaël Doursenaud, Project Manager</li>';
-print '</ul>';
+echo '<h4>' . $langs->trans("OauthGoogleContactsRsc") . '</h4>';
 
-print '<h4>' . $langs->trans("OauthGoogleContactsRsc") . '</h4>';
-
-print '
-<ul>
-    <li>OAuth logo<br>
-        &copy; <a target="_blank" href="http://factoryjoe.com/">Chris Messina</a><br>
-        <a target="_blank" href="http://creativecommons.org/licenses/by-sa/3.0/legalcode"><img src="../img/ccbysa.png" alt="Creative Commons Attribution Share Alike 3.0 license"></a>
-    </li>
-
-    <li>Contacts logo<br>
-        &copy; <a target="_blank" href="http://www.gnome.org">GNOME Project</a><br>
-        <a target="_blank" href="http://www.gnu.org/licenses/lgpl.html"><img src="../img/lgplv3.png" alt="LGPLv3"></a>
-        <a target="_blank" href="http://creativecommons.org/licenses/by-sa/3.0/legalcode"><img src="../img/ccbysa.png" alt="Creative Commons Attribution Share Alike 3.0 license"></a>
-    </li>
-
-    <li>GPLv3 logo<br>
-        &copy;2007, 2008 <a target="_blank" href="http://fsf.org">Free Software Foundation</a>
-    </li>
-
-    <li>ZenFusion logo<br>
-        &copy;2011 GPC.solutions<br>
-        Trade Mark Pending
-    </li>
-
-    <li>GPC.solutions logo<br>
-        &copy;2010 GPC.solutions
-    </li>
-</ul>
-';
+echo '<ul>',
+ '<li>OAuth logo<br>',
+ '&copy; <a target="_blank" href="http://factoryjoe.com/">Chris Messina</a><br>',
+ '<a target="_blank" href="http://creativecommons.org/licenses/by-sa/3.0/legalcode">',
+ '<img src="../img/ccbysa.png" alt="Creative Commons Attribution Share Alike 3.0 license"></a>',
+ '</li>',
+ '<li>Contacts logo<br>',
+ '&copy; <a target="_blank" href="http://www.gnome.org">GNOME Project</a><br>',
+ '<a target="_blank" href="http://www.gnu.org/licenses/lgpl.html">',
+ '<img src="../img/lgplv3.png" alt="LGPLv3"></a>',
+ '<a target="_blank" href="http://creativecommons.org/licenses/by-sa/3.0/legalcode">',
+ '<img src="../img/ccbysa.png" alt="Creative Commons Attribution Share Alike 3.0 license">',
+ '</a></li>',
+ '<li>GPLv3 logo<br>',
+ '&copy;2007, 2008 ',
+ '<a target="_blank" href="http://fsf.org">Free Software Foundation</a>',
+ '</li>',
+ '<li>ZenFusion logo<br>',
+ '&copy;2011 GPC.solutions<br>',
+ 'Trademark Pending',
+ '</li>',
+ '<li>GPC.solutions logo<br>',
+ '&copy;2010-2012 GPC.solutions',
+ '</li>',
+ '</ul>';
 llxFooter();
 ?>

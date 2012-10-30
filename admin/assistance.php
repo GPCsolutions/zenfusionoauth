@@ -57,13 +57,11 @@ $head = zf_prepare_head();
 
 dol_fiche_head($head, 'help', $langs->trans("Module150Name"), 0, 'oauth@oauthgooglecontacts');
 
-
-
-print '<a target="_blank" href="http://assistance.gpcsolutions.fr"><img src="../img/logo_assist.png" alt="' . $langs->trans("HelpCenter") . '"></a>';
-
-print "<br>\n";
-
-print '';
+echo '<a target="_blank" href="http://assistance.gpcsolutions.fr">',
+//	'<img src="../img/logo_assist.png" alt="', $langs->trans("HelpCenter"),'">',
+	$langs->trans("HelpCenter"),
+	'</a>',
+	'<br>';
 
 llxFooter();
 ?>

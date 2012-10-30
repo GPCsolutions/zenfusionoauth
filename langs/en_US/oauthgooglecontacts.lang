@@ -34,3 +34,5 @@ ClientId=Client ID
 ClientSecret=Client Secret
 domainName=Domain name
 AppsMode=Use the Google Apps mode
+ProjectManager=project manager
+SoftwareEngineer=software engineer
