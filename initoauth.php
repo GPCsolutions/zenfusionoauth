@@ -35,11 +35,19 @@
  * \authors Cédric Salvador <csalvador@gpcsolutions.fr>
  * \todo Implement English (default) and French translations
  */
-require("../main.inc.php");
+$res = 0;
+// from standard dolibarr install
+if ( ! $res && file_exists("../main.inc.php"))
+	$res = @include("../main.inc.php");
+// from custom dolibarr install
+if ( ! $res && file_exists("../../main.inc.php"))
+	$res = @include("../../main.inc.php");
+if ( ! $res) die("Main include failed");
+
 require_once(DOL_DOCUMENT_ROOT . "/user/class/user.class.php");
 require_once(DOL_DOCUMENT_ROOT . "/core/lib/usergroups.lib.php");
-require_once(DOL_DOCUMENT_ROOT . "/oauthgooglecontacts/oauth_google_contacts.class.php");
-require_once(DOL_DOCUMENT_ROOT . "/oauthgooglecontacts/lib/google-api-php-client/src/apiClient.php");
+dol_include_once("/oauthgooglecontacts/oauth_google_contacts.class.php");
+dol_include_once("/oauthgooglecontacts/lib/google-api-php-client/src/apiClient.php");
 
 $langs->load("oauthgooglecontacts@oauthgooglecontacts");
 $langs->load("admin");
@@ -63,7 +71,7 @@ $doluser = new User($db);
 /// Create an object to use llx_oauth_google_contacts table
 $oauthuser = new Oauth_google_contacts($db);
 /// Create callback address
-$callback = $dolibarr_main_url_root . "/oauthgooglecontacts/initoauth.php?action=access";
+$callback = dol_buildpath("/oauthgooglecontacts/initoauth.php", 2) . "?action=access";
 /// Scope choosen for Google's API (Google Contacts)
 
 // Oauth2 TEST
@@ -104,7 +112,7 @@ switch ($_GET["action"]) {
       $error++;
       dol_print_error($db, $oauthuser->error);
     }
-    header("refresh:0;url=" . $dolibarr_main_url_root . "/oauthgooglecontacts/initoauth.php?id=" . $_GET["id"]);
+    header("refresh:0;url=" . dol_buildpath("/oauthgooglecontacts/initoauth.php", 1) . "?id=" . $_GET["id"]);
 
     break;
   case "request": // whole process to ask a request token
@@ -138,7 +146,7 @@ switch ($_GET["action"]) {
         dol_print_error($db, $oauthuser->error);
       }
       // Refresh the page
-      header("refresh:0;url=" . $dolibarr_main_url_root . "/oauthgooglecontacts/initoauth.php?id=" . $_GET["state"]);
+      header("refresh:0;url=" . dol_buildpath("/oauthgooglecontacts/initoauth.php", 1) . "?id=" . $_GET["state"]);
     } else {
       //if ($access['http_code'] == 400)
       $retry = true;

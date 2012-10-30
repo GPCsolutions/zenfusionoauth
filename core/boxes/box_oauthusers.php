@@ -27,8 +27,8 @@
  *  \authors Sebastien Bodrero <sbodrero@gpcsolutions.fr>
  *  \authors Raphaël Doursenaud <rdoursenaud@gpcsolutions.fr>
  */
-include_once(DOL_DOCUMENT_ROOT . "/includes/boxes/modules_boxes.php");
-require_once (DOL_DOCUMENT_ROOT . "/oauthgooglecontacts/class/DoliOauth.php");
+include_once(DOL_DOCUMENT_ROOT . "/core/boxes/modules_boxes.php");
+dol_incude_once("/oauthgooglecontacts/class/DoliOauth.php");
 
 /**
  * \class box_oauthusers
@@ -110,7 +110,7 @@ class box_oauthusers extends ModeleBoxes {
               dol_syslog($e->getMessage);
               $this->info_box_contents[$i][2] = array('td' => 'align="left"',
                   'text' => $langs->trans("status_ko"),
-                  'url' => DOL_URL_ROOT . "/oauthgooglecontacts/initoauth.php?id=" . $objp->rowid . "&action=delete");
+                  'url' => dol_buildpath("/oauthgooglecontacts/initoauth.php", 1) . "?id=" . $objp->rowid . "&action=delete");
             }
           }
           else { // If token = NULL

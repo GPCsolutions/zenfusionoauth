@@ -77,8 +77,8 @@ define('GOOGLE_CONTACTS_REVOQUE_TOKEN', 'https://www.google.com/accounts/AuthSub
  * Gmail revoke token URI
  */
 define('GOOGLE_CONTACTS_TOKEN_INFO', 'https://www.google.com/accounts/AuthSubTokenInfo');
-require_once (DOL_DOCUMENT_ROOT . "/googlecontacts/class/EntreeGroupes.php");
-require_once (DOL_DOCUMENT_ROOT . "/googlecontacts/class/EntreeTiers.php");
+dol_include_once("/googlecontacts/class/EntreeGroupes.php");
+dol_include_once("/googlecontacts/class/EntreeTiers.php");
 
 /**
  * \class DoliOauth

@@ -25,10 +25,16 @@
  * \brief Google contacts module statistiques page
  * \version development
  */
+$res = 0;
+// from standard dolibarr install
+if ( ! $res && file_exists("../../main.inc.php"))
+	$res = @include("../../main.inc.php");
+// from custom dolibarr install
+if ( ! $res && file_exists("../../../main.inc.php"))
+	$res = @include("../../../main.inc.php");
+if ( ! $res) die("Main include failed");
 
-require("../../main.inc.php");
-
-require_once(DOL_DOCUMENT_ROOT . "/oauthgooglecontacts/lib/zf_oauth.lib.php");
+dol_include_once("/oauthgooglecontacts/lib/zf_oauth.lib.php");
 require_once(DOL_DOCUMENT_ROOT . "/core/lib/admin.lib.php");
 require_once(DOL_DOCUMENT_ROOT . "/core/class/html.form.class.php");
 

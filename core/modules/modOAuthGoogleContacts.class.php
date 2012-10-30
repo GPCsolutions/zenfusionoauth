@@ -120,7 +120,7 @@ class modOAuthGoogleContacts extends DolibarrModules {
     // 'contact'          to add a tab in contact view
     // Boxes
     $this->boxes = array(); // List of boxes
-    $this->boxes[0][1] = "box_oauthusers";
+    $this->boxes[0][1] = "box_oauthusers@oauthgooglecontacts";
     $r = 0;
     // Add here list of php file(s) stored in includes/boxes that contains class to show a box.
     // Example:

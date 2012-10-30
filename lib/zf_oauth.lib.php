@@ -35,24 +35,24 @@ function zf_prepare_head() {
   $h = 0;
   $head = array();
   
-  $head[$h][0] = DOL_URL_ROOT . "/oauthgooglecontacts/admin/config.php";
+  $head[$h][0] = dol_buildpath("/oauthgooglecontacts/admin/config.php", 1);
   $head[$h][1] = $langs->trans("Config");
   $head[$h][2] = 'configuration';
   $h++;
 
-  $head[$h][0] = DOL_URL_ROOT . "/oauthgooglecontacts/admin/statistiques.php";
+  $head[$h][0] = dol_buildpath("/oauthgooglecontacts/admin/statistiques.php", 1);
   $head[$h][1] = $langs->trans("Stat");
   $head[$h][2] = 'statistiques';
   $h++;
 
   if ($conf->global->ZF_CONTRAT_ASSISTANCE != '0') {
-    $head[$h][0] = DOL_URL_ROOT . "/oauthgooglecontacts/admin/assistance.php"; 
+    $head[$h][0] = dol_buildpath("/oauthgooglecontacts/admin/assistance.php", 1);
     $head[$h][1] = $langs->trans("HelpCenter");
     $head[$h][2] = 'help';
     $h++;
   }
 
-  $head[$h][0] = DOL_URL_ROOT . "/oauthgooglecontacts/admin/apropos.php";
+  $head[$h][0] = dol_buildpath("/oauthgooglecontacts/admin/apropos.php", 1);
   $head[$h][1] = $langs->trans("About");
   $head[$h][2] = 'about';
   $h++;
