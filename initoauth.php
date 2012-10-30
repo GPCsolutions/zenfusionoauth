@@ -48,6 +48,7 @@ require_once(DOL_DOCUMENT_ROOT . "/user/class/user.class.php");
 require_once(DOL_DOCUMENT_ROOT . "/core/lib/usergroups.lib.php");
 dol_include_once("/oauthgooglecontacts/oauth_google_contacts.class.php");
 dol_include_once("/oauthgooglecontacts/lib/google-api-php-client/src/apiClient.php");
+dol_include_once('/oauthgooglecontacts/DoliOauth.php');
 
 $langs->load("oauthgooglecontacts@oauthgooglecontacts");
 $langs->load("admin");
@@ -76,9 +77,6 @@ $callback = dol_buildpath("/oauthgooglecontacts/initoauth.php", 2) . "?action=ac
 
 // Oauth2 TEST
 // -- BEGIN --
-
-define('GOOGLE_CONTACTS_URI', 'https://www.google.com/m8/feeds/contacts/');
-define('GOOGLE_CONTACTS_GROUPS_URI', 'https://www.google.com/m8/feeds/groups/');
 define('GOOGLE_SHARED_CONTACTS_URI', 'https://www.google.com/m8/feeds/');
 
 

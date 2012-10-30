@@ -58,17 +58,21 @@ define('GDATA_VERSION', '3.0');
  */
 define('GOOGLE_PROJECTION', 'full');
 /**
+ * Google Contacts and Contacts Groups scope
+ */
+define('GOOGLE_CONTACTS_SCOPE', 'https://www.google.com/m8/feeds');
+/**
  * Gmail single contact feed URI
  */
-define('GOOGLE_CONTACTS_URI', 'https://www.google.com/m8/feeds/contacts/');
+define('GOOGLE_CONTACTS_URI', GOOGLE_CONTACTS_SCOPE .'/contacts');
 /**
  * Gmail group feed URI
  */
-define('GOOGLE_CONTACTS_GROUPS_URI', 'https://www.google.com/m8/feeds/groups/');
+define('GOOGLE_CONTACTS_GROUPS_URI', GOOGLE_CONTACTS_SCOPE . '/groups');
 /**
  * Gmail batch contact feed URI
  */
-define('GOOGLE_CONTACTS_BATCH_URI', 'https://www.google.com/m8/feeds/contacts/' . GOOGLE_USERID . '/' . GOOGLE_PROJECTION . '/batch');
+define('GOOGLE_CONTACTS_BATCH_URI', GOOGLE_CONTACTS_URI . '/' . GOOGLE_USERID . '/' . GOOGLE_PROJECTION . '/batch');
 /**
  * Gmail revoke token URI
  */
@@ -77,6 +81,7 @@ define('GOOGLE_CONTACTS_REVOQUE_TOKEN', 'https://www.google.com/accounts/AuthSub
  * Gmail revoke token URI
  */
 define('GOOGLE_CONTACTS_TOKEN_INFO', 'https://www.google.com/accounts/AuthSubTokenInfo');
+
 dol_include_once("/googlecontacts/class/EntreeGroupes.php");
 dol_include_once("/googlecontacts/class/EntreeTiers.php");
 
@@ -95,7 +100,7 @@ class DoliOauth extends OAuth {
    */
   public function newContact(EntreeTiers $object, $usermail) {
     $this->setAuthType(OAUTH_AUTH_TYPE_AUTHORIZATION);
-    $this->fetch(GOOGLE_CONTACTS_URI . $usermail . '/' . GOOGLE_PROJECTION, $object->saveXML(), OAUTH_HTTP_METHOD_POST, array("Content-Type" => "application/atom+xml", "GData-Version" => GDATA_VERSION));
+    $this->fetch(GOOGLE_CONTACTS_URI . '/' . $usermail . '/' . GOOGLE_PROJECTION, $object->saveXML(), OAUTH_HTTP_METHOD_POST, array("Content-Type" => "application/atom+xml", "GData-Version" => GDATA_VERSION));
     //TODO store content type in a constant and use it instead
   }
 
@@ -106,7 +111,7 @@ class DoliOauth extends OAuth {
    */
   public function newGroupe(EntreeGroupes $object, $usermail) {
     $this->setAuthType(OAUTH_AUTH_TYPE_AUTHORIZATION);
-    $this->fetch(GOOGLE_CONTACTS_GROUPS_URI . $usermail . '/' . GOOGLE_PROJECTION, $object->saveXML(), OAUTH_HTTP_METHOD_POST, array("Content-Type" => "application/atom+xml", "GData-Version" => GDATA_VERSION));
+    $this->fetch(GOOGLE_CONTACTS_GROUPS_URI . '/' . $usermail . '/' . GOOGLE_PROJECTION, $object->saveXML(), OAUTH_HTTP_METHOD_POST, array("Content-Type" => "application/atom+xml", "GData-Version" => GDATA_VERSION));
     //TODO store content type in a constant and use it instead
   }
 
