@@ -65,7 +65,7 @@ class modOAuthGoogleContacts extends DolibarrModules
 		$this->name = preg_replace('/^mod/i', '', get_class($this));
 		$this->description = "Oauth authentification for Google Apps";
 		$this->version = '1.0';
-		$this->const_name = 'MAIN_MODULE_' . strtoupper($this->name); // vérifier MAIN_MODULE_
+		$this->const_name = 'MAIN_MODULE_' . strtoupper($this->name);
 		$this->special = 3;
 		$this->picto = 'oauth@oauthgooglecontacts';
 		$this->triggers = 0;
@@ -76,10 +76,12 @@ class modOAuthGoogleContacts extends DolibarrModules
 		$this->phpmin = array(5, 3);
 		$this->need_dolibarr_version = array(3, 2);
 		$this->langfiles = array("@oauthgooglecontacts");
-		$this->const = array(0 => array('OAUTHGOOGLECONTACTS_VERSION', 'chaine', '1.0', 'Version du module', 0),
-			1 => array('ZF_CONTRAT_ASSISTANCE', 'chaine', '0', 'Type de contrat', 0));
+		$this->const = array();
+		$r = 0;
+		$this->const[$r] = array('ZF_SUPPORT', 'string', '0', 'Support contract', 1);
+		// TODO: declare config constants
 		$this->tabs = array('user:Google Apps:@oauthgooglecontacts:/oauthgooglecontacts/initoauth.php?id=__ID__');
-		$this->boxes = array(); // List of boxes
+		$this->boxes = array();
 		$this->boxes[0][1] = "box_oauthusers@oauthgooglecontacts";
 		$this->rights = array();
 		$this->menus = array();
