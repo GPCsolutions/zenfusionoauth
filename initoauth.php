@@ -159,7 +159,8 @@ switch ($_GET["action"]) {
  * ***** */
 // Create new form
 $form = new Form($db);
-llxHeader("", "OAuthGoogleContacts");
+$tabname = "Google Apps";
+llxHeader("", $tabname);
 // Display token status in the form
 $message = "Token_ok";
 if ($_GET["id"]) {
@@ -179,7 +180,7 @@ if ($_GET["id"]) {
   $head = user_prepare_head($doluser);
   $title = $langs->trans("User");
 
-  dol_fiche_head($head, 'tabOAuthGoogleContacts', $title, 0, 'user');
+  dol_fiche_head($head, 'tab' . $tabname, $title, 0, 'user');
 
   // Verify if user's email adress exists
   // If not
