@@ -24,6 +24,7 @@ OauthGoogleContactsProjectContact=Publisher
 AccessToken=Service access
 HelpCenter=Help center
 Stat=Stats
+Config=Configuration
 About=About
 SynchronizedContactsNumber=Synchronized contacts per user
 SynchronizedContacts=Synchronized contacts

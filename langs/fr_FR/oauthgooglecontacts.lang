@@ -25,6 +25,7 @@ AccessToken=Accès au service
 HelpCenter=Assistance
 Stat=Statistiques
 About=À propos
+Config=Configuration
 SynchronizedContactsNumber=Contacts synchronisés par utilisateur
 SynchronizedContacts=Contacts synchronisés
 OAuthGoogleContacts=ZenFusion Contacts
