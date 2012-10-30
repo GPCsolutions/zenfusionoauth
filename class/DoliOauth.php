@@ -76,7 +76,7 @@ define('GOOGLE_CONTACTS_GROUPS_URI', GOOGLE_CONTACTS_SCOPE . '/groups');
  * Gmail batch contact feed URI
  */
 define('GOOGLE_CONTACTS_BATCH_URI',
-	GOOGLE_CONTACTS_URI . '/' . GOOGLE_USERID . '/' . GOOGLE_PROJECTION . '/batch');
+	GOOGLE_CONTACTS_URI . '/default/' . GOOGLE_PROJECTION . '/batch');
 /**
  * Gmail revoke token URI
  */
@@ -106,7 +106,6 @@ class DoliOauth
 	 * \param Entree_Tiers $object Contact XML representation
 	 * \param string $usermail User's email address
 	 */
-
 	public function newContact(EntreeTiers $object, $usermail)
 	{
 		$this->setAuthType(OAUTH_AUTH_TYPE_AUTHORIZATION);
