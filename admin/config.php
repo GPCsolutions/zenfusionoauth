@@ -2,7 +2,7 @@
 /*
  * ZenFusion OAuth - A Google Oauth authorization module for Dolibarr
  * Copyright (C) 2011 Sebastien Bodrero <sbodrero@gpcsolutions.fr>
- * Copyright (C) 2011 Raphaël Doursenaud <rdoursenaud@gpcsolutions.fr>
+ * Copyright (C) 2011-2012 Raphaël Doursenaud <rdoursenaud@gpcsolutions.fr>
  * Copyright (C) 2012 Cédric Salvador <csalvador@gpcsolutions.fr>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -20,7 +20,7 @@
  */
 
 /**
- * \file htdocs/oauthgooglecontacts/admin/statistiques.php
+ * \file admin/statistiques.php
  * \ingroup oauthgooglecontacts
  * \brief Google contacts module statistiques page
  * \version development
@@ -28,10 +28,10 @@
 $res = 0;
 // from standard dolibarr install
 if ( ! $res && file_exists("../../main.inc.php"))
-	$res = @include("../../main.inc.php");
+		$res = @include("../../main.inc.php");
 // from custom dolibarr install
 if ( ! $res && file_exists("../../../main.inc.php"))
-	$res = @include("../../../main.inc.php");
+		$res = @include("../../../main.inc.php");
 if ( ! $res) die("Main include failed");
 
 dol_include_once("/oauthgooglecontacts/lib/zf_oauth.lib.php");
@@ -42,42 +42,44 @@ $langs->load("oauthgooglecontacts@oauthgooglecontacts");
 $langs->load("admin");
 $langs->load("help");
 
-if(isset($_POST["clientId"])){
-  dolibarr_set_const($db, "OAUTH2_CLIENT_ID", $_POST["clientId"],'chaine',0,'',$conf->entity);
-  unset($_POST["clientId"]);
-}
-  
-if(isset($_POST["clientSecret"])){
-  dolibarr_set_const($db, "OAUTH2_CLIENT_SECRET", $_POST["clientSecret"],'chaine',0,'',$conf->entity);
-  unset($_POST["clientSecret"]);
+if (isset($_POST["clientId"])) {
+	dolibarr_set_const($db, "OAUTH2_CLIENT_ID", $_POST["clientId"], 'chaine', 0,
+		'', $conf->entity);
+	unset($_POST["clientId"]);
 }
 
-if(isset($_POST["domainName"])){
-  dolibarr_set_const($db, "DOMAIN_NAME", $_POST["domainName"],'chaine',0,'',$conf->entity);
-  unset($_POST["domainName"]);
+if (isset($_POST["clientSecret"])) {
+	dolibarr_set_const($db, "OAUTH2_CLIENT_SECRET", $_POST["clientSecret"],
+		'chaine', 0, '', $conf->entity);
+	unset($_POST["clientSecret"]);
 }
 
-if(isset($_POST["domainAdmin"])){
-  dolibarr_set_const($db, "DOMAIN_ADMIN", $_POST["domainAdmin"],'chaine',0,'',$conf->entity);
-  unset($_POST["domainAdmin"]);
+if (isset($_POST["domainName"])) {
+	dolibarr_set_const($db, "DOMAIN_NAME", $_POST["domainName"], 'chaine', 0, '',
+		$conf->entity);
+	unset($_POST["domainName"]);
 }
 
-if($_POST["apps"]=="yes"){
-  if(!$conf->global->DOMAIN_NAME || !$conf->global->DOMAIN_ADMIN){
-    $msg = '<div class="error">'.$langs->trans("NeedDomainAndAdmin").'</div>';
-  }
-  else{
-    dolibarr_set_const($db, "USE_APPS_MODE", $_POST["apps"],'chaine',0,'',$conf->entity);
-  }
-  unset($_POST["apps"]);
+if (isset($_POST["domainAdmin"])) {
+	dolibarr_set_const($db, "DOMAIN_ADMIN", $_POST["domainAdmin"], 'chaine', 0, '',
+		$conf->entity);
+	unset($_POST["domainAdmin"]);
 }
 
-else if($_POST["apps"]=="no"){
-  dolibarr_del_const($db, "USE_APPS_MODE");
-  unset($_POST["apps"]);
+if ($_POST["apps"] == "yes") {
+	if ( ! $conf->global->DOMAIN_NAME || ! $conf->global->DOMAIN_ADMIN) {
+		$msg = '<div class="error">' . $langs->trans("NeedDomainAndAdmin") . '</div>';
+	} else {
+		dolibarr_set_const($db, "USE_APPS_MODE", $_POST["apps"], 'chaine', 0, '',
+			$conf->entity);
+	}
+	unset($_POST["apps"]);
+} else if ($_POST["apps"] == "no") {
+	dolibarr_del_const($db, "USE_APPS_MODE");
+	unset($_POST["apps"]);
 }
 /**
- *view 
+ * view 
  */
 llxHeader();
 dol_htmloutput_mesg($msg);
@@ -90,27 +92,27 @@ $head = zf_prepare_head();
 dol_fiche_head($head, 'configuration', $langs->trans("Config"), 0);
 
 print_titre($langs->trans("ZenfusionConfig"));
-print '<form method="post" action="'.$_SERVER[PHP_SELF].'">';
+print '<form method="post" action="' . $_SERVER[PHP_SELF] . '">';
 print '<table class="noborder" width="40%">';
 print '<tr class="liste_titre">';
-print '<td>'.$langs->trans("ClientId").'</td>';
-print '<td>'.$langs->trans("ClientSecret").'</td>';
-print '<td>'.$langs->trans("domainName").'</td>';
-print '<td>'.$langs->trans("Admin").'</td>';
-print '<td>'.$langs->trans("AppsMode").'</td>';
+print '<td>' . $langs->trans("ClientId") . '</td>';
+print '<td>' . $langs->trans("ClientSecret") . '</td>';
+print '<td>' . $langs->trans("domainName") . '</td>';
+print '<td>' . $langs->trans("Admin") . '</td>';
+print '<td>' . $langs->trans("AppsMode") . '</td>';
 print '<td>&nbsp;</td>';
 print '</tr>';
 print '<tr>';
 print '<td><input type="text" name ="clientId" ';
-print 'value="'.$conf->global->OAUTH2_CLIENT_ID.'"';
+print 'value="' . $conf->global->OAUTH2_CLIENT_ID . '"';
 print '/></td>';
 print '<td><input type="text" name ="clientSecret" ';
-print 'value="'.$conf->global->OAUTH2_CLIENT_SECRET.'"';
+print 'value="' . $conf->global->OAUTH2_CLIENT_SECRET . '"';
 print '/></td>';
-print '<td><input type="text" name="domainName" value ="'.$conf->global->DOMAIN_NAME.'" /></td>';
-print '<td>'.$form->select_dolusers($conf->global->DOMAIN_ADMIN, "domainAdmin").'</td>';
-print '<td>'.$form->selectyesno("apps", $conf->global->USE_APPS_MODE).'</td>';
-print '<td><input type="submit" value ="'.$langs->trans("Save").'"/></td>';
+print '<td><input type="text" name="domainName" value ="' . $conf->global->DOMAIN_NAME . '" /></td>';
+print '<td>' . $form->select_dolusers($conf->global->DOMAIN_ADMIN, "domainAdmin") . '</td>';
+print '<td>' . $form->selectyesno("apps", $conf->global->USE_APPS_MODE) . '</td>';
+print '<td><input type="submit" value ="' . $langs->trans("Save") . '"/></td>';
 print '</table>';
 print '</form>';
 llxFooter();

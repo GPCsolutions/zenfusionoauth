@@ -1,9 +1,8 @@
 <?php
-
 /*
  * ZenFusion OAuth - A Google Oauth authorization module for Dolibarr
  * Copyright (C) 2011 Sebastien Bodrero <sbodrero@gpcsolutions.fr>
- * Copyright (C) 2011 Raphaël Doursenaud <rdoursenaud@gpcsolutions.fr>
+ * Copyright (C) 2011-2012 Raphaël Doursenaud <rdoursenaud@gpcsolutions.fr>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -20,7 +19,7 @@
  */
 
 /**
- * \file htdocs/oauthgooglecontacts/lib/zf_oauth.lib.php
+ * \file lib/zf_oauth.lib.php
  * \ingroup oauthgooglecontacts
  * \brief Google contacts module functions lib page
  * \version development
@@ -30,34 +29,35 @@
  * \function zf_prepare_head
  * \brief Display tabs in module admin page
  */
-function zf_prepare_head() {
-  global $langs, $conf, $user;
-  $h = 0;
-  $head = array();
-  
-  $head[$h][0] = dol_buildpath("/oauthgooglecontacts/admin/config.php", 1);
-  $head[$h][1] = $langs->trans("Config");
-  $head[$h][2] = 'configuration';
-  $h++;
+function zf_prepare_head()
+{
+	global $langs, $conf, $user;
+	$h = 0;
+	$head = array();
 
-  $head[$h][0] = dol_buildpath("/oauthgooglecontacts/admin/statistiques.php", 1);
-  $head[$h][1] = $langs->trans("Stat");
-  $head[$h][2] = 'statistiques';
-  $h++;
+	$head[$h][0] = dol_buildpath("/oauthgooglecontacts/admin/config.php", 1);
+	$head[$h][1] = $langs->trans("Config");
+	$head[$h][2] = 'configuration';
+	$h ++;
 
-  if ($conf->global->ZF_CONTRAT_ASSISTANCE != '0') {
-    $head[$h][0] = dol_buildpath("/oauthgooglecontacts/admin/assistance.php", 1);
-    $head[$h][1] = $langs->trans("HelpCenter");
-    $head[$h][2] = 'help';
-    $h++;
-  }
+	$head[$h][0] = dol_buildpath("/oauthgooglecontacts/admin/statistiques.php", 1);
+	$head[$h][1] = $langs->trans("Stat");
+	$head[$h][2] = 'statistiques';
+	$h ++;
 
-  $head[$h][0] = dol_buildpath("/oauthgooglecontacts/admin/apropos.php", 1);
-  $head[$h][1] = $langs->trans("About");
-  $head[$h][2] = 'about';
-  $h++;
-  
-  return $head;
+	if ($conf->global->ZF_CONTRAT_ASSISTANCE != '0') {
+		$head[$h][0] = dol_buildpath("/oauthgooglecontacts/admin/assistance.php", 1);
+		$head[$h][1] = $langs->trans("HelpCenter");
+		$head[$h][2] = 'help';
+		$h ++;
+	}
+
+	$head[$h][0] = dol_buildpath("/oauthgooglecontacts/admin/apropos.php", 1);
+	$head[$h][1] = $langs->trans("About");
+	$head[$h][2] = 'about';
+	$h ++;
+
+	return $head;
 }
 
 ?>

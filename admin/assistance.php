@@ -1,9 +1,8 @@
 <?php
-
 /*
  * ZenFusion OAuth - A Google Oauth authorization module for Dolibarr
  * Copyright (C) 2011 Sebastien Bodrero <sbodrero@gpcsolutions.fr>
- * Copyright (C) 2011 Raphaël Doursenaud <rdoursenaud@gpcsolutions.fr>
+ * Copyright (C) 2011-2012 Raphaël Doursenaud <rdoursenaud@gpcsolutions.fr>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -20,7 +19,7 @@
  */
 
 /**
- * \file htdocs/oauthgooglecontacts/admin/assistance.php
+ * \file admin/assistance.php
  * \ingroup oauthgooglecontacts
  * \brief Google contacts module Help center page
  * \version development
@@ -28,10 +27,10 @@
 $res = 0;
 // from standard dolibarr install
 if ( ! $res && file_exists("../../main.inc.php"))
-	$res = @include("../../main.inc.php");
+		$res = @include("../../main.inc.php");
 // from custom dolibarr install
 if ( ! $res && file_exists("../../../main.inc.php"))
-	$res = @include("../../../main.inc.php");
+		$res = @include("../../../main.inc.php");
 if ( ! $res) die("Main include failed");
 
 dol_include_once("/oauthgooglecontacts/lib/zf_oauth.lib.php");
@@ -41,8 +40,7 @@ $langs->load("admin");
 $langs->load("help");
 
 // only readable by admin
-if (!$user->admin)
-  accessforbidden();
+if ( ! $user->admin) accessforbidden();
 
 /*
  * View
@@ -55,13 +53,13 @@ $linkback = '<a href="' . DOL_URL_ROOT . '/admin/modules.php">' . $langs->trans(
 // Folder icon title
 print_fiche_titre("ZenFusion", $linkback, 'setup');
 
-$head =  zf_prepare_head();
+$head = zf_prepare_head();
 
-dol_fiche_head($head, 'help', $langs->trans("HelpCenter"),0);
+dol_fiche_head($head, 'help', $langs->trans("HelpCenter"), 0);
 
 
 
-print '<a target="_blank" href="http://assistance.gpcsolutions.fr"><img src="../img/logo_assist.png" alt="'.$langs->trans("HelpCenter").'"></a>';
+print '<a target="_blank" href="http://assistance.gpcsolutions.fr"><img src="../img/logo_assist.png" alt="' . $langs->trans("HelpCenter") . '"></a>';
 
 print "<br>\n";
 

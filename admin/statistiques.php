@@ -1,9 +1,8 @@
 <?php
-
 /*
  * ZenFusion OAuth - A Google Oauth authorization module for Dolibarr
  * Copyright (C) 2011 Sebastien Bodrero <sbodrero@gpcsolutions.fr>
- * Copyright (C) 2011 Raphaël Doursenaud <rdoursenaud@gpcsolutions.fr>
+ * Copyright (C) 2011-2012 Raphaël Doursenaud <rdoursenaud@gpcsolutions.fr>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -20,7 +19,7 @@
  */
 
 /**
- * \file htdocs/oauthgooglecontacts/admin/statistiques.php
+ * \file admin/statistiques.php
  * \ingroup oauthgooglecontacts
  * \brief Google contacts module statistiques page
  * \version development
@@ -28,10 +27,10 @@
 $res = 0;
 // from standard dolibarr install
 if ( ! $res && file_exists("../../main.inc.php"))
-	$res = @include("../../main.inc.php");
+		$res = @include("../../main.inc.php");
 // from custom dolibarr install
 if ( ! $res && file_exists("../../../main.inc.php"))
-	$res = @include("../../../main.inc.php");
+		$res = @include("../../../main.inc.php");
 if ( ! $res) die("Main include failed");
 
 dol_include_once("/oauthgooglecontacts/lib/zf_oauth.lib.php");
@@ -41,8 +40,7 @@ $langs->load("admin");
 $langs->load("help");
 
 // only readable by admin
-if (!$user->admin)
-  accessforbidden();
+if ( ! $user->admin) accessforbidden();
 
 // Getting google contacts users and contacts count per user
 $sql = "SELECT u.rowid, u.firstname, u.name, u.email, g.id_dolibarr_user, count(g.rowid) as tiers ";
@@ -77,36 +75,34 @@ print '  <td align="center">' . $langs->trans("SynchronizedContacts") . '</td>';
 print "</tr>\n";
 
 if ($result) {
-  $num = $db->num_rows($result);
-  $i = 0;
-  while ($i < $num) {
-    $obj = $db->fetch_object($result);
-    $total = $obj->tiers;
+	$num = $db->num_rows($result);
+	$i = 0;
+	while ($i < $num) {
+		$obj = $db->fetch_object($result);
+		$total = $obj->tiers;
 
-    // Getting socpeople records(contacts rattachés) per user TODO factoriser les requêtes sql
-    $sqlbis = "SELECT count(id_dolibarr_user) as contacts ";
-    $sqlbis.= "FROM " . MAIN_DB_PREFIX . "google_socpeople_records ";
-    $sqlbis.= "WHERE id_dolibarr_user = '" . $obj->rowid . "'";
+		// Getting socpeople records(contacts rattachés) per user TODO factoriser les requêtes sql
+		$sqlbis = "SELECT count(id_dolibarr_user) as contacts ";
+		$sqlbis.= "FROM " . MAIN_DB_PREFIX . "google_socpeople_records ";
+		$sqlbis.= "WHERE id_dolibarr_user = '" . $obj->rowid . "'";
 
-    $resultbis = $db->query($sqlbis);
+		$resultbis = $db->query($sqlbis);
 
-    if ($resultbis) {
-      $objbis = $db->fetch_object($resultbis);
-      $total+= $objbis->contacts;
-    }
+		if ($resultbis) {
+			$objbis = $db->fetch_object($resultbis);
+			$total+= $objbis->contacts;
+		}
 
-    print "<tr>";
-    print "<td>" . $obj->firstname . "</td>";
-    print "<td>" . $obj->name . "</td>";
-    print "<td>" . $obj->email . "</td>";
-    print "<td align=\"center\">" . $total . "</td>";
-    print "</tr>";
-    $i++;
-  }
-}
-
-else {
-  dol_syslog("statistiques::select error", LOG_ERR);
+		print "<tr>";
+		print "<td>" . $obj->firstname . "</td>";
+		print "<td>" . $obj->name . "</td>";
+		print "<td>" . $obj->email . "</td>";
+		print "<td align=\"center\">" . $total . "</td>";
+		print "</tr>";
+		$i ++;
+	}
+} else {
+	dol_syslog("statistiques::select error", LOG_ERR);
 }
 print "</table>";
 
