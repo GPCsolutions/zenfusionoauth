@@ -55,7 +55,7 @@ print_fiche_titre("ZenFusion", $linkback, 'setup');
 
 $head = zf_prepare_head();
 
-dol_fiche_head($head, 'help', $langs->trans("HelpCenter"), 0);
+dol_fiche_head($head, 'help', $langs->trans("Module150Name"), 0, 'oauth@oauthgooglecontacts');
 
 
 

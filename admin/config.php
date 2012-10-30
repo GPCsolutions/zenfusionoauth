@@ -42,42 +42,47 @@ $langs->load("oauthgooglecontacts@oauthgooglecontacts");
 $langs->load("admin");
 $langs->load("help");
 
-if (isset($_POST["clientId"])) {
-	dolibarr_set_const($db, "OAUTH2_CLIENT_ID", $_POST["clientId"], 'chaine', 0,
+// Access control
+if ( ! $user->admin) accessforbidden();
+
+// Parameters
+$action = GETPOST('action', 'alpha');
+
+/*
+ * Actions
+ */
+if ($action == 'update') {
+	$client_id = GETPOST('clientId', 'alpha');
+	$client_secret = GETPOST('clientSecret', 'alpha');
+	$domain_name = GETPOST('domainName', 'alpha');
+	$domain_admin = GETPOST('domainAdmin', 'alpha');
+	$shared_contacts_mode = GETPOST('sharedcontacts', 'alpha');
+
+	$res = dolibarr_set_const($db, "OAUTH2_CLIENT_ID", $client_id, '', 0, '',
+		$conf->entity);
+	if ( ! $res > 0) $error ++;
+	$res = dolibarr_set_const($db, "OAUTH2_CLIENT_SECRET", $client_secret, '', 0,
 		'', $conf->entity);
-	unset($_POST["clientId"]);
-}
-
-if (isset($_POST["clientSecret"])) {
-	dolibarr_set_const($db, "OAUTH2_CLIENT_SECRET", $_POST["clientSecret"],
-		'chaine', 0, '', $conf->entity);
-	unset($_POST["clientSecret"]);
-}
-
-if (isset($_POST["domainName"])) {
-	dolibarr_set_const($db, "DOMAIN_NAME", $_POST["domainName"], 'chaine', 0, '',
+	if ( ! $res > 0) $error ++;
+	$res = dolibarr_set_const($db, "DOMAIN_NAME", $domain_name, '', 0, '',
 		$conf->entity);
-	unset($_POST["domainName"]);
-}
-
-if (isset($_POST["domainAdmin"])) {
-	dolibarr_set_const($db, "DOMAIN_ADMIN", $_POST["domainAdmin"], 'chaine', 0, '',
+	if ( ! $res > 0) $error ++;
+	$res = dolibarr_set_const($db, "DOMAIN_ADMIN", $domain_admin, '', 0, '',
 		$conf->entity);
-	unset($_POST["domainAdmin"]);
-}
+	if ( ! $res > 0) $error ++;
+	$res = dolibarr_set_const($db, "SHARED_CONTACTS", $shared_contacts_mode, '', 0,
+		'', $conf->entity);
+	if ( ! $res > 0) $error ++;
 
-if ($_POST["apps"] == "yes") {
-	if ( ! $conf->global->DOMAIN_NAME || ! $conf->global->DOMAIN_ADMIN) {
-		$msg = '<div class="error">' . $langs->trans("NeedDomainAndAdmin") . '</div>';
+	if ( ! $error) {
+		$db->commit();
+		$mesg = "<font class=\"ok\">" . $langs->trans("Saved") . "</font>";
 	} else {
-		dolibarr_set_const($db, "USE_APPS_MODE", $_POST["apps"], 'chaine', 0, '',
-			$conf->entity);
+		$db->rollback();
+		$mesg = "<font class=\"error\">" . $langs->trans("UnexpectedError") . "</font>";
 	}
-	unset($_POST["apps"]);
-} else if ($_POST["apps"] == "no") {
-	dolibarr_del_const($db, "USE_APPS_MODE");
-	unset($_POST["apps"]);
 }
+
 /**
  * view 
  */
@@ -89,31 +94,37 @@ $linkback = '<a href="' . DOL_URL_ROOT . '/admin/modules.php">' . $langs->trans(
 print_fiche_titre("ZenFusion", $linkback, 'setup');
 
 $head = zf_prepare_head();
-dol_fiche_head($head, 'configuration', $langs->trans("Config"), 0);
+dol_fiche_head($head, 'conf', $langs->trans("Module150Name"), 0,
+	'oauth@oauthgooglecontacts');
 
 print_titre($langs->trans("ZenfusionConfig"));
-print '<form method="post" action="' . $_SERVER[PHP_SELF] . '">';
-print '<table class="noborder" width="40%">';
-print '<tr class="liste_titre">';
-print '<td>' . $langs->trans("ClientId") . '</td>';
-print '<td>' . $langs->trans("ClientSecret") . '</td>';
-print '<td>' . $langs->trans("domainName") . '</td>';
-print '<td>' . $langs->trans("Admin") . '</td>';
-print '<td>' . $langs->trans("AppsMode") . '</td>';
-print '<td>&nbsp;</td>';
-print '</tr>';
-print '<tr>';
-print '<td><input type="text" name ="clientId" ';
-print 'value="' . $conf->global->OAUTH2_CLIENT_ID . '"';
-print '/></td>';
-print '<td><input type="text" name ="clientSecret" ';
-print 'value="' . $conf->global->OAUTH2_CLIENT_SECRET . '"';
-print '/></td>';
-print '<td><input type="text" name="domainName" value ="' . $conf->global->DOMAIN_NAME . '" /></td>';
-print '<td>' . $form->select_dolusers($conf->global->DOMAIN_ADMIN, "domainAdmin") . '</td>';
-print '<td>' . $form->selectyesno("apps", $conf->global->USE_APPS_MODE) . '</td>';
-print '<td><input type="submit" value ="' . $langs->trans("Save") . '"/></td>';
-print '</table>';
-print '</form>';
+echo '<form method="POST" action="', $_SERVER[PHP_SELF], '">';
+echo '<input type="hidden" name="token" value="', $_SESSION['newtoken'], '">';
+echo '<input type="hidden" name="action" value="update">';
+echo '<table class="noborder" width="40%">';
+echo '<tr class="liste_titre">';
+echo '<td>', $langs->trans("ClientId"), '</td>';
+echo '<td>', $langs->trans("ClientSecret"), '</td>';
+echo '<td>', $langs->trans("domainName"), '</td>';
+echo '<td>', $langs->trans("Admin"), '</td>';
+echo '<td>', $langs->trans("AppsMode"), '</td>';
+echo '<td></td>';
+echo '</tr>';
+echo '<tr>';
+echo '<td><input type="text" name ="clientId" value="',
+ $conf->global->OAUTH2_CLIENT_ID, '"/></td>';
+echo '<td><input type="text" name ="clientSecret" value="',
+ $conf->global->OAUTH2_CLIENT_SECRET . '"/></td>';
+echo '<td><input type="text" name="domainName" value ="',
+ $conf->global->DOMAIN_NAME, '" /></td>';
+echo '<td>',
+ $form->select_dolusers($conf->global->DOMAIN_ADMIN, "domainAdmin"),
+ '</td>';
+echo '<td>',
+ $form->selectyesno("apps", $conf->global->SHARED_CONTACTS), '</td>';
+echo '<td><input type="submit" class="button" value ="',
+ $langs->trans("Save"), '"/></td>';
+echo '</table>';
+echo '</form>';
 llxFooter();
 ?>

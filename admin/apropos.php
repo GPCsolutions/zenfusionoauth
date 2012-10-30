@@ -55,7 +55,7 @@ print_fiche_titre("ZenFusion", $linkback, 'setup');
 
 $head = zf_prepare_head();
 
-dol_fiche_head($head, 'about', $langs->trans("About"), 0);
+dol_fiche_head($head, 'about', $langs->trans("Module150Name"), 0, 'oauth@oauthgooglecontacts');
 
 print '<h3>' . $langs->trans("Version") . ' ' . $conf->global->OAUTHGOOGLECONTACTS_VERSION . '</h3>';
 

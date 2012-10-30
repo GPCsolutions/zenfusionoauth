@@ -37,12 +37,12 @@ function zf_prepare_head()
 
 	$head[$h][0] = dol_buildpath("/oauthgooglecontacts/admin/config.php", 1);
 	$head[$h][1] = $langs->trans("Config");
-	$head[$h][2] = 'configuration';
+	$head[$h][2] = 'conf';
 	$h ++;
 
 	$head[$h][0] = dol_buildpath("/oauthgooglecontacts/admin/statistiques.php", 1);
 	$head[$h][1] = $langs->trans("Stat");
-	$head[$h][2] = 'statistiques';
+	$head[$h][2] = 'stats';
 	$h ++;
 
 	if ($conf->global->ZF_CONTRAT_ASSISTANCE != '0') {

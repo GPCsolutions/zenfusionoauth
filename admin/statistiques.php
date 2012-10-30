@@ -62,7 +62,7 @@ print_fiche_titre("ZenFusion", $linkback, 'setup');
 
 $head = zf_prepare_head();
 
-dol_fiche_head($head, 'statistiques', $langs->trans("Stat"), 0);
+dol_fiche_head($head, 'stats', $langs->trans("Module150Name"), 0, 'oauth@oauthgooglecontacts');
 
 print_titre($langs->trans("SynchronizedContactsNumber"));
 
