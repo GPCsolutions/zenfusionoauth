@@ -33,6 +33,7 @@ if ( ! $res && file_exists("../../../main.inc.php"))
 		$res = @include("../../../main.inc.php");
 if ( ! $res) die("Main include failed");
 
+require_once '../core/modules/modOAuthGoogleContacts.class.php';
 include_once '../lib/zf_oauth.lib.php';
 
 $langs->load("oauthgooglecontacts@oauthgooglecontacts");
@@ -41,6 +42,8 @@ $langs->load("help");
 
 // only readable by admin
 if ( ! $user->admin) accessforbidden();
+
+$module = new modOAuthGoogleContacts($db);
 
 /*
  * View
@@ -60,7 +63,7 @@ dol_fiche_head($head, 'about', $langs->trans("Module150Name"), 0,
 
 echo '<h3>', $langs->trans("Module150Name"), '</h3>';
 echo '<em>', $langs->trans("Version"), ' ',
- $conf->global->OAUTHGOOGLECONTACTS_VERSION, '</em><br>';
+ $module->version, '</em><br>';
 echo '<em>&copy;2011-2012 GPC.solutions<br><em>';
 echo '<a target="_blank" href="http://www.zenfusion.net/">',
  '<img src="../img/logo_zf.png" alt="Logo ZenFusion"></a>';
