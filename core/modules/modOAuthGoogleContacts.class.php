@@ -68,7 +68,7 @@ class modOAuthGoogleContacts extends DolibarrModules
 		$this->const_name = 'MAIN_MODULE_' . strtoupper($this->name);
 		$this->special = 1;
 		$this->picto = 'oauth@oauthgooglecontacts';
-		$this->triggers = 0;
+		$this->module_parts = array();
 		$this->dirs = array();
 		$this->config_page_url = array("conf.php@oauthgooglecontacts");
 		$this->depends = array();
