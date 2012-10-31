@@ -15,19 +15,15 @@
  * limitations under the License.
  */
 
-require_once '../../src/apiClient.php';
+require_once '../../src/Google_Client.php';
 session_start();
 
-$client = new apiClient();
+$client = new Google_Client();
 $client->setApplicationName('Google Contacts PHP Sample');
 $client->setScopes("http://www.google.com/m8/feeds/");
 // Documentation: http://code.google.com/apis/gdata/docs/2.0/basics.html
 // Visit https://code.google.com/apis/console?api=contacts to generate your
 // oauth2_client_id, oauth2_client_secret, and register your oauth2_redirect_uri.
-const OAUTH2_CLIENT_ID = '214256051421.apps.googleusercontent.com';
-const OAUTH2_CLIENT_SECRET = 'e1CeMAIydAjRrtLFdcMI2_-1';
-$client->setClientId(OAUTH2_CLIENT_ID);
-$client->setClientSecret(OAUTH2_CLIENT_SECRET);
 // $client->setClientId('insert_your_oauth2_client_id');
 // $client->setClientSecret('insert_your_oauth2_client_secret');
 // $client->setRedirectUri('insert_your_redirect_uri');
@@ -50,7 +46,7 @@ if (isset($_REQUEST['logout'])) {
 }
 
 if ($client->getAccessToken()) {
-  $req = new apiHttpRequest("https://www.google.com/m8/feeds/contacts/default/full");
+  $req = new Google_HttpRequest("https://www.google.com/m8/feeds/contacts/default/full");
   $val = $client->getIo()->authenticatedRequest($req);
 
   // The contacts api only returns XML responses.
