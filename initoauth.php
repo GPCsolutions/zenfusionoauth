@@ -46,7 +46,7 @@ if ( ! $res) die("Main include failed");
 require_once DOL_DOCUMENT_ROOT . '/user/class/user.class.php';
 require_once DOL_DOCUMENT_ROOT . '/core/lib/usergroups.lib.php';
 require_once './class/oauth_google_contacts.class.php';
-require_once './lib/google-api-php-client/src/apiClient.php';
+require_once './lib/google-api-php-client/src/Google_Client.php';
 
 $langs->load("oauthgooglecontacts@oauthgooglecontacts");
 $langs->load("admin");
@@ -70,19 +70,15 @@ $oauthuser = new Oauth_google_contacts($db);
 /// Create callback address
 $callback = dol_buildpath("/oauthgooglecontacts/initoauth.php", 2) . "?action=access";
 /// Scope choosen for Google's API (Google Contacts)
-// Oauth2 TEST
-// -- BEGIN --
-define('GOOGLE_SHARED_CONTACTS_URI', 'https://www.google.com/m8/feeds/');
 
-
-$client = new apiClient();
-$client->setApplicationName('ZenFusion Contacts');
+$client = new Google_Client();
+$client->setApplicationName('ZenFusion');
+$client->setScopes(array(GOOGLE_CONTACTS_URI, GOOGLE_CONTACTS_GROUPS_URI));
+//$client->setScopes(GOOGLE_SHARED_CONTACTS_URI);
 $client->setClientId($conf->global->OAUTH2_CLIENT_ID);
 $client->setClientSecret($conf->global->OAUTH2_CLIENT_SECRET);
 $client->setRedirectUri($callback);
-//$client->setScopes(GOOGLE_CONTACTS_URI.' '.GOOGLE_CONTACTS_GROUPS_URI. ' '.GOOGLE_SHARED_CONTACTS_URI);
-$client->setScopes(GOOGLE_SHARED_CONTACTS_URI);
-// -- END --
+
 // Actions
 
 switch ($_GET["action"]) {
@@ -94,7 +90,7 @@ switch ($_GET["action"]) {
 		try { // Exception
 			// Sent a get request to revoke token
 			$client->revokeToken($oauthuser->access_token);
-		} catch (apiAuthException /* OAuthException */ $e) {
+		} catch (Google_AuthException /* OAuthException */ $e) {
 			dol_syslog("Delete token " . $e->getMessage());
 			// TODO prévenir le client de supprimer éventuellement le jeton manuelement sur son compte gmail
 		}
@@ -118,7 +114,7 @@ switch ($_GET["action"]) {
 		try {
 			$client->authenticate();
 			$access = $client->getAccessToken();
-		} catch (apiAuthException $e) {
+		} catch (Google_AuthException $e) {
 			// Display error
 			$e->getMessage();
 			dol_syslog("Access token " . $e->getMessage());
@@ -162,7 +158,7 @@ if ($_GET["id"]) {
 	$oauthuser->fetch($_GET["id"]);
 	try {
 		$client->setAccessToken($oauthuser->access_token);
-	} catch (apiAuthException $e) {
+	} catch (Google_AuthException $e) {
 		$message = "Token_ko";
 	}
 
@@ -183,7 +179,6 @@ if ($_GET["id"]) {
 	/*
 	 * Common part of the user's tabs
 	 */
-
 	print '<table class="border" width="100%">';
 
 	// Ref
@@ -229,11 +224,7 @@ if ($_GET["id"]) {
 
 	print "<br>\n";
 
-	/*
-	 * View depending on controleur
-	 */
-
-
+	// Activation
 	print '<form action="initoauth.php" method="get">';
 	if ( ! $retry) { // if no error in the controleur
 		if ($client->getAccessToken()) { // if access token exists or/and bad propose to delete it
