@@ -27,7 +27,6 @@
  *  \authors Raphaël Doursenaud <rdoursenaud@gpcsolutions.fr>
  */
 include_once DOL_DOCUMENT_ROOT . '/core/boxes/modules_boxes.php';
-include_once '../../class/DoliOauth.php';
 
 /**
  * \class box_oauthusers
@@ -98,7 +97,9 @@ class box_oauthusers extends ModeleBoxes
 					$token = $objp->access_token;
 					$secret = $objp->secret_token;
 
-					if ($token != NULL) {
+					if ($token) {
+						// TODO: port to Oauth2
+						/*
 						$dolioauth = new DoliOauth(DoliOauth::OAUTH_CONSUMER_KEY, DoliOauth::OAUTH_CONSUMER_SECRET, OAUTH_SIG_METHOD_HMACSHA1, OAUTH_AUTH_TYPE_URI);
 						$dolioauth->setToken($token, $secret);
 
@@ -113,6 +114,7 @@ class box_oauthusers extends ModeleBoxes
 								'text' => $langs->trans("status_ko"),
 								'url' => dol_buildpath("/oauthgooglecontacts/initoauth.php", 1) . "?id=" . $objp->rowid . "&action=delete");
 						}
+						 */
 					} else { // If token = NULL
 						$this->info_box_contents[$i][2] = array('td' => 'align="left"',
 							'text' => $langs->trans("no_token"));

@@ -46,7 +46,6 @@ if ( ! $res) die("Main include failed");
 require_once DOL_DOCUMENT_ROOT . '/user/class/user.class.php';
 require_once DOL_DOCUMENT_ROOT . '/core/lib/usergroups.lib.php';
 require_once './class/oauth_google_contacts.class.php';
-require_once './class/DoliOauth.php';
 require_once './lib/google-api-php-client/src/apiClient.php';
 
 $langs->load("oauthgooglecontacts@oauthgooglecontacts");
