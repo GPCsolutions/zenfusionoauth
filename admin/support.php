@@ -59,7 +59,7 @@ dol_fiche_head($head, 'help', $langs->trans("Module150Name"), 0, 'oauth@oauthgoo
 
 echo '<a target="_blank" href="http://assistance.gpcsolutions.fr">',
 //	'<img src="../img/logo_assist.png" alt="', $langs->trans("HelpCenter"),'">',
-	$langs->trans("HelpCenter"),
+	$langs->trans("Support"),
 	'</a>',
 	'<br>';
 

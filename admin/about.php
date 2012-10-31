@@ -21,7 +21,7 @@
 /**
  * \file admin/apropos.php
  * \ingroup oauthgooglecontacts
- * \brief Google contacts module About page
+ * \brief ZenFusion Oauth module About page
  * \version development
  */
 $res = 0;
@@ -68,20 +68,23 @@ echo '<em>&copy;2011-2012 GPC.solutions<br><em>';
 echo '<a target="_blank" href="http://www.zenfusion.net/">',
  '<img src="../img/logo_zf.png" alt="Logo ZenFusion"></a>';
 
-echo '<h3>', $langs->trans("OauthGoogleContactsProjectContact"), '</h3>';
+echo '<h3>', $langs->trans("Publisher"), '</h3>';
 echo '<a target="_blank" href="http://www.gpcsolutions.fr">',
  '<img src="../img/logo_gpc.png" alt="GPC.solutions"></a>';
 echo '<address>Technopole Hélioparc<br>',
  '2 avenue du Président Pierre Angot<br>',
- '64053 PAU CEDEX 9<br>+33 (0)5 35 53 97 12</address>';
+ '64053 PAU CEDEX 9<br>',
+ 'FRANCE<br>',
+ '+33 (0)5 35 53 97 12</address>',
+ '<a href="mailto:contact@gpcsolutions.fr">contact@gpcsolutions.fr</a>';
 
-echo '<h3>', $langs->trans("DolibarrLicense"), '</h3>';
+echo '<h3>', $langs->trans("License"), '</h3>';
 echo '<a target="_blank" href="http://www.gnu.org/licenses/gpl-3.0.html">',
  '<img src="../img/logo_gpl.png" alt="GPL v.3"></a>';
 
-echo '<h3>', $langs->trans("OauthGoogleContactsCredits"), '</h3>';
+echo '<h3>', $langs->trans("Credits"), '</h3>';
 
-echo '<h4>', $langs->trans("OauthGoogleContactsDev"), '</h4>';
+echo '<h4>', $langs->trans("Development"), '</h4>';
 
 echo '<ul>';
 echo '<li>Raphaël Doursenaud, ', $langs->trans('ProjectManager'), '</li>';
@@ -89,7 +92,7 @@ echo '<li>Sebastien Bodrero, ', $langs->trans('SoftwareEngineer'), '</li>';
 echo '<li>Cédric Salvador, ', $langs->trans('SoftwareEngineer'), '</li>';
 echo '</ul>';
 
-echo '<h4>' . $langs->trans("OauthGoogleContactsRsc") . '</h4>';
+echo '<h4>' . $langs->trans("Ressources") . '</h4>';
 
 echo '<ul>',
  '<li>OAuth logo<br>',
@@ -97,13 +100,6 @@ echo '<ul>',
  '<a target="_blank" href="http://creativecommons.org/licenses/by-sa/3.0/legalcode">',
  '<img src="../img/ccbysa.png" alt="Creative Commons Attribution Share Alike 3.0 license"></a>',
  '</li>',
- '<li>Contacts logo<br>',
- '&copy; <a target="_blank" href="http://www.gnome.org">GNOME Project</a><br>',
- '<a target="_blank" href="http://www.gnu.org/licenses/lgpl.html">',
- '<img src="../img/lgplv3.png" alt="LGPLv3"></a>',
- '<a target="_blank" href="http://creativecommons.org/licenses/by-sa/3.0/legalcode">',
- '<img src="../img/ccbysa.png" alt="Creative Commons Attribution Share Alike 3.0 license">',
- '</a></li>',
  '<li>GPLv3 logo<br>',
  '&copy;2007, 2008 ',
  '<a target="_blank" href="http://fsf.org">Free Software Foundation</a>',

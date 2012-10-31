@@ -35,24 +35,19 @@ function zf_prepare_head()
 	$h = 0;
 	$head = array();
 
-	$head[$h][0] = dol_buildpath("/oauthgooglecontacts/admin/config.php", 1);
+	$head[$h][0] = dol_buildpath("/oauthgooglecontacts/admin/conf.php", 1);
 	$head[$h][1] = $langs->trans("Config");
 	$head[$h][2] = 'conf';
 	$h ++;
 
-	$head[$h][0] = dol_buildpath("/oauthgooglecontacts/admin/statistiques.php", 1);
-	$head[$h][1] = $langs->trans("Stat");
-	$head[$h][2] = 'stats';
-	$h ++;
-
 	if ($conf->global->ZF_SUPPORT) {
-		$head[$h][0] = dol_buildpath("/oauthgooglecontacts/admin/assistance.php", 1);
+		$head[$h][0] = dol_buildpath("/oauthgooglecontacts/admin/support.php", 1);
 		$head[$h][1] = $langs->trans("HelpCenter");
 		$head[$h][2] = 'help';
 		$h ++;
 	}
 
-	$head[$h][0] = dol_buildpath("/oauthgooglecontacts/admin/apropos.php", 1);
+	$head[$h][0] = dol_buildpath("/oauthgooglecontacts/admin/about.php", 1);
 	$head[$h][1] = $langs->trans("About");
 	$head[$h][2] = 'about';
 	$h ++;

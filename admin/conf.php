@@ -105,12 +105,13 @@ echo '<table class="noborder" width="40%">';
 echo '<tr class="liste_titre">';
 echo '<td>', $langs->trans("ClientId"), '</td>';
 echo '<td>', $langs->trans("ClientSecret"), '</td>';
-echo '<td>', $langs->trans("domainName"), '</td>';
+echo '<td>', $langs->trans("DomainName"), '</td>';
 echo '<td>', $langs->trans("Admin"), '</td>';
-echo '<td>', $langs->trans("AppsMode"), '</td>';
+echo '<td>', $langs->trans("SharedContacts"), '</td>';
 echo '<td></td>';
 echo '</tr>';
 echo '<tr>';
+// TODO: import configuration from google's api console json file
 echo '<td><input type="text" name ="clientId" value="',
  $conf->global->OAUTH2_CLIENT_ID, '"/></td>';
 echo '<td><input type="text" name ="clientSecret" value="',
