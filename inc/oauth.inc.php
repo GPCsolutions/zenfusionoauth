@@ -27,26 +27,6 @@
  * \authors Raphaël Doursenaud <rdoursenaud@gpcsolutions.fr>
  */
 /**
- * URI for the request token
- */
-define('GOOGLE_OAUTH_REQUEST_TOKEN_API',
-	'https://www.google.com/accounts/OAuthGetRequestToken');
-/**
- * URI to authorize the request token
- */
-define('GOOGLE_OAUTH_AUTHORIZE_API',
-	'https://www.google.com/accounts/OAuthAuthorizeToken');
-/**
- * URI to exchange the request token with an access token
- */
-define('GOOGLE_OAUTH_ACCESS_TOKEN_API',
-	'https://www.google.com/accounts/OAuthGetAccessToken');
-/**
- * Login URI
- */
-define('GOOGLE_SERVICE_LOGIN_URL',
-	'https://www.google.com/accounts/ServiceLogin');
-/**
  * Gdata version is mandatory
  */
 define('GDATA_VERSION', '3.0');
