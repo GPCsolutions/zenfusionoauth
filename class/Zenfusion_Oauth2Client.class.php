@@ -45,7 +45,10 @@ class Zenfusion_Oauth2Client extends Google_Client
 
 	public function validateToken()
 	{
-		return file_get_contents(GOOGLE_TOKEN_INFO . self::$auth->token['refresh_token']);
+		if($this->isAccessTokenExpired()) {
+			$this->refreshToken(self::$auth->token['refresh_token']);
+		}
+		return file_get_contents(GOOGLE_TOKEN_INFO . self::$auth->token['access_token']);
 	}
 
 }

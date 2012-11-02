@@ -27,6 +27,7 @@
  *  \authors Raphaël Doursenaud <rdoursenaud@gpcsolutions.fr>
  */
 include_once DOL_DOCUMENT_ROOT . '/core/boxes/modules_boxes.php';
+dol_include_once('/oauthgooglecontacts/class/Zenfusion_Oauth2Client.class.php');
 
 /**
  * \class box_oauthusers
@@ -98,24 +99,17 @@ class box_oauthusers extends ModeleBoxes
 					$secret = $objp->secret_token;
 
 					if ($token) {
-						// TODO: port to Oauth2
-						/*
-						$dolioauth = new DoliOauth(DoliOauth::OAUTH_CONSUMER_KEY, DoliOauth::OAUTH_CONSUMER_SECRET, OAUTH_SIG_METHOD_HMACSHA1, OAUTH_AUTH_TYPE_URI);
-						$dolioauth->setToken($token, $secret);
-
-						try {
-							$testtoken = $dolioauth->tokenInfo();
-
+						$client = new Zenfusion_Oauth2Client();
+						$client->setAccessToken($token);
+						if ($client->validateToken()) {
 							$this->info_box_contents[$i][2] = array('td' => 'align="left"',
 								'text' => $langs->trans("status_ok"));
-						} catch (OAuthException $e) {
-							dol_syslog($e->getMessage);
+						} else {
 							$this->info_box_contents[$i][2] = array('td' => 'align="left"',
 								'text' => $langs->trans("status_ko"),
-								'url' => dol_buildpath("/oauthgooglecontacts/initoauth.php", 1) . "?id=" . $objp->rowid . "&action=delete");
+								'url' => dol_buildpath("/oauthgooglecontacts/initoauth.php", 1) . "?id=" . $objp->rowid . "&action=delete_token");
 						}
-						 */
-					} else { // If token = NULL
+					} else { // If token == NULL
 						$this->info_box_contents[$i][2] = array('td' => 'align="left"',
 							'text' => $langs->trans("no_token"));
 					}

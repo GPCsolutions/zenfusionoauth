@@ -190,38 +190,6 @@ class Oauth_google_contacts extends CommonObject
 	}
 
 	/**
-	 * \brief Load all user Access token and Secret token in memory from database
-	 * \return int <0 if KO, >0 if OK
-	 */
-	function fetchTokenList()
-	{
-		global $langs;
-		$sql = "SELECT";
-		$sql.= " t.rowid,";
-		$sql.= " t.access_token,";
-		$sql.= " t.secret_token";
-		$sql.= ", t.email";
-		$sql.= " FROM " . MAIN_DB_PREFIX . "oauth_google_contacts";
-		dol_syslog(get_class($this) . "::fetch sql=" . $sql, LOG_DEBUG);
-		$resql = $this->db->query($sql);
-		if ($resql) {
-			if ($this->db->num_rows($resql)) {
-				$obj = $this->db->fetch_object($resql);
-				$this->id = $obj->rowid;
-				$this->access_token = $obj->access_token;
-				$this->secret_token = $obj->secret_token;
-				$this->email = $obj->email;
-			}
-			$this->db->free($resql);
-			return 1;
-		} else {
-			$this->error = "Error " . $this->db->lasterror();
-			dol_syslog(get_class($this) . "::fetch " . $this->error, LOG_ERR);
-			return -1;
-		}
-	}
-
-	/**
 	 * \brief Update Access token and Secret token database
 	 * \param string $user User that modify
 	 * \param int $notrigger 0=launch triggers after, 1=disable triggers
