@@ -59,8 +59,10 @@ $canreaduser = ($user->admin || $user->rights->user->user->lire);
 $id = GETPOST('id', 'int');
 $action = GETPOST('action', 'alpha');
 $state = GETPOST('state', 'int');
+$callback_error = GETPOST('error', 'alpha');
+$retry = false; // Do we have an error ?
 // On callback, the state is the user id
-//if (! $id) $id = $state;
+if ( ! $id) $id = $state;
 
 if ($id) {
 	// $user est le user qui edite, $id est l'id de l'utilisateur edite
@@ -92,19 +94,18 @@ $client->setScopes(GOOGLE_CONTACTS_SCOPE);
 
 // Actions
 switch ($action) {
-	case "delete_token": // Delete access token
+	case "delete_token":
 		dol_syslog($script_file . " DELETE", LOG_DEBUG);
-		// Get token from base
+		// Get token from database
 		$oauthuser->fetch($id);
-		// Init current user token
-		try { // Exception
-			// Sent a get request to revoke token
-			$client->revokeToken($oauthuser->access_token);
-		} catch (Google_AuthException /* OAuthException */ $e) {
+		$token = json_decode($oauthuser->access_token);
+		try {
+			$revoked = $client->revokeToken($token->{'refresh_token'});
+		} catch (Google_AuthException $e) {
 			dol_syslog("Delete token " . $e->getMessage());
-			// TODO prévenir le client de supprimer éventuellement le jeton manuelement sur son compte google
 		}
-		// Delete token in bdd
+		// TODO: Throw an alert if revoking failed
+		// Delete token in database
 		$result = $oauthuser->delete($id);
 		if ($result < 0) {
 			$error ++;
@@ -114,42 +115,40 @@ switch ($action) {
 				1) . "?id=" . $id);
 
 		break;
-	case "request": // whole process to ask a request token
-		// Start the OAuth process by asking a request token
+	case "request":
+		// Save the current user to the state
 		$client->setState($id);
+		// Go to Google for authentication
 		$auth = $client->createAuthUrl();
 		header("Location: {$auth}");
 		break;
-	case "access": // Exchanging request token to an access token
-		try {
-			$client->authenticate();
-			$access = $client->getAccessToken();
-		} catch (Google_AuthException $e) {
-			// Display error
-			$e->getMessage();
-			dol_syslog("Access token " . $e->getMessage());
-			// Create boolean to display error in the form
+	case "access":
+		// Exchange authorization code for an access token
+		if ($callback_error) {
 			$retry = true;
-		}
-		if ( ! empty($access)) { // Save access token into BDD
+		} else {
+			try {
+				$client->authenticate();
+			} catch (Google_AuthException $e) {
+				dol_syslog("Access token " . $e->getMessage());
+				$retry = true;
+			}
+			$token = $client->getAccessToken();
+			// Save the access token into database
 			dol_syslog($script_file . " CREATE", LOG_DEBUG);
 			$oauthuser->rowid = $state;
-			$oauthuser->access_token = $access;
+			$oauthuser->access_token = $token;
 			$doluser->fetch($state);
+			// TODO: use identity API to store the email used for authentication
 			$oauthuser->email = $doluser->email;
 			$id = $oauthuser->create($doluser);
-			//var_dump($id);
-			//exit();
 			if ($id < 0) {
 				$error ++;
 				dol_print_error($db, $oauthuser->error);
 			}
-			// Refresh the page
+			// Refresh the page to prevent multiple insertions
 			header("refresh:0;url=" . dol_buildpath("/oauthgooglecontacts/initoauth.php",
 					1) . "?id=" . $state);
-		} else {
-			//if ($access['http_code'] == 400)
-			$retry = true;
 		}
 }
 /*
@@ -161,106 +160,98 @@ $tabname = "Google Apps";
 llxHeader("", $tabname);
 // Display token status in the form
 $message = "Token_ok";
-if ($id) {
-	// Load current user's informations
-	$doluser->fetch($id);
-	// Verify if the user's got an access token
-	$oauthuser->fetch($id);
-	try {
-		$client->setAccessToken($oauthuser->access_token);
-	} catch (Google_AuthException $e) {
-		$message = "Token_ko";
-	}
 
-	/*
-	 * Affichage onglets
-	 */
-	$head = user_prepare_head($doluser);
-	$title = $langs->trans("User");
+// Load current user's informations
+$doluser->fetch($id);
+// Verify if the user's got an access token
+$oauthuser->fetch($id);
+try {
+	$client->setAccessToken($oauthuser->access_token);
+} catch (Google_AuthException $e) {
+	$message = "Token_ko";
+}
 
-	dol_fiche_head($head, 'tab' . $tabname, $title, 0, 'user');
+/*
+ * Affichage onglets
+ */
+$head = user_prepare_head($doluser);
+$title = $langs->trans("User");
 
-	// Verify if user's email adress exists
-	// If not
-	if (empty($doluser->email)) {
-		$langs->load("errors");
-		print '<font class="error">' . $langs->trans("Pb_email") . '</font>';
-	}
-	/*
-	 * Common part of the user's tabs
-	 */
-	print '<table class="border" width="100%">';
+dol_fiche_head($head, 'tab' . $tabname, $title, 0, 'user');
 
-	// Ref
-	print '<tr><td width="25%" valign="top">' . $langs->trans("Ref") . '</td>';
-	print '<td colspan="2">';
-	print $form->showrefnav($doluser, 'id', '',
-			$user->rights->user->user->lire || $user->admin);
-	print '</td>';
-	print '</tr>';
+// Verify if user's email adress exists
+// If not
+if (empty($doluser->email)) {
+	$langs->load("errors");
+	print '<font class="error">' . $langs->trans("Pb_email") . '</font>';
+}
+/*
+ * Common part of the user's tabs
+ */
+print '<table class="border" width="100%">';
 
-	// Nom
-	print '<tr><td width="25%" valign="top">' . $langs->trans("Lastname") . '</td>';
-	print '<td colspan="2">' . $doluser->nom . '</td>';
-	print "</tr>\n";
+// Ref
+print '<tr><td width="25%" valign="top">' . $langs->trans("Ref") . '</td>';
+print '<td colspan="2">';
+print $form->showrefnav($doluser, 'id', '',
+		$user->rights->user->user->lire || $user->admin);
+print '</td>';
+print '</tr>';
 
-	// First name
-	print '<tr><td width="25%" valign="top">' . $langs->trans("Firstname") . '</td>';
-	print '<td colspan="2">' . $doluser->prenom . '</td>';
-	print "</tr>\n";
+// Nom
+print '<tr><td width="25%" valign="top">' . $langs->trans("Lastname") . '</td>';
+print '<td colspan="2">' . $doluser->nom . '</td>';
+print "</tr>\n";
 
-	// Email
-	print '<tr><td width="25%" valign="top">' . $langs->trans("Email") . '</td>';
-	print '<td colspan="2">' . $doluser->email . '</td>';
+// First name
+print '<tr><td width="25%" valign="top">' . $langs->trans("Firstname") . '</td>';
+print '<td colspan="2">' . $doluser->prenom . '</td>';
+print "</tr>\n";
+
+// Email
+print '<tr><td width="25%" valign="top">' . $langs->trans("Email") . '</td>';
+print '<td colspan="2">' . $doluser->email . '</td>';
 
 
-	print "</tr>\n";
+print "</tr>\n";
 
-	// Access Token
-	print '<tr><td width="25%" valign="top">' . $langs->trans("AccessToken") . '</td>';
+// Access Token
+print '<tr><td width="25%" valign="top">' . $langs->trans("AccessToken") . '</td>';
 
-	print '<td colspan="2">' . $langs->trans($message) . '</td>';
+print '<td colspan="2">' . $langs->trans($message) . '</td>';
 
-	print "</tr>\n";
+print "</tr>\n";
 
-	print "</table>\n";
+print "</table>\n";
 
-	// Ugly hack to programmatically logout from google account
-	print '<style type"text/css"><!-- iframe{display: none;} --></style><iframe src="http://www.google.com/accounts/Logout" width="0" height="0" border="0">Please logout from your google account !</iframe>';
+print "<br>\n";
 
-	//if error 400
-	if ($retour)
-			print '<font class="error">' . $langs->trans("Oauth_error") . ' ' . $retour . '</font>';
-
-	print "<br>\n";
-
-	// Activation
-	print '<form action="initoauth.php" method="get">';
-	if ( ! $retry) { // if no error in the controleur
-		if ($client->getAccessToken()) { // if access token exists or/and bad propose to delete it
-			print '<input type="hidden" name="action" value="delete_token">';
-			print '<input type="hidden" name="id" value="' . $id . '">';
-			print '<table class="border" width="100%">';
-			print '<tr><td colspan="2" align="center"><input class="button" type="submit" value="' . $langs->trans("Delete_token") . '">';
-		} elseif ( ! empty($doluser->email)) { // if no access token propose to request
-			print '<input type="hidden" name="action" value="request">';
-			print '<input type="hidden" name="id" value="' . $id . '">';
-			print '<table class="border" width="100%">';
-			print '<tr><td colspan="2" align="center"><input class="button" type="submit" value="' . $langs->trans("Request_token") . '">';
-		}
-	} elseif ($retry) { // if error different from 400 (http)
+print '<form action="initoauth.php" method="get">';
+if ( ! $retry) { // if no error in the controleur
+	if ($client->getAccessToken()) { // if access token exists or/and bad propose to delete it
+		print '<input type="hidden" name="action" value="delete_token">';
+		print '<input type="hidden" name="id" value="' . $id . '">';
+		print '<table class="border" width="100%">';
+		print '<tr><td colspan="2" align="center"><input class="button" type="submit" value="' . $langs->trans("Delete_token") . '">';
+	} elseif ( ! empty($doluser->email)) { // if no access token propose to request
 		print '<input type="hidden" name="action" value="request">';
 		print '<input type="hidden" name="id" value="' . $id . '">';
 		print '<table class="border" width="100%">';
-		$langs->load("errors");
-		print '<font class="error">' . $langs->trans("Op_failed") . '</font>';
-		print '<tr><td colspan="2" align="center"><input class="button" type="submit" value="' . $langs->trans("Retry_request") . '">';
+		print '<tr><td colspan="2" align="center"><input class="button" type="submit" value="' . $langs->trans("Request_token") . '">';
 	}
-
-	print '</table></form>';
-	print "</div>\n";
+} else {
+	// We have errors
+	print '<input type="hidden" name="action" value="request">';
+	print '<input type="hidden" name="id" value="' . $id . '">';
+	print '<table class="border" width="100%">';
+	$langs->load("errors");
+	print '<font class="error">' . $langs->trans("Op_failed") . '</font>';
+	print '<tr><td colspan="2" align="center"><input class="button" type="submit" value="' . $langs->trans("Retry_request") . '">';
 }
-// Disconnect database
+
+print '</table></form>';
+print "</div>\n";
+
 $db->close();
 llxFooter();
 ?>
