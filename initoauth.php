@@ -46,7 +46,7 @@ if ( ! $res) die("Main include failed");
 require_once DOL_DOCUMENT_ROOT . '/user/class/user.class.php';
 require_once DOL_DOCUMENT_ROOT . '/core/lib/usergroups.lib.php';
 require_once './class/oauth_google_contacts.class.php';
-require_once './lib/google-api-php-client/src/Google_Client.php';
+require_once './class/Zenfusion_Oauth2Client.class.php';
 require_once './inc/oauth.inc.php';
 
 $langs->load("oauthgooglecontacts@oauthgooglecontacts");
@@ -86,16 +86,9 @@ if ($user->id <> $id && ! $canreaduser) accessforbidden();
 $doluser = new User($db);
 /// Create an object to use llx_oauth_google_contacts table
 $oauthuser = new Oauth_google_contacts($db);
-/// Create callback address
-$callback = dol_buildpath("/oauthgooglecontacts/initoauth.php", 2) . "?action=access";
 /// Google API client
-$client = new Google_Client();
-$client->setApplicationName('ZenFusion');
+$client = new Zenfusion_Oauth2Client();
 $client->setScopes(GOOGLE_CONTACTS_SCOPE);
-//$client->setScopes(GOOGLE_SHARED_CONTACTS_URI);
-$client->setClientId($conf->global->OAUTH2_CLIENT_ID);
-$client->setClientSecret($conf->global->OAUTH2_CLIENT_SECRET);
-$client->setRedirectUri($callback);
 
 // Actions
 switch ($action) {

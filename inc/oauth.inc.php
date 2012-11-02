@@ -52,12 +52,6 @@ define('GOOGLE_CONTACTS_GROUPS_URI', GOOGLE_CONTACTS_SCOPE . '/groups');
 define('GOOGLE_CONTACTS_BATCH_URI',
 	GOOGLE_CONTACTS_URI . '/default/' . GOOGLE_PROJECTION . '/batch');
 /**
- * Gmail revoke token URI
+ * Token info URI
  */
-define('GOOGLE_CONTACTS_REVOQUE_TOKEN',
-	'https://www.google.com/accounts/AuthSubRevokeToken');
-/**
- * Gmail revoke token URI
- */
-define('GOOGLE_CONTACTS_TOKEN_INFO',
-	'https://www.google.com/accounts/AuthSubTokenInfo');
+define('GOOGLE_TOKEN_INFO', 'https://www.googleapis.com/oauth2/v1/tokeninfo?access_token=');
