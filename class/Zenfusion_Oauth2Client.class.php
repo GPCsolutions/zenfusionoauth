@@ -48,6 +48,7 @@ class Zenfusion_Oauth2Client extends Google_Client
 		if($this->isAccessTokenExpired()) {
 			$this->refreshToken(self::$auth->token['refresh_token']);
 		}
+		// TODO: use CURL instead of FGC
 		return file_get_contents(GOOGLE_TOKEN_INFO . self::$auth->token['access_token']);
 	}
 

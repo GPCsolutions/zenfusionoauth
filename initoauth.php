@@ -165,9 +165,8 @@ $message = "Token_ok";
 $doluser->fetch($id);
 // Verify if the user's got an access token
 $oauthuser->fetch($id);
-try {
-	$client->setAccessToken($oauthuser->access_token);
-} catch (Google_AuthException $e) {
+$client->setAccessToken($oauthuser->access_token);
+if ( ! $client->validateToken()) {
 	$message = "Token_ko";
 }
 
