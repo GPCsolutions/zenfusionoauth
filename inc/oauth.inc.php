@@ -39,15 +39,15 @@ define('GOOGLE_PROJECTION', 'full');
  */
 define('GOOGLE_CONTACTS_SCOPE', 'https://www.google.com/m8/feeds');
 /**
- * Gmail single contact feed URI
+ * Google single contact feed URI
  */
 define('GOOGLE_CONTACTS_URI', GOOGLE_CONTACTS_SCOPE . '/contacts');
 /**
- * Gmail group feed URI
+ * Google contacts group feed URI
  */
 define('GOOGLE_CONTACTS_GROUPS_URI', GOOGLE_CONTACTS_SCOPE . '/groups');
 /**
- * Gmail batch contact feed URI
+ * Google contacts batch feed URI
  */
 define('GOOGLE_CONTACTS_BATCH_URI',
 	GOOGLE_CONTACTS_URI . '/default/' . GOOGLE_PROJECTION . '/batch');
