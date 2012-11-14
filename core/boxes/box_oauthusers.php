@@ -96,7 +96,7 @@ class box_oauthusers extends ModeleBoxes
 						'url' => DOL_URL_ROOT."user/fiche.php?id=".$objp->userid);
 
 					$token = $objp->access_token;
-					//$secret = $objp->secret_token;
+					// $secret = $objp->secret_token; // Deprecated
 
 					if ($token) {
 						$client = new Zenfusion_Oauth2Client();

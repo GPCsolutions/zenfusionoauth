@@ -105,7 +105,6 @@ class OauthGoogleContacts extends CommonObject
 				}
 
 				$sql = "SELECT setval('" . MAIN_DB_PREFIX . "oauth_google_contacts_rowid_seq', " . ($maxrowid) . ")";
-				//print $sql; exit;
 				$resqlrowidset = $this->db->query($sql);
 				if (! $resqlrowidset) {
 					dol_print_error($this->db);
@@ -144,10 +143,10 @@ class OauthGoogleContacts extends CommonObject
 				// Uncomment this and change MYOBJECT to your own tag if you
 				// want this action call a trigger.
 				//// Call triggers
-				//include_once DOL_DOCUMENT_ROOT . '/core/class/interfaces.class.php';
-				//$interface=new Interfaces($this->db);
-				//$result=$interface->run_triggers('MYOBJECT_CREATE',$this,$user,$langs,$conf);
-				//if ($result < 0) { $error++; $this->errors=$interface->errors; }
+				// include_once DOL_DOCUMENT_ROOT . '/core/class/interfaces.class.php';
+				// $interface=new Interfaces($this->db);
+				// $result=$interface->run_triggers('MYOBJECT_CREATE',$this,$user,$langs,$conf);
+				// if ($result < 0) { $error++; $this->errors=$interface->errors; }
 				//// End call triggers
 			}
 		}
@@ -242,10 +241,10 @@ class OauthGoogleContacts extends CommonObject
 				// Uncomment this and change MYOBJECT to your own tag if you
 				// want this action call a trigger.
 				//// Call triggers
-				//include_once DOL_DOCUMENT_ROOT . '/core/class/interfaces.class.php';
-				//$interface=new Interfaces($this->db);
-				//$result=$interface->run_triggers('MYOBJECT_MODIFY',$this,$user,$langs,$conf);
-				//if ($result < 0) { $error++; $this->errors=$interface->errors; }
+				// include_once DOL_DOCUMENT_ROOT . '/core/class/interfaces.class.php';
+				// $interface=new Interfaces($this->db);
+				// $result=$interface->run_triggers('MYOBJECT_MODIFY',$this,$user,$langs,$conf);
+				// if ($result < 0) { $error++; $this->errors=$interface->errors; }
 				//// End call triggers
 			}
 		}
@@ -286,10 +285,10 @@ class OauthGoogleContacts extends CommonObject
 				// Uncomment this and change MYOBJECT to your own tag if you
 				// want this action call a trigger.
 				//// Call triggers
-				//include_once DOL_DOCUMENT_ROOT . '/core/class/interfaces.class.php';
-				//$interface=new Interfaces($this->db);
-				//$result=$interface->run_triggers('MYOBJECT_DELETE',$this,$user,$langs,$conf);
-				//if ($result < 0) { $error++; $this->errors=$interface->errors; }
+				// include_once DOL_DOCUMENT_ROOT . '/core/class/interfaces.class.php';
+				// $interface=new Interfaces($this->db);
+				// $result=$interface->run_triggers('MYOBJECT_DELETE',$this,$user,$langs,$conf);
+				// if ($result < 0) { $error++; $this->errors=$interface->errors; }
 				//// End call triggers
 			}
 		}
