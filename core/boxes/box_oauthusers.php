@@ -20,7 +20,7 @@
 
 /**
  *  \file       core/boxes/box_oauthusers.php
- *  \brief      Status token display
+ *  \brief      Token status box
  *  \ingroup oauthgooglecontacts
  *  \version development
  *  \authors Sebastien Bodrero <sbodrero@gpcsolutions.fr>

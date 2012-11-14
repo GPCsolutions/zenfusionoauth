@@ -20,7 +20,7 @@
  */
 /**
  * \file class/oauth_google_contacts.class.php
- * \brief llx_oauth_google_contacts database table manipulation
+ * \brief CRUD for oauth_google_contacts
  *
  * Creates/Reads/Updates/Deletes access token and secret token
  * from llx_oauth_google_contacts table.
@@ -35,13 +35,10 @@
  * \authors Cédric Salvador <csalvador@gpcsolutions.fr>
  */
 
-// Put here all includes required by your class file
 require_once DOL_DOCUMENT_ROOT . '/core/class/commonobject.class.php';
-//require_once DOL_DOCUMENT_ROOT.'/societe/class/societe.class.php';
-//require_once DOL_DOCUMENT_ROOT.'/product/class/product.class.php';
 
 /**
- * \class Oauth_google_contacts
+ * \class OauthGoogleContacts
  * \brief Manages Access and Secret tokens for each user
  */
 class OauthGoogleContacts extends CommonObject
@@ -50,8 +47,8 @@ class OauthGoogleContacts extends CommonObject
 	public $db; //!< To store db handler
 	public $error; //!< To return error code (or message)
 	public $errors = array(); //!< To return several error codes (or messages)
-	//public $element='oauth_google_contacts';			//!< Id that identify managed objects
-	//public $table_element='oauth_google_contacts';	//!< Name of table without prefix where object is stored
+	// public $element='oauth_google_contacts';			//!< Id that identify managed objects
+	// public $table_element='oauth_google_contacts';	//!< Name of table without prefix where object is stored
 	public $id; ///< object id
 	public $access_token; ///< Access token
 	public $secret_token; ///< Secret token TODO: deprecated

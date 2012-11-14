@@ -20,9 +20,9 @@
  */
 
 /**
- * \file admin/statistiques.php
+ * \file admin/conf.php
  * \ingroup oauthgooglecontacts
- * \brief Google contacts module statistiques page
+ * \brief Module configuration page
  * \version development
  */
 $res = 0;

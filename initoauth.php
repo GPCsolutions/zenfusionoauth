@@ -20,7 +20,7 @@
  */
 /**
  * \file initoauth.php
- * \brief OAuth setup through user's card
+ * \brief User card setup tab
  *
  * Creates a new tab in each user's card
  * allowing OAuth credentials management :

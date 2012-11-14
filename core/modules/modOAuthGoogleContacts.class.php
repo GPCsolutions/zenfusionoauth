@@ -19,8 +19,8 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 /**
- * \defgroup oauthgooglecontacts Module OAuth Google contacts
- * \brief Google contacts Oauth module for Dolibarr
+ * \defgroup oauthgooglecontacts Module Zenfusion OAuth
+ * \brief Zenfusion Oauth module for Dolibarr
  *
  * Manages the Oauth authentication process for Google contact API.
  *
@@ -32,7 +32,7 @@
  */
 /**
  * \file core/modules/modOAuthGoogleContacts.class.php
- * \brief Google contacts OAuth module
+ * \brief Zenfusion OAuth module
  *
  * Declares and initializes the Google contacts OAuth module in Dolibarr
  *

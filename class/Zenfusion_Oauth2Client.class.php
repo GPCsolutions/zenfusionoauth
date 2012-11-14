@@ -17,8 +17,8 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 /**
- * \file class/Zenfusion_Oauth2.class.php
- * \brief Oauth2 for Zenfusion
+ * \file class/Zenfusion_Oauth2Client.class.php
+ * \brief Oauth2 client for Zenfusion
  *
  * \ingroup oauthgooglecontacts
  * \version development
@@ -28,6 +28,10 @@
 dol_include_once('/oauthgooglecontacts/lib/google-api-php-client/src/Google_Client.php');
 dol_include_once('/oauthgooglecontacts/inc/oauth.inc.php');
 
+/**
+ * \class Oauth2Client
+ * \brief Manages Oauth tokens and requests
+ */
 class Oauth2Client extends Google_Client
 {
 

@@ -21,7 +21,7 @@
 /**
  * \file lib/zf_oauth.lib.php
  * \ingroup oauthgooglecontacts
- * \brief Google contacts module functions lib page
+ * \brief Module functions library
  * \version development
  */
 

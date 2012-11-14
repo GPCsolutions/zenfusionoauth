@@ -19,9 +19,9 @@
  */
 
 /**
- * \file admin/apropos.php
+ * \file admin/about.php
  * \ingroup oauthgooglecontacts
- * \brief ZenFusion Oauth module About page
+ * \brief Module about page
  * \version development
  */
 $res = 0;

@@ -19,9 +19,9 @@
  */
 
 /**
- * \file admin/assistance.php
+ * \file admin/support.php
  * \ingroup oauthgooglecontacts
- * \brief Google contacts module Help center page
+ * \brief Module support page
  * \version development
  */
 $res = 0;
