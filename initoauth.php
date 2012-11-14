@@ -70,12 +70,6 @@ if (! $id) {
 	$id = $state;
 }
 
-if ($id) {
-	// $user est le user qui edite, $id est l'id de l'utilisateur edite
-	$caneditfield = ((($user->id == $id) && $user->rights->user->self->creer)
-		|| (($user->id != $id) && $user->rights->user->user->creer));
-}
-
 // Security check
 $socid = 0;
 if ($user->societe_id > 0) {
@@ -105,12 +99,11 @@ $client->setScopes(GOOGLE_CONTACTS_SCOPE);
 // Actions
 switch ($action) {
 	case "delete_token":
-		dol_syslog($script_file . " DELETE", LOG_DEBUG);
 		// Get token from database
 		$oauthuser->fetch($id);
 		$token = json_decode($oauthuser->access_token);
 		try {
-			$revoked = $client->revokeToken($token->{'refresh_token'});
+			$client->revokeToken($token->{'refresh_token'});
 		} catch (Google_AuthException $e) {
 			dol_syslog("Delete token " . $e->getMessage());
 		}
@@ -118,7 +111,6 @@ switch ($action) {
 		// Delete token in database
 		$result = $oauthuser->delete($id);
 		if ($result < 0) {
-			$error ++;
 			dol_print_error($db, $oauthuser->error);
 		}
 		header(
@@ -157,7 +149,6 @@ switch ($action) {
 			$oauthuser->email = $doluser->email;
 			$id = $oauthuser->create($doluser);
 			if ($id < 0) {
-				$error ++;
 				dol_print_error($db, $oauthuser->error);
 			}
 			// Refresh the page to prevent multiple insertions
