@@ -26,10 +26,10 @@
  */
 
 /**
- * \function zf_prepare_head
+ * \function zfPrepareHead
  * \brief Display tabs in module admin page
  */
-function zf_prepare_head()
+function zfPrepareHead()
 {
 	global $langs, $conf, $user;
 	$h = 0;
@@ -54,5 +54,3 @@ function zf_prepare_head()
 
 	return $head;
 }
-
-?>

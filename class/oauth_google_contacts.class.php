@@ -34,6 +34,7 @@
  * \authors Raphaël Doursenaud <rdoursenaud@gpcsolutions.fr>
  * \authors Cédric Salvador <csalvador@gpcsolutions.fr>
  */
+
 // Put here all includes required by your class file
 require_once DOL_DOCUMENT_ROOT . '/core/class/commonobject.class.php';
 //require_once DOL_DOCUMENT_ROOT.'/societe/class/societe.class.php';
@@ -43,24 +44,24 @@ require_once DOL_DOCUMENT_ROOT . '/core/class/commonobject.class.php';
  * \class Oauth_google_contacts
  * \brief Manages Access and Secret tokens for each user
  */
-class Oauth_google_contacts extends CommonObject
+class OauthGoogleContacts extends CommonObject
 {
 
-	var $db; //!< To store db handler
-	var $error; //!< To return error code (or message)
-	var $errors = array(); //!< To return several error codes (or messages)
-	//var $element='oauth_google_contacts';			//!< Id that identify managed objects
-	//var $table_element='oauth_google_contacts';	//!< Name of table without prefix where object is stored
-	var $id; ///< object id
-	var $access_token; ///< Access token
-	var $secret_token; ///< Secret token
-	var $email;
+	public $db; //!< To store db handler
+	public $error; //!< To return error code (or message)
+	public $errors = array(); //!< To return several error codes (or messages)
+	//public $element='oauth_google_contacts';			//!< Id that identify managed objects
+	//public $table_element='oauth_google_contacts';	//!< Name of table without prefix where object is stored
+	public $id; ///< object id
+	public $access_token; ///< Access token
+	public $secret_token; ///< Secret token TODO: deprecated
+	public $email; // TODO: deprecated
 
 	/**
 	 * \brief Instanciates a new database object
 	 * \param string $db Database handler
 	 */
-	function Oauth_google_contacts($db)
+	public function OauthGoogleContacts($db)
 	{
 		$this->db = $db;
 		return 1;
@@ -72,16 +73,20 @@ class Oauth_google_contacts extends CommonObject
 	 * \param int $notrigger 0=launch triggers after, 1=disable triggers
 	 * \return int <0 if KO, Id of created object if OK
 	 */
-	function create($user, $notrigger = 0)
+	public function create($user, $notrigger = 0)
 	{
 		global $conf, $langs;
 		$error = 0;
 		// Clean parameters
-		if (isset($this->access_token))
+		if (isset($this->access_token)) {
 				$this->access_token = trim($this->access_token);
-		if (isset($this->secret_token))
+		}
+		if (isset($this->secret_token)) {
 				$this->secret_token = trim($this->secret_token);
-		if (isset($this->email)) $this->email = trim($this->email);
+		}
+		if (isset($this->email)) {
+			$this->email = trim($this->email);
+		}
 		// Check parameters
 		// Put here code to add control on parameters values
 		// Insert request
@@ -95,17 +100,22 @@ class Oauth_google_contacts extends CommonObject
 				$obj = $this->db->fetch_object($resqlrowid);
 				$maxrowid = $obj->maxrowid;
 				// Max rowid can be empty if there is no record yet
-				if (empty($maxrowid)) $maxrowid = 1;
+				if (empty($maxrowid)) {
+					$maxrowid = 1;
+				}
 
 				$sql = "SELECT setval('" . MAIN_DB_PREFIX . "oauth_google_contacts_rowid_seq', " . ($maxrowid) . ")";
 				//print $sql; exit;
 				$resqlrowidset = $this->db->query($sql);
-				if ( ! $resqlrowidset) dol_print_error($this->db);
+				if (! $resqlrowidset) {
+					dol_print_error($this->db);
+				}
+			} else {
+				dol_print_error($this->db);
 			}
-			else dol_print_error($this->db);
 		}
 
-		if ( ! in_array($this->db->type, array('pgsql'))) {
+		if (! in_array($this->db->type, array('pgsql'))) {
 			$token = addslashes($this->access_token);
 		} else {
 			$token = $this->access_token;
@@ -116,21 +126,21 @@ class Oauth_google_contacts extends CommonObject
 		$sql.= "secret_token";
 		$sql.= ", email";
 		$sql.= ") VALUES (";
-		$sql.= " " . ( ! isset($this->rowid) ? 'NULL' : "'" . $this->rowid . "'") . ",";
-		$sql.= " " . ( ! isset($this->access_token) ? 'NULL' : "'" . $token . "'") . ",";
-		$sql.= " " . ( ! isset($this->secret_token) ? 'NULL' : "'" . addslashes($this->secret_token) . "'") . "";
-		$sql.= ", " . ( ! isset($this->email) ? 'NULL' : "'" . $this->db->escape($this->email) . "'") . "";
+		$sql.= " " . (! isset($this->rowid) ? 'NULL' : "'" . $this->rowid . "'") . ",";
+		$sql.= " " . (! isset($this->access_token) ? 'NULL' : "'" . $token . "'") . ",";
+		$sql.= " " . (! isset($this->secret_token) ? 'NULL' : "'" . addslashes($this->secret_token) . "'") . "";
+		$sql.= ", " . (! isset($this->email) ? 'NULL' : "'" . $this->db->escape($this->email) . "'") . "";
 		$sql.= ")";
 		$this->db->begin();
 		dol_syslog(get_class($this) . "::create sql=" . $sql, LOG_DEBUG);
 		$resql = $this->db->query($sql);
-		if ( ! $resql) {
+		if (! $resql) {
 			$error ++;
 			$this->errors[] = "Error " . $this->db->lasterror();
 		}
-		if ( ! $error) {
+		if (! $error) {
 			$this->id = $this->db->last_insert_id(MAIN_DB_PREFIX . "oauth_google_contacts");
-			if ( ! $notrigger) {
+			if (! $notrigger) {
 				// Uncomment this and change MYOBJECT to your own tag if you
 				// want this action call a trigger.
 				//// Call triggers
@@ -160,7 +170,7 @@ class Oauth_google_contacts extends CommonObject
 	 * \param int $id id object
 	 * \return int <0 if KO, >0 if OK
 	 */
-	function fetch($id)
+	public function fetch($id)
 	{
 		global $langs;
 		$sql = "SELECT";
@@ -195,16 +205,20 @@ class Oauth_google_contacts extends CommonObject
 	 * \param int $notrigger 0=launch triggers after, 1=disable triggers
 	 * \return int <0 if KO, >0 if OK
 	 */
-	function update($user = 0, $notrigger = 0)
+	public function update($user = 0, $notrigger = 0)
 	{
 		global $conf, $langs;
 		$error = 0;
 		// Clean parameters
-		if (isset($this->access_token))
+		if (isset($this->access_token)) {
 				$this->access_token = trim($this->access_token);
-		if (isset($this->secret_token))
+		}
+		if (isset($this->secret_token)) {
 				$this->secret_token = trim($this->secret_token);
-		if (isset($this->email)) $this->email = trim($this->email);
+		}
+		if (isset($this->email)) {
+			$this->email = trim($this->email);
+		}
 		// Check parameters
 		// Put here code to add control on parameters values
 		// Update request
@@ -219,12 +233,12 @@ class Oauth_google_contacts extends CommonObject
 		$this->db->begin();
 		dol_syslog(get_class($this) . "::update sql=" . $sql, LOG_DEBUG);
 		$resql = $this->db->query($sql);
-		if ( ! $resql) {
+		if (! $resql) {
 			$error ++;
 			$this->errors[] = "Error " . $this->db->lasterror();
 		}
-		if ( ! $error) {
-			if ( ! $notrigger) {
+		if (! $error) {
+			if (! $notrigger) {
 				// Uncomment this and change MYOBJECT to your own tag if you
 				// want this action call a trigger.
 				//// Call triggers
@@ -254,7 +268,7 @@ class Oauth_google_contacts extends CommonObject
 	 * \param int $id id object
 	 * \return int <0 if KO, >0 if OK
 	 */
-	function delete($id)
+	public function delete($id)
 	{
 		global $conf, $langs;
 		$error = 0;
@@ -263,12 +277,12 @@ class Oauth_google_contacts extends CommonObject
 		$this->db->begin();
 		dol_syslog(get_class($this) . "::delete sql=" . $sql);
 		$resql = $this->db->query($sql);
-		if ( ! $resql) {
+		if (! $resql) {
 			$error ++;
 			$this->errors[] = "Error " . $this->db->lasterror();
 		}
-		if ( ! $error) {
-			if ( ! $notrigger) {
+		if (! $error) {
+			if (! $notrigger) {
 				// Uncomment this and change MYOBJECT to your own tag if you
 				// want this action call a trigger.
 				//// Call triggers
@@ -298,11 +312,11 @@ class Oauth_google_contacts extends CommonObject
 	 * \param int $fromid Id of object to clone
 	 * \return int New id of clone
 	 */
-	function createFromClone($fromid)
+	public function createFromClone($fromid)
 	{
 		global $user, $langs;
 		$error = 0;
-		$object = new Oauth_google_contacts($this->db);
+		$object = new OauthGoogleContacts($this->db);
 		$this->db->begin();
 		// Load source object
 		$object->fetch($fromid);
@@ -318,7 +332,7 @@ class Oauth_google_contacts extends CommonObject
 			$error ++;
 		}
 		// End
-		if ( ! $error) {
+		if (! $error) {
 			$this->db->commit();
 			return $object->id;
 		} else {
@@ -331,13 +345,10 @@ class Oauth_google_contacts extends CommonObject
 	 * \brief Initialise object with example values
 	 * \remarks id must be 0 if object instance is a specimen.
 	 */
-	function initAsSpecimen()
+	public function initAsSpecimen()
 	{
 		$this->id = 0;
 		$this->access_token = '';
 		$this->secret_token = '';
 	}
-
 }
-
-?>

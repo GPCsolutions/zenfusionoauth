@@ -36,20 +36,20 @@ dol_include_once('/oauthgooglecontacts/class/Zenfusion_Oauth2Client.class.php');
 class box_oauthusers extends ModeleBoxes
 {
 
-	var $boxcode = "Tokenstatus"; ///< Box Codename
-	var $boximg = "object_user"; ///< Box img
-	var $boxlabel; ///< Box name
-	var $depends = array(); /// Box dependencies
-	var $db; ///< Database handler
-	var $param; ///< optional Parameters
-	var $info_box_head = array(); ///< form informations
-	var $info_box_contents = array(); ///< form informations
+	public $boxcode = "Tokenstatus"; ///< Box Codename
+	public $boximg = "object_user"; ///< Box img
+	public $boxlabel; ///< Box name
+	public $depends = array(); /// Box dependencies
+	public $db; ///< Database handler
+	public $param; ///< optional Parameters
+	public $info_box_head = array(); ///< form informations
+	public $info_box_contents = array(); ///< form informations
 
 	/**
 	 *      \brief Constuctor
 	 */
 
-	function box_oauthusers()
+	public function box_oauthusers()
 	{
 		global $langs;
 		$langs->load("oauthgooglecontacts@oauthgooglecontacts");
@@ -61,7 +61,7 @@ class box_oauthusers extends ModeleBoxes
 	 *      Load data of box into memory for a future usage
 	 *      \param int $max Maximum number of records to show
 	 */
-	function loadBox($max = 0)
+	public function loadBox($max = 0)
 	{
 		global $user, $langs, $db, $conf;
 		$langs->load("oauthgooglecontacts@oauthgooglecontacts");
@@ -72,11 +72,11 @@ class box_oauthusers extends ModeleBoxes
 
 		if ($user->rights->societe->lire) {
 			$sql = "SELECT u.rowid AS userid, u.firstname, u.name, u.email,";
-			$sql.= " g.rowid, g.access_token, g.secret_token";
+			$sql.= " g.rowid, g.access_token"; // g.secret_token";
 			$sql.= " FROM " . MAIN_DB_PREFIX . "user as u";
 			$sql.= " LEFT JOIN " . MAIN_DB_PREFIX . "oauth_google_contacts as g";
 			$sql.= " ON g.rowid = u.rowid";
-			if ( ! $user->admin) {
+			if (! $user->admin) {
 				$sql.= " WHERE u.rowid = $user->id";
 			}
 			$result = $db->query($sql);
@@ -96,7 +96,7 @@ class box_oauthusers extends ModeleBoxes
 						'url' => DOL_URL_ROOT."user/fiche.php?id=".$objp->userid);
 
 					$token = $objp->access_token;
-					$secret = $objp->secret_token;
+					//$secret = $objp->secret_token;
 
 					if ($token) {
 						$client = new Zenfusion_Oauth2Client();
@@ -107,7 +107,10 @@ class box_oauthusers extends ModeleBoxes
 						} else {
 							$this->info_box_contents[$i][2] = array('td' => 'align="left"',
 								'text' => $langs->trans("status_ko"),
-								'url' => dol_buildpath("/oauthgooglecontacts/initoauth.php", 1) . "?id=" . $objp->rowid . "&action=delete_token");
+								'url' => dol_buildpath(
+									"/oauthgooglecontacts/initoauth.php",
+									1
+								) . "?id=" . $objp->rowid . "&action=delete_token");
 						}
 					} else { // If token == NULL
 						$this->info_box_contents[$i][2] = array('td' => 'align="left"',
@@ -119,10 +122,13 @@ class box_oauthusers extends ModeleBoxes
 					$i ++;
 				}
 
-				if ($num == 0)
-						$this->info_box_contents[$i][0] = array('td' => 'align="center"', 'text' => $langs->trans("NoRecordedUser"));
-			}
-			else {
+				if ($num == 0) {
+						$this->info_box_contents[$i][0] = array(
+							'td' => 'align="center"',
+							'text' => $langs->trans("NoRecordedUser")
+						);
+				}
+			} else {
 				$this->info_box_contents[0][0] = array('td' => 'align="left"',
 					'maxlength' => 500,
 					'text' => ($db->error() . ' sql=' . $sql));
@@ -133,11 +139,8 @@ class box_oauthusers extends ModeleBoxes
 		}
 	}
 
-	function showBox()
+	public function showBox()
 	{
 		parent::showBox($this->info_box_head, $this->info_box_contents);
 	}
-
 }
-
-?>

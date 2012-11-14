@@ -56,7 +56,7 @@ class modOAuthGoogleContacts extends DolibarrModules
 	 * \brief Constructor. Define names, constants, directories, boxes, permissions
 	 * \param string $db Database handler
 	 */
-	function modOAuthGoogleContacts($db)
+	public function modOAuthGoogleContacts($db)
 	{
 		$this->db = $db;
 		$this->numero = 150;
@@ -80,7 +80,7 @@ class modOAuthGoogleContacts extends DolibarrModules
 		$r = 0;
 		$this->const[$r] = array('ZF_SUPPORT', 'string', '0', 'Support contract', 1);
 		// TODO: declare config constants
-		$this->tabs = array('user:Google Apps:@oauthgooglecontacts:/oauthgooglecontacts/initoauth.php?id=__ID__');
+		$this->tabs = array('user:Google:@oauthgooglecontacts:/oauthgooglecontacts/initoauth.php?id=__ID__');
 		$this->boxes = array();
 		$this->boxes[0][1] = "box_oauthusers@oauthgooglecontacts";
 		$this->rights = array();
@@ -93,7 +93,7 @@ class modOAuthGoogleContacts extends DolibarrModules
 	 * It also creates data directories.
 	 * \return int 1 if OK, 0 if KO
 	 */
-	function init()
+	public function init()
 	{
 		$sql = array();
 		$result = $this->load_tables();
@@ -106,7 +106,7 @@ class modOAuthGoogleContacts extends DolibarrModules
 	 * Data directories are not deleted.
 	 * \return int 1 if OK, 0 if KO
 	 */
-	function remove()
+	public function remove()
 	{
 		$sql = array();
 		return $this->_remove($sql);
@@ -119,11 +119,8 @@ class modOAuthGoogleContacts extends DolibarrModules
 	 * This function is called by this->init.
 	 *  \return int <=0 if KO, >0 if OK
 	 */
-	function load_tables()
+	public function load_tables()
 	{
 		return $this->_load_tables('/oauthgooglecontacts/sql/');
 	}
-
 }
-
-?>

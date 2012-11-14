@@ -27,12 +27,16 @@
  */
 $res = 0;
 // from standard dolibarr install
-if ( ! $res && file_exists("../../main.inc.php"))
+if (! $res && file_exists("../../main.inc.php")) {
 		$res = @include("../../main.inc.php");
+}
 // from custom dolibarr install
-if ( ! $res && file_exists("../../../main.inc.php"))
+if (! $res && file_exists("../../../main.inc.php")) {
 		$res = @include("../../../main.inc.php");
-if ( ! $res) die("Main include failed");
+}
+if (! $res) {
+	die("Main include failed");
+}
 
 require_once '../lib/zf_oauth.lib.php';
 require_once DOL_DOCUMENT_ROOT . '/core/lib/admin.lib.php';
@@ -43,7 +47,9 @@ $langs->load("admin");
 $langs->load("help");
 
 // Access control
-if ( ! $user->admin) accessforbidden();
+if (! $user->admin) {
+	accessforbidden();
+}
 
 // Parameters
 $action = GETPOST('action', 'alpha');
@@ -58,23 +64,68 @@ if ($action == 'update') {
 	$domain_admin = GETPOST('domainAdmin', 'alpha');
 	$shared_contacts_mode = GETPOST('sharedcontacts', 'alpha');
 
-	$res = dolibarr_set_const($db, "OAUTH2_CLIENT_ID", $client_id, '', 0, '',
-		$conf->entity);
-	if ( ! $res > 0) $error ++;
-	$res = dolibarr_set_const($db, "OAUTH2_CLIENT_SECRET", $client_secret, '', 0,
-		'', $conf->entity);
-	if ( ! $res > 0) $error ++;
-	$res = dolibarr_set_const($db, "DOMAIN_NAME", $domain_name, '', 0, '',
-		$conf->entity);
-	if ( ! $res > 0) $error ++;
-	$res = dolibarr_set_const($db, "DOMAIN_ADMIN", $domain_admin, '', 0, '',
-		$conf->entity);
-	if ( ! $res > 0) $error ++;
-	$res = dolibarr_set_const($db, "SHARED_CONTACTS", $shared_contacts_mode, '', 0,
-		'', $conf->entity);
-	if ( ! $res > 0) $error ++;
+	$res = dolibarr_set_const(
+		$db,
+		"OAUTH2_CLIENT_ID",
+		$client_id,
+		'',
+		0,
+		'',
+		$conf->entity
+	);
+	if (! $res > 0) {
+		$error ++;
+	}
+	$res = dolibarr_set_const(
+		$db,
+		"OAUTH2_CLIENT_SECRET",
+		$client_secret,
+		'',
+		0,
+		'',
+		$conf->entity
+	);
+	if (! $res > 0) {
+		$error ++;
+	}
+	$res = dolibarr_set_const(
+		$db,
+		"DOMAIN_NAME",
+		$domain_name,
+		'',
+		0,
+		'',
+		$conf->entity
+	);
+	if (! $res > 0) {
+		$error ++;
+	}
+	$res = dolibarr_set_const(
+		$db,
+		"DOMAIN_ADMIN",
+		$domain_admin,
+		'',
+		0,
+		'',
+		$conf->entity
+	);
+	if (! $res > 0) {
+		$error ++;
+	}
+	$res = dolibarr_set_const(
+		$db,
+		"SHARED_CONTACTS",
+		$shared_contacts_mode,
+		'',
+		0,
+		'',
+		$conf->entity
+	);
+	if (! $res > 0) {
+		$error ++;
+	}
 
-	if ( ! $error) {
+	if (! $error) {
 		$db->commit();
 		$mesg = "<font class=\"ok\">" . $langs->trans("Saved") . "</font>";
 	} else {
@@ -93,9 +144,14 @@ $linkback = '<a href="' . DOL_URL_ROOT . '/admin/modules.php">' . $langs->trans(
 // Folder icon title
 print_fiche_titre("ZenFusion", $linkback, 'setup');
 
-$head = zf_prepare_head();
-dol_fiche_head($head, 'conf', $langs->trans("Module150Name"), 0,
-	'oauth@oauthgooglecontacts');
+$head = zfPrepareHead();
+dol_fiche_head(
+	$head,
+	'conf',
+	$langs->trans("Module150Name"),
+	0,
+	'oauth@oauthgooglecontacts'
+);
 
 print_titre($langs->trans("ZenfusionConfig"));
 echo '<form method="POST" action="', $_SERVER[PHP_SELF], '">';
@@ -128,4 +184,3 @@ echo '<td><input type="submit" class="button" value ="',
 echo '</table>';
 echo '</form>';
 llxFooter();
-?>

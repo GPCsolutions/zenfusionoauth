@@ -26,12 +26,16 @@
  */
 $res = 0;
 // from standard dolibarr install
-if ( ! $res && file_exists("../../main.inc.php"))
+if (! $res && file_exists("../../main.inc.php")) {
 		$res = @include("../../main.inc.php");
+}
 // from custom dolibarr install
-if ( ! $res && file_exists("../../../main.inc.php"))
+if (! $res && file_exists("../../../main.inc.php")) {
 		$res = @include("../../../main.inc.php");
-if ( ! $res) die("Main include failed");
+}
+if (! $res) {
+	die("Main include failed");
+}
 
 include_once '../lib/zf_oauth.lib.php';
 
@@ -40,7 +44,9 @@ $langs->load("admin");
 $langs->load("help");
 
 // only readable by admin
-if ( ! $user->admin) accessforbidden();
+if (! $user->admin) {
+	accessforbidden();
+}
 
 /*
  * View
@@ -53,7 +59,7 @@ $linkback = '<a href="' . DOL_URL_ROOT . '/admin/modules.php">' . $langs->trans(
 // Folder icon title
 print_fiche_titre("ZenFusion", $linkback, 'setup');
 
-$head = zf_prepare_head();
+$head = zfPrepareHead();
 
 dol_fiche_head($head, 'help', $langs->trans("Module150Name"), 0, 'oauth@oauthgooglecontacts');
 
@@ -64,5 +70,3 @@ echo '<a target="_blank" href="http://assistance.gpcsolutions.fr">',
 	'<br>';
 
 llxFooter();
-?>
-

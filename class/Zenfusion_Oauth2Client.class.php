@@ -24,10 +24,11 @@
  * \version development
  * \authors Raphaël Doursenaud <rdoursenaud@gpcsolutions.fr>
  */
+
 dol_include_once('/oauthgooglecontacts/lib/google-api-php-client/src/Google_Client.php');
 dol_include_once('/oauthgooglecontacts/inc/oauth.inc.php');
 
-class Zenfusion_Oauth2Client extends Google_Client
+class Oauth2Client extends Google_Client
 {
 
 	public function __construct()
@@ -45,13 +46,10 @@ class Zenfusion_Oauth2Client extends Google_Client
 
 	public function validateToken()
 	{
-		if($this->isAccessTokenExpired()) {
+		if ($this->isAccessTokenExpired()) {
 			$this->refreshToken(self::$auth->token['refresh_token']);
 		}
 		// TODO: use CURL instead of FGC
 		return file_get_contents(GOOGLE_TOKEN_INFO . self::$auth->token['access_token']);
 	}
-
 }
-
-?>

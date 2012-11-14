@@ -36,12 +36,16 @@
  */
 $res = 0;
 // from standard dolibarr install
-if ( ! $res && file_exists("../main.inc.php"))
+if (! $res && file_exists("../main.inc.php")) {
 		$res = @include("../main.inc.php");
+}
 // from custom dolibarr install
-if ( ! $res && file_exists("../../main.inc.php"))
+if (! $res && file_exists("../../main.inc.php")) {
 		$res = @include("../../main.inc.php");
-if ( ! $res) die("Main include failed");
+}
+if (! $res) {
+	die("Main include failed");
+}
 
 require_once DOL_DOCUMENT_ROOT . '/user/class/user.class.php';
 require_once DOL_DOCUMENT_ROOT . '/core/lib/usergroups.lib.php';
@@ -62,24 +66,30 @@ $state = GETPOST('state', 'int');
 $callback_error = GETPOST('error', 'alpha');
 $retry = false; // Do we have an error ?
 // On callback, the state is the user id
-if ( ! $id) $id = $state;
+if (! $id) {
+	$id = $state;
+}
 
 if ($id) {
 	// $user est le user qui edite, $id est l'id de l'utilisateur edite
-	$caneditfield = ( (($user->id == $id) && $user->rights->user->self->creer)
+	$caneditfield = ((($user->id == $id) && $user->rights->user->self->creer)
 		|| (($user->id != $id) && $user->rights->user->user->creer));
 }
 
 // Security check
 $socid = 0;
-if ($user->societe_id > 0) $socid = $user->societe_id;
+if ($user->societe_id > 0) {
+	$socid = $user->societe_id;
+}
 $feature2 = (($socid && $user->rights->user->self->creer) ? '' : 'user');
 if ($user->id == $id) {   // A user can always read its own card
 	$feature2 = '';
 	$canreaduser = 1;
 }
 $result = restrictedArea($user, 'user', $id, '&user', $feature2);
-if ($user->id <> $id && ! $canreaduser) accessforbidden();
+if ($user->id <> $id && ! $canreaduser) {
+	accessforbidden();
+}
 
 /*
  * Controller
@@ -87,9 +97,9 @@ if ($user->id <> $id && ! $canreaduser) accessforbidden();
 /// Create a new User instance to display tabs
 $doluser = new User($db);
 /// Create an object to use llx_oauth_google_contacts table
-$oauthuser = new Oauth_google_contacts($db);
+$oauthuser = new OauthGoogleContacts($db);
 /// Google API client
-$client = new Zenfusion_Oauth2Client();
+$client = new Oauth2Client();
 $client->setScopes(GOOGLE_CONTACTS_SCOPE);
 
 // Actions
@@ -111,8 +121,12 @@ switch ($action) {
 			$error ++;
 			dol_print_error($db, $oauthuser->error);
 		}
-		header("refresh:0;url=" . dol_buildpath("/oauthgooglecontacts/initoauth.php",
-				1) . "?id=" . $id);
+		header(
+			"refresh:0;url=" . dol_buildpath(
+				"/oauthgooglecontacts/initoauth.php",
+				1
+			) . "?id=" . $id
+		);
 
 		break;
 	case "request":
@@ -147,8 +161,12 @@ switch ($action) {
 				dol_print_error($db, $oauthuser->error);
 			}
 			// Refresh the page to prevent multiple insertions
-			header("refresh:0;url=" . dol_buildpath("/oauthgooglecontacts/initoauth.php",
-					1) . "?id=" . $state);
+			header(
+				"refresh:0;url=" . dol_buildpath(
+					"/oauthgooglecontacts/initoauth.php",
+					1
+				) . "?id=" . $state
+			);
 		}
 }
 /*
@@ -166,7 +184,7 @@ $doluser->fetch($id);
 // Verify if the user's got an access token
 $oauthuser->fetch($id);
 $client->setAccessToken($oauthuser->access_token);
-if ( ! $client->validateToken()) {
+if (! $client->validateToken()) {
 	$message = "Token_ko";
 }
 
@@ -192,8 +210,12 @@ print '<table class="border" width="100%">';
 // Ref
 print '<tr><td width="25%" valign="top">' . $langs->trans("Ref") . '</td>';
 print '<td colspan="2">';
-print $form->showrefnav($doluser, 'id', '',
-		$user->rights->user->user->lire || $user->admin);
+print $form->showrefnav(
+	$doluser,
+	'id',
+	'',
+	$user->rights->user->user->lire || $user->admin
+);
 print '</td>';
 print '</tr>';
 
@@ -226,17 +248,19 @@ print "</table>\n";
 print "<br>\n";
 
 print '<form action="initoauth.php" method="get">';
-if ( ! $retry) { // if no error in the controleur
+if (! $retry) { // if no error in the controleur
 	if ($client->getAccessToken()) { // if access token exists or/and bad propose to delete it
 		print '<input type="hidden" name="action" value="delete_token">';
 		print '<input type="hidden" name="id" value="' . $id . '">';
 		print '<table class="border" width="100%">';
-		print '<tr><td colspan="2" align="center"><input class="button" type="submit" value="' . $langs->trans("Delete_token") . '">';
-	} elseif ( ! empty($doluser->email)) { // if no access token propose to request
+		print '<tr><td colspan="2" align="center">';
+		print '<input class="button" type="submit" value="' . $langs->trans("Delete_token") . '">';
+	} elseif (! empty($doluser->email)) { // if no access token propose to request
 		print '<input type="hidden" name="action" value="request">';
 		print '<input type="hidden" name="id" value="' . $id . '">';
 		print '<table class="border" width="100%">';
-		print '<tr><td colspan="2" align="center"><input class="button" type="submit" value="' . $langs->trans("Request_token") . '">';
+		print '<tr><td colspan="2" align="center">';
+		print '<input class="button" type="submit" value="' . $langs->trans("Request_token") . '">';
 	}
 } else {
 	// We have errors
@@ -245,7 +269,8 @@ if ( ! $retry) { // if no error in the controleur
 	print '<table class="border" width="100%">';
 	$langs->load("errors");
 	print '<font class="error">' . $langs->trans("Op_failed") . '</font>';
-	print '<tr><td colspan="2" align="center"><input class="button" type="submit" value="' . $langs->trans("Retry_request") . '">';
+	print '<tr><td colspan="2" align="center">';
+	print '<input class="button" type="submit" value="' . $langs->trans("Retry_request") . '">';
 }
 
 print '</table></form>';
@@ -253,4 +278,3 @@ print "</div>\n";
 
 $db->close();
 llxFooter();
-?>
