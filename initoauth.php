@@ -156,7 +156,7 @@ switch ($action) {
  */
 // Create new form
 $form = new Form($db);
-$tabname = "Google Apps";
+$tabname = "Google";
 llxHeader("", $tabname);
 // Display token status in the form
 $message = "Token_ok";
