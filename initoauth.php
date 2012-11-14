@@ -176,15 +176,23 @@ switch ($action) {
 $form = new Form($db);
 $tabname = "Google";
 llxHeader("", $tabname);
-// Display token status in the form
-$message = "Token_ok";
+// Token status for the form
+$token_good = true;
 
 // Load current user's informations
 $doluser->fetch($id);
 // Verify if the user's got an access token
 $oauthuser->fetch($id);
-$client->setAccessToken($oauthuser->access_token);
-if (! $client->validateToken()) {
+try {
+	$client->setAccessToken($oauthuser->access_token);
+} catch (Google_AuthException $e) {
+	$token_good = false;
+}
+
+// Prepare token status message
+if ($token_good){
+	$message = "Token_ok";
+} else {
 	$message = "Token_ko";
 }
 
