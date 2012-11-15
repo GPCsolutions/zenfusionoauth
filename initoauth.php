@@ -76,7 +76,8 @@ if ($user->societe_id > 0) {
 	$socid = $user->societe_id;
 }
 $feature2 = (($socid && $user->rights->user->self->creer) ? '' : 'user');
-if ($user->id == $id) {   // A user can always read its own card
+// A user can always read its own card
+if ($user->id == $id) {
 	$feature2 = '';
 	$canreaduser = 1;
 }
@@ -181,7 +182,7 @@ try {
 }
 
 // Prepare token status message
-if ($token_good){
+if ($token_good) {
 	$message = "Token_ok";
 } else {
 	$message = "Token_ko";
@@ -247,14 +248,17 @@ print "</table>\n";
 print "<br>\n";
 
 print '<form action="initoauth.php" method="get">';
-if (! $retry) { // if no error in the controleur
-	if ($client->getAccessToken()) { // if access token exists or/and bad propose to delete it
+if (! $retry) {
+	// if no error
+	if ($client->getAccessToken()) {
+		// if access token exists or/and bad propose to delete it
 		print '<input type="hidden" name="action" value="delete_token">';
 		print '<input type="hidden" name="id" value="' . $id . '">';
 		print '<table class="border" width="100%">';
 		print '<tr><td colspan="2" align="center">';
 		print '<input class="button" type="submit" value="' . $langs->trans("Delete_token") . '">';
-	} elseif (! empty($doluser->email)) { // if no access token propose to request
+	} elseif (! empty($doluser->email)) {
+		// if no access token propose to request
 		print '<input type="hidden" name="action" value="request">';
 		print '<input type="hidden" name="id" value="' . $id . '">';
 		print '<table class="border" width="100%">';
