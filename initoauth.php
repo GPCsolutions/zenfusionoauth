@@ -91,6 +91,8 @@ if ($user->id <> $id && ! $canreaduser) {
  */
 /// Create a new User instance to display tabs
 $doluser = new User($db);
+// Load current user's informations
+$doluser->fetch($id);
 /// Create an object to use llx_oauth_google_contacts table
 $oauthuser = new OauthGoogleContacts($db);
 /// Google API client
@@ -126,7 +128,7 @@ switch ($action) {
 		// Save the current user to the state
 		$client->setState($id);
 		// Go to Google for authentication
-		$auth = $client->createAuthUrl();
+		$auth = $client->createAuthUrl($doluser->email);
 		header("Location: {$auth}");
 		break;
 	case "access":
@@ -171,8 +173,6 @@ llxHeader("", $tabname);
 // Token status for the form
 $token_good = true;
 
-// Load current user's informations
-$doluser->fetch($id);
 // Verify if the user's got an access token
 $oauthuser->fetch($id);
 try {
