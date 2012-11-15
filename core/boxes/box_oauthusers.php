@@ -99,7 +99,7 @@ class box_oauthusers extends ModeleBoxes
 					// $secret = $objp->secret_token; // Deprecated
 
 					if ($token) {
-						$client = new Zenfusion_Oauth2Client();
+						$client = new oauth2Client();
 						$client->setAccessToken($token);
 						if ($client->validateToken()) {
 							$this->info_box_contents[$i][2] = array('td' => 'align="left"',
