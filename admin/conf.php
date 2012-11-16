@@ -53,10 +53,28 @@ if (! $user->admin) {
 
 // Parameters
 $action = GETPOST('action', 'alpha');
+$error = 0; // Error counter
 
 /*
  * Actions
  */
+if ($action == 'upload') {
+	$file = file_get_contents($_FILES['jsonConfig']['tmp_name']);
+	$params = json_decode($file, true);
+	if ($params === null) {
+		$error++;
+	} else {
+		$client_id = $params['web']['client_id'];
+		$client_secret = $params['web']['client_secret'] ;
+	}
+
+	if ($error) {
+		$mesg = "<font class=\"error\">" . $langs->trans("BadFile") . "</font>";
+	} else {
+		// Do something
+	}
+}
+
 if ($action == 'update') {
 	$client_id = GETPOST('clientId', 'alpha');
 	$client_secret = GETPOST('clientSecret', 'alpha');
@@ -64,27 +82,6 @@ if ($action == 'update') {
 	$domain_admin = GETPOST('domainAdmin', 'alpha');
 	$shared_contacts_mode = GETPOST('sharedcontacts', 'alpha');
 
-	$res = dolibarr_set_const(
-		$db,
-		"OAUTH2_CLIENT_ID",
-		$client_id,
-		'',
-		0,
-		'',
-		$conf->entity
-	);
-	if (! $res > 0) {
-		$error ++;
-	}
-	$res = dolibarr_set_const(
-		$db,
-		"OAUTH2_CLIENT_SECRET",
-		$client_secret,
-		'',
-		0,
-		'',
-		$conf->entity
-	);
 	if (! $res > 0) {
 		$error ++;
 	}
@@ -134,8 +131,33 @@ if ($action == 'update') {
 	}
 }
 
+// Set constants common to update and upload actions
+if (($action == 'upload' || $action == 'update') && ! $error) {
+	$res = dolibarr_set_const(
+		$db,
+		"OAUTH2_CLIENT_ID",
+		$client_id,
+		'',
+		0,
+		'',
+		$conf->entity
+	);
+	if (! $res > 0) {
+		$error ++;
+	}
+	$res = dolibarr_set_const(
+		$db,
+		"OAUTH2_CLIENT_SECRET",
+		$client_secret,
+		'',
+		0,
+		'',
+		$conf->entity
+	);
+}
+
 /**
- * view 
+ * view
  */
 llxHeader();
 dol_htmloutput_mesg($msg);
@@ -154,6 +176,21 @@ dol_fiche_head(
 );
 
 print_titre($langs->trans("ZenfusionConfig"));
+
+// TODO: print error message
+
+// TODO: import configuration from google's api console json file
+echo '<form enctype="multipart/form-data" method="POST" action="', $_SERVER[PHP_SELF], '">';
+echo '<input type="hidden" name="token" value="', $_SESSION['newtoken'], '">';
+echo '<input type="hidden" name="action" value="upload">';
+// TODO: set max file size to a sensible value
+echo '<input type="hidden" name="MAX_FILE_SIZE" value="30000" />';
+echo $langs->trans("JSONConfig");
+echo '<input type="file" name = "jsonConfig" required="required" />';
+echo '<input type="submit" class="button" value ="',
+$langs->trans("Upload"), '"/>';
+echo '</form>';
+
 echo '<form method="POST" action="', $_SERVER[PHP_SELF], '">';
 echo '<input type="hidden" name="token" value="', $_SESSION['newtoken'], '">';
 echo '<input type="hidden" name="action" value="update">';
@@ -167,11 +204,10 @@ echo '<td>', $langs->trans("SharedContacts"), '</td>';
 echo '<td></td>';
 echo '</tr>';
 echo '<tr>';
-// TODO: import configuration from google's api console json file
 echo '<td><input type="text" name ="clientId" value="',
- $conf->global->OAUTH2_CLIENT_ID, '"/></td>';
+ $conf->global->OAUTH2_CLIENT_ID, '" required="required" /></td>';
 echo '<td><input type="text" name ="clientSecret" value="',
- $conf->global->OAUTH2_CLIENT_SECRET . '"/></td>';
+ $conf->global->OAUTH2_CLIENT_SECRET . '" required="required" /></td>';
 echo '<td><input type="text" name="domainName" value ="',
  $conf->global->DOMAIN_NAME, '" /></td>';
 echo '<td>',

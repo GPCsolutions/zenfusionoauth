@@ -148,7 +148,6 @@ switch ($action) {
 			$oauthuser->rowid = $state;
 			$oauthuser->access_token = $token;
 			$doluser->fetch($state);
-			// TODO: use identity API to store the email used for authentication
 			$oauthuser->email = $doluser->email;
 			$id = $oauthuser->create($doluser);
 			if ($id < 0) {
