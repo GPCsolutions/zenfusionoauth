@@ -185,11 +185,18 @@ echo '<input type="hidden" name="token" value="', $_SESSION['newtoken'], '">';
 echo '<input type="hidden" name="action" value="upload">';
 // TODO: set max file size to a sensible value
 echo '<input type="hidden" name="MAX_FILE_SIZE" value="30000" />';
-echo $langs->trans("JSONConfig");
+echo '<fieldset>';
+echo '<legend>', $langs->trans("ImportFrom"), ' ';
+echo '<a href="https://code.google.com/apis/console/">';
+echo 'Google API Console</a></legend>';
+echo  $langs->trans("JSONConfigFile"), ' ';
 echo '<input type="file" name = "jsonConfig" required="required" />';
 echo '<input type="submit" class="button" value ="',
 $langs->trans("Upload"), '"/>';
+echo '</fieldset>';
 echo '</form>';
+
+echo '<br>';
 
 echo '<form method="POST" action="', $_SERVER[PHP_SELF], '">';
 echo '<input type="hidden" name="token" value="', $_SESSION['newtoken'], '">';
@@ -198,6 +205,7 @@ echo '<table class="noborder" width="40%">';
 echo '<tr class="liste_titre">';
 echo '<td>', $langs->trans("ClientId"), '</td>';
 echo '<td>', $langs->trans("ClientSecret"), '</td>';
+// TODO split domain mode in its own form
 echo '<td>', $langs->trans("DomainName"), '</td>';
 echo '<td>', $langs->trans("Admin"), '</td>';
 echo '<td>', $langs->trans("SharedContacts"), '</td>';

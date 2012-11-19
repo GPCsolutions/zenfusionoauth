@@ -36,3 +36,5 @@ SharedContacts=Use the Google Apps mode
 ProjectManager=project manager
 SoftwareEngineer=software engineer
 Licence=Licence
+ImportFrom=Import from
+JSONConfigFile=JSON configuration file

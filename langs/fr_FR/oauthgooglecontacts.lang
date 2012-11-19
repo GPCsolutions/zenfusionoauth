@@ -33,3 +33,5 @@ SharedContacts=Utiliser les « Contacts partagés du domaine »
 ProjectManager=chef de projet
 SoftwareEngineer=ingénieur développement
 License=Licence
+ImportFrom=Importation depuis
+JSONConfigFile=Fichier de configuration JSON
