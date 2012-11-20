@@ -19,7 +19,7 @@
  */
 
 /**
- *  \file       core/boxes/box_oauthusers.php
+ *  \file       core/boxes/OauthStatus.php
  *  \brief      Token status box
  *  \ingroup oauthgooglecontacts
  *  \version development
@@ -30,10 +30,10 @@ include_once DOL_DOCUMENT_ROOT . '/core/boxes/modules_boxes.php';
 dol_include_once('/oauthgooglecontacts/class/Zenfusion_Oauth2Client.class.php');
 
 /**
- * \class box_oauthusers
+ * \class OauthStatus
  * \brief Display OAuth token status
  */
-class box_oauthusers extends ModeleBoxes
+class OauthStatus extends ModeleBoxes
 {
 
 	public $boxcode = 'Tokenstatus'; ///< Box Codename

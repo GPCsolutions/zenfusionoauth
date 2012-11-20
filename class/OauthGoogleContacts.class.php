@@ -19,7 +19,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 /**
- * \file class/oauth_google_contacts.class.php
+ * \file class/OauthGoogleContacts.class.php
  * \brief CRUD for oauth_google_contacts
  *
  * Creates/Reads/Updates/Deletes access token and secret token

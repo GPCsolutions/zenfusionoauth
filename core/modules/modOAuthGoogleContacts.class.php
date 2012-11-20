@@ -113,7 +113,7 @@ class modOAuthGoogleContacts extends DolibarrModules
 				. ':/oauthgooglecontacts/initoauth.php?id=__ID__'
 		);
 		$this->boxes = array();
-		$this->boxes[0][1] = "box_oauthusers@oauthgooglecontacts";
+		$this->boxes[0][1] = "OauthStatus@oauthgooglecontacts";
 		$this->rights = array();
 		$this->menus = array();
 	}

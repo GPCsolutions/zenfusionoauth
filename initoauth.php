@@ -48,7 +48,7 @@ if (! $res) {
 
 require_once DOL_DOCUMENT_ROOT . '/user/class/user.class.php';
 require_once DOL_DOCUMENT_ROOT . '/core/lib/usergroups.lib.php';
-require_once './class/oauth_google_contacts.class.php';
+require_once './class/OauthGoogleContacts.class.php';
 require_once './class/Zenfusion_Oauth2Client.class.php';
 require_once './inc/oauth.inc.php';
 
@@ -94,7 +94,7 @@ $doluser = new User($db);
 // Load current user's informations
 $doluser->fetch($id);
 /// Create an object to use llx_oauth_google_contacts table
-$oauthuser = new OauthGoogleContacts($db);
+$oauth = new OauthGoogleContacts($db);
 /// Google API client
 $client = new Oauth2Client();
 $client->setScopes(GOOGLE_CONTACTS_SCOPE);
@@ -103,8 +103,8 @@ $client->setScopes(GOOGLE_CONTACTS_SCOPE);
 switch ($action) {
 	case 'delete_token':
 		// Get token from database
-		$oauthuser->fetch($id);
-		$token = json_decode($oauthuser->access_token);
+		$oauth->fetch($id);
+		$token = json_decode($oauth->access_token);
 		try {
 			$client->revokeToken($token->{'refresh_token'});
 		} catch (Google_AuthException $e) {
@@ -112,9 +112,9 @@ switch ($action) {
 			// TODO: print message and user panel URL to manually revoke access
 		}
 		// Delete token in database
-		$result = $oauthuser->delete($id);
+		$result = $oauth->delete($id);
 		if ($result < 0) {
-			dol_print_error($db, $oauthuser->error);
+			dol_print_error($db, $oauth->error);
 		}
 		header(
 			'refresh:0;url=' . dol_buildpath(
@@ -145,13 +145,13 @@ switch ($action) {
 			$token = $client->getAccessToken();
 			// Save the access token into database
 			dol_syslog($script_file . " CREATE", LOG_DEBUG);
-			$oauthuser->rowid = $state;
-			$oauthuser->access_token = $token;
+			$oauth->rowid = $state;
+			$oauth->access_token = $token;
 			$doluser->fetch($state);
-			$oauthuser->email = $doluser->email;
-			$id = $oauthuser->create($doluser);
+			$oauth->email = $doluser->email;
+			$id = $oauth->create($doluser);
 			if ($id < 0) {
-				dol_print_error($db, $oauthuser->error);
+				dol_print_error($db, $oauth->error);
 			}
 			// Refresh the page to prevent multiple insertions
 			header(
@@ -173,9 +173,9 @@ llxHeader("", $tabname);
 $token_good = true;
 
 // Verify if the user's got an access token
-$oauthuser->fetch($id);
+$oauth->fetch($id);
 try {
-	$client->setAccessToken($oauthuser->access_token);
+	$client->setAccessToken($oauth->access_token);
 } catch (Google_AuthException $e) {
 	$token_good = false;
 }
