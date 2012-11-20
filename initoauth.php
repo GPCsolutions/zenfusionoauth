@@ -81,7 +81,8 @@ if ($user->id == $id) {
 	$canreaduser = 1;
 }
 $result = restrictedArea($user, 'user', $id, '&user', $feature2);
-if ($user->id <> $id && ! $canreaduser) {
+if (! $conf->global->MAIN_MODULE_OAUTHGOOGLECONTACTS
+		|| ($user->id <> $id && ! $canreaduser)) {
 	accessforbidden();
 }
 
