@@ -78,8 +78,65 @@ class modOAuthGoogleContacts extends DolibarrModules
 		$this->langfiles = array("oauthgooglecontacts@oauthgooglecontacts");
 		$this->const = array();
 		$r = 0;
-		$this->const[$r] = array('ZF_SUPPORT', 'string', '0', 'Support contract', 1);
-		// TODO: declare config constants
+		$this->const[$r] = array(
+			'ZF_SUPPORT',
+			'string',
+			'0',
+			'Zenfusion support contract',
+			0,
+			'current',
+			0
+		);
+		$r++;
+		$this->const[$r] = array(
+			'OAUTH2_CLIENT_ID',
+			'string',
+			'',
+			'Oauth2 client ID',
+			0,
+			'current',
+			1
+		);
+		$r++;
+		$this->const[$r] = array(
+			'OAUTH2_CLIENT_SECRET',
+			'string',
+			'',
+			'Oauth2 client secret',
+			0,
+			'current',
+			1
+		);
+		$r++;
+		$this->const[$r] = array(
+			'SHARED_CONTACTS',
+			'string',
+			'0',
+			'Shared contacts mode',
+			0,
+			'current',
+			1
+		);
+		$r++;
+		$this->const[$r] = array(
+			'DOMAIN_NAME',
+			'string',
+			'example.com',
+			'Shared contacts domain',
+			0,
+			'current',
+			1
+		);
+		$r++;
+		$this->const[$r] = array(
+			'DOMAIN_ADMIN',
+			'string',
+			'',
+			'Shared contacts domain admin',
+			0,
+			'current',
+			1
+		);
 		$this->tabs = array('user:Google:@oauthgooglecontacts:/oauthgooglecontacts/initoauth.php?id=__ID__');
 		$this->boxes = array();
 		$this->boxes[0][1] = "box_oauthusers@oauthgooglecontacts";
