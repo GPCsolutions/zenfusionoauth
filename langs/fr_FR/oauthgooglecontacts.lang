@@ -7,14 +7,17 @@ Module150Desc=Authentification OAuth pour les APIs Google
 Config=Configuration
 Support=Assistance
 About=À propos
-ZenfusionConfig=Configuration de ZenFusion
+GoogleApiConfig=Configuration API Google
 # Config
 ImportFrom=Importation depuis
 JSONConfigFile=Fichier de configuration JSON
 ClientId=Client ID
 ClientSecret=Client Secret
+DomainSharedContacts=Contacts partagés du domaine
+GoogleAppsOnly= Expérimental, disponible uniquement avec Google Apps
+UseSharedContacts=Utiliser les contacts partagés
 DomainName=Nom de domaine
-SharedContacts=Utiliser les « Contacts partagés du domaine »
+DomainAdmin=Utilisateur administrateur du domaine
 ## Messages
 Saved=Enregistré
 BadFile=Mauvais fichier

@@ -8,13 +8,16 @@ Config=Configuration
 Support=Support
 About=About
 # Config
-ZenfusionConfig=ZenFusion configuration
+GoogleApiConfig=Google API configuration
 ImportFrom=Import from
 JSONConfigFile=JSON configuration file
 ClientId=Client ID
 ClientSecret=Client Secret
+DomainSharedContacts=Domain shared contacts
+GoogleAppsOnly= Experimental, only available with Google Apps
+UseSharedContacts=Use shared contacts
 DomainName=Domain name
-SharedContacts=Use the Google Apps Domain Shared Contacts
+DomainAdmin=Domain admin user
 ## Messages
 Saved=Saved
 BadFile=Bad file

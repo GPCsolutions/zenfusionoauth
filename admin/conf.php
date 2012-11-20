@@ -175,30 +175,10 @@ dol_fiche_head(
 	'oauth@oauthgooglecontacts'
 );
 
-print_titre($langs->trans("ZenfusionConfig"));
-
 // Error / confirmation messages
 dol_htmloutput_mesg($mesg);
 
-// Import configuration from google's api console json file
-echo '<form enctype="multipart/form-data" method="POST" action="', $_SERVER[PHP_SELF], '">';
-echo '<input type="hidden" name="token" value="', $_SESSION['newtoken'], '">';
-echo '<input type="hidden" name="action" value="upload">';
-// TODO: set max file size to a sensible value
-echo '<input type="hidden" name="MAX_FILE_SIZE" value="30000" />';
-echo '<fieldset>';
-echo '<legend>', $langs->trans("ImportFrom"), ' ';
-echo '<a href="https://code.google.com/apis/console/">';
-echo 'Google API Console</a></legend>';
-echo  $langs->trans("JSONConfigFile"), ' ';
-echo '<input type="file" name = "jsonConfig" required="required" />';
-echo '<input type="submit" class="button" value ="',
-$langs->trans("Upload"), '"/>';
-echo '</fieldset>';
-echo '</form>';
-
-echo '<br>';
-
+print_titre($langs->trans("GoogleApiConfig"));
 echo '<form method="POST" action="', $_SERVER[PHP_SELF], '">';
 echo '<input type="hidden" name="token" value="', $_SESSION['newtoken'], '">';
 echo '<input type="hidden" name="action" value="update">';
@@ -206,26 +186,71 @@ echo '<table class="noborder" width="40%">';
 echo '<tr class="liste_titre">';
 echo '<td>', $langs->trans("ClientId"), '</td>';
 echo '<td>', $langs->trans("ClientSecret"), '</td>';
-// TODO split domain mode in its own form
-echo '<td>', $langs->trans("DomainName"), '</td>';
-echo '<td>', $langs->trans("Admin"), '</td>';
-echo '<td>', $langs->trans("SharedContacts"), '</td>';
 echo '<td></td>';
 echo '</tr>';
 echo '<tr>';
-echo '<td><input type="text" name ="clientId" value="',
- $conf->global->OAUTH2_CLIENT_ID, '" required="required" /></td>';
-echo '<td><input type="text" name ="clientSecret" value="',
- $conf->global->OAUTH2_CLIENT_SECRET . '" required="required" /></td>';
-echo '<td><input type="text" name="domainName" value ="',
- $conf->global->DOMAIN_NAME, '" /></td>';
 echo '<td>',
- $form->select_dolusers($conf->global->DOMAIN_ADMIN, "domainAdmin"),
- '</td>';
+	'<input type="text" name ="clientId" value="',
+	$conf->global->OAUTH2_CLIENT_ID, '" required="required">',
+	'</td>';
 echo '<td>',
- $form->selectyesno("apps", $conf->global->SHARED_CONTACTS), '</td>';
-echo '<td><input type="submit" class="button" value ="',
- $langs->trans("Save"), '"/></td>';
+	'<input type="text" name ="clientSecret" value="',
+	$conf->global->OAUTH2_CLIENT_SECRET . '" required="required">',
+	'</td>';
+echo '<td>',
+	'<input type="submit" class="button" value ="',
+	$langs->trans("Save"), '">',
+	'</td>';
 echo '</table>';
 echo '</form>';
+
+// Import configuration from google's api console json file
+echo '<form enctype="multipart/form-data" method="POST" action="', $_SERVER[PHP_SELF], '">';
+echo '<input type="hidden" name="token" value="', $_SESSION['newtoken'], '">';
+echo '<input type="hidden" name="action" value="upload">';
+// TODO: set max file size to a sensible value
+echo '<input type="hidden" name="MAX_FILE_SIZE" value="30000">';
+echo '<fieldset>';
+echo '<legend>', $langs->trans("ImportFrom"), ' ';
+echo '<a href="https://code.google.com/apis/console/">';
+echo 'Google API Console</a></legend>';
+echo  $langs->trans("JSONConfigFile"), ' ';
+echo '<input type="file" name = "jsonConfig" required="required">';
+echo '<input type="submit" class="button" value ="',
+$langs->trans("Upload"), '">';
+echo '</fieldset>';
+echo '</form>';
+
+
+// Domain Shared Contacts mode
+print_titre($langs->trans("DomainSharedContacts"));
+echo '<em>', $langs->trans("GoogleAppsOnly"), '</em>';
+echo '<form method="POST" action="', $_SERVER[PHP_SELF], '">';
+echo '<input type="hidden" name="token" value="', $_SESSION['newtoken'], '">';
+echo '<input type="hidden" name="action" value="update">';
+echo '<table class="noborder" width="40%">';
+echo '<tr class="liste_titre">';
+echo '<td>', $langs->trans("UseSharedContacts"), '</td>';
+echo '<td>', $langs->trans("DomainName"), '</td>';
+echo '<td>', $langs->trans("DomainAdmin"), '</td>';
+echo '<td></td>';
+echo '</tr>';
+echo '<tr>';
+echo '<td>',
+	$form->selectyesno("apps", $conf->global->SHARED_CONTACTS), '</td>';
+echo '<td>',
+	'<input type="text" name="domainName" value ="',
+	$conf->global->DOMAIN_NAME,
+	'" placeholder="example.com">',
+	'</td>';
+echo '<td>',
+	$form->select_dolusers($conf->global->DOMAIN_ADMIN, "domainAdmin"),
+	'</td>';
+echo '<td>',
+	'<input type="submit" class="button" value ="',
+	$langs->trans("Save"), '">',
+	'</td>';
+echo '</table>';
+echo '</form>';
+
 llxFooter();
