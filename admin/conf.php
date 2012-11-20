@@ -75,50 +75,6 @@ if ($action == 'upload') {
 if ($action == 'update') {
 	$client_id = GETPOST('clientId', 'alpha');
 	$client_secret = GETPOST('clientSecret', 'alpha');
-	$domain_name = GETPOST('domainName', 'alpha');
-	$domain_admin = GETPOST('domainAdmin', 'alpha');
-	$shared_contacts_mode = GETPOST('sharedcontacts', 'alpha');
-
-	$res = dolibarr_set_const(
-		$db,
-		'DOMAIN_NAME',
-		$domain_name,
-		'',
-		0,
-		'',
-		$conf->entity
-	);
-	if (! $res > 0) {
-		$error++;
-	}
-	$res = dolibarr_set_const(
-		$db,
-		'DOMAIN_ADMIN',
-		$domain_admin,
-		'',
-		0,
-		'',
-		$conf->entity
-	);
-	if (! $res > 0) {
-		$error++;
-	}
-	$res = dolibarr_set_const(
-		$db,
-		'SHARED_CONTACTS',
-		$shared_contacts_mode,
-		'',
-		0,
-		'',
-		$conf->entity
-	);
-	if (! $res > 0) {
-		$error++;
-	}
-	if ($error) {
-		$db->rollback();
-		$mesg = '<font class="error">' . $langs->trans("UnexpectedError") . '</font>';
-	}
 }
 
 // Set constants common to update and upload actions
@@ -219,38 +175,6 @@ echo '<input type="file" name = "jsonConfig" required="required">';
 echo '<input type="submit" class="button" value ="',
 $langs->trans("Upload"), '">';
 echo '</fieldset>';
-echo '</form>';
-
-
-// Domain Shared Contacts mode
-print_titre($langs->trans("DomainSharedContacts"));
-echo '<em>', $langs->trans("GoogleAppsOnly"), '</em>';
-echo '<form method="POST" action="', $_SERVER[PHP_SELF], '">';
-echo '<input type="hidden" name="token" value="', $_SESSION['newtoken'], '">';
-echo '<input type="hidden" name="action" value="update">';
-echo '<table class="noborder" width="40%">';
-echo '<tr class="liste_titre">';
-echo '<td>', $langs->trans("UseSharedContacts"), '</td>';
-echo '<td>', $langs->trans("DomainName"), '</td>';
-echo '<td>', $langs->trans("DomainAdmin"), '</td>';
-echo '<td></td>';
-echo '</tr>';
-echo '<tr>';
-echo '<td>',
-	$form->selectyesno("apps", $conf->global->SHARED_CONTACTS), '</td>';
-echo '<td>',
-	'<input type="text" name="domainName" value ="',
-	$conf->global->DOMAIN_NAME,
-	'" placeholder="example.com">',
-	'</td>';
-echo '<td>',
-	$form->select_dolusers($conf->global->DOMAIN_ADMIN, "domainAdmin"),
-	'</td>';
-echo '<td>',
-	'<input type="submit" class="button" value ="',
-	$langs->trans("Save"), '">',
-	'</td>';
-echo '</table>';
 echo '</form>';
 
 llxFooter();

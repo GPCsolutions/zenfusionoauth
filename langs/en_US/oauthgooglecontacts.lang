@@ -13,11 +13,6 @@ ImportFrom=Import from
 JSONConfigFile=JSON configuration file
 ClientId=Client ID
 ClientSecret=Client Secret
-DomainSharedContacts=Domain shared contacts
-GoogleAppsOnly= Experimental, only available with Google Apps
-UseSharedContacts=Use shared contacts
-DomainName=Domain name
-DomainAdmin=Domain admin user
 ## Messages
 Saved=Saved
 BadFile=Bad file
@@ -50,4 +45,3 @@ ReadPermissionNotAllowed=Read permission not allowed
 NoToken=Not connected
 StatusOk=Enabled
 StatusKo=Disabled
-

@@ -7,17 +7,12 @@ Module150Desc=Authentification OAuth pour les APIs Google
 Config=Configuration
 Support=Assistance
 About=À propos
-GoogleApiConfig=Configuration API Google
 # Config
+GoogleApiConfig=Configuration API Google
 ImportFrom=Importation depuis
 JSONConfigFile=Fichier de configuration JSON
 ClientId=Client ID
 ClientSecret=Client Secret
-DomainSharedContacts=Contacts partagés du domaine
-GoogleAppsOnly= Expérimental, disponible uniquement avec Google Apps
-UseSharedContacts=Utiliser les contacts partagés
-DomainName=Nom de domaine
-DomainAdmin=Utilisateur administrateur du domaine
 ## Messages
 Saved=Enregistré
 BadFile=Mauvais fichier
@@ -50,4 +45,3 @@ ReadPermissionNotAllowed=Vous n'avez pas la permission de lire ces informations
 NoToken=Non connecté
 StatusOk=Activée
 StatusKo=Désactivée
-
