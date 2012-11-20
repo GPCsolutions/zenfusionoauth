@@ -54,7 +54,7 @@ class box_oauthusers extends ModeleBoxes
 		global $langs;
 		$langs->load("oauthgooglecontacts@oauthgooglecontacts");
 
-		$this->boxlabel = $langs->trans("Token_status");
+		$this->boxlabel = $langs->trans("TokenStatus");
 	}
 
 	/**
@@ -68,7 +68,7 @@ class box_oauthusers extends ModeleBoxes
 
 		$this->max = $max;
 
-		$this->info_box_head = array('text' => $langs->trans("Token_status", $max));
+		$this->info_box_head = array('text' => $langs->trans("TokenStatus", $max));
 
 		if ($user->rights->societe->lire) {
 			$sql = "SELECT u.rowid AS userid, u.firstname, u.name, u.email,";
@@ -103,18 +103,19 @@ class box_oauthusers extends ModeleBoxes
 						$client->setAccessToken($token);
 						if ($client->validateToken()) {
 							$this->info_box_contents[$i][2] = array('td' => 'align="left"',
-								'text' => $langs->trans("status_ok"));
+								'text' => $langs->trans("StatusOk"));
 						} else {
 							$this->info_box_contents[$i][2] = array('td' => 'align="left"',
-								'text' => $langs->trans("status_ko"),
+								'text' => $langs->trans("StatusKo"),
 								'url' => dol_buildpath(
 									"/oauthgooglecontacts/initoauth.php",
 									1
 								) . "?id=" . $objp->rowid . "&action=delete_token");
 						}
-					} else { // If token == NULL
+					} else {
+						// If token == NULL
 						$this->info_box_contents[$i][2] = array('td' => 'align="left"',
-							'text' => $langs->trans("no_token"));
+							'text' => $langs->trans("NoToken"));
 					}
 					$this->info_box_contents[$i][3] = array('td' => 'align="right"',
 						'text' => $objp->email);
@@ -125,7 +126,7 @@ class box_oauthusers extends ModeleBoxes
 				if ($num == 0) {
 						$this->info_box_contents[$i][0] = array(
 							'td' => 'align="center"',
-							'text' => $langs->trans("NoRecordedUser")
+							'text' => $langs->trans("NoUserFound")
 						);
 				}
 			} else {

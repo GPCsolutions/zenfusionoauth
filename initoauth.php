@@ -63,6 +63,7 @@ $canreaduser = ($user->admin || $user->rights->user->user->lire);
 $id = GETPOST('id', 'int');
 $action = GETPOST('action', 'alpha');
 $state = GETPOST('state', 'int');
+$ok = GETPOST('ok', 'alpha');
 $callback_error = GETPOST('error', 'alpha');
 $retry = false; // Do we have an error ?
 // On callback, the state is the user id
@@ -117,10 +118,10 @@ switch ($action) {
 			dol_print_error($db, $oauthuser->error);
 		}
 		header(
-			"refresh:0;url=" . dol_buildpath(
-				"/oauthgooglecontacts/initoauth.php",
+			'refresh:0;url=' . dol_buildpath(
+				'/oauthgooglecontacts/initoauth.php',
 				1
-			) . "?id=" . $id
+			) . '?id=' . $id . '&ok=true'
 		);
 
 		break;
@@ -155,10 +156,10 @@ switch ($action) {
 			}
 			// Refresh the page to prevent multiple insertions
 			header(
-				"refresh:0;url=" . dol_buildpath(
-					"/oauthgooglecontacts/initoauth.php",
+				'refresh:0;url=' . dol_buildpath(
+					'/oauthgooglecontacts/initoauth.php',
 					1
-				) . "?id=" . $state
+				) . '?id=' . $state. '&ok=true'
 			);
 		}
 }
@@ -182,9 +183,9 @@ try {
 
 // Prepare token status message
 if ($token_good) {
-	$message = "Token_ok";
+	$message = "TokenOk";
 } else {
-	$message = "Token_ko";
+	$message = "TokenKo";
 }
 
 /*
@@ -195,11 +196,11 @@ $title = $langs->trans("User");
 
 dol_fiche_head($head, 'tab' . $tabname, $title, 0, 'user');
 
-// Verify if user's email adress exists
-// If not
+// Verify that the user's email adress exists
 if (empty($doluser->email)) {
+	$lock = true;
 	$langs->load("errors");
-	print '<font class="error">' . $langs->trans("Pb_email") . '</font>';
+	$mesg = '<font class="error">' . $langs->trans("NoEmail") . '</font>';
 }
 /*
  * Common part of the user's tabs
@@ -244,39 +245,46 @@ print "</tr>\n";
 
 print "</table>\n";
 
-print "<br>\n";
+if ($ok) {
+	$mesg = '<font class="ok">' . $langs->trans("OperationSuccessful") . '</font>';
+}
 
-print '<form action="initoauth.php" method="get">';
-if (! $retry) {
-	// if no error
-	if ($client->getAccessToken()) {
-		// if access token exists or/and bad propose to delete it
-		print '<input type="hidden" name="action" value="delete_token">';
-		print '<input type="hidden" name="id" value="' . $id . '">';
-		print '<table class="border" width="100%">';
-		print '<tr><td colspan="2" align="center">';
-		print '<input class="button" type="submit" value="' . $langs->trans("Delete_token") . '">';
-	} elseif (! empty($doluser->email)) {
-		// if no access token propose to request
+if (! $lock) {
+	print "<br>\n";
+	print '<form action="initoauth.php" method="get">';
+	if (! $retry) {
+		// if no error
+		if ($client->getAccessToken()) {
+			// if access token exists or/and bad propose to delete it
+			print '<input type="hidden" name="action" value="delete_token">';
+			print '<input type="hidden" name="id" value="' . $id . '">';
+			print '<table class="border" width="100%">';
+			print '<tr><td colspan="2" align="center">';
+			print '<input class="button" type="submit" value="' . $langs->trans("DeleteToken") . '">';
+		} elseif (! empty($doluser->email)) {
+			// if no access token propose to request
+			print '<input type="hidden" name="action" value="request">';
+			print '<input type="hidden" name="id" value="' . $id . '">';
+			print '<table class="border" width="100%">';
+			print '<tr><td colspan="2" align="center">';
+			print '<input class="button" type="submit" value="' . $langs->trans("RequestToken") . '">';
+		}
+	} else {
+		// We have errors
+		$langs->load("errors");
+		$mesg = '<font class="error">' . $langs->trans("OperationFailed") . '</font>';
 		print '<input type="hidden" name="action" value="request">';
 		print '<input type="hidden" name="id" value="' . $id . '">';
 		print '<table class="border" width="100%">';
 		print '<tr><td colspan="2" align="center">';
-		print '<input class="button" type="submit" value="' . $langs->trans("Request_token") . '">';
+		print '<input class="button" type="submit" value="' . $langs->trans("Retry") . '">';
 	}
-} else {
-	// We have errors
-	print '<input type="hidden" name="action" value="request">';
-	print '<input type="hidden" name="id" value="' . $id . '">';
-	print '<table class="border" width="100%">';
-	$langs->load("errors");
-	print '<font class="error">' . $langs->trans("Op_failed") . '</font>';
-	print '<tr><td colspan="2" align="center">';
-	print '<input class="button" type="submit" value="' . $langs->trans("Retry_request") . '">';
+	print '</table></form>';
+	print "</div>\n";
 }
 
-print '</table></form>';
-print "</div>\n";
+// Print messages
+dol_htmloutput_mesg($mesg);
 
 $db->close();
 llxFooter();

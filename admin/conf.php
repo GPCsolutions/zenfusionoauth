@@ -180,7 +180,7 @@ print_titre($langs->trans("ZenfusionConfig"));
 // Error / confirmation messages
 dol_htmloutput_mesg($mesg);
 
-// TODO: import configuration from google's api console json file
+// Import configuration from google's api console json file
 echo '<form enctype="multipart/form-data" method="POST" action="', $_SERVER[PHP_SELF], '">';
 echo '<input type="hidden" name="token" value="', $_SESSION['newtoken'], '">';
 echo '<input type="hidden" name="action" value="upload">';

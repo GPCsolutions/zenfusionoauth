@@ -30,20 +30,21 @@ SoftwareEngineer=ingénieur développement
 Ressources=Ressources
 # User card tab
 AccessToken=Accès au service
-Token_ok=Activé
-Token_ko=Désactivé
-Request_token=Activer
-Delete_token=Désactiver
-Retry_request=Réessayer
+TokenOk=Activé
+TokenKo=Désactivé
+RequestToken=Activer
+DeleteToken=Désactiver
+Retry=Réessayer
 ## Messages
-Pb_email=Addresse email non renseignée
+NoEmail=Addresse email non renseignée
 Oauth_error=Erreur, veuillez contacter votre administrateur système
-Op_failed=L'opération a échoué
+OperationSuccessful=Opération réussie
+OperationFailed=L'opération a échoué
 # Box
-Token_status=État communication Google Apps
-NoRecordedUser=Aucun utilisateur inscrit
+TokenStatus=État communication Google Apps
+NoUserFound=Aucun utilisateur inscrit
 ReadPermissionNotAllowed=Vous n'avez pas la permission de lire ces informations
-no_token=Non connecté
-status_ok=Activée
-status_ko=Désactivée
+NoToken=Non connecté
+StatusOk=Activée
+StatusKo=Désactivée
 
