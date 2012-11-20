@@ -19,7 +19,7 @@
  */
 
 /**
- * \file lib/zf_oauth.lib.php
+ * \file lib/admin.lib.php
  * \ingroup oauthgooglecontacts
  * \brief Module functions library
  */

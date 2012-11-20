@@ -37,7 +37,7 @@ if (! $res) {
 	die("Main include failed");
 }
 
-require_once '../lib/zf_oauth.lib.php';
+require_once '../lib/admin.lib.php';
 require_once DOL_DOCUMENT_ROOT . '/core/lib/admin.lib.php';
 require_once DOL_DOCUMENT_ROOT . '/core/class/html.form.class.php';
 
