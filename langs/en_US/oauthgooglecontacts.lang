@@ -1,40 +1,49 @@
 # Dolibarr language file - en_US - ZenFusion OAuth
 CHARSET=UTF-8
+# Module
 Module150Name=ZenFusion OAuth
 Module150Desc=Oauth authentification for Google APIs
-Token_ok=Active
-Token_ko=Inactive
-Pb_email=Unspecified email address
-Oauth_error=Error please contact your system administrator
-Delete_token=Disable
-Request_token=Enable
-Op_failed=Operation failed
-Retry_request=Retry
-Token_status=Google Apps communication state
-NoRecordedUser=No subscribed user
-ReadPermissionNotAllowed=Read permission not allowed
-status_ok=Enabled
-status_ko=Disabled
-no_token=Not connected
-Version=Version
-Credits=Credits
-Development=Development
-Ressources=Resources
-Publisher=Publisher
-AccessToken=Service access
-Support=Support
-Stat=Stats
+# Admin
 Config=Configuration
+Support=Support
 About=About
-SynchronizedContactsNumber=Synchronized contacts per user
-SynchronizedContacts=Synchronized contacts
+# Config
 ZenfusionConfig=ZenFusion configuration
+ImportFrom=Import from
+JSONConfigFile=JSON configuration file
 ClientId=Client ID
 ClientSecret=Client Secret
 DomainName=Domain name
-SharedContacts=Use the Google Apps mode
+SharedContacts=Use the Google Apps Domain Shared Contacts
+## Messages
+Saved=Saved
+BadFile=Bad file
+UnexpectedError=Unexpected error
+# About
+Version=Version
+Publisher=Publisher
+Licence=Licence
+Credits=Credits
+Development=Development
 ProjectManager=project manager
 SoftwareEngineer=software engineer
-Licence=Licence
-ImportFrom=Import from
-JSONConfigFile=JSON configuration file
+Ressources=Resources
+# User card tab
+AccessToken=Service access
+Token_ok=Active
+Token_ko=Inactive
+Request_token=Enable
+Delete_token=Disable
+Retry_request=Retry
+## Messages
+Pb_email=Unspecified email address
+Oauth_error=Error please contact your system administrator
+Op_failed=Operation failed
+# Box
+Token_status=Google Apps communication state
+NoRecordedUser=No subscribed user
+ReadPermissionNotAllowed=Read permission not allowed
+no_token=Not connected
+status_ok=Enabled
+status_ko=Disabled
+

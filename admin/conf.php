@@ -67,11 +67,8 @@ if ($action == 'upload') {
 		$client_id = $params['web']['client_id'];
 		$client_secret = $params['web']['client_secret'] ;
 	}
-
 	if ($error) {
 		$mesg = "<font class=\"error\">" . $langs->trans("BadFile") . "</font>";
-	} else {
-		// Do something
 	}
 }
 
@@ -82,9 +79,6 @@ if ($action == 'update') {
 	$domain_admin = GETPOST('domainAdmin', 'alpha');
 	$shared_contacts_mode = GETPOST('sharedcontacts', 'alpha');
 
-	if (! $res > 0) {
-		$error ++;
-	}
 	$res = dolibarr_set_const(
 		$db,
 		"DOMAIN_NAME",
@@ -95,7 +89,7 @@ if ($action == 'update') {
 		$conf->entity
 	);
 	if (! $res > 0) {
-		$error ++;
+		$error++;
 	}
 	$res = dolibarr_set_const(
 		$db,
@@ -107,7 +101,7 @@ if ($action == 'update') {
 		$conf->entity
 	);
 	if (! $res > 0) {
-		$error ++;
+		$error++;
 	}
 	$res = dolibarr_set_const(
 		$db,
@@ -119,13 +113,9 @@ if ($action == 'update') {
 		$conf->entity
 	);
 	if (! $res > 0) {
-		$error ++;
+		$error++;
 	}
-
-	if (! $error) {
-		$db->commit();
-		$mesg = "<font class=\"ok\">" . $langs->trans("Saved") . "</font>";
-	} else {
+	if ($error) {
 		$db->rollback();
 		$mesg = "<font class=\"error\">" . $langs->trans("UnexpectedError") . "</font>";
 	}
@@ -143,7 +133,7 @@ if (($action == 'upload' || $action == 'update') && ! $error) {
 		$conf->entity
 	);
 	if (! $res > 0) {
-		$error ++;
+		$error++;
 	}
 	$res = dolibarr_set_const(
 		$db,
@@ -154,6 +144,16 @@ if (($action == 'upload' || $action == 'update') && ! $error) {
 		'',
 		$conf->entity
 	);
+	if (! $res > 0) {
+		$error++;
+	}
+	if (! $error) {
+		$db->commit();
+		$mesg = "<font class=\"ok\">" . $langs->trans("Saved") . "</font>";
+	} else {
+		$db->rollback();
+		$mesg = "<font class=\"error\">" . $langs->trans("UnexpectedError") . "</font>";
+	}
 }
 
 /**
@@ -177,7 +177,8 @@ dol_fiche_head(
 
 print_titre($langs->trans("ZenfusionConfig"));
 
-// TODO: print error message
+// Error / confirmation messages
+dol_htmloutput_mesg($mesg);
 
 // TODO: import configuration from google's api console json file
 echo '<form enctype="multipart/form-data" method="POST" action="', $_SERVER[PHP_SELF], '">';

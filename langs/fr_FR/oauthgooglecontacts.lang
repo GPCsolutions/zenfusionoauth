@@ -1,37 +1,49 @@
 # Dolibarr language file - fr_FR - ZenFusion OAuth
 CHARSET=UTF-8
+# Module
 Module150Name=ZenFusion OAuth
 Module150Desc=Authentification OAuth pour les APIs Google
-Token_ok=Activé
-Token_ko=Désactivé
-Pb_email=Addresse email non renseignée
-Oauth_error=Erreur, veuillez contacter votre administrateur système
-Delete_token=Désactiver
-Request_token=Activer
-Op_failed=L'opération a échoué
-Retry_request=Réessayer
-Token_status=État communication Google Apps
-NoRecordedUser=Aucun utilisateur inscrit
-ReadPermissionNotAllowed=Vous n'avez pas la permission de lire ces informations
-status_ok=Activée
-status_ko=Désactivée
-no_token=Non connecté
-Version=Version
-Credits=Crédits
-Development=Développement
-Ressources=Ressources
-Publisher=Éditeur
-AccessToken=Accès au service
+# Admin
+Config=Configuration
 Support=Assistance
 About=À propos
-Configuration=Configuration
 ZenfusionConfig=Configuration de ZenFusion
+# Config
+ImportFrom=Importation depuis
+JSONConfigFile=Fichier de configuration JSON
 ClientId=Client ID
 ClientSecret=Client Secret
 DomainName=Nom de domaine
 SharedContacts=Utiliser les « Contacts partagés du domaine »
+## Messages
+Saved=Enregistré
+BadFile=Mauvais fichier
+UnexpectedError=Erreur inattendue
+# About
+Version=Version
+Publisher=Éditeur
+License=Licence
+Credits=Crédits
+Development=Développement
 ProjectManager=chef de projet
 SoftwareEngineer=ingénieur développement
-License=Licence
-ImportFrom=Importation depuis
-JSONConfigFile=Fichier de configuration JSON
+Ressources=Ressources
+# User card tab
+AccessToken=Accès au service
+Token_ok=Activé
+Token_ko=Désactivé
+Request_token=Activer
+Delete_token=Désactiver
+Retry_request=Réessayer
+## Messages
+Pb_email=Addresse email non renseignée
+Oauth_error=Erreur, veuillez contacter votre administrateur système
+Op_failed=L'opération a échoué
+# Box
+Token_status=État communication Google Apps
+NoRecordedUser=Aucun utilisateur inscrit
+ReadPermissionNotAllowed=Vous n'avez pas la permission de lire ces informations
+no_token=Non connecté
+status_ok=Activée
+status_ko=Désactivée
+
