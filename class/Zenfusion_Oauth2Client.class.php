@@ -64,7 +64,9 @@ class Oauth2Client extends Google_Client
 		if ($email) {
 			// Hack to have the email pre-populated
 			// TODO: move url and parameters to an include
-			$url = 'https://accounts.google.com/ServiceLogin' . '?service=lso&ltmpl=popup&Email=' . $email . '&continue=' . urlencode($url);
+			$url = 'https://accounts.google.com/ServiceLogin'
+				. '?service=lso&ltmpl=popup&Email=' . $email
+				. '&continue=' . urlencode($url);
 		}
 
 		return $url;

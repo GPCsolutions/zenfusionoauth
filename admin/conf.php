@@ -108,7 +108,9 @@ if (($action == 'upload' || $action == 'update') && ! $error) {
 		$mesg = '<font class="ok">' . $langs->trans("Saved") . '</font>';
 	} else {
 		$db->rollback();
-		$mesg = '<font class="error">' . $langs->trans("UnexpectedError") . '</font>';
+		$mesg = '<font class="error">'
+			. $langs->trans("UnexpectedError")
+			. '</font>';
 	}
 }
 
@@ -118,7 +120,8 @@ if (($action == 'upload' || $action == 'update') && ! $error) {
 llxHeader();
 dol_htmloutput_mesg($msg);
 $form = new Form($db);
-$linkback = '<a href="' . DOL_URL_ROOT . '/admin/modules.php">' . $langs->trans("BackToModuleList") . '</a>';
+$linkback = '<a href="' . DOL_URL_ROOT . '/admin/modules.php">'
+	. $langs->trans("BackToModuleList") . '</a>';
 // Folder icon title
 print_fiche_titre("ZenFusion", $linkback, 'setup');
 
@@ -161,7 +164,8 @@ echo '</table>';
 echo '</form>';
 
 // Import configuration from google's api console json file
-echo '<form enctype="multipart/form-data" method="POST" action="', $_SERVER[PHP_SELF], '">';
+echo '<form enctype="multipart/form-data" method="POST" ',
+	'action="', $_SERVER[PHP_SELF], '">';
 echo '<input type="hidden" name="token" value="', $_SESSION['newtoken'], '">';
 echo '<input type="hidden" name="action" value="upload">';
 // TODO: set max file size to a sensible value

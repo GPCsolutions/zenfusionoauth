@@ -49,7 +49,7 @@ class box_oauthusers extends ModeleBoxes
 	 *      \brief Constuctor
 	 */
 
-	public function box_oauthusers()
+	public function __construct()
 	{
 		global $langs;
 		$langs->load('oauthgooglecontacts@oauthgooglecontacts');
@@ -68,7 +68,9 @@ class box_oauthusers extends ModeleBoxes
 
 		$this->max = $max;
 
-		$this->info_box_head = array('text' => $langs->trans("TokenStatus", $max));
+		$this->info_box_head = array(
+			'text' => $langs->trans("TokenStatus", $max)
+		);
 
 		if ($user->rights->societe->lire) {
 			$sql = 'SELECT u.rowid AS userid, u.firstname, u.name, u.email,';
@@ -88,12 +90,16 @@ class box_oauthusers extends ModeleBoxes
 				while ($i < $num) {
 					$objp = $db->fetch_object($result);
 
-					$this->info_box_contents[$i][0] = array('td' => 'align="left" width="20"',
-						'logo' => $this->boximg);
+					$this->info_box_contents[$i][0] = array(
+						'td' => 'align="left" width="20"',
+						'logo' => $this->boximg
+					);
 
-					$this->info_box_contents[$i][1] = array('td' => 'align="left" ',
+					$this->info_box_contents[$i][1] = array(
+						'td' => 'align="left" ',
 						'text' => $objp->name . " " . $objp->firstname,
-						'url' => DOL_URL_ROOT . 'user/fiche.php?id=' . $objp->userid);
+						'url' => DOL_URL_ROOT . 'user/fiche.php?id=' . $objp->userid
+					);
 
 					$token = $objp->access_token;
 					// $secret = $objp->secret_token; // Deprecated
@@ -102,23 +108,31 @@ class box_oauthusers extends ModeleBoxes
 						$client = new oauth2Client();
 						$client->setAccessToken($token);
 						if ($client->validateToken()) {
-							$this->info_box_contents[$i][2] = array('td' => 'align="left"',
-								'text' => $langs->trans("StatusOk"));
+							$this->info_box_contents[$i][2] = array(
+								'td' => 'align="left"',
+								'text' => $langs->trans("StatusOk")
+							);
 						} else {
-							$this->info_box_contents[$i][2] = array('td' => 'align="left"',
+							$this->info_box_contents[$i][2] = array(
+								'td' => 'align="left"',
 								'text' => $langs->trans("StatusKo"),
 								'url' => dol_buildpath(
 									'/oauthgooglecontacts/initoauth.php',
 									1
-								) . '?id=' . $objp->rowid . '&action=delete_token');
+								) . '?id=' . $objp->rowid . '&action=delete_token'
+							);
 						}
 					} else {
 						// If token == NULL
-						$this->info_box_contents[$i][2] = array('td' => 'align="left"',
-							'text' => $langs->trans("NoToken"));
+						$this->info_box_contents[$i][2] = array(
+							'td' => 'align="left"',
+							'text' => $langs->trans("NoToken")
+						);
 					}
-					$this->info_box_contents[$i][3] = array('td' => 'align="right"',
-						'text' => $objp->email);
+					$this->info_box_contents[$i][3] = array(
+						'td' => 'align="right"',
+						'text' => $objp->email
+					);
 
 					$i ++;
 				}
@@ -130,13 +144,17 @@ class box_oauthusers extends ModeleBoxes
 						);
 				}
 			} else {
-				$this->info_box_contents[0][0] = array('td' => 'align="left"',
+				$this->info_box_contents[0][0] = array(
+					'td' => 'align="left"',
 					'maxlength' => 500,
-					'text' => ($db->error() . ' sql=' . $sql));
+					'text' => ($db->error() . ' sql=' . $sql)
+				);
 			}
 		} else {
-			$this->info_box_contents[0][0] = array('align' => 'left',
-				'text' => $langs->trans("ReadPermissionNotAllowed"));
+			$this->info_box_contents[0][0] = array(
+				'align' => 'left',
+				'text' => $langs->trans("ReadPermissionNotAllowed")
+			);
 		}
 	}
 

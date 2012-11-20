@@ -41,7 +41,10 @@ function zfPrepareHead()
 	$h ++;
 
 	if ($conf->global->ZF_SUPPORT) {
-		$head[$h][0] = dol_buildpath("/oauthgooglecontacts/admin/support.php", 1);
+		$head[$h][0] = dol_buildpath(
+			"/oauthgooglecontacts/admin/support.php",
+			1
+		);
 		$head[$h][1] = $langs->trans("HelpCenter");
 		$head[$h][2] = 'help';
 		$h ++;

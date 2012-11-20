@@ -52,10 +52,11 @@ class modOAuthGoogleContacts extends DolibarrModules
 {
 
 	/**
-	 * \brief Constructor. Define names, constants, directories, boxes, permissions
+	 * Constructor. Define names, constants,
+	 * directories, boxes, permissions
 	 * \param string $db Database handler
 	 */
-	public function modOAuthGoogleContacts($db)
+	public function __construct($db)
 	{
 		$this->db = $db;
 		$this->numero = 150;
@@ -107,7 +108,10 @@ class modOAuthGoogleContacts extends DolibarrModules
 			1
 		);
 		$r++;
-		$this->tabs = array('user:Google:@oauthgooglecontacts:/oauthgooglecontacts/initoauth.php?id=__ID__');
+		$this->tabs = array(
+			'user:Google:@oauthgooglecontacts'
+				. ':/oauthgooglecontacts/initoauth.php?id=__ID__'
+		);
 		$this->boxes = array();
 		$this->boxes[0][1] = "box_oauthusers@oauthgooglecontacts";
 		$this->rights = array();
@@ -116,7 +120,8 @@ class modOAuthGoogleContacts extends DolibarrModules
 
 	/**
 	 * \brief Function called when module is enabled.
-	 * The init function add constants, boxes, permissions and menus (defined in constructor) into Dolibarr database.
+	 * The init function add constants, boxes, permissions and menus
+	 * (defined in constructor) into Dolibarr database.
 	 * It also creates data directories.
 	 * \return int 1 if OK, 0 if KO
 	 */
@@ -129,7 +134,8 @@ class modOAuthGoogleContacts extends DolibarrModules
 
 	/**
 	 * \brief Function called when module is disabled.
-	 * Remove from database constants, boxes and permissions from Dolibarr database.
+	 * Remove from database constants, boxes and permissions
+	 * from Dolibarr database.
 	 * Data directories are not deleted.
 	 * \return int 1 if OK, 0 if KO
 	 */
@@ -141,7 +147,8 @@ class modOAuthGoogleContacts extends DolibarrModules
 
 	/**
 	 * \brief Create tables, keys and data required by module
-	 * Files llx_table1.sql, llx_table1.key.sql llx_data.sql with create table, create keys
+	 * Files llx_table1.sql, llx_table1.key.sql llx_data.sql
+	 * with create table, create keys
 	 * and create data commands must be stored in directory /mymodule/sql/
 	 * This function is called by this->init.
 	 *  \return int <=0 if KO, >0 if OK

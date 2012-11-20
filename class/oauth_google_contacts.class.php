@@ -58,7 +58,7 @@ class OauthGoogleContacts extends CommonObject
 	 * \brief Instanciates a new database object
 	 * \param string $db Database handler
 	 */
-	public function OauthGoogleContacts($db)
+	public function __construct($db)
 	{
 		$this->db = $db;
 		return 1;

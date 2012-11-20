@@ -55,7 +55,8 @@ if (! $user->admin) {
 // Little folder on the html page
 llxHeader();
 /// Navigation in the modules
-$linkback = '<a href="' . DOL_URL_ROOT . '/admin/modules.php">' . $langs->trans("BackToModuleList") . '</a>';
+$linkback = '<a href="' . DOL_URL_ROOT . '/admin/modules.php">'
+	. $langs->trans("BackToModuleList") . '</a>';
 // Folder icon title
 print_fiche_titre("ZenFusion", $linkback, 'setup');
 
