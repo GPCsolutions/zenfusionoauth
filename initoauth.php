@@ -32,7 +32,6 @@
  * \authors Sebastien Bodrero <sbodrero@gpcsolutions.fr>
  * \authors Raphaël Doursenaud <rdoursenaud@gpcsolutions.fr>
  * \authors Cédric Salvador <csalvador@gpcsolutions.fr>
- * \todo Implement English (default) and French translations
  */
 $res = 0;
 // from standard dolibarr install
@@ -110,12 +109,12 @@ switch ($action) {
 			$client->revokeToken($token->{'refresh_token'});
 		} catch (Google_AuthException $e) {
 			dol_syslog("Delete token " . $e->getMessage());
+			// TODO: print message and user panel URL to manually revoke access
 		}
-		// TODO: Throw an alert if revoking failed
 		// Delete token in database
 		$result = $oauthuser->delete($id);
 		if ($result < 0) {
-			dol_echo_error($db, $oauthuser->error);
+			dol_print_error($db, $oauthuser->error);
 		}
 		header(
 			'refresh:0;url=' . dol_buildpath(
@@ -152,7 +151,7 @@ switch ($action) {
 			$oauthuser->email = $doluser->email;
 			$id = $oauthuser->create($doluser);
 			if ($id < 0) {
-				dol_echo_error($db, $oauthuser->error);
+				dol_print_error($db, $oauthuser->error);
 			}
 			// Refresh the page to prevent multiple insertions
 			header(
