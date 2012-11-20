@@ -22,7 +22,6 @@
  * \brief Oauth constants
  *
  * \ingroup oauthgooglecontacts
- * \version development
  * \authors Sebastien Bodrero <sbodrero@gpcsolutions.fr>
  * \authors Raphaël Doursenaud <rdoursenaud@gpcsolutions.fr>
  */

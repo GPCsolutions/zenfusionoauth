@@ -22,7 +22,6 @@
  *  \file       core/boxes/OauthStatus.php
  *  \brief      Token status box
  *  \ingroup oauthgooglecontacts
- *  \version development
  *  \authors Sebastien Bodrero <sbodrero@gpcsolutions.fr>
  *  \authors Raphaël Doursenaud <rdoursenaud@gpcsolutions.fr>
  */

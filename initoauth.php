@@ -28,7 +28,6 @@
  * - token revocation and deletion.
  *
  * \ingroup oauthgooglecontacts
- * \version development
  * \authors Sebastien Bodrero <sbodrero@gpcsolutions.fr>
  * \authors Raphaël Doursenaud <rdoursenaud@gpcsolutions.fr>
  * \authors Cédric Salvador <csalvador@gpcsolutions.fr>

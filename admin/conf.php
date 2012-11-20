@@ -23,7 +23,6 @@
  * \file admin/conf.php
  * \ingroup oauthgooglecontacts
  * \brief Module configuration page
- * \version development
  */
 $res = 0;
 // from standard dolibarr install

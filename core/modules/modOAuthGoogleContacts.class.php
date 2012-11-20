@@ -37,7 +37,6 @@
  * Declares and initializes the Google contacts OAuth module in Dolibarr
  *
  * \ingroup oauthgooglecontacts
- * \version development
  * \authors Sebastien Bodrero <sbodrero@gpcsolutions.fr>
  * \authors Raphaël Doursenaud <rdoursenaud@gpcsolutions.fr>
  * \authors Cédric Salvador <csalvador@gpcsolutions.fr>

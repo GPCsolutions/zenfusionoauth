@@ -21,7 +21,6 @@
  * \brief Oauth2 client for Zenfusion
  *
  * \ingroup oauthgooglecontacts
- * \version development
  * \authors Raphaël Doursenaud <rdoursenaud@gpcsolutions.fr>
  */
 
