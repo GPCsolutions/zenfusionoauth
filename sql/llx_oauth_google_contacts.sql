@@ -16,8 +16,8 @@
 -- You should have received a copy of the GNU General Public License
 -- along with this program.  If not, see <http://www.gnu.org/licenses/>.
 CREATE TABLE IF NOT EXISTS llx_oauth_google_contacts (
-  rowid integer NOT NULL auto_increment primary key,
-  access_token VARCHAR(255) NULL,
-  secret_token VARCHAR(255) NULL,
+  rowid integer NOT NULL primary key,
+  token        VARCHAR(255) NULL,
+  scopes       VARCHAR(255) NULL,
   email        VARCHAR(255) NULL
 ) ENGINE = InnoDB;

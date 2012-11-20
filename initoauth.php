@@ -104,7 +104,7 @@ switch ($action) {
 	case 'delete_token':
 		// Get token from database
 		$oauth->fetch($id);
-		$token = json_decode($oauth->access_token);
+		$token = json_decode($oauth->token);
 		try {
 			$client->revokeToken($token->{'refresh_token'});
 		} catch (Google_AuthException $e) {
@@ -126,6 +126,15 @@ switch ($action) {
 		break;
 	case 'request':
 		// Save the current user to the state
+		$oauth->fetch($id);
+		$oauth->delete($id);
+		$oauth->id = $id;
+		$oauth->scopes = json_encode($client->getScopes());
+		$oauth->email = $doluser->email;
+		$req = $oauth->create($doluser);
+		if ($req < 0) {
+			dol_print_error($db, $oauth->error);
+		}
 		$client->setState($id);
 		// Go to Google for authentication
 		$auth = $client->createAuthUrl($doluser->email);
@@ -145,11 +154,10 @@ switch ($action) {
 			$token = $client->getAccessToken();
 			// Save the access token into database
 			dol_syslog($script_file . " CREATE", LOG_DEBUG);
-			$oauth->rowid = $state;
-			$oauth->access_token = $token;
 			$doluser->fetch($state);
-			$oauth->email = $doluser->email;
-			$id = $oauth->create($doluser);
+			$oauth->fetch($state);
+			$oauth->token = $token;
+			$id = $oauth->update($doluser);
 			if ($id < 0) {
 				dol_print_error($db, $oauth->error);
 			}
@@ -165,6 +173,8 @@ switch ($action) {
 /*
  * View
  */
+// TODO: Check that the module is configured
+
 // Create new form
 $form = new Form($db);
 $tabname = "Google";
@@ -175,7 +185,7 @@ $token_good = true;
 // Verify if the user's got an access token
 $oauth->fetch($id);
 try {
-	$client->setAccessToken($oauth->access_token);
+	$client->setAccessToken($oauth->token);
 } catch (Google_AuthException $e) {
 	$token_good = false;
 }
@@ -231,6 +241,11 @@ echo '</tr>';
 // Email
 echo '<tr><td width="25%" valign="top">' . $langs->trans("Email") . '</td>';
 echo '<td colspan="2">' . $doluser->email . '</td>';
+echo '</tr>';
+
+// TODO: Scopes
+echo '<tr><td width="25%" valign="top">' . $langs->trans("Services") . '</td>';
+echo '<td colspan="2">' . $oauth->scopes . '</td>';
 echo '</tr>';
 
 // Access Token

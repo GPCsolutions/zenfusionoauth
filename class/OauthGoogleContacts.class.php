@@ -49,9 +49,9 @@ class OauthGoogleContacts extends CommonObject
 	// public $element='oauth_google_contacts';			//!< Id that identify managed objects
 	// public $table_element='oauth_google_contacts';	//!< Name of table without prefix where object is stored
 	public $id; ///< object id
-	public $access_token; ///< Access token
-	public $secret_token; ///< Secret token TODO: deprecated
-	public $email; // TODO: deprecated
+	public $token; ///< Access token
+	public $scopes; ///< TODO: Registered scopes
+	public $email; ///< Registered email
 
 	/**
 	 * \brief Instanciates a new database object
@@ -74,11 +74,11 @@ class OauthGoogleContacts extends CommonObject
 		global $conf, $langs;
 		$error = 0;
 		// Clean parameters
-		if (isset($this->access_token)) {
-				$this->access_token = trim($this->access_token);
+		if (isset($this->token)) {
+				$this->token = trim($this->token);
 		}
-		if (isset($this->secret_token)) {
-				$this->secret_token = trim($this->secret_token);
+		if (isset($this->scopes)) {
+				$this->scopes = trim($this->scopes);
 		}
 		if (isset($this->email)) {
 			$this->email = trim($this->email);
@@ -110,20 +110,15 @@ class OauthGoogleContacts extends CommonObject
 			}
 		}
 
-		if (! in_array($this->db->type, array('pgsql'))) {
-			$token = addslashes($this->access_token);
-		} else {
-			$token = $this->access_token;
-		}
 		$sql = "INSERT INTO " . MAIN_DB_PREFIX . "oauth_google_contacts(";
-		$sql.= "rowid,";
-		$sql.= "access_token,";
-		$sql.= "secret_token";
+		$sql.= "rowid";
+		$sql.= ", token";
+		$sql.= ", scopes";
 		$sql.= ", email";
 		$sql.= ") VALUES (";
-		$sql.= " " . (! isset($this->rowid) ? 'NULL' : "'" . $this->rowid . "'") . ",";
-		$sql.= " " . (! isset($this->access_token) ? 'NULL' : "'" . $token . "'") . ",";
-		$sql.= " " . (! isset($this->secret_token) ? 'NULL' : "'" . addslashes($this->secret_token) . "'") . "";
+		$sql.= " " . (! isset($this->id) ? 'NULL' : "'" . $this->id . "'") . ",";
+		$sql.= " " . (! isset($this->token) ? 'NULL' : "'" . $his->token . "'") . ",";
+		$sql.= " " . (! isset($this->scopes) ? 'NULL' : "'" . $this->scopes . "'") . "";
 		$sql.= ", " . (! isset($this->email) ? 'NULL' : "'" . $this->db->escape($this->email) . "'") . "";
 		$sql.= ")";
 		$this->db->begin();
@@ -170,8 +165,8 @@ class OauthGoogleContacts extends CommonObject
 		global $langs;
 		$sql = "SELECT";
 		$sql.= " t.rowid,";
-		$sql.= " t.access_token,";
-		$sql.= " t.secret_token";
+		$sql.= " t.token,";
+		$sql.= " t.scopes";
 		$sql.= ", t.email";
 		$sql.= " FROM " . MAIN_DB_PREFIX . "oauth_google_contacts as t";
 		$sql.= " WHERE t.rowid = " . $id;
@@ -181,8 +176,8 @@ class OauthGoogleContacts extends CommonObject
 			if ($this->db->num_rows($resql)) {
 				$obj = $this->db->fetch_object($resql);
 				$this->id = $obj->rowid;
-				$this->access_token = $obj->access_token;
-				$this->secret_token = $obj->secret_token;
+				$this->token = $obj->token;
+				$this->scopes = $obj->scopes;
 				$this->email = $obj->email;
 			}
 			$this->db->free($resql);
@@ -205,11 +200,11 @@ class OauthGoogleContacts extends CommonObject
 		global $conf, $langs;
 		$error = 0;
 		// Clean parameters
-		if (isset($this->access_token)) {
-				$this->access_token = trim($this->access_token);
+		if (isset($this->token)) {
+				$this->token = trim($this->token);
 		}
-		if (isset($this->secret_token)) {
-				$this->secret_token = trim($this->secret_token);
+		if (isset($this->scopes)) {
+				$this->scopes = trim($this->scopes);
 		}
 		if (isset($this->email)) {
 			$this->email = trim($this->email);
@@ -218,9 +213,9 @@ class OauthGoogleContacts extends CommonObject
 		// Put here code to add control on parameters values
 		// Update request
 		$sql = "UPDATE " . MAIN_DB_PREFIX . "oauth_google_contacts SET";
-		$sql.= " access_token=" . (isset($this->access_token) ? "'" . addslashes($this->access_token) . "'"
+		$sql.= " token=" . (isset($this->token) ? "'" . $this->token . "'"
 					: "null") . ",";
-		$sql.= " secret_token=" . (isset($this->secret_token) ? "'" . addslashes($this->secret_token) . "'"
+		$sql.= " scopes=" . (isset($this->scopes) ? "'" . $this->scopes . "'"
 					: "null") . "";
 		$sql.= ", email=" . (isset($this->email) ? "'" . $this->db->escape($this->email) . "'"
 					: "null") . "";
@@ -343,7 +338,7 @@ class OauthGoogleContacts extends CommonObject
 	public function initAsSpecimen()
 	{
 		$this->id = 0;
-		$this->access_token = '';
-		$this->secret_token = '';
+		$this->token = '';
+		$this->scopes = '';
 	}
 }

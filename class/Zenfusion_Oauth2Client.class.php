@@ -70,4 +70,8 @@ class Oauth2Client extends Google_Client
 
 		return $url;
 	}
+	public function getScopes()
+	{
+		return $this->scopes;
+	}
 }
