@@ -36,12 +36,12 @@
  */
 $res = 0;
 // from standard dolibarr install
-if (! $res && file_exists("../main.inc.php")) {
-		$res = @include("../main.inc.php");
+if (! $res && file_exists('../main.inc.php')) {
+		$res = @include('../main.inc.php');
 }
 // from custom dolibarr install
-if (! $res && file_exists("../../main.inc.php")) {
-		$res = @include("../../main.inc.php");
+if (! $res && file_exists('../../main.inc.php')) {
+		$res = @include('../../main.inc.php');
 }
 if (! $res) {
 	die("Main include failed");
@@ -53,9 +53,9 @@ require_once './class/oauth_google_contacts.class.php';
 require_once './class/Zenfusion_Oauth2Client.class.php';
 require_once './inc/oauth.inc.php';
 
-$langs->load("oauthgooglecontacts@oauthgooglecontacts");
-$langs->load("admin");
-$langs->load("users");
+$langs->load('oauthgooglecontacts@oauthgooglecontacts');
+$langs->load('admin');
+$langs->load('users');
 
 // Defini si peux lire/modifier permisssions
 $canreaduser = ($user->admin || $user->rights->user->user->lire);
@@ -102,7 +102,7 @@ $client->setScopes(GOOGLE_CONTACTS_SCOPE);
 
 // Actions
 switch ($action) {
-	case "delete_token":
+	case 'delete_token':
 		// Get token from database
 		$oauthuser->fetch($id);
 		$token = json_decode($oauthuser->access_token);
@@ -115,7 +115,7 @@ switch ($action) {
 		// Delete token in database
 		$result = $oauthuser->delete($id);
 		if ($result < 0) {
-			dol_print_error($db, $oauthuser->error);
+			dol_echo_error($db, $oauthuser->error);
 		}
 		header(
 			'refresh:0;url=' . dol_buildpath(
@@ -125,14 +125,14 @@ switch ($action) {
 		);
 
 		break;
-	case "request":
+	case 'request':
 		// Save the current user to the state
 		$client->setState($id);
 		// Go to Google for authentication
 		$auth = $client->createAuthUrl($doluser->email);
-		header("Location: {$auth}");
+		header('Location: ' . $auth);
 		break;
-	case "access":
+	case 'access':
 		// Exchange authorization code for an access token
 		if ($callback_error) {
 			$retry = true;
@@ -152,7 +152,7 @@ switch ($action) {
 			$oauthuser->email = $doluser->email;
 			$id = $oauthuser->create($doluser);
 			if ($id < 0) {
-				dol_print_error($db, $oauthuser->error);
+				dol_echo_error($db, $oauthuser->error);
 			}
 			// Refresh the page to prevent multiple insertions
 			header(
@@ -183,9 +183,9 @@ try {
 
 // Prepare token status message
 if ($token_good) {
-	$message = "TokenOk";
+	$token_status = "TokenOk";
 } else {
-	$message = "TokenKo";
+	$token_status = "TokenKo";
 }
 
 /*
@@ -199,91 +199,86 @@ dol_fiche_head($head, 'tab' . $tabname, $title, 0, 'user');
 // Verify that the user's email adress exists
 if (empty($doluser->email)) {
 	$lock = true;
-	$langs->load("errors");
+	$langs->load('errors');
 	$mesg = '<font class="error">' . $langs->trans("NoEmail") . '</font>';
 }
 /*
  * Common part of the user's tabs
  */
-print '<table class="border" width="100%">';
+echo '<table class="border" width="100%">';
 
 // Ref
-print '<tr><td width="25%" valign="top">' . $langs->trans("Ref") . '</td>';
-print '<td colspan="2">';
-print $form->showrefnav(
+echo '<tr><td width="25%" valign="top">' . $langs->trans("Ref") . '</td>';
+echo '<td colspan="2">';
+echo $form->showrefnav(
 	$doluser,
 	'id',
 	'',
 	$user->rights->user->user->lire || $user->admin
 );
-print '</td>';
-print '</tr>';
+echo '</td>';
+echo '</tr>';
 
 // Nom
-print '<tr><td width="25%" valign="top">' . $langs->trans("Lastname") . '</td>';
-print '<td colspan="2">' . $doluser->nom . '</td>';
-print "</tr>\n";
+echo '<tr><td width="25%" valign="top">' . $langs->trans("Lastname") . '</td>';
+echo '<td colspan="2">' . $doluser->nom . '</td>';
+echo '</tr>';
 
 // First name
-print '<tr><td width="25%" valign="top">' . $langs->trans("Firstname") . '</td>';
-print '<td colspan="2">' . $doluser->prenom . '</td>';
-print "</tr>\n";
+echo '<tr><td width="25%" valign="top">' . $langs->trans("Firstname") . '</td>';
+echo '<td colspan="2">' . $doluser->prenom . '</td>';
+echo '</tr>';
 
 // Email
-print '<tr><td width="25%" valign="top">' . $langs->trans("Email") . '</td>';
-print '<td colspan="2">' . $doluser->email . '</td>';
-
-
-print "</tr>\n";
+echo '<tr><td width="25%" valign="top">' . $langs->trans("Email") . '</td>';
+echo '<td colspan="2">' . $doluser->email . '</td>';
+echo '</tr>';
 
 // Access Token
-print '<tr><td width="25%" valign="top">' . $langs->trans("AccessToken") . '</td>';
+echo '<tr><td width="25%" valign="top">' . $langs->trans("AccessToken") . '</td>';
+echo '<td colspan="2">' . $langs->trans($token_status) . '</td>';
+echo '</tr>';
 
-print '<td colspan="2">' . $langs->trans($message) . '</td>';
-
-print "</tr>\n";
-
-print "</table>\n";
+echo '</table>';
 
 if ($ok) {
 	$mesg = '<font class="ok">' . $langs->trans("OperationSuccessful") . '</font>';
 }
 
 if (! $lock) {
-	print "<br>\n";
-	print '<form action="initoauth.php" method="get">';
+	echo '<br>';
+	echo '<form action="initoauth.php" method="get">';
 	if (! $retry) {
 		// if no error
 		if ($client->getAccessToken()) {
 			// if access token exists or/and bad propose to delete it
-			print '<input type="hidden" name="action" value="delete_token">';
-			print '<input type="hidden" name="id" value="' . $id . '">';
-			print '<table class="border" width="100%">';
-			print '<tr><td colspan="2" align="center">';
-			print '<input class="button" type="submit" value="' . $langs->trans("DeleteToken") . '">';
+			echo '<input type="hidden" name="action" value="delete_token">';
+			echo '<input type="hidden" name="id" value="' . $id . '">';
+			echo '<table class="border" width="100%">';
+			echo '<tr><td colspan="2" align="center">';
+			echo '<input class="button" type="submit" value="' . $langs->trans("DeleteToken") . '">';
 		} elseif (! empty($doluser->email)) {
 			// if no access token propose to request
-			print '<input type="hidden" name="action" value="request">';
-			print '<input type="hidden" name="id" value="' . $id . '">';
-			print '<table class="border" width="100%">';
-			print '<tr><td colspan="2" align="center">';
-			print '<input class="button" type="submit" value="' . $langs->trans("RequestToken") . '">';
+			echo '<input type="hidden" name="action" value="request">';
+			echo '<input type="hidden" name="id" value="' . $id . '">';
+			echo '<table class="border" width="100%">';
+			echo '<tr><td colspan="2" align="center">';
+			echo '<input class="button" type="submit" value="' . $langs->trans("RequestToken") . '">';
 		}
 	} else {
 		// We have errors
 		$langs->load("errors");
 		$mesg = '<font class="error">' . $langs->trans("OperationFailed") . '</font>';
-		print '<input type="hidden" name="action" value="request">';
-		print '<input type="hidden" name="id" value="' . $id . '">';
-		print '<table class="border" width="100%">';
-		print '<tr><td colspan="2" align="center">';
-		print '<input class="button" type="submit" value="' . $langs->trans("Retry") . '">';
+		echo '<input type="hidden" name="action" value="request">';
+		echo '<input type="hidden" name="id" value="' . $id . '">';
+		echo '<table class="border" width="100%">';
+		echo '<tr><td colspan="2" align="center">';
+		echo '<input class="button" type="submit" value="' . $langs->trans("Retry") . '">';
 	}
-	print '</table></form>';
-	print "</div>\n";
+	echo '</table></form>';
 }
 
-// Print messages
+// Messages
 dol_htmloutput_mesg($mesg);
 
 $db->close();

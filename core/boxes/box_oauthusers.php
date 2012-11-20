@@ -36,8 +36,8 @@ dol_include_once('/oauthgooglecontacts/class/Zenfusion_Oauth2Client.class.php');
 class box_oauthusers extends ModeleBoxes
 {
 
-	public $boxcode = "Tokenstatus"; ///< Box Codename
-	public $boximg = "object_user"; ///< Box img
+	public $boxcode = 'Tokenstatus'; ///< Box Codename
+	public $boximg = 'object_user'; ///< Box img
 	public $boxlabel; ///< Box name
 	public $depends = array(); /// Box dependencies
 	public $db; ///< Database handler
@@ -52,7 +52,7 @@ class box_oauthusers extends ModeleBoxes
 	public function box_oauthusers()
 	{
 		global $langs;
-		$langs->load("oauthgooglecontacts@oauthgooglecontacts");
+		$langs->load('oauthgooglecontacts@oauthgooglecontacts');
 
 		$this->boxlabel = $langs->trans("TokenStatus");
 	}
@@ -64,20 +64,20 @@ class box_oauthusers extends ModeleBoxes
 	public function loadBox($max = 0)
 	{
 		global $user, $langs, $db, $conf;
-		$langs->load("oauthgooglecontacts@oauthgooglecontacts");
+		$langs->load('oauthgooglecontacts@oauthgooglecontacts');
 
 		$this->max = $max;
 
 		$this->info_box_head = array('text' => $langs->trans("TokenStatus", $max));
 
 		if ($user->rights->societe->lire) {
-			$sql = "SELECT u.rowid AS userid, u.firstname, u.name, u.email,";
-			$sql.= " g.rowid, g.access_token"; // g.secret_token";
-			$sql.= " FROM " . MAIN_DB_PREFIX . "user as u";
-			$sql.= " LEFT JOIN " . MAIN_DB_PREFIX . "oauth_google_contacts as g";
-			$sql.= " ON g.rowid = u.rowid";
+			$sql = 'SELECT u.rowid AS userid, u.firstname, u.name, u.email,';
+			$sql.= ' g.rowid, g.access_token'; // g.secret_token';
+			$sql.= ' FROM ' . MAIN_DB_PREFIX . 'user as u';
+			$sql.= ' LEFT JOIN ' . MAIN_DB_PREFIX . 'oauth_google_contacts as g';
+			$sql.= ' ON g.rowid = u.rowid';
 			if (! $user->admin) {
-				$sql.= " WHERE u.rowid = $user->id";
+				$sql.= ' WHERE u.rowid = ' . $user->id;
 			}
 			$result = $db->query($sql);
 
@@ -93,7 +93,7 @@ class box_oauthusers extends ModeleBoxes
 
 					$this->info_box_contents[$i][1] = array('td' => 'align="left" ',
 						'text' => $objp->name . " " . $objp->firstname,
-						'url' => DOL_URL_ROOT."user/fiche.php?id=".$objp->userid);
+						'url' => DOL_URL_ROOT . 'user/fiche.php?id=' . $objp->userid);
 
 					$token = $objp->access_token;
 					// $secret = $objp->secret_token; // Deprecated
@@ -108,9 +108,9 @@ class box_oauthusers extends ModeleBoxes
 							$this->info_box_contents[$i][2] = array('td' => 'align="left"',
 								'text' => $langs->trans("StatusKo"),
 								'url' => dol_buildpath(
-									"/oauthgooglecontacts/initoauth.php",
+									'/oauthgooglecontacts/initoauth.php',
 									1
-								) . "?id=" . $objp->rowid . "&action=delete_token");
+								) . '?id=' . $objp->rowid . '&action=delete_token');
 						}
 					} else {
 						// If token == NULL

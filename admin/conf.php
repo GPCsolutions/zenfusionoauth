@@ -27,12 +27,12 @@
  */
 $res = 0;
 // from standard dolibarr install
-if (! $res && file_exists("../../main.inc.php")) {
-		$res = @include("../../main.inc.php");
+if (! $res && file_exists('../../main.inc.php')) {
+		$res = @include('../../main.inc.php');
 }
 // from custom dolibarr install
-if (! $res && file_exists("../../../main.inc.php")) {
-		$res = @include("../../../main.inc.php");
+if (! $res && file_exists('../../../main.inc.php')) {
+		$res = @include('../../../main.inc.php');
 }
 if (! $res) {
 	die("Main include failed");
@@ -42,9 +42,9 @@ require_once '../lib/zf_oauth.lib.php';
 require_once DOL_DOCUMENT_ROOT . '/core/lib/admin.lib.php';
 require_once DOL_DOCUMENT_ROOT . '/core/class/html.form.class.php';
 
-$langs->load("oauthgooglecontacts@oauthgooglecontacts");
-$langs->load("admin");
-$langs->load("help");
+$langs->load('oauthgooglecontacts@oauthgooglecontacts');
+$langs->load('admin');
+$langs->load('help');
 
 // Access control
 if (! $user->admin) {
@@ -68,7 +68,7 @@ if ($action == 'upload') {
 		$client_secret = $params['web']['client_secret'] ;
 	}
 	if ($error) {
-		$mesg = "<font class=\"error\">" . $langs->trans("BadFile") . "</font>";
+		$mesg = '<font class="error">' . $langs->trans("BadFile") . '</font>';
 	}
 }
 
@@ -81,7 +81,7 @@ if ($action == 'update') {
 
 	$res = dolibarr_set_const(
 		$db,
-		"DOMAIN_NAME",
+		'DOMAIN_NAME',
 		$domain_name,
 		'',
 		0,
@@ -93,7 +93,7 @@ if ($action == 'update') {
 	}
 	$res = dolibarr_set_const(
 		$db,
-		"DOMAIN_ADMIN",
+		'DOMAIN_ADMIN',
 		$domain_admin,
 		'',
 		0,
@@ -105,7 +105,7 @@ if ($action == 'update') {
 	}
 	$res = dolibarr_set_const(
 		$db,
-		"SHARED_CONTACTS",
+		'SHARED_CONTACTS',
 		$shared_contacts_mode,
 		'',
 		0,
@@ -117,7 +117,7 @@ if ($action == 'update') {
 	}
 	if ($error) {
 		$db->rollback();
-		$mesg = "<font class=\"error\">" . $langs->trans("UnexpectedError") . "</font>";
+		$mesg = '<font class="error">' . $langs->trans("UnexpectedError") . '</font>';
 	}
 }
 
@@ -125,7 +125,7 @@ if ($action == 'update') {
 if (($action == 'upload' || $action == 'update') && ! $error) {
 	$res = dolibarr_set_const(
 		$db,
-		"OAUTH2_CLIENT_ID",
+		'OAUTH2_CLIENT_ID',
 		$client_id,
 		'',
 		0,
@@ -137,7 +137,7 @@ if (($action == 'upload' || $action == 'update') && ! $error) {
 	}
 	$res = dolibarr_set_const(
 		$db,
-		"OAUTH2_CLIENT_SECRET",
+		'OAUTH2_CLIENT_SECRET',
 		$client_secret,
 		'',
 		0,
@@ -149,10 +149,10 @@ if (($action == 'upload' || $action == 'update') && ! $error) {
 	}
 	if (! $error) {
 		$db->commit();
-		$mesg = "<font class=\"ok\">" . $langs->trans("Saved") . "</font>";
+		$mesg = '<font class="ok">' . $langs->trans("Saved") . '</font>';
 	} else {
 		$db->rollback();
-		$mesg = "<font class=\"error\">" . $langs->trans("UnexpectedError") . "</font>";
+		$mesg = '<font class="error">' . $langs->trans("UnexpectedError") . '</font>';
 	}
 }
 

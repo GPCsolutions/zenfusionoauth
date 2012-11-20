@@ -26,12 +26,12 @@
  */
 $res = 0;
 // from standard dolibarr install
-if (! $res && file_exists("../../main.inc.php")) {
-		$res = @include("../../main.inc.php");
+if (! $res && file_exists('../../main.inc.php')) {
+		$res = @include('../../main.inc.php');
 }
 // from custom dolibarr install
-if (! $res && file_exists("../../../main.inc.php")) {
-		$res = @include("../../../main.inc.php");
+if (! $res && file_exists('../../../main.inc.php')) {
+		$res = @include('../../../main.inc.php');
 }
 if (! $res) {
 	die("Main include failed");
@@ -39,9 +39,9 @@ if (! $res) {
 
 include_once '../lib/zf_oauth.lib.php';
 
-$langs->load("oauthgooglecontacts@oauthgooglecontacts");
-$langs->load("admin");
-$langs->load("help");
+$langs->load('oauthgooglecontacts@oauthgooglecontacts');
+$langs->load('admin');
+$langs->load('help');
 
 // only readable by admin
 if (! $user->admin) {
