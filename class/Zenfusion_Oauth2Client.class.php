@@ -38,7 +38,7 @@ class Oauth2Client extends Google_Client
 	public function __construct()
 	{
 		global $conf;
-		$callback = dol_buildpath("/oauthgooglecontacts/initoauth.php", 2) . "?action=access";
+		$callback = dol_buildpath('/oauthgooglecontacts/initoauth.php', 2) . '?action=access';
 		parent::__construct();
 		$this->setApplicationName('ZenFusion');
 		$this->setClientId($conf->global->OAUTH2_CLIENT_ID);
