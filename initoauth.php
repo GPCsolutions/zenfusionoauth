@@ -49,6 +49,7 @@ require_once DOL_DOCUMENT_ROOT . '/user/class/user.class.php';
 require_once DOL_DOCUMENT_ROOT . '/core/lib/usergroups.lib.php';
 require_once './class/OauthGoogleContacts.class.php';
 require_once './class/Zenfusion_Oauth2Client.class.php';
+require_once './lib/scopes.lib.php';
 require_once './inc/oauth.inc.php';
 
 $langs->load('oauthgooglecontacts@oauthgooglecontacts');
@@ -244,7 +245,12 @@ echo '</tr>';
 
 // TODO: Scopes
 echo '<tr><td width="25%" valign="top">' . $langs->trans("Services") . '</td>';
-echo '<td colspan="2">' . $oauth->scopes . '</td>';
+echo '<td colspan="2">';
+$services = readScopes(json_decode($oauth->scopes));
+foreach ($services as $s) {
+	echo $s, '<br>';
+}
+echo '</td>';
 echo '</tr>';
 
 // Access Token

@@ -27,7 +27,8 @@ ProjectManager=project manager
 SoftwareEngineer=software engineer
 Ressources=Resources
 # User card tab
-AccessToken=Service access
+Services=Active services
+AccessToken=Services access
 TokenOk=Active
 TokenKo=Inactive
 RequestToken=Enable

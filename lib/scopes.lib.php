@@ -66,3 +66,13 @@ function addScope($scope) {
 		return false;
 	}
 }
+
+// Reads a scopes array and returns a human readable array
+function readScopes($scopes) {
+	$hr_scopes = array();
+	if (in_array(GOOGLE_CONTACTS_SCOPE, $scopes)) {
+		array_push($hr_scopes, 'Contacts');
+	}
+
+	return $hr_scopes;
+}
