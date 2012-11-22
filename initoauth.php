@@ -157,7 +157,6 @@ switch ($action) {
 			$token = $client->getAccessToken();
 			// Save the access token into database
 			dol_syslog($script_file . " CREATE", LOG_DEBUG);
-			$doluser->fetch($id);
 			$oauth->token = $token;
 			$id = $oauth->update($doluser);
 			if ($id < 0) {
