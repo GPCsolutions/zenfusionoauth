@@ -167,8 +167,7 @@ echo '<form enctype="multipart/form-data" method="POST" ',
 	'action="', $_SERVER[PHP_SELF], '">';
 echo '<input type="hidden" name="token" value="', $_SESSION['newtoken'], '">';
 echo '<input type="hidden" name="action" value="upload">';
-// TODO: set max file size to a sensible value
-echo '<input type="hidden" name="MAX_FILE_SIZE" value="30000">';
+echo '<input type="hidden" name="MAX_FILE_SIZE" value="1000">';
 echo '<fieldset>';
 echo '<legend>', $langs->trans("ImportFrom"), ' ';
 echo '<a href="https://code.google.com/apis/console/">';
