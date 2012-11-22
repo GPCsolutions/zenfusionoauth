@@ -42,8 +42,8 @@ class Oauth2Client extends Google_Client
 		$scopes = json_decode($conf->global->ZF_OAUTH2_SCOPES);
 		parent::__construct();
 		$this->setApplicationName('ZenFusion');
-		$this->setClientId($conf->global->OAUTH2_CLIENT_ID);
-		$this->setClientSecret($conf->global->OAUTH2_CLIENT_SECRET);
+		$this->setClientId($conf->global->ZF_OAUTH2_CLIENT_ID);
+		$this->setClientSecret($conf->global->ZF_OAUTH2_CLIENT_SECRET);
 		$this->setRedirectUri($callback);
 		// We want to be able to access the user's data even if he's not connected
 		$this->setAccessType('offline');

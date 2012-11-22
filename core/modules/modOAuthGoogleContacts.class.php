@@ -88,7 +88,7 @@ class modOAuthGoogleContacts extends DolibarrModules
 		);
 		$r++;
 		$this->const[$r] = array(
-			'OAUTH2_CLIENT_ID',
+			'ZF_OAUTH2_CLIENT_ID',
 			'string',
 			'',
 			'Oauth2 client ID',
@@ -98,7 +98,7 @@ class modOAuthGoogleContacts extends DolibarrModules
 		);
 		$r++;
 		$this->const[$r] = array(
-			'OAUTH2_CLIENT_SECRET',
+			'ZF_OAUTH2_CLIENT_SECRET',
 			'string',
 			'',
 			'Oauth2 client secret',

@@ -80,7 +80,7 @@ if ($action == 'update') {
 if (($action == 'upload' || $action == 'update') && ! $error) {
 	$res = dolibarr_set_const(
 		$db,
-		'OAUTH2_CLIENT_ID',
+		'ZF_OAUTH2_CLIENT_ID',
 		$client_id,
 		'',
 		0,
@@ -92,7 +92,7 @@ if (($action == 'upload' || $action == 'update') && ! $error) {
 	}
 	$res = dolibarr_set_const(
 		$db,
-		'OAUTH2_CLIENT_SECRET',
+		'ZF_OAUTH2_CLIENT_SECRET',
 		$client_secret,
 		'',
 		0,
@@ -149,11 +149,11 @@ echo '</tr>';
 echo '<tr>';
 echo '<td>',
 	'<input type="text" name ="clientId" value="',
-	$conf->global->OAUTH2_CLIENT_ID, '" required="required">',
+	$conf->global->ZF_OAUTH2_CLIENT_ID, '" required="required">',
 	'</td>';
 echo '<td>',
 	'<input type="text" name ="clientSecret" value="',
-	$conf->global->OAUTH2_CLIENT_SECRET . '" required="required">',
+	$conf->global->ZF_OAUTH2_CLIENT_SECRET . '" required="required">',
 	'</td>';
 echo '<td>',
 	'<input type="submit" class="button" value ="',
