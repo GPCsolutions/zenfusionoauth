@@ -37,7 +37,7 @@ if (! $res) {
 }
 
 require_once '../core/modules/modOAuthGoogleContacts.class.php';
-include_once '../lib/admin.lib.php';
+require_once '../lib/admin.lib.php';
 
 $langs->load('oauthgooglecontacts@oauthgooglecontacts');
 $langs->load('admin');

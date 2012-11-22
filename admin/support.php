@@ -36,7 +36,7 @@ if (! $res) {
 	die("Main include failed");
 }
 
-include_once '../lib/admin.lib.php';
+require_once '../lib/admin.lib.php';
 
 $langs->load('oauthgooglecontacts@oauthgooglecontacts');
 $langs->load('admin');
