@@ -97,7 +97,6 @@ $doluser->fetch($id);
 $oauth = new OauthGoogleContacts($db);
 /// Google API client
 $client = new Oauth2Client();
-$client->setScopes(GOOGLE_CONTACTS_SCOPE);
 
 // Actions
 switch ($action) {

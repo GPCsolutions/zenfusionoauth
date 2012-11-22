@@ -37,7 +37,9 @@ class Oauth2Client extends Google_Client
 	public function __construct()
 	{
 		global $conf;
-		$callback = dol_buildpath('/oauthgooglecontacts/initoauth.php', 2) . '?action=access';
+		$callback = dol_buildpath('/oauthgooglecontacts/initoauth.php', 2)
+			. '?action=access';
+		$scopes = json_decode($conf->global->ZF_OAUTH2_SCOPES);
 		parent::__construct();
 		$this->setApplicationName('ZenFusion');
 		$this->setClientId($conf->global->OAUTH2_CLIENT_ID);
@@ -45,6 +47,10 @@ class Oauth2Client extends Google_Client
 		$this->setRedirectUri($callback);
 		// We want to be able to access the user's data even if he's not connected
 		$this->setAccessType('offline');
+		// We set the scope against other known modules
+		if ($scopes) {
+			$this->setScopes($scopes);
+		}
 	}
 
 	public function validateToken()
@@ -53,7 +59,9 @@ class Oauth2Client extends Google_Client
 			$this->refreshToken(self::$auth->token['refresh_token']);
 		}
 		// TODO: use CURL instead of FGC
-		return file_get_contents(GOOGLE_TOKEN_INFO . self::$auth->token['access_token']);
+		return file_get_contents(
+			GOOGLE_TOKEN_INFO . self::$auth->token['access_token']
+		);
 	}
 
 	public function createAuthUrl($email = null)

@@ -107,6 +107,18 @@ class modOAuthGoogleContacts extends DolibarrModules
 			1
 		);
 		$r++;
+		// JSON encoded array of scopes set by depending modules using
+		// addScope() from scopes.lib.php
+		$this->const[$r] = array(
+			'ZF_OAUTH2_SCOPES',
+			'string',
+			'',
+			'Oauth2 requested scopes',
+			0,
+			'current',
+			1
+		);
+		$r++;
 		$this->tabs = array(
 			'user:Google:@oauthgooglecontacts'
 				. ':/oauthgooglecontacts/initoauth.php?id=__ID__'

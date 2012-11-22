@@ -78,6 +78,7 @@ class OauthStatus extends ModeleBoxes
 			$sql.= ' LEFT JOIN ' . MAIN_DB_PREFIX . 'oauth_google_contacts as g';
 			$sql.= ' ON g.rowid = u.rowid';
 			if (! $user->admin) {
+				// Shows only self
 				$sql.= ' WHERE u.rowid = ' . $user->id;
 			}
 			$result = $db->query($sql);
