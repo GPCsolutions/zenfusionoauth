@@ -175,7 +175,6 @@ switch ($action) {
 /*
  * View
  */
-// TODO: Check that the module is configured
 
 // Create new form
 $form = new Form($db);

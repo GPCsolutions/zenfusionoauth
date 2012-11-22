@@ -50,7 +50,7 @@ class OauthGoogleContacts extends CommonObject
 	// public $table_element='oauth_google_contacts';	//!< Name of table without prefix where object is stored
 	public $id; ///< object id
 	public $token; ///< Access token
-	public $scopes; ///< TODO: Registered scopes
+	public $scopes; ///< Registered scopes
 	public $email; ///< Registered email
 
 	/**
