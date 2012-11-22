@@ -104,7 +104,15 @@ class OauthStatus extends ModeleBoxes
 					$token = $objp->token;
 
 					if ($token) {
-						$client = new oauth2Client();
+						try {
+							$client = new Oauth2Client();
+						} catch (Oauth2Exception $e) {
+							$this->info_box_contents[$i][2] = array(
+								'td' => 'align="left"',
+								'text' => $langs->trans("NotConfigured")
+							);
+							return;
+						}
 						$client->setAccessToken($token);
 						if ($client->validateToken()) {
 							$this->info_box_contents[$i][2] = array(

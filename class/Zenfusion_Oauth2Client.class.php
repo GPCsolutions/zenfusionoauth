@@ -27,6 +27,15 @@
 dol_include_once('/oauthgooglecontacts/lib/google-api-php-client/src/Google_Client.php');
 dol_include_once('/oauthgooglecontacts/inc/oauth.inc.php');
 
+
+/**
+ * \class Oauth2Exception
+ * \brief Exception for Oauth2Client
+ */
+class Oauth2Exception extends Exception
+{
+}
+
 /**
  * \class Oauth2Client
  * \brief Manages Oauth tokens and requests
@@ -37,6 +46,13 @@ class Oauth2Client extends Google_Client
 	public function __construct()
 	{
 		global $conf;
+
+		// Check if the module is configured
+		if ($conf->global->ZF_OAUTH2_CLIENT_ID === null
+				|| $conf->global->ZF_OAUTH2_CLIENT_SECRET === null ) {
+			throw new Oauth2Exception("Module not configured");
+		}
+
 		$callback = dol_buildpath('/oauthgooglecontacts/initoauth.php', 2)
 			. '?action=access';
 		$scopes = json_decode($conf->global->ZF_OAUTH2_SCOPES);
@@ -45,7 +61,8 @@ class Oauth2Client extends Google_Client
 		$this->setClientId($conf->global->ZF_OAUTH2_CLIENT_ID);
 		$this->setClientSecret($conf->global->ZF_OAUTH2_CLIENT_SECRET);
 		$this->setRedirectUri($callback);
-		// We want to be able to access the user's data even if he's not connected
+		// We want to be able to access the user's data
+		// even if he's not connected
 		$this->setAccessType('offline');
 		// We set the scope against other known modules
 		if ($scopes) {

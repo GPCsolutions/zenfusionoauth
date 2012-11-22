@@ -90,20 +90,24 @@ if (! $conf->global->MAIN_MODULE_OAUTHGOOGLECONTACTS
 /*
  * Controller
  */
-/// Create a new User instance to display tabs
+// Create a new User instance to display tabs
 $doluser = new User($db);
 // Load current user's informations
 $doluser->fetch($id);
-/// Create an object to use llx_oauth_google_contacts table
+// Create an object to use llx_oauth_google_contacts table
 $oauth = new OauthGoogleContacts($db);
-/// Google API client
-$client = new Oauth2Client();
+$oauth->fetch($id);
+// Google API client
+try {
+	$client = new Oauth2Client();
+} catch (Oauth2Exception $e) {
+	// Ignore
+}
 
 // Actions
 switch ($action) {
 	case 'delete_token':
 		// Get token from database
-		$oauth->fetch($id);
 		$token = json_decode($oauth->token);
 		try {
 			$client->revokeToken($token->{'refresh_token'});
@@ -126,7 +130,6 @@ switch ($action) {
 		break;
 	case 'request':
 		// Save the current user to the state
-		$oauth->fetch($id);
 		$oauth->delete($id);
 		$oauth->id = $id;
 		$oauth->scopes = json_encode($client->getScopes());
@@ -154,8 +157,7 @@ switch ($action) {
 			$token = $client->getAccessToken();
 			// Save the access token into database
 			dol_syslog($script_file . " CREATE", LOG_DEBUG);
-			$doluser->fetch($state);
-			$oauth->fetch($state);
+			$doluser->fetch($id);
 			$oauth->token = $token;
 			$id = $oauth->update($doluser);
 			if ($id < 0) {
@@ -166,7 +168,7 @@ switch ($action) {
 				'refresh:0;url=' . dol_buildpath(
 					'/oauthgooglecontacts/initoauth.php',
 					1
-				) . '?id=' . $state. '&ok=true'
+				) . '?id=' . $id. '&ok=true'
 			);
 		}
 }
@@ -181,24 +183,29 @@ $tabname = "Google";
 llxHeader("", $tabname);
 // Token status for the form
 $token_good = true;
+// Services for the form
+$services = readScopes(json_decode($oauth->scopes));
 
 // Verify if the user's got an access token
-$oauth->fetch($id);
-try {
-	$client->setAccessToken($oauth->token);
-} catch (Google_AuthException $e) {
-	$token_good = false;
-}
+if ($client) {
+	try {
+		$client->setAccessToken($oauth->token);
+	} catch (Google_AuthException $e) {
+		$token_good = false;
+	}
 
-// Prepare token status message
-if ($token_good) {
-	$token_status = "TokenOk";
+	// Prepare token status message
+	if ($token_good) {
+		$token_status = "TokenOk";
+	} else {
+		$token_status = "TokenKo";
+	}
 } else {
-	$token_status = "TokenKo";
+	$token_status = "NotConfigured";
 }
 
 /*
- * Affichage onglets
+ * Tab display
  */
 $head = user_prepare_head($doluser);
 $title = $langs->trans("User");
@@ -208,9 +215,13 @@ dol_fiche_head($head, 'tab' . $tabname, $title, 0, 'user');
 // Verify that the user's email adress exists
 if (empty($doluser->email)) {
 	$lock = true;
-	$langs->load('errors');
 	$mesg = '<font class="error">' . $langs->trans("NoEmail") . '</font>';
 }
+if (! $client) {
+	$lock = true;
+	$mesg = '<font class="error">' . $langs->trans("NotConfigured") . '</font>';
+}
+
 /*
  * Common part of the user's tabs
  */
@@ -243,10 +254,9 @@ echo '<tr><td width="25%" valign="top">' . $langs->trans("Email") . '</td>';
 echo '<td colspan="2">' . $doluser->email . '</td>';
 echo '</tr>';
 
-// TODO: Scopes
+// Scopes
 echo '<tr><td width="25%" valign="top">' . $langs->trans("Services") . '</td>';
 echo '<td colspan="2">';
-$services = readScopes(json_decode($oauth->scopes));
 foreach ($services as $s) {
 	echo $s, '<br>';
 }
