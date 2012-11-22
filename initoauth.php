@@ -185,6 +185,7 @@ $token_good = true;
 // Services for the form
 $services = readScopes(json_decode($oauth->scopes));
 
+
 // Verify if the user's got an access token
 if ($client) {
 	try {
@@ -257,7 +258,7 @@ echo '</tr>';
 echo '<tr><td width="25%" valign="top">' . $langs->trans("Services") . '</td>';
 echo '<td colspan="2">';
 foreach ($services as $s) {
-	echo $s, '<br>';
+	echo $langs->trans($s), '<br>';
 }
 echo '</td>';
 echo '</tr>';
@@ -269,7 +270,7 @@ echo '</tr>';
 
 echo '</table>';
 
-if ($ok) {
+if ($ok == 'true') {
 	$mesg = '<font class="ok">' . $langs->trans("OperationSuccessful") . '</font>';
 }
 

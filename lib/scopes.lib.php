@@ -36,7 +36,7 @@ function addScope($scope) {
 	require_once DOL_DOCUMENT_ROOT . '/core/lib/admin.lib.php';
 
 	global $conf, $db;
-	
+
 	$scopes = json_decode($conf->global->ZF_OAUTH2_SCOPES);
 	// This can fail, let's initialize it
 	if ($scopes === null) {
@@ -67,9 +67,20 @@ function addScope($scope) {
 	}
 }
 
-// Reads a scopes array and returns a human readable array
+/**
+ * \brief Reads a scopes array and returns a human readable array
+ * \param array $scopes
+ * \return array
+ */
 function readScopes($scopes) {
 	$hr_scopes = array();
+
+	// Check if we got something
+	if (! $scopes) {
+		array_push($hr_scopes, 'None');
+		return $hr_scopes;
+	}
+
 	if (in_array(GOOGLE_CONTACTS_SCOPE, $scopes)) {
 		array_push($hr_scopes, 'Contacts');
 	}
