@@ -32,7 +32,8 @@
  * @param object $conf The global configueration
  * @return boolean Operation status
  */
-function addScope($scope) {
+function addScope($scope)
+{
 	require_once DOL_DOCUMENT_ROOT . '/core/lib/admin.lib.php';
 
 	global $conf, $db;
@@ -72,7 +73,8 @@ function addScope($scope) {
  * \param array $scopes
  * \return array
  */
-function readScopes($scopes) {
+function readScopes($scopes)
+{
 	$hr_scopes = array();
 
 	// Check if we got something
