@@ -158,8 +158,8 @@ switch ($action) {
 			// Save the access token into database
 			dol_syslog($script_file . " CREATE", LOG_DEBUG);
 			$oauth->token = $token;
-			$id = $oauth->update($doluser);
-			if ($id < 0) {
+			$db_id = $oauth->update($doluser);
+			if ($db_id < 0) {
 				dol_print_error($db, $oauth->error);
 			}
 			// Refresh the page to prevent multiple insertions
