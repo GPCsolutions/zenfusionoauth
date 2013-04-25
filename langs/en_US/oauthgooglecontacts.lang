@@ -46,3 +46,4 @@ ReadPermissionNotAllowed=Read permission not allowed
 NoToken=Not connected
 StatusOk=Enabled
 StatusKo=Disabled
+MissingCURL=php-curl is missing
