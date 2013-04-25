@@ -138,9 +138,18 @@ class modOAuthGoogleContacts extends DolibarrModules
 	 */
 	public function init()
 	{
+		global $langs;
 		$sql = array();
 		$result = $this->load_tables();
-		return $this->_init($sql);
+		if(function_exists('curl_init'))
+		{
+			$this->_init($sql);
+		}
+		else {
+			setEventMessage($langs->trans("MissingCURL"), 'errors');
+			header("Location: modules.php?mode=interfaces");
+			exit;
+		}
 	}
 
 	/**
