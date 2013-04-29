@@ -126,14 +126,19 @@ class OauthStatus extends ModeleBoxes
 								'url' => dol_buildpath(
 									'/oauthgooglecontacts/initoauth.php',
 									1
-								) . '?id=' . $objp->rowid . '&action=delete_token'
+								) . '?id=' . $objp->userid . '&action=delete_token'
 							);
 						}
 					} else {
 						// If token == NULL
 						$this->info_box_contents[$i][2] = array(
 							'td' => 'align="left"',
-							'text' => $langs->trans("NoToken")
+							'text' => $langs->trans("NoToken"),
+							'url' => dol_buildpath(
+									'/oauthgooglecontacts/initoauth.php',
+									1
+								) . '?id=' . $objp->userid . '&action=request'
+                            
 						);
 					}
 					$this->info_box_contents[$i][3] = array(
