@@ -2,8 +2,8 @@
 /*
  * ZenFusion OAuth - A Google Oauth authorization module for Dolibarr
  * Copyright (C) 2011 Sebastien Bodrero <sbodrero@gpcsolutions.fr>
- * Copyright (C) 2011-2012 Raphaël Doursenaud <rdoursenaud@gpcsolutions.fr>
- * Copyright (C) 2012 Cédric Salvador <csalvador@gpcsolutions.fr>
+ * Copyright (C) 2011-2013 Raphaël Doursenaud <rdoursenaud@gpcsolutions.fr>
+ * Copyright (C) 2012-2013 Cédric Salvador <csalvador@gpcsolutions.fr>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -100,6 +100,8 @@ $oauth->fetch($id);
 // Google API client
 try {
 	$client = new Oauth2Client();
+   // var_dump($client);
+  //  exit;
 } catch (Oauth2Exception $e) {
 	// Ignore
 }
@@ -139,37 +141,11 @@ switch ($action) {
 			dol_print_error($db, $oauth->error);
 		}
 		$client->setState($id);
+        $client->setRedirectUri("http://localhost/custom/oauthgooglecontacts/callback.php");
 		// Go to Google for authentication
 		$auth = $client->createAuthUrl($doluser->email);
 		header('Location: ' . $auth);
 		break;
-	case 'access':
-		// Exchange authorization code for an access token
-		if ($callback_error) {
-			$retry = true;
-		} else {
-			try {
-				$client->authenticate();
-			} catch (Google_AuthException $e) {
-				dol_syslog("Access token " . $e->getMessage());
-				$retry = true;
-			}
-			$token = $client->getAccessToken();
-			// Save the access token into database
-			dol_syslog($script_file . " CREATE", LOG_DEBUG);
-			$oauth->token = $token;
-			$db_id = $oauth->update($doluser);
-			if ($db_id < 0) {
-				dol_print_error($db, $oauth->error);
-			}
-			// Refresh the page to prevent multiple insertions
-			header(
-				'refresh:0;url=' . dol_buildpath(
-					'/oauthgooglecontacts/initoauth.php',
-					1
-				) . '?id=' . $id. '&ok=true'
-			);
-		}
 }
 /*
  * View
