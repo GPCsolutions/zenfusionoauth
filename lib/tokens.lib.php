@@ -32,35 +32,35 @@
  */
 function getAllTokens($db, $scope = null)
 {
-	$db_tokens = array();
-	$all_tokens = array();
+    $db_tokens = array();
+    $all_tokens = array();
 
-	$sql = 'SELECT rowid, token, email, scopes ';
-	$sql .= 'FROM ' . MAIN_DB_PREFIX . 'oauth_google_contacts';
-	$resql = $db->query($sql);
-	if ($resql) {
-		if ($db->num_rows($resql)) {
-			$num = $db->num_rows($resql);
-			for ($i = 0; $i < $num; $i ++) {
-				$obj = $db->fetch_object($resql);
-				array_push($db_tokens, $obj);
-			}
-		}
-	}
+    $sql = 'SELECT rowid, token, email, scopes ';
+    $sql .= 'FROM ' . MAIN_DB_PREFIX . 'oauth_google_contacts';
+    $resql = $db->query($sql);
+    if ($resql) {
+        if ($db->num_rows($resql)) {
+            $num = $db->num_rows($resql);
+            for ($i = 0; $i < $num; $i ++) {
+                $obj = $db->fetch_object($resql);
+                array_push($db_tokens, $obj);
+            }
+        }
+    }
 
-	// Filter by scope
-	if ($scope === null) {
-		$all_tokens = $db_tokens;
-	} else {
-		foreach ($db_tokens as $token) {
-			$token_scopes = json_decode($token->scopes);
-			if (in_array($scope, $token_scopes)) {
-				array_push($all_tokens, $token);
-			}
-		}
-	}
+    // Filter by scope
+    if ($scope === null) {
+        $all_tokens = $db_tokens;
+    } else {
+        foreach ($db_tokens as $token) {
+            $token_scopes = json_decode($token->scopes);
+            if (in_array($scope, $token_scopes)) {
+                array_push($all_tokens, $token);
+            }
+        }
+    }
 
-	return $all_tokens;
+    return $all_tokens;
 }
 
 /**
@@ -71,19 +71,20 @@ function getAllTokens($db, $scope = null)
  */
 function getToken($db, $user_id)
 {
-	$sql = 'SELECT rowid, token, email, scopes ';
-	$sql .= 'FROM ' . MAIN_DB_PREFIX . 'oauth_google_contacts ';
-	$sql .= 'WHERE rowid=' . $user_id;
-	$resql = $db->query($sql);
-	if ($resql) {
-		if ($db->num_rows($resql)) {
-			$num = $db->num_rows($resql);
-			for ($i = 0; $i < $num; $i ++) {
-				$token = $db->fetch_object($resql);
-				return $token;
-			}
-		}
-	}
+    $sql = 'SELECT rowid, token, email, scopes ';
+    $sql .= 'FROM ' . MAIN_DB_PREFIX . 'oauth_google_contacts ';
+    $sql .= 'WHERE rowid=' . $user_id;
+    $resql = $db->query($sql);
+    if ($resql) {
+        if ($db->num_rows($resql)) {
+            $num = $db->num_rows($resql);
+            for ($i = 0; $i < $num; $i ++) {
+                $token = $db->fetch_object($resql);
 
-	return false;
+                return $token;
+            }
+        }
+    }
+
+    return false;
 }

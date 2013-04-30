@@ -35,143 +35,144 @@ dol_include_once('/oauthgooglecontacts/class/Zenfusion_Oauth2Client.class.php');
 class OauthStatus extends ModeleBoxes
 {
 
-	public $boxcode = 'Tokenstatus'; ///< Box Codename
-	public $boximg = 'object_user'; ///< Box img
-	public $boxlabel; ///< Box name
-	public $depends = array(); /// Box dependencies
-	public $db; ///< Database handler
-	public $param; ///< optional Parameters
-	public $info_box_head = array(); ///< form informations
-	public $info_box_contents = array(); ///< form informations
+    public $boxcode = 'Tokenstatus'; ///< Box Codename
+    public $boximg = 'object_user'; ///< Box img
+    public $boxlabel; ///< Box name
+    public $depends = array(); /// Box dependencies
+    public $db; ///< Database handler
+    public $param; ///< optional Parameters
+    public $info_box_head = array(); ///< form informations
+    public $info_box_contents = array(); ///< form informations
 
-	/**
-	 *      \brief Constuctor
-	 */
+    /**
+     *      \brief Constuctor
+     */
 
-	public function __construct()
-	{
-		global $langs;
-		$langs->load('oauthgooglecontacts@oauthgooglecontacts');
+    public function __construct()
+    {
+        global $langs;
+        $langs->load('oauthgooglecontacts@oauthgooglecontacts');
 
-		$this->boxlabel = $langs->trans("TokenStatus");
-	}
+        $this->boxlabel = $langs->trans("TokenStatus");
+    }
 
-	/**
-	 *      Load data of box into memory for a future usage
-	 *      \param int $max Maximum number of records to show
-	 */
-	public function loadBox($max = 0)
-	{
-		global $user, $langs, $db, $conf;
-		$langs->load('oauthgooglecontacts@oauthgooglecontacts');
+    /**
+     *      Load data of box into memory for a future usage
+     *      \param int $max Maximum number of records to show
+     */
+    public function loadBox($max = 0)
+    {
+        global $user, $langs, $db, $conf;
+        $langs->load('oauthgooglecontacts@oauthgooglecontacts');
 
-		$this->max = $max;
+        $this->max = $max;
 
-		$this->info_box_head = array(
-			'text' => $langs->trans("TokenStatus", $max)
-		);
+        $this->info_box_head = array(
+            'text' => $langs->trans("TokenStatus", $max)
+        );
 
-		if ($user->rights->societe->lire) {
-			$sql = 'SELECT u.rowid AS userid, u.firstname, u.name, u.email,';
-			$sql.= ' g.rowid, g.token';
-			$sql.= ' FROM ' . MAIN_DB_PREFIX . 'user as u';
-			$sql.= ' LEFT JOIN ' . MAIN_DB_PREFIX . 'oauth_google_contacts as g';
-			$sql.= ' ON g.rowid = u.rowid';
-			if (! $user->admin) {
-				// Shows only self
-				$sql.= ' WHERE u.rowid = ' . $user->id;
-			}
-			$result = $db->query($sql);
+        if ($user->rights->societe->lire) {
+            $sql = 'SELECT u.rowid AS userid, u.firstname, u.name, u.email,';
+            $sql.= ' g.rowid, g.token';
+            $sql.= ' FROM ' . MAIN_DB_PREFIX . 'user as u';
+            $sql.= ' LEFT JOIN ' . MAIN_DB_PREFIX . 'oauth_google_contacts as g';
+            $sql.= ' ON g.rowid = u.rowid';
+            if (! $user->admin) {
+                // Shows only self
+                $sql.= ' WHERE u.rowid = ' . $user->id;
+            }
+            $result = $db->query($sql);
 
-			if ($result) {
-				$num = $db->num_rows($result);
+            if ($result) {
+                $num = $db->num_rows($result);
 
-				$i = 0;
-				while ($i < $num) {
-					$objp = $db->fetch_object($result);
+                $i = 0;
+                while ($i < $num) {
+                    $objp = $db->fetch_object($result);
 
-					$this->info_box_contents[$i][0] = array(
-						'td' => 'align="left" width="20"',
-						'logo' => $this->boximg
-					);
+                    $this->info_box_contents[$i][0] = array(
+                        'td' => 'align="left" width="20"',
+                        'logo' => $this->boximg
+                    );
 
-					$this->info_box_contents[$i][1] = array(
-						'td' => 'align="left" ',
-						'text' => $objp->name . " " . $objp->firstname,
-						'url' => DOL_URL_ROOT . 'user/fiche.php?id=' . $objp->userid
-					);
+                    $this->info_box_contents[$i][1] = array(
+                        'td' => 'align="left" ',
+                        'text' => $objp->name . " " . $objp->firstname,
+                        'url' => DOL_URL_ROOT . 'user/fiche.php?id=' . $objp->userid
+                    );
 
-					$token = $objp->token;
+                    $token = $objp->token;
 
-					if ($token) {
-						try {
-							$client = new Oauth2Client();
-						} catch (Oauth2Exception $e) {
-							$this->info_box_contents[$i][2] = array(
-								'td' => 'align="left"',
-								'text' => $langs->trans("NotConfigured")
-							);
-							return;
-						}
-						$client->setAccessToken($token);
-						if ($client->validateToken()) {
-							$this->info_box_contents[$i][2] = array(
-								'td' => 'align="left"',
-								'text' => $langs->trans("StatusOk")
-							);
-						} else {
-							$this->info_box_contents[$i][2] = array(
-								'td' => 'align="left"',
-								'text' => $langs->trans("StatusKo"),
-								'url' => dol_buildpath(
-									'/oauthgooglecontacts/initoauth.php',
-									1
-								) . '?id=' . $objp->userid . '&action=delete_token'
-							);
-						}
-					} else {
-						// If token == NULL
-						$this->info_box_contents[$i][2] = array(
-							'td' => 'align="left"',
-							'text' => $langs->trans("NoToken"),
-							'url' => dol_buildpath(
-									'/oauthgooglecontacts/initoauth.php',
-									1
-								) . '?id=' . $objp->userid . '&action=request'
-                            
-						);
-					}
-					$this->info_box_contents[$i][3] = array(
-						'td' => 'align="right"',
-						'text' => $objp->email
-					);
+                    if ($token) {
+                        try {
+                            $client = new Oauth2Client();
+                        } catch (Oauth2Exception $e) {
+                            $this->info_box_contents[$i][2] = array(
+                                'td' => 'align="left"',
+                                'text' => $langs->trans("NotConfigured")
+                            );
 
-					$i ++;
-				}
+                            return;
+                        }
+                        $client->setAccessToken($token);
+                        if ($client->validateToken()) {
+                            $this->info_box_contents[$i][2] = array(
+                                'td' => 'align="left"',
+                                'text' => $langs->trans("StatusOk")
+                            );
+                        } else {
+                            $this->info_box_contents[$i][2] = array(
+                                'td' => 'align="left"',
+                                'text' => $langs->trans("StatusKo"),
+                                'url' => dol_buildpath(
+                                    '/oauthgooglecontacts/initoauth.php',
+                                    1
+                                ) . '?id=' . $objp->userid . '&action=delete_token'
+                            );
+                        }
+                    } else {
+                        // If token == NULL
+                        $this->info_box_contents[$i][2] = array(
+                            'td' => 'align="left"',
+                            'text' => $langs->trans("NoToken"),
+                            'url' => dol_buildpath(
+                                    '/oauthgooglecontacts/initoauth.php',
+                                    1
+                                ) . '?id=' . $objp->userid . '&action=request'
 
-				if ($num == 0) {
-						$this->info_box_contents[$i][0] = array(
-							'td' => 'align="center"',
-							'text' => $langs->trans("NoUserFound")
-						);
-				}
-			} else {
-				$this->info_box_contents[0][0] = array(
-					'td' => 'align="left"',
-					'maxlength' => 500,
-					'text' => ($db->error() . ' sql=' . $sql)
-				);
-			}
-		} else {
-			$this->info_box_contents[0][0] = array(
-				'align' => 'left',
-				'text' => $langs->trans("ReadPermissionNotAllowed")
-			);
-		}
-	}
+                        );
+                    }
+                    $this->info_box_contents[$i][3] = array(
+                        'td' => 'align="right"',
+                        'text' => $objp->email
+                    );
 
-	public function showBox()
-	{
-		parent::showBox($this->info_box_head, $this->info_box_contents);
-	}
+                    $i ++;
+                }
+
+                if ($num == 0) {
+                        $this->info_box_contents[$i][0] = array(
+                            'td' => 'align="center"',
+                            'text' => $langs->trans("NoUserFound")
+                        );
+                }
+            } else {
+                $this->info_box_contents[0][0] = array(
+                    'td' => 'align="left"',
+                    'maxlength' => 500,
+                    'text' => ($db->error() . ' sql=' . $sql)
+                );
+            }
+        } else {
+            $this->info_box_contents[0][0] = array(
+                'align' => 'left',
+                'text' => $langs->trans("ReadPermissionNotAllowed")
+            );
+        }
+    }
+
+    public function showBox()
+    {
+        parent::showBox($this->info_box_head, $this->info_box_contents);
+    }
 }

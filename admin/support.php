@@ -26,14 +26,14 @@
 $res = 0;
 // from standard dolibarr install
 if (! $res && file_exists('../../main.inc.php')) {
-		$res = @include('../../main.inc.php');
+        $res = @include('../../main.inc.php');
 }
 // from custom dolibarr install
 if (! $res && file_exists('../../../main.inc.php')) {
-		$res = @include('../../../main.inc.php');
+        $res = @include('../../../main.inc.php');
 }
 if (! $res) {
-	die("Main include failed");
+    die("Main include failed");
 }
 
 require_once '../lib/admin.lib.php';
@@ -44,7 +44,7 @@ $langs->load('help');
 
 // only readable by admin
 if (! $user->admin) {
-	accessforbidden();
+    accessforbidden();
 }
 
 /*
@@ -55,7 +55,7 @@ if (! $user->admin) {
 llxHeader();
 /// Navigation in the modules
 $linkback = '<a href="' . DOL_URL_ROOT . '/admin/modules.php">'
-	. $langs->trans("BackToModuleList") . '</a>';
+    . $langs->trans("BackToModuleList") . '</a>';
 // Folder icon title
 print_fiche_titre("ZenFusion", $linkback, 'setup');
 
@@ -65,8 +65,8 @@ dol_fiche_head($head, 'help', $langs->trans("Module150Name"), 0, 'oauth@oauthgoo
 
 echo '<a target="_blank" href="http://assistance.gpcsolutions.fr">',
 //	'<img src="../img/logo_assist.png" alt="', $langs->trans("HelpCenter"),'">',
-	$langs->trans("Support"),
-	'</a>',
-	'<br>';
+    $langs->trans("Support"),
+    '</a>',
+    '<br>';
 
 llxFooter();

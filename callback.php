@@ -28,14 +28,14 @@
 $res = 0;
 // from standard dolibarr install
 if (! $res && file_exists('../main.inc.php')) {
-		$res = @include('../main.inc.php');
+        $res = @include('../main.inc.php');
 }
 // from custom dolibarr install
 if (! $res && file_exists('../../main.inc.php')) {
-		$res = @include('../../main.inc.php');
+        $res = @include('../../main.inc.php');
 }
 if (! $res) {
-	die("Main include failed");
+    die("Main include failed");
 }
 
 require_once DOL_DOCUMENT_ROOT . '/user/class/user.class.php';
@@ -60,7 +60,7 @@ $callback_error = GETPOST('error', 'alpha');
 $retry = false; // Do we have an error ?
 // On callback, the state is the user id
 if (! $id) {
-	$id = $state;
+    $id = $state;
 }
 /*
  * Controller
@@ -74,9 +74,9 @@ $oauth = new OauthGoogleContacts($db);
 $oauth->fetch($id);
 // Google API client
 try {
-	$client = new Oauth2Client();
+    $client = new Oauth2Client();
 } catch (Oauth2Exception $e) {
-	// Ignore
+    // Ignore
 }
 if ($callback_error) {
             $retry = true;
@@ -107,4 +107,3 @@ if ($callback_error) {
         }
 $db->close();
 llxFooter();
-?>

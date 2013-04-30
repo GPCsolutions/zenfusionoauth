@@ -35,14 +35,14 @@
 $res = 0;
 // from standard dolibarr install
 if (! $res && file_exists('../main.inc.php')) {
-		$res = @include('../main.inc.php');
+        $res = @include('../main.inc.php');
 }
 // from custom dolibarr install
 if (! $res && file_exists('../../main.inc.php')) {
-		$res = @include('../../main.inc.php');
+        $res = @include('../../main.inc.php');
 }
 if (! $res) {
-	die("Main include failed");
+    die("Main include failed");
 }
 
 require_once DOL_DOCUMENT_ROOT . '/user/class/user.class.php';
@@ -67,24 +67,24 @@ $callback_error = GETPOST('error', 'alpha');
 $retry = false; // Do we have an error ?
 // On callback, the state is the user id
 if (! $id) {
-	$id = $state;
+    $id = $state;
 }
 
 // Security check
 $socid = 0;
 if ($user->societe_id > 0) {
-	$socid = $user->societe_id;
+    $socid = $user->societe_id;
 }
 $feature2 = (($socid && $user->rights->user->self->creer) ? '' : 'user');
 // A user can always read its own card
 if ($user->id == $id) {
-	$feature2 = '';
-	$canreaduser = 1;
+    $feature2 = '';
+    $canreaduser = 1;
 }
 $result = restrictedArea($user, 'user', $id, '&user', $feature2);
 if (! $conf->global->MAIN_MODULE_OAUTHGOOGLECONTACTS
-		|| ($user->id <> $id && ! $canreaduser)) {
-	accessforbidden();
+        || ($user->id <> $id && ! $canreaduser)) {
+    accessforbidden();
 }
 
 /*
@@ -99,53 +99,53 @@ $oauth = new OauthGoogleContacts($db);
 $oauth->fetch($id);
 // Google API client
 try {
-	$client = new Oauth2Client();
+    $client = new Oauth2Client();
    // var_dump($client);
   //  exit;
 } catch (Oauth2Exception $e) {
-	// Ignore
+    // Ignore
 }
 
 // Actions
 switch ($action) {
-	case 'delete_token':
-		// Get token from database
-		$token = json_decode($oauth->token);
-		try {
-			$client->revokeToken($token->{'refresh_token'});
-		} catch (Google_AuthException $e) {
-			dol_syslog("Delete token " . $e->getMessage());
-			// TODO: print message and user panel URL to manually revoke access
-		}
-		// Delete token in database
-		$result = $oauth->delete($id);
-		if ($result < 0) {
-			dol_print_error($db, $oauth->error);
-		}
-		header(
-			'refresh:0;url=' . dol_buildpath(
-				'/oauthgooglecontacts/initoauth.php',
-				1
-			) . '?id=' . $id . '&ok=true'
-		);
+    case 'delete_token':
+        // Get token from database
+        $token = json_decode($oauth->token);
+        try {
+            $client->revokeToken($token->{'refresh_token'});
+        } catch (Google_AuthException $e) {
+            dol_syslog("Delete token " . $e->getMessage());
+            // TODO: print message and user panel URL to manually revoke access
+        }
+        // Delete token in database
+        $result = $oauth->delete($id);
+        if ($result < 0) {
+            dol_print_error($db, $oauth->error);
+        }
+        header(
+            'refresh:0;url=' . dol_buildpath(
+                '/oauthgooglecontacts/initoauth.php',
+                1
+            ) . '?id=' . $id . '&ok=true'
+        );
 
-		break;
-	case 'request':
-		// Save the current user to the state
-		$oauth->delete($id);
-		$oauth->id = $id;
-		$oauth->scopes = json_encode($client->getScopes());
-		$oauth->email = $doluser->email;
-		$req = $oauth->create($doluser);
-		if ($req < 0) {
-			dol_print_error($db, $oauth->error);
-		}
-		$client->setState($id);
+        break;
+    case 'request':
+        // Save the current user to the state
+        $oauth->delete($id);
+        $oauth->id = $id;
+        $oauth->scopes = json_encode($client->getScopes());
+        $oauth->email = $doluser->email;
+        $req = $oauth->create($doluser);
+        if ($req < 0) {
+            dol_print_error($db, $oauth->error);
+        }
+        $client->setState($id);
         $client->setRedirectUri("http://localhost/custom/oauthgooglecontacts/callback.php");
-		// Go to Google for authentication
-		$auth = $client->createAuthUrl($doluser->email);
-		header('Location: ' . $auth);
-		break;
+        // Go to Google for authentication
+        $auth = $client->createAuthUrl($doluser->email);
+        header('Location: ' . $auth);
+        break;
 }
 /*
  * View
@@ -160,23 +160,22 @@ $token_good = true;
 // Services for the form
 $services = readScopes(json_decode($oauth->scopes));
 
-
 // Verify if the user's got an access token
 if ($client) {
-	try {
-		$client->setAccessToken($oauth->token);
-	} catch (Google_AuthException $e) {
-		$token_good = false;
-	}
+    try {
+        $client->setAccessToken($oauth->token);
+    } catch (Google_AuthException $e) {
+        $token_good = false;
+    }
 
-	// Prepare token status message
-	if ($token_good) {
-		$token_status = "TokenOk";
-	} else {
-		$token_status = "TokenKo";
-	}
+    // Prepare token status message
+    if ($token_good) {
+        $token_status = "TokenOk";
+    } else {
+        $token_status = "TokenKo";
+    }
 } else {
-	$token_status = "NotConfigured";
+    $token_status = "NotConfigured";
 }
 
 /*
@@ -189,12 +188,12 @@ dol_fiche_head($head, 'tab' . $tabname, $title, 0, 'user');
 
 // Verify that the user's email adress exists
 if (empty($doluser->email)) {
-	$lock = true;
-	$mesg = '<font class="error">' . $langs->trans("NoEmail") . '</font>';
+    $lock = true;
+    $mesg = '<font class="error">' . $langs->trans("NoEmail") . '</font>';
 }
 if (! $client) {
-	$lock = true;
-	$mesg = '<font class="error">' . $langs->trans("NotConfigured") . '</font>';
+    $lock = true;
+    $mesg = '<font class="error">' . $langs->trans("NotConfigured") . '</font>';
 }
 
 /*
@@ -206,10 +205,10 @@ echo '<table class="border" width="100%">';
 echo '<tr><td width="25%" valign="top">' . $langs->trans("Ref") . '</td>';
 echo '<td colspan="2">';
 echo $form->showrefnav(
-	$doluser,
-	'id',
-	'',
-	$user->rights->user->user->lire || $user->admin
+    $doluser,
+    'id',
+    '',
+    $user->rights->user->user->lire || $user->admin
 );
 echo '</td>';
 echo '</tr>';
@@ -233,7 +232,7 @@ echo '</tr>';
 echo '<tr><td width="25%" valign="top">' . $langs->trans("Services") . '</td>';
 echo '<td colspan="2">';
 foreach ($services as $s) {
-	echo $langs->trans($s), '<br>';
+    echo $langs->trans($s), '<br>';
 }
 echo '</td>';
 echo '</tr>';
@@ -246,40 +245,40 @@ echo '</tr>';
 echo '</table>';
 
 if ($ok == 'true') {
-	$mesg = '<font class="ok">' . $langs->trans("OperationSuccessful") . '</font>';
+    $mesg = '<font class="ok">' . $langs->trans("OperationSuccessful") . '</font>';
 }
 
 if (! $lock) {
-	echo '<br>';
-	echo '<form action="initoauth.php" method="get">';
-	if (! $retry) {
-		// if no error
-		if ($client->getAccessToken()) {
-			// if access token exists or/and bad propose to delete it
-			echo '<input type="hidden" name="action" value="delete_token">';
-			echo '<input type="hidden" name="id" value="' . $id . '">';
-			echo '<table class="border" width="100%">';
-			echo '<tr><td colspan="2" align="center">';
-			echo '<input class="button" type="submit" value="' . $langs->trans("DeleteToken") . '">';
-		} elseif (! empty($doluser->email)) {
-			// if no access token propose to request
-			echo '<input type="hidden" name="action" value="request">';
-			echo '<input type="hidden" name="id" value="' . $id . '">';
-			echo '<table class="border" width="100%">';
-			echo '<tr><td colspan="2" align="center">';
-			echo '<input class="button" type="submit" value="' . $langs->trans("RequestToken") . '">';
-		}
-	} else {
-		// We have errors
-		$langs->load("errors");
-		$mesg = '<font class="error">' . $langs->trans("OperationFailed") . '</font>';
-		echo '<input type="hidden" name="action" value="request">';
-		echo '<input type="hidden" name="id" value="' . $id . '">';
-		echo '<table class="border" width="100%">';
-		echo '<tr><td colspan="2" align="center">';
-		echo '<input class="button" type="submit" value="' . $langs->trans("Retry") . '">';
-	}
-	echo '</table></form>';
+    echo '<br>';
+    echo '<form action="initoauth.php" method="get">';
+    if (! $retry) {
+        // if no error
+        if ($client->getAccessToken()) {
+            // if access token exists or/and bad propose to delete it
+            echo '<input type="hidden" name="action" value="delete_token">';
+            echo '<input type="hidden" name="id" value="' . $id . '">';
+            echo '<table class="border" width="100%">';
+            echo '<tr><td colspan="2" align="center">';
+            echo '<input class="button" type="submit" value="' . $langs->trans("DeleteToken") . '">';
+        } elseif (! empty($doluser->email)) {
+            // if no access token propose to request
+            echo '<input type="hidden" name="action" value="request">';
+            echo '<input type="hidden" name="id" value="' . $id . '">';
+            echo '<table class="border" width="100%">';
+            echo '<tr><td colspan="2" align="center">';
+            echo '<input class="button" type="submit" value="' . $langs->trans("RequestToken") . '">';
+        }
+    } else {
+        // We have errors
+        $langs->load("errors");
+        $mesg = '<font class="error">' . $langs->trans("OperationFailed") . '</font>';
+        echo '<input type="hidden" name="action" value="request">';
+        echo '<input type="hidden" name="id" value="' . $id . '">';
+        echo '<table class="border" width="100%">';
+        echo '<tr><td colspan="2" align="center">';
+        echo '<input class="button" type="submit" value="' . $langs->trans("Retry") . '">';
+    }
+    echo '</table></form>';
 }
 
 // Messages

@@ -34,38 +34,40 @@
  */
 function addScope($scope)
 {
-	require_once DOL_DOCUMENT_ROOT . '/core/lib/admin.lib.php';
+    require_once DOL_DOCUMENT_ROOT . '/core/lib/admin.lib.php';
 
-	global $conf, $db;
+    global $conf, $db;
 
-	$scopes = json_decode($conf->global->ZF_OAUTH2_SCOPES);
-	// This can fail, let's initialize it
-	if ($scopes === null) {
-		$scopes = array();
-	}
-	if (! in_array($scope, $scopes)) {
-		array_push($scopes, $scope);
-	}
-	$json = json_encode($scopes);
-	$res = dolibarr_set_const(
-		$db,
-		'ZF_OAUTH2_SCOPES',
-		$json,
-		'',
-		0,
-		'',
-		$conf->entity
-	);
-	if (! $res > 0) {
-		$error++;
-	}
-	if (! $error) {
-		$db->commit();
-		return true;
-	} else {
-		$db->rollback();
-		return false;
-	}
+    $scopes = json_decode($conf->global->ZF_OAUTH2_SCOPES);
+    // This can fail, let's initialize it
+    if ($scopes === null) {
+        $scopes = array();
+    }
+    if (! in_array($scope, $scopes)) {
+        array_push($scopes, $scope);
+    }
+    $json = json_encode($scopes);
+    $res = dolibarr_set_const(
+        $db,
+        'ZF_OAUTH2_SCOPES',
+        $json,
+        '',
+        0,
+        '',
+        $conf->entity
+    );
+    if (! $res > 0) {
+        $error++;
+    }
+    if (! $error) {
+        $db->commit();
+
+        return true;
+    } else {
+        $db->rollback();
+
+        return false;
+    }
 }
 
 /**
@@ -75,17 +77,18 @@ function addScope($scope)
  */
 function readScopes($scopes)
 {
-	$hr_scopes = array();
+    $hr_scopes = array();
 
-	// Check if we got something
-	if (! $scopes) {
-		array_push($hr_scopes, 'None');
-		return $hr_scopes;
-	}
+    // Check if we got something
+    if (! $scopes) {
+        array_push($hr_scopes, 'None');
 
-	if (in_array(GOOGLE_CONTACTS_SCOPE, $scopes)) {
-		array_push($hr_scopes, 'Contacts');
-	}
+        return $hr_scopes;
+    }
 
-	return $hr_scopes;
+    if (in_array(GOOGLE_CONTACTS_SCOPE, $scopes)) {
+        array_push($hr_scopes, 'Contacts');
+    }
+
+    return $hr_scopes;
 }

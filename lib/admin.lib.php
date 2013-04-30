@@ -30,29 +30,29 @@
  */
 function zfPrepareHead()
 {
-	global $langs, $conf, $user;
-	$h = 0;
-	$head = array();
+    global $langs, $conf, $user;
+    $h = 0;
+    $head = array();
 
-	$head[$h][0] = dol_buildpath("/oauthgooglecontacts/admin/conf.php", 1);
-	$head[$h][1] = $langs->trans("Config");
-	$head[$h][2] = 'conf';
-	$h ++;
+    $head[$h][0] = dol_buildpath("/oauthgooglecontacts/admin/conf.php", 1);
+    $head[$h][1] = $langs->trans("Config");
+    $head[$h][2] = 'conf';
+    $h ++;
 
-	if ($conf->global->ZF_SUPPORT) {
-		$head[$h][0] = dol_buildpath(
-			"/oauthgooglecontacts/admin/support.php",
-			1
-		);
-		$head[$h][1] = $langs->trans("HelpCenter");
-		$head[$h][2] = 'help';
-		$h ++;
-	}
+    if ($conf->global->ZF_SUPPORT) {
+        $head[$h][0] = dol_buildpath(
+            "/oauthgooglecontacts/admin/support.php",
+            1
+        );
+        $head[$h][1] = $langs->trans("HelpCenter");
+        $head[$h][2] = 'help';
+        $h ++;
+    }
 
-	$head[$h][0] = dol_buildpath("/oauthgooglecontacts/admin/about.php", 1);
-	$head[$h][1] = $langs->trans("About");
-	$head[$h][2] = 'about';
-	$h ++;
+    $head[$h][0] = dol_buildpath("/oauthgooglecontacts/admin/about.php", 1);
+    $head[$h][1] = $langs->trans("About");
+    $head[$h][2] = 'about';
+    $h ++;
 
-	return $head;
+    return $head;
 }
