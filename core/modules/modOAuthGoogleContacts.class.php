@@ -50,131 +50,130 @@ include_once DOL_DOCUMENT_ROOT . '/core/modules/DolibarrModules.class.php';
 class modOAuthGoogleContacts extends DolibarrModules
 {
 
-	/**
-	 * Constructor. Define names, constants,
-	 * directories, boxes, permissions
-	 * \param string $db Database handler
-	 */
-	public function __construct($db)
-	{
-		$this->db = $db;
-		$this->numero = 150;
-		$this->rights_class = 'oauthgooglecontacts';
-		$this->family = "other";
-		$this->name = preg_replace('/^mod/i', '', get_class($this));
-		$this->description = "Oauth authentification for Google APIs";
-		$this->version = '2.0';
-		$this->const_name = 'MAIN_MODULE_' . strtoupper($this->name);
-		$this->special = 1;
-		$this->picto = 'oauth@oauthgooglecontacts';
-		$this->module_parts = array();
-		$this->dirs = array();
-		$this->config_page_url = array("conf.php@oauthgooglecontacts");
-		$this->depends = array();
-		$this->requiredby = array("modGoogleContacts");
-		$this->phpmin = array(5, 3);
-		$this->need_dolibarr_version = array(3, 2);
-		$this->langfiles = array("oauthgooglecontacts@oauthgooglecontacts");
-		$this->const = array();
-		$r = 0;
-		$this->const[$r] = array(
-			'ZF_SUPPORT',
-			'string',
-			'0',
-			'Zenfusion support contract',
-			0,
-			'current',
-			0
-		);
-		$r++;
-		$this->const[$r] = array(
-			'ZF_OAUTH2_CLIENT_ID',
-			'string',
-			'',
-			'Oauth2 client ID',
-			0,
-			'current',
-			1
-		);
-		$r++;
-		$this->const[$r] = array(
-			'ZF_OAUTH2_CLIENT_SECRET',
-			'string',
-			'',
-			'Oauth2 client secret',
-			0,
-			'current',
-			1
-		);
-		$r++;
-		// JSON encoded array of scopes set by depending modules using
-		// addScope() from scopes.lib.php
-		$this->const[$r] = array(
-			'ZF_OAUTH2_SCOPES',
-			'string',
-			'',
-			'Oauth2 requested scopes',
-			0,
-			'current',
-			1
-		);
-		$r++;
-		$this->tabs = array(
-			'user:Google:@oauthgooglecontacts'
-				. ':/oauthgooglecontacts/initoauth.php?id=__ID__'
-		);
-		$this->boxes = array();
-		$this->boxes[0][1] = "OauthStatus@oauthgooglecontacts";
-		$this->rights = array();
-		$this->menus = array();
-	}
+    /**
+     * Constructor. Define names, constants,
+     * directories, boxes, permissions
+     * \param string $db Database handler
+     */
+    public function __construct($db)
+    {
+        $this->db = $db;
+        $this->numero = 150;
+        $this->rights_class = 'oauthgooglecontacts';
+        $this->family = "other";
+        $this->name = preg_replace('/^mod/i', '', get_class($this));
+        $this->description = "Oauth authentification for Google APIs";
+        $this->version = '2.0';
+        $this->const_name = 'MAIN_MODULE_' . strtoupper($this->name);
+        $this->special = 1;
+        $this->picto = 'oauth@oauthgooglecontacts';
+        $this->module_parts = array();
+        $this->dirs = array();
+        $this->config_page_url = array("conf.php@oauthgooglecontacts");
+        $this->depends = array();
+        $this->requiredby = array("modGoogleContacts");
+        $this->phpmin = array(5, 3);
+        $this->need_dolibarr_version = array(3, 2);
+        $this->langfiles = array("oauthgooglecontacts@oauthgooglecontacts");
+        $this->const = array();
+        $r = 0;
+        $this->const[$r] = array(
+            'ZF_SUPPORT',
+            'string',
+            '0',
+            'Zenfusion support contract',
+            0,
+            'current',
+            0
+        );
+        $r++;
+        $this->const[$r] = array(
+            'ZF_OAUTH2_CLIENT_ID',
+            'string',
+            '',
+            'Oauth2 client ID',
+            0,
+            'current',
+            1
+        );
+        $r++;
+        $this->const[$r] = array(
+            'ZF_OAUTH2_CLIENT_SECRET',
+            'string',
+            '',
+            'Oauth2 client secret',
+            0,
+            'current',
+            1
+        );
+        $r++;
+        // JSON encoded array of scopes set by depending modules using
+        // addScope() from scopes.lib.php
+        $this->const[$r] = array(
+            'ZF_OAUTH2_SCOPES',
+            'string',
+            '',
+            'Oauth2 requested scopes',
+            0,
+            'current',
+            1
+        );
+        $r++;
+        $this->tabs = array(
+            'user:Google:@oauthgooglecontacts'
+                . ':/oauthgooglecontacts/initoauth.php?id=__ID__'
+        );
+        $this->boxes = array();
+        $this->boxes[0][1] = "OauthStatus@oauthgooglecontacts";
+        $this->rights = array();
+        $this->menus = array();
+    }
 
-	/**
-	 * \brief Function called when module is enabled.
-	 * The init function add constants, boxes, permissions and menus
-	 * (defined in constructor) into Dolibarr database.
-	 * It also creates data directories.
-	 * \return int 1 if OK, 0 if KO
-	 */
-	public function init()
-	{
-		global $langs;
-		$sql = array();
-		$result = $this->load_tables();
-		if(function_exists('curl_init'))
-		{
-			$this->_init($sql);
-		}
-		else {
-			setEventMessage($langs->trans("MissingCURL"), 'errors');
-			header("Location: modules.php?mode=interfaces");
-			exit;
-		}
-	}
+    /**
+     * \brief Function called when module is enabled.
+     * The init function add constants, boxes, permissions and menus
+     * (defined in constructor) into Dolibarr database.
+     * It also creates data directories.
+     * \return int 1 if OK, 0 if KO
+     */
+    public function init()
+    {
+        global $langs;
+        $sql = array();
+        $result = $this->load_tables();
+        if (function_exists('curl_init')) {
+            $this->_init($sql);
+        } else {
+            setEventMessage($langs->trans("MissingCURL"), 'errors');
+            header("Location: modules.php?mode=interfaces");
+            exit;
+        }
+    }
 
-	/**
-	 * \brief Function called when module is disabled.
-	 * Remove from database constants, boxes and permissions
-	 * from Dolibarr database.
-	 * Data directories are not deleted.
-	 * \return int 1 if OK, 0 if KO
-	 */
-	public function remove()
-	{
-		$sql = array();
-		return $this->_remove($sql);
-	}
+    /**
+     * \brief Function called when module is disabled.
+     * Remove from database constants, boxes and permissions
+     * from Dolibarr database.
+     * Data directories are not deleted.
+     * \return int 1 if OK, 0 if KO
+     */
+    public function remove()
+    {
+        $sql = array();
 
-	/**
-	 * \brief Create tables, keys and data required by module
-	 * Files llx_table1.sql, llx_table1.key.sql llx_data.sql
-	 * with create table, create keys
-	 * and create data commands must be stored in directory /mymodule/sql/
-	 * This function is called by this->init.
-	 *  \return int <=0 if KO, >0 if OK
-	 */
-	public function load_tables()
-	{
-		return $this->_load_tables('/oauthgooglecontacts/sql/');
-	}
+        return $this->_remove($sql);
+    }
+
+    /**
+     * \brief Create tables, keys and data required by module
+     * Files llx_table1.sql, llx_table1.key.sql llx_data.sql
+     * with create table, create keys
+     * and create data commands must be stored in directory /mymodule/sql/
+     * This function is called by this->init.
+     *  \return int <=0 if KO, >0 if OK
+     */
+    public function load_tables()
+    {
+        return $this->_load_tables('/oauthgooglecontacts/sql/');
+    }
 }

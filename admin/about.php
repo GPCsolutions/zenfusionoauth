@@ -26,14 +26,14 @@
 $res = 0;
 // from standard dolibarr install
 if (! $res && file_exists('../../main.inc.php')) {
-		$res = @include('../../main.inc.php');
+        $res = @include('../../main.inc.php');
 }
 // from custom dolibarr install
 if (! $res && file_exists('../../../main.inc.php')) {
-		$res = @include('../../../main.inc.php');
+        $res = @include('../../../main.inc.php');
 }
 if (! $res) {
-	die("Main include failed");
+    die("Main include failed");
 }
 
 require_once '../core/modules/modOAuthGoogleContacts.class.php';
@@ -45,7 +45,7 @@ $langs->load('help');
 
 // only readable by admin
 if (! $user->admin) {
-	accessforbidden();
+    accessforbidden();
 }
 
 $module = new modOAuthGoogleContacts($db);
@@ -58,18 +58,18 @@ $module = new modOAuthGoogleContacts($db);
 llxHeader();
 /// Navigation in the modules
 $linkback = '<a href="' . DOL_URL_ROOT . '/admin/modules.php">'
-	. $langs->trans("BackToModuleList") . '</a>';
+    . $langs->trans("BackToModuleList") . '</a>';
 // Folder icon title
 print_fiche_titre("ZenFusion", $linkback, 'setup');
 
 $head = zfPrepareHead();
 
 dol_fiche_head(
-	$head,
-	'about',
-	$langs->trans("Module150Name"),
-	0,
-	'oauth@oauthgooglecontacts'
+    $head,
+    'about',
+    $langs->trans("Module150Name"),
+    0,
+    'oauth@oauthgooglecontacts'
 );
 
 echo '<h3>', $langs->trans("Module150Name"), '</h3>';

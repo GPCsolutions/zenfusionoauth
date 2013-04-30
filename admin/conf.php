@@ -27,14 +27,14 @@
 $res = 0;
 // from standard dolibarr install
 if (! $res && file_exists('../../main.inc.php')) {
-		$res = @include('../../main.inc.php');
+        $res = @include('../../main.inc.php');
 }
 // from custom dolibarr install
 if (! $res && file_exists('../../../main.inc.php')) {
-		$res = @include('../../../main.inc.php');
+        $res = @include('../../../main.inc.php');
 }
 if (! $res) {
-	die("Main include failed");
+    die("Main include failed");
 }
 
 require_once '../lib/admin.lib.php';
@@ -47,7 +47,7 @@ $langs->load('help');
 
 // Access control
 if (! $user->admin) {
-	accessforbidden();
+    accessforbidden();
 }
 
 // Parameters
@@ -58,59 +58,59 @@ $error = 0; // Error counter
  * Actions
  */
 if ($action == 'upload') {
-	$file = file_get_contents($_FILES['jsonConfig']['tmp_name']);
-	$params = json_decode($file, true);
-	if ($params === null) {
-		$error++;
-	} else {
-		$client_id = $params['web']['client_id'];
-		$client_secret = $params['web']['client_secret'] ;
-	}
-	if ($error) {
-		$mesg = '<font class="error">' . $langs->trans("BadFile") . '</font>';
-	}
+    $file = file_get_contents($_FILES['jsonConfig']['tmp_name']);
+    $params = json_decode($file, true);
+    if ($params === null) {
+        $error++;
+    } else {
+        $client_id = $params['web']['client_id'];
+        $client_secret = $params['web']['client_secret'] ;
+    }
+    if ($error) {
+        $mesg = '<font class="error">' . $langs->trans("BadFile") . '</font>';
+    }
 }
 
 if ($action == 'update') {
-	$client_id = GETPOST('clientId', 'alpha');
-	$client_secret = GETPOST('clientSecret', 'alpha');
+    $client_id = GETPOST('clientId', 'alpha');
+    $client_secret = GETPOST('clientSecret', 'alpha');
 }
 
 // Set constants common to update and upload actions
 if (($action == 'upload' || $action == 'update') && ! $error) {
-	$res = dolibarr_set_const(
-		$db,
-		'ZF_OAUTH2_CLIENT_ID',
-		$client_id,
-		'',
-		0,
-		'',
-		$conf->entity
-	);
-	if (! $res > 0) {
-		$error++;
-	}
-	$res = dolibarr_set_const(
-		$db,
-		'ZF_OAUTH2_CLIENT_SECRET',
-		$client_secret,
-		'',
-		0,
-		'',
-		$conf->entity
-	);
-	if (! $res > 0) {
-		$error++;
-	}
-	if (! $error) {
-		$db->commit();
-		$mesg = '<font class="ok">' . $langs->trans("Saved") . '</font>';
-	} else {
-		$db->rollback();
-		$mesg = '<font class="error">'
-			. $langs->trans("UnexpectedError")
-			. '</font>';
-	}
+    $res = dolibarr_set_const(
+        $db,
+        'ZF_OAUTH2_CLIENT_ID',
+        $client_id,
+        '',
+        0,
+        '',
+        $conf->entity
+    );
+    if (! $res > 0) {
+        $error++;
+    }
+    $res = dolibarr_set_const(
+        $db,
+        'ZF_OAUTH2_CLIENT_SECRET',
+        $client_secret,
+        '',
+        0,
+        '',
+        $conf->entity
+    );
+    if (! $res > 0) {
+        $error++;
+    }
+    if (! $error) {
+        $db->commit();
+        $mesg = '<font class="ok">' . $langs->trans("Saved") . '</font>';
+    } else {
+        $db->rollback();
+        $mesg = '<font class="error">'
+            . $langs->trans("UnexpectedError")
+            . '</font>';
+    }
 }
 
 /**
@@ -120,17 +120,17 @@ llxHeader();
 dol_htmloutput_mesg($msg);
 $form = new Form($db);
 $linkback = '<a href="' . DOL_URL_ROOT . '/admin/modules.php">'
-	. $langs->trans("BackToModuleList") . '</a>';
+    . $langs->trans("BackToModuleList") . '</a>';
 // Folder icon title
 print_fiche_titre("ZenFusion", $linkback, 'setup');
 
 $head = zfPrepareHead();
 dol_fiche_head(
-	$head,
-	'conf',
-	$langs->trans("Module150Name"),
-	0,
-	'oauth@oauthgooglecontacts'
+    $head,
+    'conf',
+    $langs->trans("Module150Name"),
+    0,
+    'oauth@oauthgooglecontacts'
 );
 
 // Error / confirmation messages
@@ -148,23 +148,23 @@ echo '<td></td>';
 echo '</tr>';
 echo '<tr>';
 echo '<td>',
-	'<input type="text" name ="clientId" value="',
-	$conf->global->ZF_OAUTH2_CLIENT_ID, '" required="required">',
-	'</td>';
+    '<input type="text" name ="clientId" value="',
+    $conf->global->ZF_OAUTH2_CLIENT_ID, '" required="required">',
+    '</td>';
 echo '<td>',
-	'<input type="text" name ="clientSecret" value="',
-	$conf->global->ZF_OAUTH2_CLIENT_SECRET . '" required="required">',
-	'</td>';
+    '<input type="text" name ="clientSecret" value="',
+    $conf->global->ZF_OAUTH2_CLIENT_SECRET . '" required="required">',
+    '</td>';
 echo '<td>',
-	'<input type="submit" class="button" value ="',
-	$langs->trans("Save"), '">',
-	'</td>';
+    '<input type="submit" class="button" value ="',
+    $langs->trans("Save"), '">',
+    '</td>';
 echo '</table>';
 echo '</form>';
 
 // Import configuration from google's api console json file
 echo '<form enctype="multipart/form-data" method="POST" ',
-	'action="', $_SERVER[PHP_SELF], '">';
+    'action="', $_SERVER[PHP_SELF], '">';
 echo '<input type="hidden" name="token" value="', $_SESSION['newtoken'], '">';
 echo '<input type="hidden" name="action" value="upload">';
 echo '<input type="hidden" name="MAX_FILE_SIZE" value="1000">';

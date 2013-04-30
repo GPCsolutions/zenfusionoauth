@@ -27,7 +27,6 @@
 dol_include_once('/oauthgooglecontacts/lib/google-api-php-client/src/Google_Client.php');
 dol_include_once('/oauthgooglecontacts/inc/oauth.inc.php');
 
-
 /**
  * \class Oauth2Exception
  * \brief Exception for Oauth2Client
@@ -43,60 +42,60 @@ class Oauth2Exception extends Exception
 class Oauth2Client extends Google_Client
 {
 
-	public function __construct()
-	{
-		global $conf;
+    public function __construct()
+    {
+        global $conf;
 
-		// Check if the module is configured
-		if ($conf->global->ZF_OAUTH2_CLIENT_ID === null
-				|| $conf->global->ZF_OAUTH2_CLIENT_SECRET === null ) {
-			throw new Oauth2Exception("Module not configured");
-		}
+        // Check if the module is configured
+        if ($conf->global->ZF_OAUTH2_CLIENT_ID === null
+                || $conf->global->ZF_OAUTH2_CLIENT_SECRET === null) {
+            throw new Oauth2Exception("Module not configured");
+        }
 
-		$callback = dol_buildpath('/oauthgooglecontacts/initoauth.php', 2)
-			. '?action=access';
-		$scopes = json_decode($conf->global->ZF_OAUTH2_SCOPES);
-		parent::__construct();
-		$this->setApplicationName('ZenFusion');
-		$this->setClientId($conf->global->ZF_OAUTH2_CLIENT_ID);
-		$this->setClientSecret($conf->global->ZF_OAUTH2_CLIENT_SECRET);
-		$this->setRedirectUri($callback);
-		// We want to be able to access the user's data
-		// even if he's not connected
-		$this->setAccessType('offline');
-		// We set the scope against other known modules
-		if ($scopes) {
-			$this->setScopes($scopes);
-		}
-	}
+        $callback = dol_buildpath('/oauthgooglecontacts/initoauth.php', 2)
+            . '?action=access';
+        $scopes = json_decode($conf->global->ZF_OAUTH2_SCOPES);
+        parent::__construct();
+        $this->setApplicationName('ZenFusion');
+        $this->setClientId($conf->global->ZF_OAUTH2_CLIENT_ID);
+        $this->setClientSecret($conf->global->ZF_OAUTH2_CLIENT_SECRET);
+        $this->setRedirectUri($callback);
+        // We want to be able to access the user's data
+        // even if he's not connected
+        $this->setAccessType('offline');
+        // We set the scope against other known modules
+        if ($scopes) {
+            $this->setScopes($scopes);
+        }
+    }
 
-	public function validateToken()
-	{
-		if ($this->isAccessTokenExpired()) {
-			$this->refreshToken(self::$auth->token['refresh_token']);
-		}
-		// TODO: use CURL instead of FGC
-		return file_get_contents(
-			GOOGLE_TOKEN_INFO . self::$auth->token['access_token']
-		);
-	}
+    public function validateToken()
+    {
+        if ($this->isAccessTokenExpired()) {
+            $this->refreshToken(self::$auth->token['refresh_token']);
+        }
+        // TODO: use CURL instead of FGC
+        return file_get_contents(
+            GOOGLE_TOKEN_INFO . self::$auth->token['access_token']
+        );
+    }
 
-	public function createAuthUrl($email = null)
-	{
-		$url = parent::createAuthUrl();
+    public function createAuthUrl($email = null)
+    {
+        $url = parent::createAuthUrl();
 
-		if ($email) {
-			// Hack to have the email pre-populated
-			// TODO: move url and parameters to an include
-			$url = 'https://accounts.google.com/ServiceLogin'
-				. '?service=lso&ltmpl=popup&Email=' . $email
-				. '&continue=' . urlencode($url);
-		}
+        if ($email) {
+            // Hack to have the email pre-populated
+            // TODO: move url and parameters to an include
+            $url = 'https://accounts.google.com/ServiceLogin'
+                . '?service=lso&ltmpl=popup&Email=' . $email
+                . '&continue=' . urlencode($url);
+        }
 
-		return $url;
-	}
-	public function getScopes()
-	{
-		return $this->scopes;
-	}
+        return $url;
+    }
+    public function getScopes()
+    {
+        return $this->scopes;
+    }
 }
