@@ -21,7 +21,7 @@
 
 /**
  * \file admin/conf.php
- * \ingroup oauthgooglecontacts
+ * \ingroup zenfusionoauth
  * \brief Module configuration page
  */
 $res = 0;
@@ -41,7 +41,7 @@ require_once '../lib/admin.lib.php';
 require_once DOL_DOCUMENT_ROOT . '/core/lib/admin.lib.php';
 require_once DOL_DOCUMENT_ROOT . '/core/class/html.form.class.php';
 
-$langs->load('oauthgooglecontacts@oauthgooglecontacts');
+$langs->load('zenfusionoauth@zenfusionoauth');
 $langs->load('admin');
 $langs->load('help');
 
@@ -130,7 +130,7 @@ dol_fiche_head(
     'conf',
     $langs->trans("Module150Name"),
     0,
-    'oauth@oauthgooglecontacts'
+    'oauth@zenfusionoauth'
 );
 
 // Error / confirmation messages

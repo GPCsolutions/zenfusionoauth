@@ -20,7 +20,7 @@
 
 /**
  * \file lib/admin.lib.php
- * \ingroup oauthgooglecontacts
+ * \ingroup zenfusionoauth
  * \brief Module functions library
  */
 
@@ -34,14 +34,14 @@ function zfPrepareHead()
     $h = 0;
     $head = array();
 
-    $head[$h][0] = dol_buildpath("/oauthgooglecontacts/admin/conf.php", 1);
+    $head[$h][0] = dol_buildpath("/zenfusionoauth/admin/conf.php", 1);
     $head[$h][1] = $langs->trans("Config");
     $head[$h][2] = 'conf';
     $h ++;
 
     if ($conf->global->ZF_SUPPORT) {
         $head[$h][0] = dol_buildpath(
-            "/oauthgooglecontacts/admin/support.php",
+            "/zenfusionoauth/admin/support.php",
             1
         );
         $head[$h][1] = $langs->trans("HelpCenter");
@@ -49,7 +49,7 @@ function zfPrepareHead()
         $h ++;
     }
 
-    $head[$h][0] = dol_buildpath("/oauthgooglecontacts/admin/about.php", 1);
+    $head[$h][0] = dol_buildpath("/zenfusionoauth/admin/about.php", 1);
     $head[$h][1] = $langs->trans("About");
     $head[$h][2] = 'about';
     $h ++;

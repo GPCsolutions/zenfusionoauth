@@ -19,7 +19,7 @@
 
 /**
  * \file lib/scopes.lib.php
- * \ingroup oauthgooglecontacts
+ * \ingroup zenfusionoauth
  * \brief Oauth scopes functions library
  */
 

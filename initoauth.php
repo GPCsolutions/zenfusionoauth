@@ -27,7 +27,7 @@
  * - token creation and authorization,
  * - token revocation and deletion.
  *
- * \ingroup oauthgooglecontacts
+ * \ingroup zenfusionoauth
  * \authors Sebastien Bodrero <sbodrero@gpcsolutions.fr>
  * \authors Raphaël Doursenaud <rdoursenaud@gpcsolutions.fr>
  * \authors Cédric Salvador <csalvador@gpcsolutions.fr>
@@ -47,12 +47,12 @@ if (! $res) {
 
 require_once DOL_DOCUMENT_ROOT . '/user/class/user.class.php';
 require_once DOL_DOCUMENT_ROOT . '/core/lib/usergroups.lib.php';
-require_once './class/OauthGoogleContacts.class.php';
+require_once './class/ZenFusionOAuth.class.php';
 require_once './class/Zenfusion_Oauth2Client.class.php';
 require_once './lib/scopes.lib.php';
 require_once './inc/oauth.inc.php';
 
-$langs->load('oauthgooglecontacts@oauthgooglecontacts');
+$langs->load('zenfusionoauth@zenfusionoauth');
 $langs->load('admin');
 $langs->load('users');
 
@@ -82,7 +82,7 @@ if ($user->id == $id) {
     $canreaduser = 1;
 }
 $result = restrictedArea($user, 'user', $id, '&user', $feature2);
-if (! $conf->global->MAIN_MODULE_OAUTHGOOGLECONTACTS
+if (! $conf->global->MAIN_MODULE_ZENFUSIONOAUTH
         || ($user->id <> $id && ! $canreaduser)) {
     accessforbidden();
 }
@@ -95,7 +95,7 @@ $doluser = new User($db);
 // Load current user's informations
 $doluser->fetch($id);
 // Create an object to use llx_oauth_google_contacts table
-$oauth = new OauthGoogleContacts($db);
+$oauth = new ZenFusionOAuth($db);
 $oauth->fetch($id);
 // Google API client
 try {
@@ -124,7 +124,7 @@ switch ($action) {
         }
         header(
             'refresh:0;url=' . dol_buildpath(
-                '/oauthgooglecontacts/initoauth.php',
+                '/zenfusionoauth/initoauth.php',
                 1
             ) . '?id=' . $id . '&ok=true'
         );
@@ -141,7 +141,7 @@ switch ($action) {
             dol_print_error($db, $oauth->error);
         }
         $client->setState($id);
-        $client->setRedirectUri("http://localhost/custom/oauthgooglecontacts/callback.php");
+        $client->setRedirectUri("http://localhost/custom/zenfusionoauth/callback.php");
         // Go to Google for authentication
         $auth = $client->createAuthUrl($doluser->email);
         header('Location: ' . $auth);
