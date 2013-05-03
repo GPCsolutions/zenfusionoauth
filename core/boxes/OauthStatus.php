@@ -21,12 +21,12 @@
 /**
  *  \file       core/boxes/OauthStatus.php
  *  \brief      Token status box
- *  \ingroup oauthgooglecontacts
+ *  \ingroup zenfusionoauth
  *  \authors Sebastien Bodrero <sbodrero@gpcsolutions.fr>
  *  \authors Raphaël Doursenaud <rdoursenaud@gpcsolutions.fr>
  */
 include_once DOL_DOCUMENT_ROOT . '/core/boxes/modules_boxes.php';
-dol_include_once('/oauthgooglecontacts/class/Zenfusion_Oauth2Client.class.php');
+dol_include_once('/zenfusionoauth/class/Zenfusion_Oauth2Client.class.php');
 
 /**
  * \class OauthStatus
@@ -51,7 +51,7 @@ class OauthStatus extends ModeleBoxes
     public function __construct()
     {
         global $langs;
-        $langs->load('oauthgooglecontacts@oauthgooglecontacts');
+        $langs->load('zenfusionoauth@zenfusionoauth');
 
         $this->boxlabel = $langs->trans("TokenStatus");
     }
@@ -63,7 +63,7 @@ class OauthStatus extends ModeleBoxes
     public function loadBox($max = 0)
     {
         global $user, $langs, $db, $conf;
-        $langs->load('oauthgooglecontacts@oauthgooglecontacts');
+        $langs->load('zenfusionoauth@zenfusionoauth');
 
         $this->max = $max;
 
@@ -125,7 +125,7 @@ class OauthStatus extends ModeleBoxes
                                 'td' => 'align="left"',
                                 'text' => $langs->trans("StatusKo"),
                                 'url' => dol_buildpath(
-                                    '/oauthgooglecontacts/initoauth.php',
+                                    '/zenfusionoauth/initoauth.php',
                                     1
                                 ) . '?id=' . $objp->userid . '&action=delete_token'
                             );
@@ -136,7 +136,7 @@ class OauthStatus extends ModeleBoxes
                             'td' => 'align="left"',
                             'text' => $langs->trans("NoToken"),
                             'url' => dol_buildpath(
-                                    '/oauthgooglecontacts/initoauth.php',
+                                    '/zenfusionoauth/initoauth.php',
                                     1
                                 ) . '?id=' . $objp->userid . '&action=request'
 

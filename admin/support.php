@@ -20,7 +20,7 @@
 
 /**
  * \file admin/support.php
- * \ingroup oauthgooglecontacts
+ * \ingroup zenfusionoauth
  * \brief Module support page
  */
 $res = 0;
@@ -38,7 +38,7 @@ if (! $res) {
 
 require_once '../lib/admin.lib.php';
 
-$langs->load('oauthgooglecontacts@oauthgooglecontacts');
+$langs->load('zenfusionoauth@zenfusionoauth');
 $langs->load('admin');
 $langs->load('help');
 
@@ -61,7 +61,7 @@ print_fiche_titre("ZenFusion", $linkback, 'setup');
 
 $head = zfPrepareHead();
 
-dol_fiche_head($head, 'help', $langs->trans("Module150Name"), 0, 'oauth@oauthgooglecontacts');
+dol_fiche_head($head, 'help', $langs->trans("Module150Name"), 0, 'oauth@zenfusionoauth');
 
 echo '<a target="_blank" href="http://assistance.gpcsolutions.fr">',
 //	'<img src="../img/logo_assist.png" alt="', $langs->trans("HelpCenter"),'">',

@@ -20,12 +20,12 @@
  * \file class/Zenfusion_Oauth2Client.class.php
  * \brief Oauth2 client for Zenfusion
  *
- * \ingroup oauthgooglecontacts
+ * \ingroup zenfusionoauth
  * \authors Raphaël Doursenaud <rdoursenaud@gpcsolutions.fr>
  */
 
-dol_include_once('/oauthgooglecontacts/lib/google-api-php-client/src/Google_Client.php');
-dol_include_once('/oauthgooglecontacts/inc/oauth.inc.php');
+dol_include_once('/zenfusionoauth/lib/google-api-php-client/src/Google_Client.php');
+dol_include_once('/zenfusionoauth/inc/oauth.inc.php');
 
 /**
  * \class Oauth2Exception
@@ -52,7 +52,7 @@ class Oauth2Client extends Google_Client
             throw new Oauth2Exception("Module not configured");
         }
 
-        $callback = dol_buildpath('/oauthgooglecontacts/initoauth.php', 2)
+        $callback = dol_buildpath('/zenfusionoauth/initoauth.php', 2)
             . '?action=access';
         $scopes = json_decode($conf->global->ZF_OAUTH2_SCOPES);
         parent::__construct();

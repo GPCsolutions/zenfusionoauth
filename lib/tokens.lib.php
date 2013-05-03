@@ -19,7 +19,7 @@
 
 /**
  * \file lib/tokens.lib.php
- * \ingroup oauthgooglecontacts
+ * \ingroup zenfusionoauth
  * \brief Oauth tokens functions library
  */
 

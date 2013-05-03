@@ -19,7 +19,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 /**
- * \file class/OauthGoogleContacts.class.php
+ * \file class/ZenFusionOAuth.class.php
  * \brief CRUD for oauth_google_contacts
  *
  * Creates/Reads/Updates/Deletes access token and secret token
@@ -28,7 +28,7 @@
  * \remarks Mostly automatically generated
  *
  *
- * \ingroup oauthgooglecontacts
+ * \ingroup zenfusionoauth
  * \authors Sebastien Bodrero <sbodrero@gpcsolutions.fr>
  * \authors Raphaël Doursenaud <rdoursenaud@gpcsolutions.fr>
  * \authors Cédric Salvador <csalvador@gpcsolutions.fr>
@@ -37,10 +37,10 @@
 require_once DOL_DOCUMENT_ROOT . '/core/class/commonobject.class.php';
 
 /**
- * \class OauthGoogleContacts
+ * \class ZenFusionOAuth
  * \brief Manages Access and Secret tokens for each user
  */
-class OauthGoogleContacts extends CommonObject
+class ZenFusionOAuth extends CommonObject
 {
     public $db; //!< To store db handler
     public $error; //!< To return error code (or message)
@@ -314,7 +314,7 @@ class OauthGoogleContacts extends CommonObject
     {
         global $user, $langs;
         $error = 0;
-        $object = new OauthGoogleContacts($this->db);
+        $object = new ZenFusionOAuth($this->db);
         $this->db->begin();
         // Load source object
         $object->fetch($fromid);

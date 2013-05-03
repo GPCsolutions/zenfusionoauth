@@ -20,7 +20,7 @@
 
 /**
  * \file admin/about.php
- * \ingroup oauthgooglecontacts
+ * \ingroup zenfusionoauth
  * \brief Module about page
  */
 $res = 0;
@@ -36,10 +36,10 @@ if (! $res) {
     die("Main include failed");
 }
 
-require_once '../core/modules/modOAuthGoogleContacts.class.php';
+require_once '../core/modules/modZenFusionOAuth.class.php';
 require_once '../lib/admin.lib.php';
 
-$langs->load('oauthgooglecontacts@oauthgooglecontacts');
+$langs->load('zenfusionoauth@zenfusionoauth');
 $langs->load('admin');
 $langs->load('help');
 
@@ -48,7 +48,7 @@ if (! $user->admin) {
     accessforbidden();
 }
 
-$module = new modOAuthGoogleContacts($db);
+$module = new modZenFusionOAuth($db);
 
 /*
  * View
@@ -69,7 +69,7 @@ dol_fiche_head(
     'about',
     $langs->trans("Module150Name"),
     0,
-    'oauth@oauthgooglecontacts'
+    'oauth@zenfusionoauth'
 );
 
 echo '<h3>', $langs->trans("Module150Name"), '</h3>';

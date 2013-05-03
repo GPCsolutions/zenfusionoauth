@@ -21,7 +21,7 @@
  * \file inc/oauth.inc.php
  * \brief Oauth constants
  *
- * \ingroup oauthgooglecontacts
+ * \ingroup zenfusionoauth
  * \authors Sebastien Bodrero <sbodrero@gpcsolutions.fr>
  * \authors Raphaël Doursenaud <rdoursenaud@gpcsolutions.fr>
  */

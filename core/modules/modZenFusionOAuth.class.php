@@ -19,7 +19,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 /**
- * \defgroup oauthgooglecontacts Module Zenfusion OAuth
+ * \defgroup zenfusionoauth Module Zenfusion OAuth
  * \brief Zenfusion Oauth module for Dolibarr
  *
  * Manages the Oauth authentication process for Google contact API.
@@ -31,12 +31,12 @@
  *
  */
 /**
- * \file core/modules/modOAuthGoogleContacts.class.php
+ * \file core/modules/modZenFusionOAuth.class.php
  * \brief Zenfusion OAuth module
  *
  * Declares and initializes the Google contacts OAuth module in Dolibarr
  *
- * \ingroup oauthgooglecontacts
+ * \ingroup zenfusionoauth
  * \authors Sebastien Bodrero <sbodrero@gpcsolutions.fr>
  * \authors Raphaël Doursenaud <rdoursenaud@gpcsolutions.fr>
  * \authors Cédric Salvador <csalvador@gpcsolutions.fr>
@@ -44,10 +44,10 @@
 include_once DOL_DOCUMENT_ROOT . '/core/modules/DolibarrModules.class.php';
 
 /**
- * \class modOAuthGoogleContacts
+ * \class modZenFusionOAuth
  * \brief Describes and activates Google contacts OAuth module
  */
-class modOAuthGoogleContacts extends DolibarrModules
+class modZenFusionOAuth extends DolibarrModules
 {
 
     /**
@@ -59,22 +59,22 @@ class modOAuthGoogleContacts extends DolibarrModules
     {
         $this->db = $db;
         $this->numero = 150;
-        $this->rights_class = 'oauthgooglecontacts';
+        $this->rights_class = 'zenfusionoauth';
         $this->family = "other";
         $this->name = preg_replace('/^mod/i', '', get_class($this));
         $this->description = "Oauth authentification for Google APIs";
         $this->version = '2.0';
         $this->const_name = 'MAIN_MODULE_' . strtoupper($this->name);
         $this->special = 1;
-        $this->picto = 'oauth@oauthgooglecontacts';
+        $this->picto = 'oauth@zenfusionoauth';
         $this->module_parts = array();
         $this->dirs = array();
-        $this->config_page_url = array("conf.php@oauthgooglecontacts");
+        $this->config_page_url = array("conf.php@zenfusionoauth");
         $this->depends = array();
         $this->requiredby = array("modGoogleContacts");
         $this->phpmin = array(5, 3);
         $this->need_dolibarr_version = array(3, 2);
-        $this->langfiles = array("oauthgooglecontacts@oauthgooglecontacts");
+        $this->langfiles = array("zenfusionoauth@zenfusionoauth");
         $this->const = array();
         $r = 0;
         $this->const[$r] = array(
@@ -120,11 +120,11 @@ class modOAuthGoogleContacts extends DolibarrModules
         );
         $r++;
         $this->tabs = array(
-            'user:Google:@oauthgooglecontacts'
-                . ':/oauthgooglecontacts/initoauth.php?id=__ID__'
+            'user:Google:@zenfusionoauth'
+                . ':/zenfusionoauth/initoauth.php?id=__ID__'
         );
         $this->boxes = array();
-        $this->boxes[0][1] = "OauthStatus@oauthgooglecontacts";
+        $this->boxes[0][1] = "OauthStatus@zenfusionoauth";
         $this->rights = array();
         $this->menus = array();
     }
@@ -174,6 +174,6 @@ class modOAuthGoogleContacts extends DolibarrModules
      */
     public function load_tables()
     {
-        return $this->_load_tables('/oauthgooglecontacts/sql/');
+        return $this->_load_tables('/zenfusionoauth/sql/');
     }
 }

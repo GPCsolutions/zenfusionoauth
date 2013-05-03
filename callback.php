@@ -21,7 +21,7 @@
  * \file callback.php
  * \brief callback page for OAuth
  *
- * \ingroup oauthgooglecontacts
+ * \ingroup zenfusionoauth
  * \authors Raphaël Doursenaud <rdoursenaud@gpcsolutions.fr>
  * \authors Cédric Salvador <csalvador@gpcsolutions.fr>
  */
@@ -40,12 +40,12 @@ if (! $res) {
 
 require_once DOL_DOCUMENT_ROOT . '/user/class/user.class.php';
 require_once DOL_DOCUMENT_ROOT . '/core/lib/usergroups.lib.php';
-require_once './class/OauthGoogleContacts.class.php';
+require_once './class/ZenFusionOAuth.class.php';
 require_once './class/Zenfusion_Oauth2Client.class.php';
 require_once './lib/scopes.lib.php';
 require_once './inc/oauth.inc.php';
 
-$langs->load('oauthgooglecontacts@oauthgooglecontacts');
+$langs->load('zenfusionoauth@zenfusionoauth');
 $langs->load('admin');
 $langs->load('users');
 
@@ -70,7 +70,7 @@ $doluser = new User($db);
 // Load current user's informations
 $doluser->fetch($id);
 // Create an object to use llx_oauth_google_contacts table
-$oauth = new OauthGoogleContacts($db);
+$oauth = new ZenFusionOAuth($db);
 $oauth->fetch($id);
 // Google API client
 try {
@@ -82,7 +82,7 @@ if ($callback_error) {
             $retry = true;
         } else {
             try {
-                $client->setRedirectUri("http://localhost/custom/oauthgooglecontacts/callback.php");
+                $client->setRedirectUri("http://localhost/custom/zenfusionoauth/callback.php");
                 $client->authenticate();
             } catch (Google_AuthException $e) {
                 dol_syslog("Access token " . $e->getMessage());
@@ -99,7 +99,7 @@ if ($callback_error) {
             // Refresh the page to prevent multiple insertions
             header(
                 'refresh:0;url=' . dol_buildpath(
-                    '/oauthgooglecontacts/initoauth.php',
+                    '/zenfusionoauth/initoauth.php',
                     1
                 ) . '?id=' . $id. '&ok=true'
             );
