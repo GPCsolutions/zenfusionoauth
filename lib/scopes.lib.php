@@ -71,7 +71,7 @@ function addScope($scope)
 }
 
 /**
- * \function addScope
+ * \function removeScope
  * \brief Allows a depending module to delete its scope
  *
  * @param string $scope The scope to delete
