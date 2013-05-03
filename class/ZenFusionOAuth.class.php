@@ -20,10 +20,10 @@
  */
 /**
  * \file class/ZenFusionOAuth.class.php
- * \brief CRUD for oauth_google_contacts
+ * \brief CRUD for zenfusion_oauth
  *
  * Creates/Reads/Updates/Deletes access token and secret token
- * from llx_oauth_google_contacts table.
+ * from llx_zenfusion_oauth table.
  *
  * \remarks Mostly automatically generated
  *
@@ -45,8 +45,8 @@ class ZenFusionOAuth extends CommonObject
     public $db; //!< To store db handler
     public $error; //!< To return error code (or message)
     public $errors = array(); //!< To return several error codes (or messages)
-    // public $element='oauth_google_contacts';			//!< Id that identify managed objects
-    // public $table_element='oauth_google_contacts';	//!< Name of table without prefix where object is stored
+    // public $element='zenfusion_oauth';			//!< Id that identify managed objects
+    // public $table_element='zenfusion_oauth';	//!< Name of table without prefix where object is stored
     public $id; ///< object id
     public $token; ///< Access token
     public $scopes; ///< Registered scopes
@@ -90,7 +90,7 @@ class ZenFusionOAuth extends CommonObject
         // may use an already used value because its internal cursor does not increase when we do
         // an insert with a forced id.
         if (in_array($this->db->type, array('pgsql'))) {
-            $sql = "SELECT MAX(rowid) as maxrowid FROM " . MAIN_DB_PREFIX . "oauth_google_contacts";
+            $sql = "SELECT MAX(rowid) as maxrowid FROM " . MAIN_DB_PREFIX . "zenfusion_oauth";
             $resqlrowid = $this->db->query($sql);
             if ($resqlrowid) {
                 $obj = $this->db->fetch_object($resqlrowid);
@@ -100,7 +100,7 @@ class ZenFusionOAuth extends CommonObject
                     $maxrowid = 1;
                 }
 
-                $sql = "SELECT setval('" . MAIN_DB_PREFIX . "oauth_google_contacts_rowid_seq', " . ($maxrowid) . ")";
+                $sql = "SELECT setval('" . MAIN_DB_PREFIX . "zenfusion_oauth_rowid_seq', " . ($maxrowid) . ")";
                 $resqlrowidset = $this->db->query($sql);
                 if (! $resqlrowidset) {
                     dol_print_error($this->db);
@@ -110,7 +110,7 @@ class ZenFusionOAuth extends CommonObject
             }
         }
 
-        $sql = "INSERT INTO " . MAIN_DB_PREFIX . "oauth_google_contacts(";
+        $sql = "INSERT INTO " . MAIN_DB_PREFIX . "zenfusion_oauth(";
         $sql.= "rowid";
         $sql.= ", token";
         $sql.= ", scopes";
@@ -129,7 +129,7 @@ class ZenFusionOAuth extends CommonObject
             $this->errors[] = "Error " . $this->db->lasterror();
         }
         if (! $error) {
-            $this->id = $this->db->last_insert_id(MAIN_DB_PREFIX . "oauth_google_contacts");
+            $this->id = $this->db->last_insert_id(MAIN_DB_PREFIX . "zenfusion_oauth");
             if (! $notrigger) {
                 // Uncomment this and change MYOBJECT to your own tag if you
                 // want this action call a trigger.
@@ -170,7 +170,7 @@ class ZenFusionOAuth extends CommonObject
         $sql.= " t.token,";
         $sql.= " t.scopes";
         $sql.= ", t.email";
-        $sql.= " FROM " . MAIN_DB_PREFIX . "oauth_google_contacts as t";
+        $sql.= " FROM " . MAIN_DB_PREFIX . "zenfusion_oauth as t";
         $sql.= " WHERE t.rowid = " . $id;
         dol_syslog(get_class($this) . "::fetch sql=" . $sql, LOG_DEBUG);
         $resql = $this->db->query($sql);
@@ -216,7 +216,7 @@ class ZenFusionOAuth extends CommonObject
         // Check parameters
         // Put here code to add control on parameters values
         // Update request
-        $sql = "UPDATE " . MAIN_DB_PREFIX . "oauth_google_contacts SET";
+        $sql = "UPDATE " . MAIN_DB_PREFIX . "zenfusion_oauth SET";
         $sql.= " token=" . (isset($this->token) ? "'" . $this->token . "'"
                     : "null") . ",";
         $sql.= " scopes=" . (isset($this->scopes) ? "'" . $this->scopes . "'"
@@ -268,7 +268,7 @@ class ZenFusionOAuth extends CommonObject
     {
         global $conf, $langs;
         $error = 0;
-        $sql = "DELETE FROM " . MAIN_DB_PREFIX . "oauth_google_contacts";
+        $sql = "DELETE FROM " . MAIN_DB_PREFIX . "zenfusion_oauth";
         $sql.= " WHERE rowid=" . $id;
         $this->db->begin();
         dol_syslog(get_class($this) . "::delete sql=" . $sql);
