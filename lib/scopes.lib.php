@@ -29,7 +29,7 @@
  *
  * @param string $scope The scope to add
  * @param object $db The database handler
- * @param object $conf The global configueration
+ * @param object $conf The global configuration
  * @return boolean Operation status
  */
 function addScope($scope)
@@ -45,6 +45,55 @@ function addScope($scope)
     }
     if (! in_array($scope, $scopes)) {
         array_push($scopes, $scope);
+    }
+    $json = json_encode($scopes);
+    $res = dolibarr_set_const(
+        $db,
+        'ZF_OAUTH2_SCOPES',
+        $json,
+        '',
+        0,
+        '',
+        $conf->entity
+    );
+    if (! $res > 0) {
+        $error++;
+    }
+    if (! $error) {
+        $db->commit();
+
+        return true;
+    } else {
+        $db->rollback();
+
+        return false;
+    }
+}
+
+/**
+ * \function removeScope
+ * \brief Allows a depending module to delete its scope
+ *
+ * @param string $scope The scope to delete
+ * @param object $db The database handler
+ * @param object $conf The global configuration
+ * @return boolean Operation status
+ */
+ 
+function removeScope($scope)
+{
+    require_once DOL_DOCUMENT_ROOT . '/core/lib/admin.lib.php';
+
+    global $conf, $db;
+
+    $scopes = json_decode($conf->global->ZF_OAUTH2_SCOPES);
+    // This can fail, let's initialize it
+    if ($scopes === null) {
+        $scopes = array();
+    }
+    if (in_array($scope, $scopes)) {
+        unset($scopes[array_search($scope, $scopes)]);
+        $scopes = array_values($scopes);
     }
     $json = json_encode($scopes);
     $res = dolibarr_set_const(

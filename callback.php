@@ -69,7 +69,7 @@ if (! $id) {
 $doluser = new User($db);
 // Load current user's informations
 $doluser->fetch($id);
-// Create an object to use llx_oauth_google_contacts table
+// Create an object to use llx_zenfusion_oauth table
 $oauth = new ZenFusionOAuth($db);
 $oauth->fetch($id);
 // Google API client

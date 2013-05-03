@@ -75,7 +75,7 @@ class OauthStatus extends ModeleBoxes
             $sql = 'SELECT u.rowid AS userid, u.firstname, u.name, u.email,';
             $sql.= ' g.rowid, g.token';
             $sql.= ' FROM ' . MAIN_DB_PREFIX . 'user as u';
-            $sql.= ' LEFT JOIN ' . MAIN_DB_PREFIX . 'oauth_google_contacts as g';
+            $sql.= ' LEFT JOIN ' . MAIN_DB_PREFIX . 'zenfusion_oauth as g';
             $sql.= ' ON g.rowid = u.rowid';
             if (! $user->admin) {
                 // Shows only self

@@ -94,7 +94,7 @@ if (! $conf->global->MAIN_MODULE_ZENFUSIONOAUTH
 $doluser = new User($db);
 // Load current user's informations
 $doluser->fetch($id);
-// Create an object to use llx_oauth_google_contacts table
+// Create an object to use llx_zenfusion_oauth table
 $oauth = new ZenFusionOAuth($db);
 $oauth->fetch($id);
 // Google API client
@@ -191,6 +191,10 @@ if (empty($doluser->email)) {
     $lock = true;
     $mesg = '<font class="error">' . $langs->trans("NoEmail") . '</font>';
 }
+// Check if there is a scope
+if($conf->global->ZF_OAUTH2_SCOPES == '[]'){
+    $mesg = '<font class="error">' . $langs->trans("NoScope") . '</font>';
+}
 if (! $client) {
     $lock = true;
     $mesg = '<font class="error">' . $langs->trans("NotConfigured") . '</font>';
@@ -260,7 +264,7 @@ if (! $lock) {
             echo '<table class="border" width="100%">';
             echo '<tr><td colspan="2" align="center">';
             echo '<input class="button" type="submit" value="' . $langs->trans("DeleteToken") . '">';
-        } elseif (! empty($doluser->email)) {
+        } elseif (! empty($doluser->email) && $conf->global->ZF_OAUTH2_SCOPES != '[]') {
             // if no access token propose to request
             echo '<input type="hidden" name="action" value="request">';
             echo '<input type="hidden" name="id" value="' . $id . '">';

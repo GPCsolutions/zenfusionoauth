@@ -36,7 +36,7 @@ function getAllTokens($db, $scope = null)
     $all_tokens = array();
 
     $sql = 'SELECT rowid, token, email, scopes ';
-    $sql .= 'FROM ' . MAIN_DB_PREFIX . 'oauth_google_contacts';
+    $sql .= 'FROM ' . MAIN_DB_PREFIX . 'zenfusion_oauth';
     $resql = $db->query($sql);
     if ($resql) {
         if ($db->num_rows($resql)) {
@@ -72,7 +72,7 @@ function getAllTokens($db, $scope = null)
 function getToken($db, $user_id)
 {
     $sql = 'SELECT rowid, token, email, scopes ';
-    $sql .= 'FROM ' . MAIN_DB_PREFIX . 'oauth_google_contacts ';
+    $sql .= 'FROM ' . MAIN_DB_PREFIX . 'zenfusion_oauth ';
     $sql .= 'WHERE rowid=' . $user_id;
     $resql = $db->query($sql);
     if ($resql) {

@@ -47,3 +47,4 @@ NoToken=Non connecté
 StatusOk=Activée
 StatusKo=Désactivée
 MissingCURL=php-curl n'est pas installé
+NoScope=Ce module ne peut pas fonctionner seul. Voir la liste des modules compatibles sur zenfusion.fr
