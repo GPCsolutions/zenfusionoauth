@@ -102,19 +102,23 @@ class OauthStatus extends ModeleBoxes
                     );
 
                     $token = $objp->token;
-
-                    if ($token) {
+                    if ($objp->rowid) {
                         try {
                             $client = new Oauth2Client();
-                        } catch (Oauth2Exception $e) {
+                            $client->setAccessToken($token);
+                        } catch (Google_AuthException $e) {
                             $this->info_box_contents[$i][2] = array(
                                 'td' => 'align="left"',
-                                'text' => $langs->trans("NotConfigured")
+                                //TODO translate
+                                'text' => $e->getMessage(),//$langs->trans("NotConfigured")
+                                'url' => dol_buildpath(
+                                    '/zenfusionoauth/initoauth.php',
+                                    1
+                                ) . '?id=' . $objp->userid . '&action=delete_token'
                             );
 
                             return;
                         }
-                        $client->setAccessToken($token);
                         if ($client->validateToken()) {
                             $this->info_box_contents[$i][2] = array(
                                 'td' => 'align="left"',
