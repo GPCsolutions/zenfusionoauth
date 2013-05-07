@@ -71,7 +71,7 @@ class modZenFusionOAuth extends DolibarrModules
         $this->dirs = array();
         $this->config_page_url = array("conf.php@zenfusionoauth");
         $this->depends = array();
-        $this->requiredby = array("modGoogleContacts");
+        $this->requiredby = array("modZenFusionContacts");
         $this->phpmin = array(5, 3);
         $this->need_dolibarr_version = array(3, 2);
         $this->langfiles = array("zenfusionoauth@zenfusionoauth");
