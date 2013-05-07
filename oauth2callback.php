@@ -83,7 +83,7 @@ if ($callback_error) {
             $retry = true;
         } else {
             try {
-                $cback= dol_buildpath('/zenfusionoauth/oauth2callback.php', 2);
+                $cback= dol_buildpath('/zenfusionoauth/oauth2callback', 2);
                 $client->setRedirectUri($cback);
                 $client->authenticate();
             } catch (Google_AuthException $e) {
