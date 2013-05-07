@@ -141,7 +141,8 @@ switch ($action) {
             dol_print_error($db, $oauth->error);
         }
         $client->setState($id);
-        $client->setRedirectUri("http://localhost/custom/zenfusionoauth/callback.php");
+        $cback= dol_buildpath('/zenfusionoauth/callback.php', 2);
+        $client->setRedirectUri($cback);
         // Go to Google for authentication
         $auth = $client->createAuthUrl($doluser->email);
         header('Location: ' . $auth);

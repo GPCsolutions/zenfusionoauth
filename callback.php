@@ -1,4 +1,5 @@
 <?php
+
 /*
  * ZenFusion OAuth - A Google Oauth authorization module for Dolibarr
  * Copyright (C) 2011-2013 Raphaël Doursenaud <rdoursenaud@gpcsolutions.fr>
@@ -82,7 +83,8 @@ if ($callback_error) {
             $retry = true;
         } else {
             try {
-                $client->setRedirectUri("http://localhost/custom/zenfusionoauth/callback.php");
+                $cback= dol_buildpath('/zenfusionoauth/callback.php', 2);
+                $client->setRedirectUri($cback);
                 $client->authenticate();
             } catch (Google_AuthException $e) {
                 dol_syslog("Access token " . $e->getMessage());
