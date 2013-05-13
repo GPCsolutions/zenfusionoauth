@@ -100,9 +100,8 @@ $oauth->fetch($id);
 // Google API client
 try {
     $client = new Oauth2Client();
-   // var_dump($client);
-  //  exit;
-} catch (Oauth2Exception $e) {
+    
+} catch (Google_AuthException $e) {
     // Ignore
 }
 
