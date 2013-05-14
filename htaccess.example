@@ -1,3 +1,0 @@
-Options +FollowSymlinks
-RewriteEngine on
-RewriteRule oauth2callback?$ oauth2callback.php [L]
