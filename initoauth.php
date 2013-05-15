@@ -100,9 +100,8 @@ $oauth->fetch($id);
 // Google API client
 try {
     $client = new Oauth2Client();
-   // var_dump($client);
-  //  exit;
-} catch (Oauth2Exception $e) {
+    
+} catch (Google_AuthException $e) {
     // Ignore
 }
 
@@ -196,7 +195,7 @@ if (empty($doluser->email)) {
 if($conf->global->ZF_OAUTH2_SCOPES == '[]'){
     $mesg = '<font class="error">' . $langs->trans("NoScope") . '</font>';
 }
-if (! $client) {
+if (! $client || ! $conf->global->ZF_OAUTH2_CLIENT_ID) {
     $lock = true;
     $mesg = '<font class="error">' . $langs->trans("NotConfigured") . '</font>';
 }
@@ -265,7 +264,7 @@ if (! $lock) {
             echo '<table class="border" width="100%">';
             echo '<tr><td colspan="2" align="center">';
             echo '<input class="button" type="submit" value="' . $langs->trans("DeleteToken") . '">';
-        } elseif (! empty($doluser->email) && $conf->global->ZF_OAUTH2_SCOPES != '[]') {
+        } elseif (! empty($doluser->email) && $conf->global->ZF_OAUTH2_SCOPES != '[]' && $conf->global->ZF_OAUTH2_CLIENT_ID) {
             // if no access token propose to request
             echo '<input type="hidden" name="action" value="request">';
             echo '<input type="hidden" name="id" value="' . $id . '">';
