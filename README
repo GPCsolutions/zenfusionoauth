@@ -4,10 +4,13 @@ Installation des paquets:
 Migration:
     -Ne pas réactiver les modules avant d'avoir exécuté les scripts
     -Executer les scripts sql
-    -Renommer les dossiers des modules(oauthgooglecontacts => zenfusionoauth, 
-    googlecontacts => zenfusioncontacts)
+    -Renommer les dossiers des modules
+    (oauthgooglecontacts => zenfusionoauth,
+     googlecontacts => zenfusioncontacts)
+    -Mettre à jour l'URL de callback vers oauth2callback.php 
+     dans la console Google API.
     
 
 URL-rewriting
     -Nginx: ajouter à nginx.conf la ligne rewrite ^(.*)/oauth2callback$ $1/oauth2callback.php last; dans location /{}
-    -Apache: utiliser le fichier htaccess.exemple fourni dans le module
+    -Apache: utiliser le fichier htaccess.example fourni dans le module
