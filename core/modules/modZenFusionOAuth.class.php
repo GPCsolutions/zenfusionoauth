@@ -58,7 +58,7 @@ class modZenFusionOAuth extends DolibarrModules
     public function __construct($db)
     {
         $this->db = $db;
-        $this->numero = 150;
+        $this->numero = 105001;
         $this->rights_class = 'zenfusionoauth';
         $this->family = "other";
         $this->name = preg_replace('/^mod/i', '', get_class($this));
@@ -71,7 +71,9 @@ class modZenFusionOAuth extends DolibarrModules
         $this->dirs = array();
         $this->config_page_url = array("conf.php@zenfusionoauth");
         $this->depends = array();
-        $this->requiredby = array("modZenFusionContacts");
+        $this->requiredby = array(
+            "modZenFusionContacts",
+            "modZenFusionSSO");
         $this->phpmin = array(5, 3);
         $this->need_dolibarr_version = array(3, 2);
         $this->langfiles = array("zenfusionoauth@zenfusionoauth");
