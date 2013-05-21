@@ -128,7 +128,7 @@ $head = zfPrepareHead();
 dol_fiche_head(
     $head,
     'conf',
-    $langs->trans("Module150Name"),
+    $langs->trans("Module105001Name"),
     0,
     'oauth@zenfusionoauth'
 );
