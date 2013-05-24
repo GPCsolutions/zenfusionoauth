@@ -67,12 +67,12 @@ $head = zfPrepareHead();
 dol_fiche_head(
     $head,
     'about',
-    $langs->trans("Module150Name"),
+    $langs->trans("Module105001Name"),
     0,
     'oauth@zenfusionoauth'
 );
 
-echo '<h3>', $langs->trans("Module150Name"), '</h3>';
+echo '<h3>', $langs->trans("Module105001Name"), '</h3>';
 echo '<em>', $langs->trans("Version"), ' ',
  $module->version, '</em><br>';
 echo '<em>&copy;2011-2012 GPC.solutions<br><em>';
