@@ -3,6 +3,7 @@
  * ZenFusion OAuth - A Google Oauth authorization module for Dolibarr
  * Copyright (C) 2011 Sebastien Bodrero <sbodrero@gpcsolutions.fr>
  * Copyright (C) 2011-2012 Raphaël Doursenaud <rdoursenaud@gpcsolutions.fr>
+ * Copyright (C) 2013 Cédric Salvador <csalvador@gpcsolutions.fr>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -24,10 +25,12 @@
  * \ingroup zenfusionoauth
  * \authors Sebastien Bodrero <sbodrero@gpcsolutions.fr>
  * \authors Raphaël Doursenaud <rdoursenaud@gpcsolutions.fr>
+ * \authors Cédric Salvador <csalvador@gpcsolutions.fr>
  */
 /**
  * Gdata version is mandatory
  */
+ //TODO Put each scope in its own module
 define('GDATA_VERSION', '3.0');
 /**
  * Can be one of full, base or thin
@@ -52,6 +55,7 @@ define(
     'GOOGLE_CONTACTS_BATCH_URI',
     GOOGLE_CONTACTS_URI . '/default/' . GOOGLE_PROJECTION . '/batch'
 );
+define('GOOGLE_AUTH_SCOPE', 'openid profile email');
 /**
  * Token info URI
  */

@@ -1,8 +1,8 @@
 # Dolibarr language file - en_US - ZenFusion OAuth
 CHARSET=UTF-8
 # Module
-Module150Name=ZenFusion OAuth
-Module150Desc=Oauth authentification for Google APIs
+Module105001Name=ZenFusion OAuth
+Module105001Desc=Oauth authentification for Google APIs
 # Admin
 Config=Configuration
 Support=Support
