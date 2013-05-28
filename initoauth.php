@@ -135,6 +135,7 @@ switch ($action) {
         $oauth->id = $id;
         $oauth->scopes = json_encode($client->getScopes());
         $oauth->email = $doluser->email;
+        $oauth->oauth_id = '';
         $req = $oauth->create($doluser);
         if ($req < 0) {
             dol_print_error($db, $oauth->error);

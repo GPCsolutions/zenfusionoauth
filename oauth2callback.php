@@ -26,6 +26,33 @@
  * \authors Raphaël Doursenaud <rdoursenaud@gpcsolutions.fr>
  * \authors Cédric Salvador <csalvador@gpcsolutions.fr>
  */
+ 
+/**
+ *
+ * \brief handles GET requests
+ * \param string $uri
+ * \param Oauth2Client $client
+ * \return string $gmail
+ */
+function getRequest($uri, $client)
+{
+    $get = new Google_HttpRequest($uri, 'GET');
+    $val = $client->getIo()->authenticatedRequest($get);
+    if ($val->getResponseHttpCode() == 401) {
+        $_SESSION['warning'] = 'Error HTTP 401: Unauthorized';
+    }
+    //FIX ME use a library to handle these errors separetely
+    else if($val->getResponseHttpCode() != 401 &&
+            $val->getResponseHttpCode() != 200){
+        $_SESSION['warning'] = 'Unknown HTTP Error';
+    }
+    $rep = $val->getResponseBody();
+    // FIXME: validate response, it might not be what we expect
+    $gmail = json_decode($rep);
+
+    return $gmail;
+}
+    
 $res = 0;
 // from standard dolibarr install
 if (! $res && file_exists('../main.inc.php')) {
@@ -94,6 +121,8 @@ if ($callback_error) {
             // Save the access token into database
             dol_syslog($script_file . " CREATE", LOG_DEBUG);
             $oauth->token = $token;
+            $info = getRequest('https://www.googleapis.com/oauth2/v1/userinfo?access_token='.$token->token, $client);
+            $oauth->oauth_id = $info->id;
             $db_id = $oauth->update($doluser);
             if ($db_id < 0) {
                 dol_print_error($db, $oauth->error);
