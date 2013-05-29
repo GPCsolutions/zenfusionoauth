@@ -43,7 +43,7 @@ function getAllTokens($db, $scope = null)
             $num = $db->num_rows($resql);
             for ($i = 0; $i < $num; $i ++) {
                 $obj = $db->fetch_object($resql);
-                if(json_decode($obj->token)){
+                if (json_decode($obj->token)) {
                     array_push($db_tokens, $obj);
                 }
             }

@@ -79,7 +79,7 @@ function addScope($scope)
  * @param object $conf The global configuration
  * @return boolean Operation status
  */
- 
+
 function removeScope($scope)
 {
     require_once DOL_DOCUMENT_ROOT . '/core/lib/admin.lib.php';
