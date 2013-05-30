@@ -114,7 +114,7 @@ class OauthStatus extends ModeleBoxes
                             $this->info_box_contents[$i][2] = array(
                                 'td' => 'align="left"',
                                 //TODO translate
-                                'text' => $e->getMessage(),//$langs->trans("NotConfigured")
+                                'text' => $langs->trans("Error").": ".$e->getMessage(),//$langs->trans("NotConfigured")
                                 'url' => dol_buildpath(
                                     '/zenfusionoauth/initoauth.php',
                                     1
