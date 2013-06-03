@@ -2,7 +2,7 @@
 /*
  * ZenFusion OAuth - A Google Oauth authorization module for Dolibarr
  * Copyright (C) 2011 Sebastien Bodrero <sbodrero@gpcsolutions.fr>
- * Copyright (C) 2011-2012 Raphaël Doursenaud <rdoursenaud@gpcsolutions.fr>
+ * Copyright (C) 2011-2013 Raphaël Doursenaud <rdoursenaud@gpcsolutions.fr>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -67,15 +67,15 @@ $head = zfPrepareHead();
 dol_fiche_head(
     $head,
     'about',
-    $langs->trans("Module150Name"),
+    $langs->trans("Module105001Name"),
     0,
     'oauth@zenfusionoauth'
 );
 
-echo '<h3>', $langs->trans("Module150Name"), '</h3>';
+echo '<h3>', $langs->trans("Module105001Name"), '</h3>';
 echo '<em>', $langs->trans("Version"), ' ',
  $module->version, '</em><br>';
-echo '<em>&copy;2011-2012 GPC.solutions<br><em>';
+echo '<em>&copy;2011-2013 GPC.solutions<br><em>';
 echo '<a target="_blank" href="http://www.zenfusion.net/">',
  '<img src="../img/logo_zf.png" alt="Logo ZenFusion"></a>';
 
@@ -120,7 +120,7 @@ echo '<ul>',
  'Trademark Pending',
  '</li>',
  '<li>GPC.solutions logo<br>',
- '&copy;2010-2012 GPC.solutions',
+ '&copy;2010-2013 GPC.solutions',
  '</li>',
  '</ul>';
 llxFooter();

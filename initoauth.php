@@ -100,7 +100,7 @@ $oauth->fetch($id);
 // Google API client
 try {
     $client = new Oauth2Client();
-    
+
 } catch (Google_AuthException $e) {
     // Ignore
 }
@@ -193,7 +193,7 @@ if (empty($doluser->email)) {
     $mesg = '<font class="error">' . $langs->trans("NoEmail") . '</font>';
 }
 // Check if there is a scope
-if($conf->global->ZF_OAUTH2_SCOPES == '[]'){
+if ($conf->global->ZF_OAUTH2_SCOPES == '[]') {
     $mesg = '<font class="error">' . $langs->trans("NoScope") . '</font>';
 }
 if (! $client || ! $conf->global->ZF_OAUTH2_CLIENT_ID) {

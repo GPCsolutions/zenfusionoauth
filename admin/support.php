@@ -61,7 +61,7 @@ print_fiche_titre("ZenFusion", $linkback, 'setup');
 
 $head = zfPrepareHead();
 
-dol_fiche_head($head, 'help', $langs->trans("Module150Name"), 0, 'oauth@zenfusionoauth');
+dol_fiche_head($head, 'help', $langs->trans("Module105001Name"), 0, 'oauth@zenfusionoauth');
 
 echo '<a target="_blank" href="http://assistance.gpcsolutions.fr">',
 //	'<img src="../img/logo_assist.png" alt="', $langs->trans("HelpCenter"),'">',
