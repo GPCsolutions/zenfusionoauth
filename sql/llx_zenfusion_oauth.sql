@@ -17,7 +17,8 @@
 -- along with this program.  If not, see <http://www.gnu.org/licenses/>.
 CREATE TABLE IF NOT EXISTS llx_zenfusion_oauth (
   rowid integer NOT NULL primary key,
-  token        VARCHAR(255) NULL,
+  token        TEXT NULL,
   scopes       VARCHAR(255) NULL,
-  email        VARCHAR(255) NULL
+  email        VARCHAR(255) NULL,
+  oauth_id     VARCHAR(255) NULL
 ) ENGINE = InnoDB;

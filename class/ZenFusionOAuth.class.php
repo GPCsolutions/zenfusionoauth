@@ -51,6 +51,7 @@ class ZenFusionOAuth extends CommonObject
     public $token; ///< Access token
     public $scopes; ///< Registered scopes
     public $email; ///< Registered email
+    public $oauth_id; //registered id for oauth
 
     /**
      * \brief Instanciates a new database object
@@ -82,6 +83,9 @@ class ZenFusionOAuth extends CommonObject
         }
         if (isset($this->email)) {
             $this->email = trim($this->email);
+        }
+        if (isset($this->email)) {
+            $this->oauth_d = trim($this->oauth_id);
         }
         // Check parameters
         // Put here code to add control on parameters values
@@ -115,11 +119,13 @@ class ZenFusionOAuth extends CommonObject
         $sql.= ", token";
         $sql.= ", scopes";
         $sql.= ", email";
+        $sql.= ", oauth_id";
         $sql.= ") VALUES (";
         $sql.= " " . (! isset($this->id) ? 'NULL' : "'" . $this->id . "'") . ",";
         $sql.= " " . (! isset($this->token) ? 'NULL' : "'" . $his->token . "'") . ",";
         $sql.= " " . (! isset($this->scopes) ? 'NULL' : "'" . $this->scopes . "'") . "";
         $sql.= ", " . (! isset($this->email) ? 'NULL' : "'" . $this->db->escape($this->email) . "'") . "";
+        $sql.= ", " . (! isset($this->oauth_id ) || $this->oauth_id == '' ? 'NULL' : "'" . $this->oauth_id . "'") . "";
         $sql.= ")";
         $this->db->begin();
         dol_syslog(get_class($this) . "::create sql=" . $sql, LOG_DEBUG);
@@ -170,6 +176,7 @@ class ZenFusionOAuth extends CommonObject
         $sql.= " t.token,";
         $sql.= " t.scopes";
         $sql.= ", t.email";
+        $sql.= ", t.oauth_id";
         $sql.= " FROM " . MAIN_DB_PREFIX . "zenfusion_oauth as t";
         $sql.= " WHERE t.rowid = " . $id;
         dol_syslog(get_class($this) . "::fetch sql=" . $sql, LOG_DEBUG);
@@ -181,6 +188,7 @@ class ZenFusionOAuth extends CommonObject
                 $this->token = $obj->token;
                 $this->scopes = $obj->scopes;
                 $this->email = $obj->email;
+                $this->oauth_id = $obj->oauth_id;
             }
             $this->db->free($resql);
 
@@ -213,6 +221,9 @@ class ZenFusionOAuth extends CommonObject
         if (isset($this->email)) {
             $this->email = trim($this->email);
         }
+        if (isset($this->oauth_id)) {
+            $this->oauth_id = trim($this->oauth_id);
+        }
         // Check parameters
         // Put here code to add control on parameters values
         // Update request
@@ -222,6 +233,8 @@ class ZenFusionOAuth extends CommonObject
         $sql.= " scopes=" . (isset($this->scopes) ? "'" . $this->scopes . "'"
                     : "null") . "";
         $sql.= ", email=" . (isset($this->email) ? "'" . $this->db->escape($this->email) . "'"
+                    : "null") . "";
+        $sql.= ", oauth_id=" . (isset($this->oauth_id) ? "'" . $this->oauth_id . "'"
                     : "null") . "";
         $sql.= " WHERE rowid=" . $this->id;
         $this->db->begin();
@@ -350,5 +363,20 @@ class ZenFusionOAuth extends CommonObject
         $this->id = 0;
         $this->token = '';
         $this->scopes = '';
+    }
+    
+    public function search($email, $oauth_id)
+    {
+        $sql = 'select rowid from '.MAIN_DB_PREFIX.'zenfusion_oauth ';
+        $sql .= 'where email="'.$email.'" and oauth_id="'.$oauth_id.'"';
+        $resql = $this->db->query($sql);
+        if($resql) {
+            $obj = $this->db->fetch_object($resql);
+            $this->db->free($resql);
+            return $obj->rowid;
+        }
+        else {
+            return - 1;
+        }
     }
 }

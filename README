@@ -14,3 +14,6 @@ Migration:
 URL-rewriting
     -Nginx: ajouter à nginx.conf la ligne rewrite ^(.*)/oauth2callback$ $1/oauth2callback.php last; dans location /{}
     -Apache: utiliser le fichier htaccess.example fourni dans le module
+
+Note:
+    -Le module Multicompany n'est pas pris en charge dans cette version.
