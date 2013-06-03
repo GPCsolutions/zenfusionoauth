@@ -55,7 +55,8 @@ define(
     'GOOGLE_CONTACTS_BATCH_URI',
     GOOGLE_CONTACTS_URI . '/default/' . GOOGLE_PROJECTION . '/batch'
 );
-define('GOOGLE_AUTH_SCOPE', 'https://www.googleapis.com/auth/userinfo.email https://www.googleapis.com/auth/userinfo.profile');
+define('GOOGLE_USERINFO_EMAIL_SCOPE', 'https://www.googleapis.com/auth/userinfo.email');
+define('GOOGLE_USERINFO_PROFILE_SCOPE', 'https://www.googleapis.com/auth/userinfo.profile');
 /**
  * Token info URI
  */
