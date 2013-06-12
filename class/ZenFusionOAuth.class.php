@@ -364,18 +364,18 @@ class ZenFusionOAuth extends CommonObject
         $this->token = '';
         $this->scopes = '';
     }
-    
+
     public function search($email, $oauth_id)
     {
         $sql = 'select rowid from '.MAIN_DB_PREFIX.'zenfusion_oauth ';
         $sql .= 'where email="'.$email.'" and oauth_id="'.$oauth_id.'"';
         $resql = $this->db->query($sql);
-        if($resql) {
+        if ($resql) {
             $obj = $this->db->fetch_object($resql);
             $this->db->free($resql);
+
             return $obj->rowid;
-        }
-        else {
+        } else {
             return - 1;
         }
     }
