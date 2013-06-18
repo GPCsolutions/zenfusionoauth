@@ -30,13 +30,14 @@
  * \param string $scope
  * \return array:
  */
-function getAllTokens($db, $scope = null)
+function getAllTokens($db, $scope = null, $filter=null)
 {
     $db_tokens = array();
     $all_tokens = array();
 
     $sql = 'SELECT rowid, token, email, scopes ';
     $sql .= 'FROM ' . MAIN_DB_PREFIX . 'zenfusion_oauth';
+    if($filter) $sql .= ' WHERE '.$filter;
     $resql = $db->query($sql);
     if ($resql) {
         if ($db->num_rows($resql)) {

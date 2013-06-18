@@ -370,7 +370,7 @@ class ZenFusionOAuth extends CommonObject
         $sql = 'select rowid from '.MAIN_DB_PREFIX.'zenfusion_oauth ';
         $sql .= 'where email="'.$email.'" and oauth_id="'.$oauth_id.'"';
         $resql = $this->db->query($sql);
-        if($resql) {
+        if($resql && $this->db->num_rows($resql) > 0) {
             $obj = $this->db->fetch_object($resql);
             $this->db->free($resql);
             return $obj->rowid;

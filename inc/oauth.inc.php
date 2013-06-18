@@ -55,8 +55,15 @@ define(
     'GOOGLE_CONTACTS_BATCH_URI',
     GOOGLE_CONTACTS_URI . '/default/' . GOOGLE_PROJECTION . '/batch'
 );
+/**
+ * ZenFusion SSO scopes
+ **/
 define('GOOGLE_USERINFO_EMAIL_SCOPE', 'https://www.googleapis.com/auth/userinfo.email');
 define('GOOGLE_USERINFO_PROFILE_SCOPE', 'https://www.googleapis.com/auth/userinfo.profile');
+/**
+ * ZenFusion Drive scope
+ **/
+define('GOOGLE_DRIVE_SCOPE', 'https://www.googleapis.com/auth/drive');
 /**
  * Token info URI
  */
