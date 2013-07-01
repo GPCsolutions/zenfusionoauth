@@ -16,7 +16,7 @@
 -- You should have received a copy of the GNU General Public License
 -- along with this program.  If not, see <http://www.gnu.org/licenses/>.
 CREATE TABLE IF NOT EXISTS llx_zenfusion_oauth (
-  rowid integer NOT NULL primary key,
+  rowid integer NOT NULL AUTO_INCREMENT primary key,
   token        TEXT NULL,
   scopes       VARCHAR(255) NULL,
   email        VARCHAR(255) NULL,
