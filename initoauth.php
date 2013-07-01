@@ -187,6 +187,11 @@ $title = $langs->trans("User");
 
 dol_fiche_head($head, 'tab' . $tabname, $title, 0, 'user');
 
+if (!isValidEmail($doluser->email)) {
+    $lock = true;
+    $langs->load("errors");
+    $mesg = '<font class="error">' . $langs->trans("ErrorBadEMail", $doluser->email) . '</font>';
+}
 // Verify that the user's email adress exists
 if (empty($doluser->email)) {
     $lock = true;
@@ -265,7 +270,7 @@ if (! $lock) {
             echo '<table class="border" width="100%">';
             echo '<tr><td colspan="2" align="center">';
             echo '<input class="button" type="submit" value="' . $langs->trans("DeleteToken") . '">';
-        } elseif (! empty($doluser->email) && $conf->global->ZF_OAUTH2_SCOPES != '[]' && $conf->global->ZF_OAUTH2_CLIENT_ID) {
+        } elseif (isValidEmail($doluser->email) && $conf->global->ZF_OAUTH2_SCOPES != '[]' && $conf->global->ZF_OAUTH2_CLIENT_ID) {
             // if no access token propose to request
             echo '<input type="hidden" name="action" value="request">';
             echo '<input type="hidden" name="id" value="' . $id . '">';
