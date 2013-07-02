@@ -73,7 +73,8 @@ class modZenFusionOAuth extends DolibarrModules
         $this->depends = array();
         $this->requiredby = array(
             "modZenFusionContacts",
-            "modZenFusionSSO");
+            "modZenFusionSSO",
+            "modZenFusionDrive");
         $this->phpmin = array(5, 3);
         $this->need_dolibarr_version = array(3, 2);
         $this->langfiles = array("zenfusionoauth@zenfusionoauth");

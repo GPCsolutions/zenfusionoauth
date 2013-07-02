@@ -187,6 +187,11 @@ $title = $langs->trans("User");
 
 dol_fiche_head($head, 'tab' . $tabname, $title, 0, 'user');
 
+if (!isValidEmail($doluser->email)) {
+    $lock = true;
+    $langs->load("errors");
+    $mesg = '<font class="error">' . $langs->trans("ErrorBadEMail", $doluser->email) . '</font>';
+}
 // Verify that the user's email adress exists
 if (empty($doluser->email)) {
     $lock = true;
@@ -204,84 +209,100 @@ if (! $client || ! $conf->global->ZF_OAUTH2_CLIENT_ID) {
 /*
  * Common part of the user's tabs
  */
-echo '<table class="border" width="100%">';
+ 
+ //user->nom and user->prenom are deprecated and won't be supported in the future
+ //so test to make insure compatibility
+if($doluser->nom)
+{
+    $lastname = $doluser->nom;
+} else {
+    $lastname = $doluser->lastname;
+}
+if($doluser->prenom)
+{
+    $firstname = $doluser->prenom;
+} else {
+    $firstname = $doluser->firstname;
+}
+ 
+echo '<table class="border" width="100%">',
 
 // Ref
-echo '<tr><td width="25%" valign="top">' . $langs->trans("Ref") . '</td>';
-echo '<td colspan="2">';
-echo $form->showrefnav(
+     '<tr><td width="25%" valign="top">' , $langs->trans("Ref") , '</td>',
+     '<td colspan="2">',
+     $form->showrefnav(
     $doluser,
     'id',
     '',
     $user->rights->user->user->lire || $user->admin
-);
-echo '</td>';
-echo '</tr>';
+),
+     '</td>',
+     '</tr>',
 
 // Nom
-echo '<tr><td width="25%" valign="top">' . $langs->trans("Lastname") . '</td>';
-echo '<td colspan="2">' . $doluser->nom . '</td>';
-echo '</tr>';
+     '<tr><td width="25%" valign="top">' , $langs->trans("Lastname") , '</td>',
+     '<td colspan="2">' , $lastname , '</td>',
+     '</tr>',
 
 // First name
-echo '<tr><td width="25%" valign="top">' . $langs->trans("Firstname") . '</td>';
-echo '<td colspan="2">' . $doluser->prenom . '</td>';
-echo '</tr>';
+     '<tr><td width="25%" valign="top">' , $langs->trans("Firstname") , '</td>',
+     '<td colspan="2">' . $firstname . '</td>',
+     '</tr>',
 
 // Email
-echo '<tr><td width="25%" valign="top">' . $langs->trans("Email") . '</td>';
-echo '<td colspan="2">' . $doluser->email . '</td>';
-echo '</tr>';
+     '<tr><td width="25%" valign="top">' , $langs->trans("Email") , '</td>',
+     '<td colspan="2">' , $doluser->email , '</td>',
+     '</tr>',
 
 // Scopes
-echo '<tr><td width="25%" valign="top">' . $langs->trans("Services") . '</td>';
-echo '<td colspan="2">';
+     '<tr><td width="25%" valign="top">' , $langs->trans("Services") , '</td>',
+     '<td colspan="2">';
 foreach ($services as $s) {
     echo $langs->trans($s), '<br>';
 }
-echo '</td>';
-echo '</tr>';
+echo '</td>',
+     '</tr>',
 
 // Access Token
-echo '<tr><td width="25%" valign="top">' . $langs->trans("AccessToken") . '</td>';
-echo '<td colspan="2">' . $langs->trans($token_status) . '</td>';
-echo '</tr>';
+     '<tr><td width="25%" valign="top">' , $langs->trans("AccessToken") , '</td>',
+     '<td colspan="2">' , $langs->trans($token_status) , '</td>',
+     '</tr>',
 
-echo '</table>';
+     '</table>';
 
 if ($ok == 'true') {
     $mesg = '<font class="ok">' . $langs->trans("OperationSuccessful") . '</font>';
 }
 
 if (! $lock) {
-    echo '<br>';
-    echo '<form action="initoauth.php" method="get">';
+    echo '<br>',
+         '<form action="initoauth.php" method="get">';
     if (! $retry) {
         // if no error
         if ($client->getAccessToken()) {
             // if access token exists or/and bad propose to delete it
-            echo '<input type="hidden" name="action" value="delete_token">';
-            echo '<input type="hidden" name="id" value="' . $id . '">';
-            echo '<table class="border" width="100%">';
-            echo '<tr><td colspan="2" align="center">';
-            echo '<input class="button" type="submit" value="' . $langs->trans("DeleteToken") . '">';
-        } elseif (! empty($doluser->email) && $conf->global->ZF_OAUTH2_SCOPES != '[]' && $conf->global->ZF_OAUTH2_CLIENT_ID) {
+            echo '<input type="hidden" name="action" value="delete_token">',
+                 '<input type="hidden" name="id" value="' , $id , '">',
+                 '<table class="border" width="100%">',
+                 '<tr><td colspan="2" align="center">',
+                 '<input class="button" type="submit" value="' , $langs->trans("DeleteToken") , '">';
+        } elseif (isValidEmail($doluser->email) && $conf->global->ZF_OAUTH2_SCOPES != '[]' && $conf->global->ZF_OAUTH2_CLIENT_ID) {
             // if no access token propose to request
-            echo '<input type="hidden" name="action" value="request">';
-            echo '<input type="hidden" name="id" value="' . $id . '">';
-            echo '<table class="border" width="100%">';
-            echo '<tr><td colspan="2" align="center">';
-            echo '<input class="button" type="submit" value="' . $langs->trans("RequestToken") . '">';
+            echo '<input type="hidden" name="action" value="request">',
+                 '<input type="hidden" name="id" value="' , $id , '">',
+                 '<table class="border" width="100%">',
+                 '<tr><td colspan="2" align="center">',
+                 '<input class="button" type="submit" value="' , $langs->trans("RequestToken") , '">';
         }
     } else {
         // We have errors
         $langs->load("errors");
         $mesg = '<font class="error">' . $langs->trans("OperationFailed") . '</font>';
-        echo '<input type="hidden" name="action" value="request">';
-        echo '<input type="hidden" name="id" value="' . $id . '">';
-        echo '<table class="border" width="100%">';
-        echo '<tr><td colspan="2" align="center">';
-        echo '<input class="button" type="submit" value="' . $langs->trans("Retry") . '">';
+        echo '<input type="hidden" name="action" value="request">',
+             '<input type="hidden" name="id" value="' , $id , '">',
+             '<table class="border" width="100%">',
+             '<tr><td colspan="2" align="center">',
+             '<input class="button" type="submit" value="' , $langs->trans("Retry") , '">';
     }
     echo '</table></form>';
 }
