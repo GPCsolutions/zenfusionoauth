@@ -70,10 +70,17 @@ class OauthStatus extends ModeleBoxes
         $this->info_box_head = array(
             'text' => $langs->trans("TokenStatus", $max)
         );
-
+        //we want compatibility with Dolibarr 3.3 and >3.4
+        if(DOL_VERSION < '3.4')
+        {
+            $name = 'u.name';
+        } else {
+            $name = 'u.lastname';
+        }
         if ($user->rights->societe->lire) {
-            $sql = 'SELECT u.rowid AS userid, u.firstname, u.name, u.email,';
+            $sql = 'SELECT u.rowid AS userid, u.firstname, u.email,';
             $sql.= ' g.rowid, g.token';
+            $sql .= ', ' . $name;
             $sql.= ' FROM ' . MAIN_DB_PREFIX . 'user as u';
             $sql.= ' LEFT JOIN ' . MAIN_DB_PREFIX . 'zenfusion_oauth as g';
             $sql.= ' ON g.rowid = u.rowid';
