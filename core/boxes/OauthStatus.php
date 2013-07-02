@@ -77,6 +77,7 @@ class OauthStatus extends ModeleBoxes
         } else {
             $name = 'u.lastname';
         }
+        var_dump($user);
         if ($user->rights->societe->lire) {
             $sql = 'SELECT u.rowid AS userid, u.firstname, u.email,';
             $sql.= ' g.rowid, g.token';
@@ -102,9 +103,15 @@ class OauthStatus extends ModeleBoxes
                         'logo' => $this->boximg
                     );
 
+                    if($objp->name)
+                    {
+                        $objname = $objp->name;
+                    } else {
+                        $objname = $objp->lastname;
+                    }
                     $this->info_box_contents[$i][1] = array(
                         'td' => 'align="left" ',
-                        'text' => $objp->name . " " . $objp->firstname,
+                        'text' => $objp->firstname . " " . $objname,
                         'url' => DOL_URL_ROOT . 'user/fiche.php?id=' . $objp->userid
                     );
 
