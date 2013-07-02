@@ -77,101 +77,93 @@ class OauthStatus extends ModeleBoxes
         } else {
             $name = 'u.lastname';
         }
-        var_dump($user);
-        if ($user->rights->societe->lire) {
-            $sql = 'SELECT u.rowid AS userid, u.firstname, u.email,';
-            $sql.= ' g.rowid, g.token';
-            $sql .= ', ' . $name;
-            $sql.= ' FROM ' . MAIN_DB_PREFIX . 'user as u';
-            $sql.= ' LEFT JOIN ' . MAIN_DB_PREFIX . 'zenfusion_oauth as g';
-            $sql.= ' ON g.rowid = u.rowid';
-            if (! $user->admin) {
-                // Shows only self
-                $sql.= ' WHERE u.rowid = ' . $user->id;
-            }
-            $result = $db->query($sql);
+        $sql = 'SELECT u.rowid AS userid, u.firstname, u.email,';
+        $sql.= ' g.rowid, g.token';
+        $sql .= ', ' . $name;
+        $sql.= ' FROM ' . MAIN_DB_PREFIX . 'user as u';
+        $sql.= ' LEFT JOIN ' . MAIN_DB_PREFIX . 'zenfusion_oauth as g';
+        $sql.= ' ON g.rowid = u.rowid';
+        if (! $user->admin) {
+            // Shows only self
+            $sql.= ' WHERE u.rowid = ' . $user->id;
+        }
+        $result = $db->query($sql);
 
-            if ($result) {
-                $num = $db->num_rows($result);
+        if ($result) {
+            $num = $db->num_rows($result);
 
-                $i = 0;
-                while ($i < $num) {
-                    $objp = $db->fetch_object($result);
+            $i = 0;
+            while ($i < $num) {
+                $objp = $db->fetch_object($result);
 
-                    $this->info_box_contents[$i][0] = array(
-                        'td' => 'align="left" width="20"',
-                        'logo' => $this->boximg
-                    );
+                $this->info_box_contents[$i][0] = array(
+                    'td' => 'align="left" width="20"',
+                    'logo' => $this->boximg
+                );
 
-                    if($objp->name)
-                    {
-                        $objname = $objp->name;
-                    } else {
-                        $objname = $objp->lastname;
-                    }
-                    $this->info_box_contents[$i][1] = array(
-                        'td' => 'align="left" ',
-                        'text' => $objp->firstname . " " . $objname,
-                        'url' => DOL_URL_ROOT . 'user/fiche.php?id=' . $objp->userid
-                    );
+                if($objp->name)
+                {
+                    $objname = $objp->name;
+                } else {
+                    $objname = $objp->lastname;
+                }
+                $this->info_box_contents[$i][1] = array(
+                    'td' => 'align="left" ',
+                    'text' => $objp->firstname . " " . $objname,
+                    'url' => DOL_URL_ROOT . 'user/fiche.php?id=' . $objp->userid
+                );
 
-                    $token = $objp->token;
-                    if ($objp->rowid) {
-                        $client = new Oauth2Client();
-                        try {
-                            $client->setAccessToken($token);
-                            $this->info_box_contents[$i][2] = array(
-                                'td' => 'align="left"',
-                                'text' => $langs->trans("StatusOk")
-                            );
-                        } catch (Google_AuthException $e) {
-                            $this->info_box_contents[$i][2] = array(
-                                'td' => 'align="left"',
-                                //TODO translate
-                                'text' => $langs->trans("Error").": ".$e->getMessage(),//$langs->trans("NotConfigured")
-                                'url' => dol_buildpath(
-                                    '/zenfusionoauth/initoauth.php',
-                                    1
-                                ) . '?id=' . $objp->userid . '&action=delete_token'
-                            );
-                        }
-                    } else {
-                        // If token == NULL
+                $token = $objp->token;
+                if ($objp->rowid) {
+                    $client = new Oauth2Client();
+                    try {
+                        $client->setAccessToken($token);
                         $this->info_box_contents[$i][2] = array(
                             'td' => 'align="left"',
-                            'text' => $langs->trans("NoToken"),
+                            'text' => $langs->trans("StatusOk")
+                        );
+                    } catch (Google_AuthException $e) {
+                        $this->info_box_contents[$i][2] = array(
+                            'td' => 'align="left"',
+                            //TODO translate
+                            'text' => $langs->trans("Error").": ".$e->getMessage(),//$langs->trans("NotConfigured")
                             'url' => dol_buildpath(
-                                    '/zenfusionoauth/initoauth.php',
-                                    1
-                                ) . '?id=' . $objp->userid . '&action=request'
-
+                                '/zenfusionoauth/initoauth.php',
+                                1
+                            ) . '?id=' . $objp->userid . '&action=delete_token'
                         );
                     }
-                    $this->info_box_contents[$i][3] = array(
-                        'td' => 'align="right"',
-                        'text' => $objp->email
+                } else {
+                    // If token == NULL
+                    $this->info_box_contents[$i][2] = array(
+                        'td' => 'align="left"',
+                        'text' => $langs->trans("NoToken"),
+                        'url' => dol_buildpath(
+                                '/zenfusionoauth/initoauth.php',
+                                1
+                            ) . '?id=' . $objp->userid . '&action=request'
+
                     );
-
-                    $i ++;
                 }
-
-                if ($num == 0) {
-                        $this->info_box_contents[$i][0] = array(
-                            'td' => 'align="center"',
-                            'text' => $langs->trans("NoUserFound")
-                        );
-                }
-            } else {
-                $this->info_box_contents[0][0] = array(
-                    'td' => 'align="left"',
-                    'maxlength' => 500,
-                    'text' => ($db->error() . ' sql=' . $sql)
+                $this->info_box_contents[$i][3] = array(
+                    'td' => 'align="right"',
+                    'text' => $objp->email
                 );
+
+                $i ++;
+            }
+
+            if ($num == 0) {
+                    $this->info_box_contents[$i][0] = array(
+                        'td' => 'align="center"',
+                        'text' => $langs->trans("NoUserFound")
+                    );
             }
         } else {
             $this->info_box_contents[0][0] = array(
-                'align' => 'left',
-                'text' => $langs->trans("ReadPermissionNotAllowed")
+                'td' => 'align="left"',
+                'maxlength' => 500,
+                'text' => ($db->error() . ' sql=' . $sql)
             );
         }
     }
