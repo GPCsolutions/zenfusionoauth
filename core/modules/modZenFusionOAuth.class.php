@@ -147,8 +147,14 @@ class modZenFusionOAuth extends DolibarrModules
         if (function_exists('curl_init')) {
             $this->_init($sql);
         } else {
-            setEventMessage($langs->trans("MissingCURL"), 'errors');
-            header("Location: modules.php?mode=interfaces");
+            $mesg = $langs->trans("MissingCURL");
+            if (DOL_VERSION >= '3.3') {
+                setEventMessage($mesg, 'errors');
+            } else {
+                $mesg = urlencode($mesg);
+                $msg = '&mesg=' . $mesg;
+            }
+            header("Location: modules.php?mode=interfaces" . $msg);
             exit;
         }
     }
