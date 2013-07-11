@@ -139,5 +139,13 @@ function readScopes($scopes)
         array_push($hr_scopes, 'Contacts');
     }
 
+    if (in_array(GOOGLE_DRIVE_SCOPE, $scopes)) {
+        array_push($hr_scopes, 'Drive');
+    }
+
+    if (in_array(GOOGLE_USERINFO_PROFILE_SCOPE, $scopes)) {
+        array_push($hr_scopes, 'SSO');
+    }
+
     return $hr_scopes;
 }
