@@ -38,18 +38,25 @@ function getRequest($uri, $client)
 {
     $get = new Google_HttpRequest($uri, 'GET');
     $val = $client->getIo()->authenticatedRequest($get);
+    dol_syslog('GET response code: ' . $val->getResponseHttpCode(), LOG_INFO);
     if ($val->getResponseHttpCode() == 401) {
-        $_SESSION['warning'] = 'Error HTTP 401: Unauthorized';
+        $_SESSION['warning'] = 'HTTP401Unauthorized';
+        return null;
+    }
+    else if($val->getResponseHttpCode() == 404){
+        //404, no error message
+        return null;
     }
     //FIX ME use a library to handle these errors separetely
     else if($val->getResponseHttpCode() != 401 &&
-            $val->getResponseHttpCode() != 200){
-        $_SESSION['warning'] = 'Unknown HTTP Error';
-    }
+            $val->getResponseHttpCode() != 200 &&
+            $val->getResponseHttpCode() != 404){
+        $_SESSION['warning'] = 'UnknownHTTPError';
+        return null;
+    } 
     $rep = $val->getResponseBody();
     // FIXME: validate response, it might not be what we expect
-    $gmail = json_decode($rep);
-
+    $gmail = simplexml_load_string($rep);
     return $gmail;
 }
     
