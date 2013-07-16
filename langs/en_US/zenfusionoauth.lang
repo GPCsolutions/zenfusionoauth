@@ -28,6 +28,7 @@ SoftwareEngineer=software engineer
 Ressources=Resources
 # User card tab
 Services=Active services
+AvailableServices=Available services
 AccessToken=Services access
 TokenOk=Active
 TokenKo=Inactive

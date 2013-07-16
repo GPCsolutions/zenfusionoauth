@@ -159,7 +159,9 @@ llxHeader("", $tabname);
 // Token status for the form
 $token_good = true;
 // Services for the form
-$services = readScopes(json_decode($oauth->scopes));
+
+$enabledservices = readScopes(json_decode($oauth->scopes));
+$availableservices = array_diff(readScopes(json_decode($conf->global->ZF_OAUTH2_SCOPES)), $enabledservices);
 
 // Verify if the user's got an access token
 if ($client) {
@@ -254,11 +256,19 @@ echo '<table class="border" width="100%">',
      '<td colspan="2">' , $doluser->email , '</td>',
      '</tr>',
 
+     '<tr><td width="25%" valign="top">' , $langs->trans("AvailableServices") , '</td>',
+     '<td colspan="2">';
+foreach ($availableservices as $as) {
+    echo $langs->trans($as), '<br>';
+}
+echo '</td>',
+     '</tr>',
+
 // Scopes
      '<tr><td width="25%" valign="top">' , $langs->trans("Services") , '</td>',
      '<td colspan="2">';
-foreach ($services as $s) {
-    echo $langs->trans($s), '<br>';
+foreach ($enabledservices as $es) {
+    echo $langs->trans($es), '<br>';
 }
 echo '</td>',
      '</tr>',
