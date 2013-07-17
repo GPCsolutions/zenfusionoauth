@@ -57,18 +57,14 @@ $langs->load('admin');
 $langs->load('users');
 
 // Defini si peux lire/modifier permisssions
-$canreaduser = ($user->admin || $user->rights->user->user->lire);
+$canreaduser = ($user->admin || $user->rights->zenfusionoauth->use);
 
 $id = GETPOST('id', 'int');
 $action = GETPOST('action', 'alpha');
-$state = GETPOST('state', 'int');
 $ok = GETPOST('ok', 'alpha');
 $callback_error = GETPOST('error', 'alpha');
 $retry = false; // Do we have an error ?
 // On callback, the state is the user id
-if (! $id) {
-    $id = $state;
-}
 
 // Security check
 $socid = 0;
@@ -295,14 +291,14 @@ if (! $lock) {
                  '<input type="hidden" name="id" value="' , $id , '">',
                  '<table class="border" width="100%">',
                  '<tr><td colspan="2" align="center">',
-                 '<input class="button" type="submit" value="' , $langs->trans("DeleteToken") , '">';
-        } elseif (isValidEmail($doluser->email) && $conf->global->ZF_OAUTH2_SCOPES != '[]' && $conf->global->ZF_OAUTH2_CLIENT_ID) {
+                 '<input class="button" type="submit" value="' , $langs->trans("DeleteToken") , '"></tr>';
+        } elseif (isValidEmail($doluser->email) && $conf->global->ZF_OAUTH2_SCOPES != '[]' && $conf->global->ZF_OAUTH2_CLIENT_ID && $user->rights->zenfusionoauth->use) {
             // if no access token propose to request
             echo '<input type="hidden" name="action" value="request">',
                  '<input type="hidden" name="id" value="' , $id , '">',
                  '<table class="border" width="100%">',
                  '<tr><td colspan="2" align="center">',
-                 '<input class="button" type="submit" value="' , $langs->trans("RequestToken") , '">';
+                 '<input class="button" type="submit" value="' , $langs->trans("RequestToken") , '"></tr>';
         }
     } else {
         // We have errors
@@ -312,7 +308,7 @@ if (! $lock) {
              '<input type="hidden" name="id" value="' , $id , '">',
              '<table class="border" width="100%">',
              '<tr><td colspan="2" align="center">',
-             '<input class="button" type="submit" value="' , $langs->trans("Retry") , '">';
+             '<input class="button" type="submit" value="' , $langs->trans("Retry") , '"></tr>';
     }
     echo '</table></form>';
 }

@@ -49,3 +49,4 @@ StatusOk=Enabled
 StatusKo=Disabled
 MissingCURL=php-curl is missing
 NoScope=This module can't work on its own. See the list of compatibles modules on zenfusion.fr
+Permission7345701=Use ZenFusion OAuth

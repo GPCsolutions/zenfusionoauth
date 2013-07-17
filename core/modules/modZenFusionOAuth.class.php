@@ -129,6 +129,10 @@ class modZenFusionOAuth extends DolibarrModules
         $this->boxes = array();
         $this->boxes[0][1] = "OauthStatus@zenfusionoauth";
         $this->rights = array();
+        $this->rights[0][0] = 7345701;
+        $this->rights[0][1] = 'Use ZenFusionOAuth';
+        $this->rights[0][3] = 0;
+        $this->rights[0][4] = 'use';
         $this->menus = array();
     }
 
