@@ -56,8 +56,8 @@ function getRequest($uri, $client)
     } 
     $rep = $val->getResponseBody();
     // FIXME: validate response, it might not be what we expect
-    $gmail = simplexml_load_string($rep);
-    return $gmail;
+    //$gmail = simplexml_load_string($rep);
+    return $rep;
 }
     
 $res = 0;
@@ -128,8 +128,11 @@ if ($callback_error) {
             // Save the access token into database
             dol_syslog($script_file . " CREATE", LOG_DEBUG);
             $oauth->token = $token;
-            $info = getRequest('https://www.googleapis.com/oauth2/v1/userinfo?access_token='.$token->token, $client);
-            $oauth->oauth_id = $info->id;
+            $oauth->oauth_id = null;
+            if ($conf->global->MAIN_MODULE_ZENFUSIONSSO) {
+                $info = getRequest('https://www.googleapis.com/oauth2/v1/userinfo?access_token='.$token->token, $client);
+                $oauth->oauth_id = $info->id;
+            }
             $db_id = $oauth->update($doluser);
             if ($db_id < 0) {
                 dol_print_error($db, $oauth->error);
