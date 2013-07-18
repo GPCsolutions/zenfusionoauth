@@ -207,22 +207,20 @@ if (! $client || ! $conf->global->ZF_OAUTH2_CLIENT_ID) {
 /*
  * Common part of the user's tabs
  */
- 
+
  //user->nom and user->prenom are deprecated and won't be supported in the future
  //so test to make insure compatibility
-if($doluser->nom)
-{
+if ($doluser->nom) {
     $lastname = $doluser->nom;
 } else {
     $lastname = $doluser->lastname;
 }
-if($doluser->prenom)
-{
+if ($doluser->prenom) {
     $firstname = $doluser->prenom;
 } else {
     $firstname = $doluser->firstname;
 }
- 
+
 echo '<table class="border" width="100%">',
 
 // Ref

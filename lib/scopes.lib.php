@@ -141,7 +141,7 @@ function readScopes($scopes)
         array_push($hr_scopes, 'Contacts');
     }
 
-    if (in_array(GOOGLE_DRIVE_SCOPE, $scopes) 
+    if (in_array(GOOGLE_DRIVE_SCOPE, $scopes)
         && $conf->global->MAIN_MODULE_ZENFUSIONDRIVE) {
         array_push($hr_scopes, 'Drive');
     }

@@ -26,7 +26,7 @@
  * \authors Raphaël Doursenaud <rdoursenaud@gpcsolutions.fr>
  * \authors Cédric Salvador <csalvador@gpcsolutions.fr>
  */
- 
+
 /**
  *
  * \brief handles GET requests
@@ -41,9 +41,9 @@ function getRequest($uri, $client)
     dol_syslog('GET response code: ' . $val->getResponseHttpCode(), LOG_INFO);
     if ($val->getResponseHttpCode() == 401) {
         $_SESSION['warning'] = 'HTTP401Unauthorized';
+
         return null;
-    }
-    else if($val->getResponseHttpCode() == 404){
+    } elseif ($val->getResponseHttpCode() == 404) {
         //404, no error message
         return null;
     }
@@ -52,14 +52,15 @@ function getRequest($uri, $client)
             $val->getResponseHttpCode() != 200 &&
             $val->getResponseHttpCode() != 404){
         $_SESSION['warning'] = 'UnknownHTTPError';
+
         return null;
-    } 
+    }
     $rep = $val->getResponseBody();
     // FIXME: validate response, it might not be what we expect
     //$gmail = simplexml_load_string($rep);
     return $rep;
 }
-    
+
 $res = 0;
 // from standard dolibarr install
 if (! $res && file_exists('../main.inc.php')) {
