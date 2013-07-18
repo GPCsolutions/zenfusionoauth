@@ -38,19 +38,26 @@ function getRequest($uri, $client)
 {
     $get = new Google_HttpRequest($uri, 'GET');
     $val = $client->getIo()->authenticatedRequest($get);
+    dol_syslog('GET response code: ' . $val->getResponseHttpCode(), LOG_INFO);
     if ($val->getResponseHttpCode() == 401) {
-        $_SESSION['warning'] = 'Error HTTP 401: Unauthorized';
+        $_SESSION['warning'] = 'HTTP401Unauthorized';
+        return null;
+    }
+    else if($val->getResponseHttpCode() == 404){
+        //404, no error message
+        return null;
     }
     //FIX ME use a library to handle these errors separetely
     else if($val->getResponseHttpCode() != 401 &&
-            $val->getResponseHttpCode() != 200){
-        $_SESSION['warning'] = 'Unknown HTTP Error';
-    }
+            $val->getResponseHttpCode() != 200 &&
+            $val->getResponseHttpCode() != 404){
+        $_SESSION['warning'] = 'UnknownHTTPError';
+        return null;
+    } 
     $rep = $val->getResponseBody();
     // FIXME: validate response, it might not be what we expect
-    $gmail = json_decode($rep);
-
-    return $gmail;
+    //$gmail = simplexml_load_string($rep);
+    return $rep;
 }
     
 $res = 0;
@@ -80,61 +87,63 @@ $langs->load('users');
 // Defini si peux lire/modifier permisssions
 //$canreaduser = ($user->admin || $user->rights->user->user->lire);
 
-$id = GETPOST('id', 'int');
-$action = GETPOST('action', 'alpha');
 $state = GETPOST('state', 'int');
-$ok = GETPOST('ok', 'alpha');
 $callback_error = GETPOST('error', 'alpha');
+$code = GETPOST('code', 'alpha');
 $retry = false; // Do we have an error ?
 // On callback, the state is the user id
-if (! $id) {
-    $id = $state;
-}
-/*
- * Controller
- */
-// Create a new User instance to display tabs
-$doluser = new User($db);
-// Load current user's informations
-$doluser->fetch($id);
-// Create an object to use llx_zenfusion_oauth table
-$oauth = new ZenFusionOAuth($db);
-$oauth->fetch($id);
-// Google API client
-try {
-    $client = new Oauth2Client();
-} catch (Oauth2Exception $e) {
-    // Ignore
-}
-if ($callback_error) {
+if ((!$state || !$code || !$user->rights->zenfusionoauth->use) && !$user->admin) {
+    accessforbidden();
+} else {
+    /*
+     * Controller
+     */
+    // Create a new User instance to display tabs
+    $doluser = new User($db);
+    // Load current user's informations
+    $doluser->fetch($id);
+    // Create an object to use llx_zenfusion_oauth table
+    $oauth = new ZenFusionOAuth($db);
+    $oauth->fetch($state);
+    // Google API client
+    try {
+        $client = new Oauth2Client();
+    } catch (Oauth2Exception $e) {
+        // Ignore
+    }
+    if ($callback_error) {
+        $retry = true;
+    } else {
+        try {
+            $cback= dol_buildpath('/zenfusionoauth/oauth2callback.php', 2);
+            $client->setRedirectUri($cback);
+            $client->authenticate();
+        } catch (Google_AuthException $e) {
+            dol_syslog("Access token " . $e->getMessage());
             $retry = true;
-        } else {
-            try {
-                $cback= dol_buildpath('/zenfusionoauth/oauth2callback.php', 2);
-                $client->setRedirectUri($cback);
-                $client->authenticate();
-            } catch (Google_AuthException $e) {
-                dol_syslog("Access token " . $e->getMessage());
-                $retry = true;
-            }
-            $token = $client->getAccessToken();
-            // Save the access token into database
-            dol_syslog($script_file . " CREATE", LOG_DEBUG);
-            $oauth->token = $token;
+        }
+        $token = $client->getAccessToken();
+        // Save the access token into database
+        dol_syslog($script_file . " CREATE", LOG_DEBUG);
+        $oauth->token = $token;
+        $oauth->oauth_id = null;
+        if ($conf->global->MAIN_MODULE_ZENFUSIONSSO) {
             $info = getRequest('https://www.googleapis.com/oauth2/v1/userinfo?access_token='.$token->token, $client);
             $oauth->oauth_id = $info->id;
-            $db_id = $oauth->update($doluser);
-            if ($db_id < 0) {
-                dol_print_error($db, $oauth->error);
-            }
-            // Refresh the page to prevent multiple insertions
-            header(
-                'refresh:0;url=' . dol_buildpath(
-                    '/zenfusionoauth/initoauth.php',
-                    1
-                ) . '?id=' . $id. '&ok=true'
-            );
-            exit;
         }
+        $db_id = $oauth->update($doluser);
+        if ($db_id < 0) {
+            dol_print_error($db, $oauth->error);
+        }
+        // Refresh the page to prevent multiple insertions
+        header(
+            'refresh:0;url=' . dol_buildpath(
+                '/zenfusionoauth/initoauth.php',
+                1
+            ) . '?id=' . $state. '&ok=true'
+        );
+        exit;
+    }
+}
 $db->close();
 llxFooter();

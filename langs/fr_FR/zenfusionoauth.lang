@@ -28,6 +28,7 @@ SoftwareEngineer=ingénieur développement
 Ressources=Ressources
 # User card tab
 Services=Services activés
+AvailableServices=Services disponibles
 AccessToken=Accès aux services
 TokenOk=Activé
 TokenKo=Désactivé
@@ -48,3 +49,4 @@ StatusOk=Activée
 StatusKo=Désactivée
 MissingCURL=php-curl n'est pas installé
 NoScope=Ce module ne peut pas fonctionner seul. Voir la liste des modules compatibles sur zenfusion.fr
+Permission7345701=Utiliser ZenFusion OAuth

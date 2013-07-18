@@ -63,108 +63,110 @@ class OauthStatus extends ModeleBoxes
     public function loadBox($max = 0)
     {
         global $user, $langs, $db, $conf;
-        $langs->load('zenfusionoauth@zenfusionoauth');
+        if($user->rights->zenfusionoauth->use || $user->admin) {
+            $langs->load('zenfusionoauth@zenfusionoauth');
 
-        $this->max = $max;
+            $this->max = $max;
 
-        $this->info_box_head = array(
-            'text' => $langs->trans("TokenStatus", $max)
-        );
-        //we want compatibility with Dolibarr 3.3 and >3.4
-        if(DOL_VERSION < '3.4')
-        {
-            $name = 'u.name';
-        } else {
-            $name = 'u.lastname';
-        }
-        $sql = 'SELECT u.rowid AS userid, u.firstname, u.email,';
-        $sql.= ' g.rowid, g.token';
-        $sql .= ', ' . $name;
-        $sql.= ' FROM ' . MAIN_DB_PREFIX . 'user as u';
-        $sql.= ' LEFT JOIN ' . MAIN_DB_PREFIX . 'zenfusion_oauth as g';
-        $sql.= ' ON g.rowid = u.rowid';
-        if (! $user->admin) {
-            // Shows only self
-            $sql.= ' WHERE u.rowid = ' . $user->id;
-        }
-        $result = $db->query($sql);
+            $this->info_box_head = array(
+                'text' => $langs->trans("TokenStatus", $max)
+            );
+            //we want compatibility with Dolibarr 3.3 and >3.4
+            if(DOL_VERSION < '3.4')
+            {
+                $name = 'u.name';
+            } else {
+                $name = 'u.lastname';
+            }
+            $sql = 'SELECT u.rowid AS userid, u.firstname, u.email,';
+            $sql.= ' g.rowid, g.token';
+            $sql .= ', ' . $name;
+            $sql.= ' FROM ' . MAIN_DB_PREFIX . 'user as u';
+            $sql.= ' LEFT JOIN ' . MAIN_DB_PREFIX . 'zenfusion_oauth as g';
+            $sql.= ' ON g.rowid = u.rowid';
+            if (! $user->admin) {
+                // Shows only self
+                $sql.= ' WHERE u.rowid = ' . $user->id;
+            }
+            $result = $db->query($sql);
 
-        if ($result) {
-            $num = $db->num_rows($result);
+            if ($result) {
+                $num = $db->num_rows($result);
 
-            $i = 0;
-            while ($i < $num) {
-                $objp = $db->fetch_object($result);
+                $i = 0;
+                while ($i < $num) {
+                    $objp = $db->fetch_object($result);
 
-                $this->info_box_contents[$i][0] = array(
-                    'td' => 'align="left" width="20"',
-                    'logo' => $this->boximg
-                );
+                    $this->info_box_contents[$i][0] = array(
+                        'td' => 'align="left" width="20"',
+                        'logo' => $this->boximg
+                    );
 
-                if($objp->name)
-                {
-                    $objname = $objp->name;
-                } else {
-                    $objname = $objp->lastname;
-                }
-                $this->info_box_contents[$i][1] = array(
-                    'td' => 'align="left" ',
-                    'text' => $objp->firstname . " " . $objname,
-                    'url' => DOL_URL_ROOT . 'user/fiche.php?id=' . $objp->userid
-                );
+                    if($objp->name)
+                    {
+                        $objname = $objp->name;
+                    } else {
+                        $objname = $objp->lastname;
+                    }
+                    $this->info_box_contents[$i][1] = array(
+                        'td' => 'align="left" ',
+                        'text' => $objp->firstname . " " . $objname,
+                        'url' => DOL_URL_ROOT . 'user/fiche.php?id=' . $objp->userid
+                    );
 
-                $token = $objp->token;
-                if ($objp->rowid) {
-                    $client = new Oauth2Client();
-                    try {
-                        $client->setAccessToken($token);
+                    $token = $objp->token;
+                    if ($objp->rowid) {
+                        $client = new Oauth2Client();
+                        try {
+                            $client->setAccessToken($token);
+                            $this->info_box_contents[$i][2] = array(
+                                'td' => 'align="left"',
+                                'text' => $langs->trans("StatusOk")
+                            );
+                        } catch (Google_AuthException $e) {
+                            $this->info_box_contents[$i][2] = array(
+                                'td' => 'align="left"',
+                                //TODO translate
+                                'text' => $langs->trans("Error").": ".$e->getMessage(),//$langs->trans("NotConfigured")
+                                'url' => dol_buildpath(
+                                    '/zenfusionoauth/initoauth.php',
+                                    1
+                                ) . '?id=' . $objp->userid . '&action=delete_token'
+                            );
+                        }
+                    } else {
+                        // If token == NULL
                         $this->info_box_contents[$i][2] = array(
                             'td' => 'align="left"',
-                            'text' => $langs->trans("StatusOk")
-                        );
-                    } catch (Google_AuthException $e) {
-                        $this->info_box_contents[$i][2] = array(
-                            'td' => 'align="left"',
-                            //TODO translate
-                            'text' => $langs->trans("Error").": ".$e->getMessage(),//$langs->trans("NotConfigured")
+                            'text' => $langs->trans("NoToken"),
                             'url' => dol_buildpath(
-                                '/zenfusionoauth/initoauth.php',
-                                1
-                            ) . '?id=' . $objp->userid . '&action=delete_token'
+                                    '/zenfusionoauth/initoauth.php',
+                                    1
+                                ) . '?id=' . $objp->userid . '&action=request'
+
                         );
                     }
-                } else {
-                    // If token == NULL
-                    $this->info_box_contents[$i][2] = array(
-                        'td' => 'align="left"',
-                        'text' => $langs->trans("NoToken"),
-                        'url' => dol_buildpath(
-                                '/zenfusionoauth/initoauth.php',
-                                1
-                            ) . '?id=' . $objp->userid . '&action=request'
-
+                    $this->info_box_contents[$i][3] = array(
+                        'td' => 'align="right"',
+                        'text' => $objp->email
                     );
+
+                    $i ++;
                 }
-                $this->info_box_contents[$i][3] = array(
-                    'td' => 'align="right"',
-                    'text' => $objp->email
+
+                if ($num == 0) {
+                        $this->info_box_contents[$i][0] = array(
+                            'td' => 'align="center"',
+                            'text' => $langs->trans("NoUserFound")
+                        );
+                }
+            } else {
+                $this->info_box_contents[0][0] = array(
+                    'td' => 'align="left"',
+                    'maxlength' => 500,
+                    'text' => ($db->error() . ' sql=' . $sql)
                 );
-
-                $i ++;
             }
-
-            if ($num == 0) {
-                    $this->info_box_contents[$i][0] = array(
-                        'td' => 'align="center"',
-                        'text' => $langs->trans("NoUserFound")
-                    );
-            }
-        } else {
-            $this->info_box_contents[0][0] = array(
-                'td' => 'align="left"',
-                'maxlength' => 500,
-                'text' => ($db->error() . ' sql=' . $sql)
-            );
         }
     }
 
