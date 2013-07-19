@@ -64,6 +64,7 @@ $action = GETPOST('action', 'alpha');
 $ok = GETPOST('ok', 'alpha');
 $callback_error = GETPOST('error', 'alpha');
 $retry = false; // Do we have an error ?
+$mesg = GETPOST('mesg', 'alpha');
 // On callback, the state is the user id
 
 // Security check
@@ -196,7 +197,7 @@ if (empty($doluser->email)) {
     $mesg = '<font class="error">' . $langs->trans("NoEmail") . '</font>';
 }
 // Check if there is a scope
-if ($conf->global->ZF_OAUTH2_SCOPES == '[]') {
+if (!$availableservices && !$enabledservices) {
     $mesg = '<font class="error">' . $langs->trans("NoScope") . '</font>';
 }
 if (! $client || ! $conf->global->ZF_OAUTH2_CLIENT_ID) {
@@ -291,7 +292,7 @@ if (! $lock) {
                  '<tr><td colspan="2" align="center">',
                  '<input class="button" type="submit" value="' , $langs->trans("DeleteToken") , '"></tr>';
         } elseif (isValidEmail($doluser->email)
-                  && $conf->global->ZF_OAUTH2_SCOPES != '[]'
+                  && ($availableservices || $enabledservices)
                   && $conf->global->ZF_OAUTH2_CLIENT_ID
                   && ($user->rights->zenfusionoauth->use || $user->admin)) {
             // if no access token propose to request
