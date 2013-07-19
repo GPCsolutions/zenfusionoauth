@@ -97,7 +97,7 @@ class modZenFusionOAuth extends DolibarrModules
             'Oauth2 client ID',
             0,
             'current',
-            1
+            0
         );
         $r++;
         $this->const[$r] = array(
@@ -107,7 +107,7 @@ class modZenFusionOAuth extends DolibarrModules
             'Oauth2 client secret',
             0,
             'current',
-            1
+            0
         );
         $r++;
         // JSON encoded array of scopes set by depending modules using
@@ -119,7 +119,7 @@ class modZenFusionOAuth extends DolibarrModules
             'Oauth2 requested scopes',
             0,
             'current',
-            1
+            0
         );
         $r++;
         $this->tabs = array(

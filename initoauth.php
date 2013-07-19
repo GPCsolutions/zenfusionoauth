@@ -290,7 +290,10 @@ if (! $lock) {
                  '<table class="border" width="100%">',
                  '<tr><td colspan="2" align="center">',
                  '<input class="button" type="submit" value="' , $langs->trans("DeleteToken") , '"></tr>';
-        } elseif (isValidEmail($doluser->email) && $conf->global->ZF_OAUTH2_SCOPES != '[]' && $conf->global->ZF_OAUTH2_CLIENT_ID && $user->rights->zenfusionoauth->use) {
+        } elseif (isValidEmail($doluser->email)
+                  && $conf->global->ZF_OAUTH2_SCOPES != '[]'
+                  && $conf->global->ZF_OAUTH2_CLIENT_ID
+                  && ($user->rights->zenfusionoauth->use || $user->admin)) {
             // if no access token propose to request
             echo '<input type="hidden" name="action" value="request">',
                  '<input type="hidden" name="id" value="' , $id , '">',
