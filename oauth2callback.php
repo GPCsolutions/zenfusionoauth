@@ -102,7 +102,7 @@ if ((!$state || !$code || !$user->rights->zenfusionoauth->use) && !$user->admin)
     // Create a new User instance to display tabs
     $doluser = new User($db);
     // Load current user's informations
-    $doluser->fetch($id);
+    $doluser->fetch($state);
     // Create an object to use llx_zenfusion_oauth table
     $oauth = new ZenFusionOAuth($db);
     $oauth->fetch($state);
@@ -113,7 +113,13 @@ if ((!$state || !$code || !$user->rights->zenfusionoauth->use) && !$user->admin)
         // Ignore
     }
     if ($callback_error) {
-        $retry = true;
+        $oauth->delete($state);
+        header(
+            'refresh:0;url=' . dol_buildpath(
+                '/zenfusionoauth/initoauth.php',
+                1
+            ) . '?id=' . $state
+        );
     } else {
         try {
             $cback= dol_buildpath('/zenfusionoauth/oauth2callback.php', 2);
@@ -128,20 +134,31 @@ if ((!$state || !$code || !$user->rights->zenfusionoauth->use) && !$user->admin)
         dol_syslog($script_file . " CREATE", LOG_DEBUG);
         $oauth->token = $token;
         $oauth->oauth_id = null;
-        if ($conf->global->MAIN_MODULE_ZENFUSIONSSO) {
-            $info = getRequest('https://www.googleapis.com/oauth2/v1/userinfo?access_token='.$token->token, $client);
-            $oauth->oauth_id = $info->id;
-        }
-        $db_id = $oauth->update($doluser);
-        if ($db_id < 0) {
-            dol_print_error($db, $oauth->error);
+        $info = getRequest('https://www.googleapis.com/oauth2/v1/userinfo?access_token='.$token->token, $client);
+        $info = json_decode($info);
+        $oauth->oauth_id = $info->id;
+        $ok = $info->verified_email && $info->email == $doluser->email;
+        if ($ok) {
+            $db_id = $oauth->update($doluser);
+            if ($db_id < 0) {
+                dol_print_error($db, $oauth->error);
+                $ok = false;
+            }
+        } else {
+            if (DOL_VERSION >= '3.3') {
+                setEventMessage($langs->trans('NotSameEmail'), 'errors');
+            } else {
+                $mesg = '&mesg=' . urlencode('<font class="error">' .
+                        $langs->trans('NotSameEmail') . '/font>');
+            }
+            $oauth->delete($state);
         }
         // Refresh the page to prevent multiple insertions
         header(
             'refresh:0;url=' . dol_buildpath(
                 '/zenfusionoauth/initoauth.php',
                 1
-            ) . '?id=' . $state. '&ok=true'
+            ) . '?id=' . $state. '&ok=' . $ok . $mesg
         );
         exit;
     }

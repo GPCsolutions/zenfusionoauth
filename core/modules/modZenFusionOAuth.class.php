@@ -42,6 +42,8 @@
  * \authors Cédric Salvador <csalvador@gpcsolutions.fr>
  */
 include_once DOL_DOCUMENT_ROOT . '/core/modules/DolibarrModules.class.php';
+dol_include_once('/zenfusionoauth/inc/oauth.inc.php');
+dol_include_once('/zenfusionoauth/lib/scopes.lib.php');
 
 /**
  * \class modZenFusionOAuth
@@ -149,6 +151,7 @@ class modZenFusionOAuth extends DolibarrModules
         $sql = array();
         $result = $this->load_tables();
         if (function_exists('curl_init')) {
+            addscope(GOOGLE_USERINFO_EMAIL_SCOPE);
             $this->_init($sql);
         } else {
             $mesg = $langs->trans("MissingCURL");
