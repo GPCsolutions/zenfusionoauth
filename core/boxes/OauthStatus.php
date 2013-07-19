@@ -83,9 +83,17 @@ class OauthStatus extends ModeleBoxes
             $sql.= ' FROM ' . MAIN_DB_PREFIX . 'user as u';
             $sql.= ' LEFT JOIN ' . MAIN_DB_PREFIX . 'zenfusion_oauth as g';
             $sql.= ' ON g.rowid = u.rowid';
+            $extra = array();
             if (! $user->admin) {
                 // Shows only self
-                $sql.= ' WHERE u.rowid = ' . $user->id;
+                $extra[] = 'u.rowid = ' . $user->id;
+            }
+            if ($user->entity > 0) {
+                $extra[] = 'u.entity = ' . $conf->entity;
+            }
+            if ($extra) {
+                $filter = implode(' AND ', $extra);
+                $sql .= ' WHERE ' . $filter;
             }
             $result = $db->query($sql);
 
