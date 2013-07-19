@@ -63,7 +63,7 @@ class OauthStatus extends ModeleBoxes
     public function loadBox($max = 0)
     {
         global $user, $langs, $db, $conf;
-        if($user->rights->zenfusionoauth->use || $user->admin) {
+        if ($user->rights->zenfusionoauth->use || $user->admin) {
             $langs->load('zenfusionoauth@zenfusionoauth');
 
             $this->max = $max;
@@ -72,8 +72,7 @@ class OauthStatus extends ModeleBoxes
                 'text' => $langs->trans("TokenStatus", $max)
             );
             //we want compatibility with Dolibarr 3.3 and >3.4
-            if(DOL_VERSION < '3.4')
-            {
+            if (DOL_VERSION < '3.4') {
                 $name = 'u.name';
             } else {
                 $name = 'u.lastname';
@@ -102,8 +101,7 @@ class OauthStatus extends ModeleBoxes
                         'logo' => $this->boximg
                     );
 
-                    if($objp->name)
-                    {
+                    if ($objp->name) {
                         $objname = $objp->name;
                     } else {
                         $objname = $objp->lastname;
