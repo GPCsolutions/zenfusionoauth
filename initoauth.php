@@ -275,7 +275,7 @@ echo '</td>',
 
      '</table>';
 
-if ($ok == 'true') {
+if ($ok) {
     $mesg = '<font class="ok">' . $langs->trans("OperationSuccessful") . '</font>';
 }
 
