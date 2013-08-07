@@ -137,7 +137,7 @@ dol_fiche_head(
 dol_htmloutput_mesg($mesg);
 
 print_titre($langs->trans("GoogleApiConfig"));
-echo '<form method="POST" action="', $_SERVER[PHP_SELF], '">';
+echo '<form method="POST" action="', $_SERVER['PHP_SELF'], '">';
 echo '<input type="hidden" name="token" value="', $_SESSION['newtoken'], '">';
 echo '<input type="hidden" name="action" value="update">';
 echo '<table class="noborder" width="40%">';
@@ -164,7 +164,7 @@ echo '</form>';
 
 // Import configuration from google's api console json file
 echo '<form enctype="multipart/form-data" method="POST" ',
-    'action="', $_SERVER[PHP_SELF], '">';
+    'action="', $_SERVER['PHP_SELF'], '">';
 echo '<input type="hidden" name="token" value="', $_SESSION['newtoken'], '">';
 echo '<input type="hidden" name="action" value="upload">';
 echo '<input type="hidden" name="MAX_FILE_SIZE" value="1000">';

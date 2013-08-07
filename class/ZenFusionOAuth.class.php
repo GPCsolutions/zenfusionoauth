@@ -84,8 +84,8 @@ class ZenFusionOAuth extends CommonObject
         if (isset($this->email)) {
             $this->email = trim($this->email);
         }
-        if (isset($this->email)) {
-            $this->oauth_d = trim($this->oauth_id);
+        if (isset($this->oauth_id)) {
+            $this->oauth_id = trim($this->oauth_id);
         }
         // Check parameters
         // Put here code to add control on parameters values
@@ -203,11 +203,11 @@ class ZenFusionOAuth extends CommonObject
 
     /**
      * \brief Update Access token and Secret token database
-     * \param string $user User that modify
+     * \param User $user User that modify
      * \param int $notrigger 0=launch triggers after, 1=disable triggers
      * \return int <0 if KO, >0 if OK
      */
-    public function update($user = 0, $notrigger = 0)
+    public function update($user = null, $notrigger = 0)
     {
         global $conf, $langs;
         $error = 0;
