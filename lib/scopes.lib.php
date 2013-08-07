@@ -28,8 +28,6 @@
  * \brief Allows a depending module to set the scope it needs
  *
  * @param string $scope The scope to add
- * @param object $db The database handler
- * @param object $conf The global configuration
  * @return boolean Operation status
  */
 function addScope($scope)
@@ -75,8 +73,6 @@ function addScope($scope)
  * \brief Allows a depending module to delete its scope
  *
  * @param string $scope The scope to delete
- * @param object $db The database handler
- * @param object $conf The global configuration
  * @return boolean Operation status
  */
 
