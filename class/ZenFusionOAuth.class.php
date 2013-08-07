@@ -318,53 +318,6 @@ class ZenFusionOAuth extends CommonObject
         }
     }
 
-    /**
-     * \brief Load an object from its id and create a new one in database
-     * \param int $fromid Id of object to clone
-     * \return int New id of clone
-     */
-    public function createFromClone($fromid)
-    {
-        global $user, $langs;
-        $error = 0;
-        $object = new ZenFusionOAuth($this->db);
-        $this->db->begin();
-        // Load source object
-        $object->fetch($fromid);
-        $object->id = 0;
-        $object->statut = 0;
-        // Clear fields
-        // ...
-        // Create clone
-        $result = $object->create($user);
-        // Other options
-        if ($result < 0) {
-            $this->error = $object->error;
-            $error ++;
-        }
-        // End
-        if (! $error) {
-            $this->db->commit();
-
-            return $object->id;
-        } else {
-            $this->db->rollback();
-
-            return -1;
-        }
-    }
-
-    /**
-     * \brief Initialise object with example values
-     * \remarks id must be 0 if object instance is a specimen.
-     */
-    public function initAsSpecimen()
-    {
-        $this->id = 0;
-        $this->token = '';
-        $this->scopes = '';
-    }
-
     public function search($email, $oauth_id)
     {
         $sql = 'select rowid from '.MAIN_DB_PREFIX.'zenfusion_oauth ';
