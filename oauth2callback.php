@@ -134,15 +134,17 @@ if ((!$state || !$code || !$user->rights->zenfusionoauth->use) && !$user->admin)
         dol_syslog($script_file . " CREATE", LOG_DEBUG);
         $oauth->token = $token;
         $oauth->oauth_id = null;
-        $info = getRequest('https://www.googleapis.com/oauth2/v1/userinfo?access_token='.$token->token, $client);
+        $access_token = json_decode($token)->access_token;
+        $info = getRequest('https://www.googleapis.com/oauth2/v1/userinfo?access_token=' . $access_token, $client);
         $info = json_decode($info);
         $oauth->oauth_id = $info->id;
-        $ok = $info->verified_email && $info->email == $doluser->email;
-        if ($ok) {
+        $ok = false;
+        if ($info->verified_email && $info->email == $doluser->email) {
             $db_id = $oauth->update($doluser);
             if ($db_id < 0) {
                 dol_print_error($db, $oauth->error);
-                $ok = false;
+            } else {
+                $ok = true;
             }
         } else {
             if (DOL_VERSION >= '3.3') {
