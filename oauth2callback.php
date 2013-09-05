@@ -34,6 +34,7 @@
  * \param Oauth2Client $client
  * \return string $gmail
  */
+// FIXME: Factorize with request.lib.php
 function getRequest($uri, $client)
 {
     $get = new Google_HttpRequest($uri, 'GET');
