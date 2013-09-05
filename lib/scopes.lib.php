@@ -28,11 +28,12 @@
  * \brief Allows a depending module to set the scope it needs
  *
  * @param string $scope The scope to add
+ *
  * @return boolean Operation status
  */
 function addScope($scope)
 {
-    require_once DOL_DOCUMENT_ROOT . '/core/lib/admin.lib.php';
+    include_once DOL_DOCUMENT_ROOT . '/core/lib/admin.lib.php';
 
     global $conf, $db;
 
@@ -73,12 +74,13 @@ function addScope($scope)
  * \brief Allows a depending module to delete its scope
  *
  * @param string $scope The scope to delete
+ *
  * @return boolean Operation status
  */
 
 function removeScope($scope)
 {
-    require_once DOL_DOCUMENT_ROOT . '/core/lib/admin.lib.php';
+    include_once DOL_DOCUMENT_ROOT . '/core/lib/admin.lib.php';
 
     global $conf, $db;
 

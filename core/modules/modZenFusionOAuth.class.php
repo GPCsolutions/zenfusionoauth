@@ -41,7 +41,7 @@
  * \authors Raphaël Doursenaud <rdoursenaud@gpcsolutions.fr>
  * \authors Cédric Salvador <csalvador@gpcsolutions.fr>
  */
-include_once DOL_DOCUMENT_ROOT . '/core/modules/DolibarrModules.class.php';
+require_once DOL_DOCUMENT_ROOT . '/core/modules/DolibarrModules.class.php';
 dol_include_once('/zenfusionoauth/inc/oauth.inc.php');
 dol_include_once('/zenfusionoauth/lib/scopes.lib.php');
 
