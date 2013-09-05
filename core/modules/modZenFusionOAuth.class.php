@@ -149,7 +149,7 @@ class modZenFusionOAuth extends DolibarrModules
     {
         global $langs;
         $sql = array();
-        $result = $this->load_tables();
+        $this->load_tables();
         if (function_exists('curl_init')) {
             addscope(GOOGLE_USERINFO_EMAIL_SCOPE);
             $this->_init($sql);
