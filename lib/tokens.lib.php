@@ -37,7 +37,9 @@ function getAllTokens($db, $scope = null, $filter=null)
 
     $sql = 'SELECT rowid, token, email, scopes ';
     $sql .= 'FROM ' . MAIN_DB_PREFIX . 'zenfusion_oauth';
-    if($filter) $sql .= ' WHERE '.$filter;
+    if ($filter) {
+        $sql .= ' WHERE '.$filter;
+    }
     $resql = $db->query($sql);
     if ($resql) {
         if ($db->num_rows($resql)) {

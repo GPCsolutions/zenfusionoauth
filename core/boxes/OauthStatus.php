@@ -146,9 +146,9 @@ class OauthStatus extends ModeleBoxes
                             'td' => 'align="left"',
                             'text' => $langs->trans("NoToken"),
                             'url' => dol_buildpath(
-                                    '/zenfusionoauth/initoauth.php',
-                                    1
-                                ) . '?id=' . $objp->userid . '&action=request'
+                                '/zenfusionoauth/initoauth.php',
+                                1
+                            ) . '?id=' . $objp->userid . '&action=request'
 
                         );
                     }

@@ -133,18 +133,21 @@ function readScopes($scopes)
     }
 
     if (in_array(GOOGLE_CONTACTS_SCOPE, $scopes)
-        && $conf->global->MAIN_MODULE_ZENFUSIONCONTACTS) {
+        && $conf->global->MAIN_MODULE_ZENFUSIONCONTACTS
+    ) {
         array_push($hr_scopes, 'Contacts');
     }
 
     if (in_array(GOOGLE_DRIVE_SCOPE, $scopes)
-        && $conf->global->MAIN_MODULE_ZENFUSIONDRIVE) {
+        && $conf->global->MAIN_MODULE_ZENFUSIONDRIVE
+    ) {
         array_push($hr_scopes, 'Drive');
     }
 
     if (in_array(GOOGLE_USERINFO_PROFILE_SCOPE, $scopes)
         && in_array(GOOGLE_USERINFO_EMAIL_SCOPE, $scopes)
-        && $conf->global->MAIN_MODULE_ZENFUSIONSSO) {
+        && $conf->global->MAIN_MODULE_ZENFUSIONSSO
+    ) {
         array_push($hr_scopes, 'SSO');
     }
 

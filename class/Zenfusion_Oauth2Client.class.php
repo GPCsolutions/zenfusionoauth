@@ -48,7 +48,8 @@ class Oauth2Client extends Google_Client
 
         // Check if the module is configured
         if ($conf->global->ZF_OAUTH2_CLIENT_ID === null
-                || $conf->global->ZF_OAUTH2_CLIENT_SECRET === null) {
+            || $conf->global->ZF_OAUTH2_CLIENT_SECRET === null
+        ) {
             throw new Oauth2Exception("Module not configured");
         }
 
