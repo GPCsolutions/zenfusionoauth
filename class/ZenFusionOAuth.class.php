@@ -122,7 +122,7 @@ class ZenFusionOAuth extends CommonObject
         $sql.= ", oauth_id";
         $sql.= ") VALUES (";
         $sql.= " " . (! isset($this->id) ? 'NULL' : "'" . $this->id . "'") . ",";
-        $sql.= " " . (! isset($this->token) ? 'NULL' : "'" . $his->token . "'") . ",";
+        $sql.= " " . (! isset($this->token) ? 'NULL' : "'" . $this->token . "'") . ",";
         $sql.= " " . (! isset($this->scopes) ? 'NULL' : "'" . $this->scopes . "'") . "";
         $sql.= ", " . (! isset($this->email) ? 'NULL' : "'" . $this->db->escape($this->email) . "'") . "";
         $sql.= ", " . (! isset($this->oauth_id ) || $this->oauth_id == '' ? 'NULL' : "'" . $this->oauth_id . "'") . "";
