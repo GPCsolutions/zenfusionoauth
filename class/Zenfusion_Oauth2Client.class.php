@@ -109,14 +109,4 @@ class Oauth2Client extends Google_Client
 
         return $url;
     }
-
-    /**
-     * Provides the available scopes for this client
-     *
-     * @return array of strings Available scopes
-     */
-    public function getScopes()
-    {
-        return $this->scopes;
-    }
 }
