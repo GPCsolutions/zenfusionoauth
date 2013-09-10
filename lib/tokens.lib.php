@@ -20,7 +20,7 @@
 /**
  * \file lib/tokens.lib.php
  * \ingroup zenfusionoauth
- * \brief Oauth tokens functions library
+ * Oauth tokens functions library
  */
 
 /**

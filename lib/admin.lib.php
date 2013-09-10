@@ -21,12 +21,12 @@
 /**
  * \file lib/admin.lib.php
  * \ingroup zenfusionoauth
- * \brief Module functions library
+ * Module functions library
  */
 
 /**
  * \function zfPrepareHead
- * \brief Display tabs in module admin page
+ * Display tabs in module admin page
  *
  * @return array
  */

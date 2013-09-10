@@ -21,7 +21,7 @@
 /**
  * \file admin/about.php
  * \ingroup zenfusionoauth
- * \brief Module about page
+ * Module about page
  */
 $res = 0;
 // from standard dolibarr install

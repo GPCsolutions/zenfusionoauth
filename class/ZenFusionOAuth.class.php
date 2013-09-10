@@ -20,7 +20,7 @@
  */
 /**
  * \file class/ZenFusionOAuth.class.php
- * \brief CRUD for zenfusion_oauth
+ * CRUD for zenfusion_oauth
  *
  * Creates/Reads/Updates/Deletes access token and secret token
  * from llx_zenfusion_oauth table.
@@ -39,7 +39,7 @@ require_once DOL_DOCUMENT_ROOT . '/core/class/commonobject.class.php';
 /**
  * \class ZenFusionOAuth
  *
- * \brief Manages Access and Secret tokens for each user
+ * Manages Access and Secret tokens for each user
  */
 class ZenFusionOAuth extends CommonObject
 {
@@ -55,7 +55,7 @@ class ZenFusionOAuth extends CommonObject
     public $oauth_id; //registered id for oauth
 
     /**
-     * \brief Instanciates a new database object
+     * Instanciates a new database object
      *
      * @param string $db Database handler
      */
@@ -67,7 +67,7 @@ class ZenFusionOAuth extends CommonObject
     }
 
     /**
-     * \brief Create in database
+     * Create in database
      *
      * @param User $user      User that create
      * @param int  $notrigger 0=launch triggers after, 1=disable triggers
@@ -168,7 +168,7 @@ class ZenFusionOAuth extends CommonObject
     }
 
     /**
-     * \brief Load Access token and Secret token in memory from database
+     * Load Access token and Secret token in memory from database
      *
      * @param int $id id object
      *
@@ -208,7 +208,7 @@ class ZenFusionOAuth extends CommonObject
     }
 
     /**
-     * \brief Update Access token and Secret token database
+     * Update Access token and Secret token database
      *
      * @param User $user      User that modify
      * @param int  $notrigger 0=launch triggers after, 1=disable triggers
@@ -281,7 +281,7 @@ class ZenFusionOAuth extends CommonObject
     }
 
     /**
-     * \brief Delete Access token and Secret token in database
+     * Delete Access token and Secret token in database
      *
      * @param int $id id object
      *

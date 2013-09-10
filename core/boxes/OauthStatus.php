@@ -20,7 +20,7 @@
 
 /**
  *  \file       core/boxes/OauthStatus.php
- *  \brief      Token status box
+ *       Token status box
  *  \ingroup zenfusionoauth
  *  \authors Sebastien Bodrero <sbodrero@gpcsolutions.fr>
  *  \authors Raphaël Doursenaud <rdoursenaud@gpcsolutions.fr>
@@ -30,7 +30,7 @@ dol_include_once('/zenfusionoauth/class/Zenfusion_Oauth2Client.class.php');
 
 /**
  * \class OauthStatus
- * \brief Display OAuth token status
+ * Display OAuth token status
  */
 class OauthStatus extends ModeleBoxes
 {
@@ -45,7 +45,7 @@ class OauthStatus extends ModeleBoxes
     public $info_box_contents = array(); ///< form informations
 
     /**
-     * \brief Constuctor
+     * Constuctor
      */
 
     public function __construct()

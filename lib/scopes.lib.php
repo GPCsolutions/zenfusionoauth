@@ -20,12 +20,12 @@
 /**
  * \file lib/scopes.lib.php
  * \ingroup zenfusionoauth
- * \brief Oauth scopes functions library
+ * Oauth scopes functions library
  */
 
 /**
  * \function addScope
- * \brief Allows a depending module to set the scope it needs
+ * Allows a depending module to set the scope it needs
  *
  * @param string $scope The scope to add
  *
@@ -71,7 +71,7 @@ function addScope($scope)
 
 /**
  * \function removeScope
- * \brief Allows a depending module to delete its scope
+ * Allows a depending module to delete its scope
  *
  * @param string $scope The scope to delete
  *
@@ -118,7 +118,7 @@ function removeScope($scope)
 }
 
 /**
- * \brief Reads a scopes array and returns a human readable array
+ * Reads a scopes array and returns a human readable array
  *
  * @param array $scopes Scopes array
  *

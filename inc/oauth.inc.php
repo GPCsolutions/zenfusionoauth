@@ -20,7 +20,7 @@
  */
 /**
  * \file inc/oauth.inc.php
- * \brief Oauth constants
+ * Oauth constants
  *
  * \ingroup zenfusionoauth
  * \authors Sebastien Bodrero <sbodrero@gpcsolutions.fr>

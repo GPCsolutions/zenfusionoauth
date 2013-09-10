@@ -18,7 +18,7 @@
  */
 /**
  * \file class/Zenfusion_Oauth2Client.class.php
- * \brief Oauth2 client for Zenfusion
+ * Oauth2 client for Zenfusion
  *
  * \ingroup zenfusionoauth
  * \authors Raphaël Doursenaud <rdoursenaud@gpcsolutions.fr>
@@ -29,7 +29,7 @@ dol_include_once('/zenfusionoauth/inc/oauth.inc.php');
 
 /**
  * \class Oauth2Exception
- * \brief Exception for Oauth2Client
+ * Exception for Oauth2Client
  */
 class Oauth2Exception extends Exception
 {
@@ -37,7 +37,7 @@ class Oauth2Exception extends Exception
 
 /**
  * \class Oauth2Client
- * \brief Manages Oauth tokens and requests
+ * Manages Oauth tokens and requests
  */
 class Oauth2Client extends Google_Client
 {

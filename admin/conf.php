@@ -22,7 +22,7 @@
 /**
  * \file admin/conf.php
  * \ingroup zenfusionoauth
- * \brief Module configuration page
+ * Module configuration page
  */
 $res = 0;
 // from standard dolibarr install

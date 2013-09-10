@@ -20,7 +20,7 @@
  */
 /**
  * \defgroup zenfusionoauth Module Zenfusion OAuth
- * \brief Zenfusion Oauth module for Dolibarr
+ * Zenfusion Oauth module for Dolibarr
  *
  * Manages the Oauth authentication process for Google contact API.
  *
@@ -32,7 +32,7 @@
  */
 /**
  * \file core/modules/modZenFusionOAuth.class.php
- * \brief Zenfusion OAuth module
+ * Zenfusion OAuth module
  *
  * Declares and initializes the Google contacts OAuth module in Dolibarr
  *
@@ -47,7 +47,7 @@ dol_include_once('/zenfusionoauth/lib/scopes.lib.php');
 
 /**
  * \class modZenFusionOAuth
- * \brief Describes and activates Google contacts OAuth module
+ * Describes and activates Google contacts OAuth module
  */
 class modZenFusionOAuth extends DolibarrModules
 {
@@ -139,7 +139,7 @@ class modZenFusionOAuth extends DolibarrModules
     }
 
     /**
-     * \brief Function called when module is enabled.
+     * Function called when module is enabled.
      * The init function add constants, boxes, permissions and menus
      * (defined in constructor) into Dolibarr database.
      * It also creates data directories.
@@ -168,7 +168,7 @@ class modZenFusionOAuth extends DolibarrModules
     }
 
     /**
-     * \brief Function called when module is disabled.
+     * Function called when module is disabled.
      * Remove from database constants, boxes and permissions
      * from Dolibarr database.
      * Data directories are not deleted.
@@ -183,7 +183,7 @@ class modZenFusionOAuth extends DolibarrModules
     }
 
     /**
-     * \brief Create tables, keys and data required by module
+     * Create tables, keys and data required by module
      * Files llx_table1.sql, llx_table1.key.sql llx_data.sql
      * with create table, create keys
      * and create data commands must be stored in directory /mymodule/sql/

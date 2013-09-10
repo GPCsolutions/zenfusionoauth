@@ -20,7 +20,7 @@
  */
 /**
  * \file callback.php
- * \brief callback page for OAuth
+ * Callback page for OAuth
  *
  * \ingroup zenfusionoauth
  * \authors Raphaël Doursenaud <rdoursenaud@gpcsolutions.fr>
@@ -29,7 +29,7 @@
 
 /**
  *
- * \brief handles GET requests
+ * Handles GET requests
  *
  * @param string $uri
  * @param Oauth2Client $client
