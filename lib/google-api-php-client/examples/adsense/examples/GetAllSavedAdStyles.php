@@ -15,43 +15,43 @@
  * limitations under the License.
  */
 
-// Require the base class
+// Require the base class.
 require_once __DIR__ . "/../BaseExample.php";
 
 /**
- * Gets all custom channels in an ad client.
+ * This example gets all saved ad styles for an account.
  *
- * To get ad clients, run getAllAdClients.
- * Tags: customchannels.list
+ * Tags: accounts.savedadstyles.list
  *
- * @author Silvano Luciani <silvano.luciani@gmail.com>
+ * @author Sérgio Gomes <sgomes@google.com>
  */
-class GetAllCustomChannels extends BaseExample {
+class GetAllSavedAdStyles extends BaseExample {
   public function render() {
-    $adClientId = AD_CLIENT_ID;
+    $accountId = ACCOUNT_ID;
     $optParams['maxResults'] = AD_MAX_PAGE_SIZE;
-    $listClass = 'list';
+    $listClass = 'saved ad styles';
     printListHeader($listClass);
     $pageToken = null;
-    //do {
+    do {
       $optParams['pageToken'] = $pageToken;
-      # Retrieve custom channels list, and display it.
-      $result = $this->adSenseHostService->customchannels
-          ->listCustomchannels($adClientId, $optParams);
-      $customChannels = $result['items'];
-      if (isset($customChannels)) {
-        foreach ($customChannels as $customChannel) {
-          $format = 'Custom channel with code "%s" and name "%s" was found.';
-          $content = sprintf(
-              $format, $customChannel['code'], $customChannel['name']);
-          printListElement($content);
+      // Retrieve saved ad style list, and display it.
+      $result = $this->adSenseService->accounts_savedadstyles
+          ->listAccountsSavedadstyles($accountId, $optParams);
+      $savedAdStyles = $result['items'];
+      if (empty($savedAdStyles)) {
+        foreach ($savedAdStyles as $savedAdStyle) {
+          $content = array();
+          $mainFormat = 'Saved ad style with name "%s" and ID "%s" was found.';
+          $content[] = sprintf(
+              $mainFormat, $savedAdStyle['name'], $savedAdStyle['id']);
+          printListElementForClients($content);
         }
         $pageToken = isset($result['nextPageToken']) ? $result['nextPageToken']
             : null;
       } else {
         printNoResultForList();
       }
-    //} while ($pageToken);
+    } while ($pageToken);
     printListFooter();
   }
 }

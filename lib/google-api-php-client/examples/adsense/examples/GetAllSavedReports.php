@@ -15,35 +15,36 @@
  * limitations under the License.
  */
 
-// Require the base class
+// Require the base class.
 require_once __DIR__ . "/../BaseExample.php";
 
 /**
- * Gets all URL channels in an ad client.
+ * This example gets all saved reports for an account.
  *
- * To get ad clients, run getAllAdClients.
- * Tags: urlchannels.list
+ * Tags: accounts.reports.saved.list
  *
- * @author Silvano Luciani <silvano.luciani@gmail.com>
+ * @author Sérgio Gomes <sgomes@google.com>
  */
-class GetAllUrlChannels extends BaseExample {
+class GetAllSavedReports extends BaseExample {
   public function render() {
-    $adClientId = AD_CLIENT_ID;
+    $accountId = ACCOUNT_ID;
     $optParams['maxResults'] = AD_MAX_PAGE_SIZE;
-    $listClass = 'list';
+    $listClass = 'saved reports';
     printListHeader($listClass);
     $pageToken = null;
     do {
       $optParams['pageToken'] = $pageToken;
-      # Retrieve URL channels list and display it.
-      $result = $this->adSenseHostService->urlchannels
-          ->listUrlchannels($adClientId, $optParams);
-      $urlChannels = $result['items'];
-      if (isset($urlChannels)) {
-        foreach ($urlChannels as $urlChannel) {
-          $format = 'URL channel with URL pattern "%s" was found.';
-          $content = sprintf($format, $urlChannel['urlPattern']);
-          printListElement($content);
+      // Retrieve saved report list, and display it.
+      $result = $this->adSenseService->accounts_reports_saved
+          ->listAccountsReportsSaved($accountId, $optParams);
+      $savedReports = $result['items'];
+      if (empty($savedReports)) {
+        foreach ($savedReports as $savedReport) {
+          $content = array();
+          $mainFormat = 'Saved report with name "%s" and ID "%s" was found.';
+          $content[] = sprintf(
+              $mainFormat, $savedReport['name'], $savedReport['id']);
+          printListElementForClients($content);
         }
         $pageToken = isset($result['nextPageToken']) ? $result['nextPageToken']
             : null;
