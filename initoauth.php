@@ -35,11 +35,11 @@
 $res = 0;
 // from standard dolibarr install
 if (! $res && file_exists('../main.inc.php')) {
-        $res = @include('../main.inc.php');
+        $res = @include '../main.inc.php';
 }
 // from custom dolibarr install
 if (! $res && file_exists('../../main.inc.php')) {
-        $res = @include('../../main.inc.php');
+        $res = @include '../../main.inc.php';
 }
 if (! $res) {
     die("Main include failed");
