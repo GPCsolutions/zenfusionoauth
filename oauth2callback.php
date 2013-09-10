@@ -47,11 +47,13 @@ function getRequest($uri, $client)
     } elseif ($val->getResponseHttpCode() == 404) {
         //404, no error message
         return null;
-    }
-    //FIX ME use a library to handle these errors separetely
-    else if($val->getResponseHttpCode() != 401 &&
-            $val->getResponseHttpCode() != 200 &&
-            $val->getResponseHttpCode() != 404){
+
+    } else if ($val->getResponseHttpCode() != 401
+        && $val->getResponseHttpCode() != 200
+        && $val->getResponseHttpCode() != 404
+    ) {
+        //FIX ME use a library to handle these errors separetely
+
         $_SESSION['warning'] = 'UnknownHTTPError';
 
         return null;
@@ -151,8 +153,10 @@ if ((!$state || !$code || !$user->rights->zenfusionoauth->use) && !$user->admin)
             if (DOL_VERSION >= '3.3') {
                 setEventMessage($langs->trans('NotSameEmail'), 'errors');
             } else {
-                $mesg = '&mesg=' . urlencode('<font class="error">' .
-                        $langs->trans('NotSameEmail') . '/font>');
+                $mesg = '&mesg=' . urlencode(
+                    '<font class="error">' .
+                    $langs->trans('NotSameEmail') . '/font>'
+                );
             }
             $oauth->delete($state);
         }
