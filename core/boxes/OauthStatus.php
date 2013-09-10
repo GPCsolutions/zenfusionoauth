@@ -133,7 +133,6 @@ class OauthStatus extends ModeleBoxes
                         } catch (Google_AuthException $e) {
                             $this->info_box_contents[$i][2] = array(
                                 'td' => 'align="left"',
-                                //TODO translate
                                 'text' => $langs->trans("Error").": ".$e->getMessage(),//$langs->trans("NotConfigured")
                                 'url' => dol_buildpath(
                                     '/zenfusionoauth/initoauth.php',
