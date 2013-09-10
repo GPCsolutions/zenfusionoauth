@@ -27,6 +27,8 @@
 /**
  * \function zfPrepareHead
  * \brief Display tabs in module admin page
+ *
+ * @return array
  */
 function zfPrepareHead()
 {

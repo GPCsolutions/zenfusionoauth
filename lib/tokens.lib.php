@@ -26,9 +26,11 @@
 /**
  * Return all tokens eventually with the corresponding scope.
  *
- * @param dbhandler $db
- * @param string $scope
- * \return array:
+ * @param DoliDB      $db     Database
+ * @param null|string $scope  Scope filter
+ * @param null|string $filter SQL filter
+ *
+ * @return array of stdObject Tokens
  */
 function getAllTokens($db, $scope = null, $filter=null)
 {
@@ -71,8 +73,10 @@ function getAllTokens($db, $scope = null, $filter=null)
 /**
  * Returns the token associated with the user
  *
- * @param int $user_id
- * \return stdObject or false
+ * @param DoliDB $db      Database
+ * @param int    $user_id The user ID
+ *
+ * @return stdObject or false
  */
 function getToken($db, $user_id)
 {

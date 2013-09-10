@@ -38,6 +38,7 @@ require_once DOL_DOCUMENT_ROOT . '/core/class/commonobject.class.php';
 
 /**
  * \class ZenFusionOAuth
+ *
  * \brief Manages Access and Secret tokens for each user
  */
 class ZenFusionOAuth extends CommonObject
@@ -67,9 +68,11 @@ class ZenFusionOAuth extends CommonObject
 
     /**
      * \brief Create in database
-     * @param string $user User that create
-     * @param int $notrigger 0=launch triggers after, 1=disable triggers
-     * \return int <0 if KO, Id of created object if OK
+     *
+     * @param User $user      User that create
+     * @param int  $notrigger 0=launch triggers after, 1=disable triggers
+     *
+     * @return int <0 if KO, Id of created object if OK
      */
     public function create($user, $notrigger = 0)
     {
@@ -166,8 +169,10 @@ class ZenFusionOAuth extends CommonObject
 
     /**
      * \brief Load Access token and Secret token in memory from database
+     *
      * @param int $id id object
-     * \return int <0 if KO, >0 if OK
+     *
+     * @return int <0 if KO, >0 if OK
      */
     public function fetch($id)
     {
@@ -204,9 +209,11 @@ class ZenFusionOAuth extends CommonObject
 
     /**
      * \brief Update Access token and Secret token database
-     * @param User $user User that modify
-     * @param int $notrigger 0=launch triggers after, 1=disable triggers
-     * \return int <0 if KO, >0 if OK
+     *
+     * @param User $user      User that modify
+     * @param int  $notrigger 0=launch triggers after, 1=disable triggers
+     *
+     * @return int <0 if KO, >0 if OK
      */
     public function update($user = null, $notrigger = 0)
     {
@@ -275,8 +282,10 @@ class ZenFusionOAuth extends CommonObject
 
     /**
      * \brief Delete Access token and Secret token in database
+     *
      * @param int $id id object
-     * \return int <0 if KO, >0 if OK
+     *
+     * @return int <0 if KO, >0 if OK
      */
     public function delete($id)
     {
@@ -310,8 +319,8 @@ class ZenFusionOAuth extends CommonObject
     /**
      * Provides the user ID associated with the provided email address and oauth ID
      *
-     * @param $email    The user's email address
-     * @param $oauth_id The user's Oauth ID
+     * @param string $email    The user's email address
+     * @param int    $oauth_id The user's Oauth ID
      *
      * @return int      The user's ID or -1 on error
      */

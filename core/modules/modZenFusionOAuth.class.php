@@ -53,8 +53,8 @@ class modZenFusionOAuth extends DolibarrModules
 {
 
     /**
-     * Constructor. Define names, constants,
-     * directories, boxes, permissions
+     * Constructor. Define names, constants, directories, boxes, permissions
+     *
      * @param string $db Database handler
      */
     public function __construct($db)
@@ -143,7 +143,8 @@ class modZenFusionOAuth extends DolibarrModules
      * The init function add constants, boxes, permissions and menus
      * (defined in constructor) into Dolibarr database.
      * It also creates data directories.
-     * \return int 1 if OK, 0 if KO
+     *
+     * @return int 1 if OK, 0 if KO
      */
     public function init()
     {
@@ -171,7 +172,8 @@ class modZenFusionOAuth extends DolibarrModules
      * Remove from database constants, boxes and permissions
      * from Dolibarr database.
      * Data directories are not deleted.
-     * \return int 1 if OK, 0 if KO
+     *
+     * @return int 1 if OK, 0 if KO
      */
     public function remove()
     {
@@ -186,7 +188,8 @@ class modZenFusionOAuth extends DolibarrModules
      * with create table, create keys
      * and create data commands must be stored in directory /mymodule/sql/
      * This function is called by this->init.
-     *  \return int <=0 if KO, >0 if OK
+     *
+     *  @return int <=0 if KO, >0 if OK
      */
     public function load_tables()
     {

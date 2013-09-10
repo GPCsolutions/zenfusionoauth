@@ -45,7 +45,7 @@ class OauthStatus extends ModeleBoxes
     public $info_box_contents = array(); ///< form informations
 
     /**
-     *      \brief Constuctor
+     * \brief Constuctor
      */
 
     public function __construct()
@@ -57,8 +57,9 @@ class OauthStatus extends ModeleBoxes
     }
 
     /**
-     *      Load data of box into memory for a future usage
-     *      @param int $max Maximum number of records to show
+     * Load data of box into memory for a future usage
+     *
+     * @param int $max Maximum number of records to show
      */
     public function loadBox($max = 0)
     {
@@ -176,6 +177,9 @@ class OauthStatus extends ModeleBoxes
         }
     }
 
+    /**
+     * Displays the box
+     */
     public function showBox()
     {
         parent::showBox($this->info_box_head, $this->info_box_contents);
