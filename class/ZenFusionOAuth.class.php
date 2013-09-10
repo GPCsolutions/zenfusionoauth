@@ -306,6 +306,14 @@ class ZenFusionOAuth extends CommonObject
         }
     }
 
+    /**
+     * Provides the user ID associated with the provided email address and oauth ID
+     *
+     * @param $email    The user's email address
+     * @param $oauth_id The user's Oauth ID
+     *
+     * @return int      The user's ID or -1 on error
+     */
     public function search($email, $oauth_id)
     {
         $sql = 'select rowid from '.MAIN_DB_PREFIX.'zenfusion_oauth ';

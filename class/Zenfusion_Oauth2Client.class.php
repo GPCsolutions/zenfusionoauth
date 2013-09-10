@@ -41,7 +41,9 @@ class Oauth2Exception extends Exception
  */
 class Oauth2Client extends Google_Client
 {
-
+    /**
+     * Init an oauth2 client
+     */
     public function __construct()
     {
         global $conf;
@@ -70,6 +72,11 @@ class Oauth2Client extends Google_Client
         }
     }
 
+    /**
+     * Check token validity
+     *
+     * @return string Token info
+     */
     public function validateToken()
     {
         if ($this->isAccessTokenExpired()) {
@@ -81,6 +88,13 @@ class Oauth2Client extends Google_Client
         );
     }
 
+    /**
+     * Generates the authentication URL
+     *
+     * @param null $email The email address to authenticate with
+     *
+     * @return string Authentication URL
+     */
     public function createAuthUrl($email = null)
     {
         $url = parent::createAuthUrl();
@@ -95,6 +109,12 @@ class Oauth2Client extends Google_Client
 
         return $url;
     }
+
+    /**
+     * Provides the available scopes for this client
+     *
+     * @return array of strings Available scopes
+     */
     public function getScopes()
     {
         return $this->scopes;
