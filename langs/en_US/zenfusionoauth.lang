@@ -25,6 +25,8 @@ Credits=Credits
 Development=Development
 ProjectManager=project manager
 SoftwareEngineer=software engineer
+Libraries=Libraries
+Contains=Contains:
 Ressources=Resources
 # User card tab
 Services=Active services

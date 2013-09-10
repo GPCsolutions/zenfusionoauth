@@ -103,6 +103,28 @@ echo '<li>Sebastien Bodrero, ', $langs->trans('SoftwareEngineer'), '</li>';
 echo '<li>Cédric Salvador, ', $langs->trans('SoftwareEngineer'), '</li>';
 echo '</ul>';
 
+echo '<h4>' . $langs->trans("Libraries") . '</h4>';
+echo '<ul>',
+    '<li>',
+    '<a href="https://code.google.com/p/google-api-php-client/" target="_blank">',
+    'Google APIs Client Library for PHP',
+    '</a>',
+    '<br>',
+    '©2008-2013 Google Inc.<br>',
+    'Apache License 2.0<br>',
+    $langs->trans("Contains"),
+    '<ul>',
+    '<li>',
+    '<a href="http://code.google.com/p/diso/" target="_blank">',
+    'XRDS-Simple library',
+    '</a>',
+    '<br>',
+    'Apache License 2.0',
+    '</li>',
+    '</ul>',
+    '</li>',
+    '</ul>';
+
 echo '<h4>' . $langs->trans("Ressources") . '</h4>';
 
 echo '<ul>',
