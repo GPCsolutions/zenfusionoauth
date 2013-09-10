@@ -80,7 +80,8 @@ if ($user->id == $id) {
 }
 $result = restrictedArea($user, 'user', $id, '&user', $feature2);
 if (! $conf->global->MAIN_MODULE_ZENFUSIONOAUTH
-        || ($user->id <> $id && ! $canreaduser)) {
+    || ($user->id <> $id && ! $canreaduser)
+) {
     accessforbidden();
 }
 
@@ -104,46 +105,46 @@ try {
 
 // Actions
 switch ($action) {
-    case 'delete_token':
-        // Get token from database
-        $token = json_decode($oauth->token);
-        try {
-            $client->revokeToken($token->{'refresh_token'});
-        } catch (Google_AuthException $e) {
-            dol_syslog("Delete token " . $e->getMessage());
-            // TODO: print message and user panel URL to manually revoke access
-        }
-        // Delete token in database
-        $result = $oauth->delete($id);
-        if ($result < 0) {
-            dol_print_error($db, $oauth->error);
-        }
-        header(
-            'refresh:0;url=' . dol_buildpath(
-                '/zenfusionoauth/initoauth.php',
-                1
-            ) . '?id=' . $id . '&ok=true'
-        );
+case 'delete_token':
+    // Get token from database
+    $token = json_decode($oauth->token);
+    try {
+        $client->revokeToken($token->{'refresh_token'});
+    } catch (Google_AuthException $e) {
+        dol_syslog("Delete token " . $e->getMessage());
+        // TODO: print message and user panel URL to manually revoke access
+    }
+    // Delete token in database
+    $result = $oauth->delete($id);
+    if ($result < 0) {
+        dol_print_error($db, $oauth->error);
+    }
+    header(
+        'refresh:0;url=' . dol_buildpath(
+            '/zenfusionoauth/initoauth.php',
+            1
+        ) . '?id=' . $id . '&ok=true'
+    );
 
-        break;
-    case 'request':
-        // Save the current user to the state
-        $oauth->delete($id);
-        $oauth->id = $id;
-        $oauth->scopes = json_encode($client->getScopes());
-        $oauth->email = $doluser->email;
-        $oauth->oauth_id = '';
-        $req = $oauth->create($doluser);
-        if ($req < 0) {
-            dol_print_error($db, $oauth->error);
-        }
-        $client->setState($id);
-        $cback= dol_buildpath('/zenfusionoauth/oauth2callback.php', 2);
-        $client->setRedirectUri($cback);
-        // Go to Google for authentication
-        $auth = $client->createAuthUrl($doluser->email);
-        header('Location: ' . $auth);
-        break;
+    break;
+case 'request':
+    // Save the current user to the state
+    $oauth->delete($id);
+    $oauth->id = $id;
+    $oauth->scopes = json_encode($client->getScopes());
+    $oauth->email = $doluser->email;
+    $oauth->oauth_id = '';
+    $req = $oauth->create($doluser);
+    if ($req < 0) {
+        dol_print_error($db, $oauth->error);
+    }
+    $client->setState($id);
+    $cback= dol_buildpath('/zenfusionoauth/oauth2callback.php', 2);
+    $client->setRedirectUri($cback);
+    // Go to Google for authentication
+    $auth = $client->createAuthUrl($doluser->email);
+    header('Location: ' . $auth);
+    break;
 }
 /*
  * View
@@ -227,12 +228,12 @@ echo '<table class="border" width="100%">',
 // Ref
      '<tr><td width="25%" valign="top">' , $langs->trans("Ref") , '</td>',
      '<td colspan="2">',
-     $form->showrefnav(
-    $doluser,
-    'id',
-    '',
-    $user->rights->user->user->lire || $user->admin
-),
+    $form->showrefnav(
+        $doluser,
+        'id',
+        '',
+        $user->rights->user->user->lire || $user->admin
+    ),
      '</td>',
      '</tr>',
 
