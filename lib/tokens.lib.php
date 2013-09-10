@@ -26,8 +26,8 @@
 /**
  * Return all tokens eventually with the corresponding scope.
  *
- * \param dbhandler $db
- * \param string $scope
+ * @param dbhandler $db
+ * @param string $scope
  * \return array:
  */
 function getAllTokens($db, $scope = null, $filter=null)
@@ -71,7 +71,7 @@ function getAllTokens($db, $scope = null, $filter=null)
 /**
  * Returns the token associated with the user
  *
- * \param int $user_id
+ * @param int $user_id
  * \return stdObject or false
  */
 function getToken($db, $user_id)

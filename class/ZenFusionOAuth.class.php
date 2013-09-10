@@ -55,7 +55,8 @@ class ZenFusionOAuth extends CommonObject
 
     /**
      * \brief Instanciates a new database object
-     * \param string $db Database handler
+     *
+     * @param string $db Database handler
      */
     public function __construct($db)
     {
@@ -66,8 +67,8 @@ class ZenFusionOAuth extends CommonObject
 
     /**
      * \brief Create in database
-     * \param string $user User that create
-     * \param int $notrigger 0=launch triggers after, 1=disable triggers
+     * @param string $user User that create
+     * @param int $notrigger 0=launch triggers after, 1=disable triggers
      * \return int <0 if KO, Id of created object if OK
      */
     public function create($user, $notrigger = 0)
@@ -165,7 +166,7 @@ class ZenFusionOAuth extends CommonObject
 
     /**
      * \brief Load Access token and Secret token in memory from database
-     * \param int $id id object
+     * @param int $id id object
      * \return int <0 if KO, >0 if OK
      */
     public function fetch($id)
@@ -203,8 +204,8 @@ class ZenFusionOAuth extends CommonObject
 
     /**
      * \brief Update Access token and Secret token database
-     * \param User $user User that modify
-     * \param int $notrigger 0=launch triggers after, 1=disable triggers
+     * @param User $user User that modify
+     * @param int $notrigger 0=launch triggers after, 1=disable triggers
      * \return int <0 if KO, >0 if OK
      */
     public function update($user = null, $notrigger = 0)
@@ -274,7 +275,7 @@ class ZenFusionOAuth extends CommonObject
 
     /**
      * \brief Delete Access token and Secret token in database
-     * \param int $id id object
+     * @param int $id id object
      * \return int <0 if KO, >0 if OK
      */
     public function delete($id)

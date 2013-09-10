@@ -119,7 +119,7 @@ function removeScope($scope)
 
 /**
  * \brief Reads a scopes array and returns a human readable array
- * \param array $scopes
+ * @param array $scopes
  * \return array
  */
 function readScopes($scopes)

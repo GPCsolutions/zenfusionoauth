@@ -55,7 +55,7 @@ class modZenFusionOAuth extends DolibarrModules
     /**
      * Constructor. Define names, constants,
      * directories, boxes, permissions
-     * \param string $db Database handler
+     * @param string $db Database handler
      */
     public function __construct($db)
     {

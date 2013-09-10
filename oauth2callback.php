@@ -30,8 +30,8 @@
 /**
  *
  * \brief handles GET requests
- * \param string $uri
- * \param Oauth2Client $client
+ * @param string $uri
+ * @param Oauth2Client $client
  * \return string $gmail
  */
 // FIXME: Factorize with request.lib.php
