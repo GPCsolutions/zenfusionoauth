@@ -157,7 +157,7 @@ if ((!$state || !$code || !$user->rights->zenfusionoauth->use) && !$user->admin)
             } else {
                 $mesg = '&mesg=' . urlencode(
                     '<font class="error">' .
-                    $langs->trans('NotSameEmail') . '/font>'
+                    $langs->trans('NotSameEmail') . '</font>'
                 );
             }
             $oauth->delete($state);
@@ -167,7 +167,7 @@ if ((!$state || !$code || !$user->rights->zenfusionoauth->use) && !$user->admin)
             'refresh:0;url=' . dol_buildpath(
                 '/zenfusionoauth/initoauth.php',
                 1
-            ) . '?id=' . $state. '&ok=' . $ok . $mesg
+            ) . '?id=' . $state. '&ok=' . (int)$ok . $mesg
         );
         exit;
     }

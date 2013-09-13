@@ -61,7 +61,6 @@ $canreaduser = ($user->admin || $user->rights->zenfusionoauth->use);
 
 $id = GETPOST('id', 'int');
 $action = GETPOST('action', 'alpha');
-$ok = GETPOST('ok', 'alpha');
 $callback_error = GETPOST('error', 'alpha');
 $retry = false; // Do we have an error ?
 $mesg = GETPOST('mesg', 'alpha');
@@ -123,7 +122,7 @@ case 'delete_token':
         'refresh:0;url=' . dol_buildpath(
             '/zenfusionoauth/initoauth.php',
             1
-        ) . '?id=' . $id . '&ok=true'
+        ) . '?id=' . $id . '&ok=1'
     );
 
     break;
@@ -276,8 +275,10 @@ echo '</td>',
 
      '</table>';
 
-if ($ok) {
+if (GETPOST('ok', 'int') > 0) {
     $mesg = '<font class="ok">' . $langs->trans("OperationSuccessful") . '</font>';
+} elseif(isset($_GET['ok']) && GETPOST('ok', 'int') == 0) {
+    $retry = true;
 }
 
 if (! $lock) {

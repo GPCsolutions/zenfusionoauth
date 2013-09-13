@@ -155,6 +155,7 @@ class modZenFusionOAuth extends DolibarrModules
             addscope(GOOGLE_USERINFO_EMAIL_SCOPE);
             $this->_init($sql);
         } else {
+            $langs->load('zenfusionoauth@zenfusionoauth');
             $mesg = $langs->trans("MissingCURL");
             if (DOL_VERSION >= '3.3') {
                 setEventMessage($mesg, 'errors');
