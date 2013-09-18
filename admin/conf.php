@@ -2,7 +2,7 @@
 /*
  * ZenFusion OAuth - A Google Oauth authorization module for Dolibarr
  * Copyright (C) 2011 Sebastien Bodrero <sbodrero@gpcsolutions.fr>
- * Copyright (C) 2011-2012 Raphaël Doursenaud <rdoursenaud@gpcsolutions.fr>
+ * Copyright (C) 2011-2013 Raphaël Doursenaud <rdoursenaud@gpcsolutions.fr>
  * Copyright (C) 2012 Cédric Salvador <csalvador@gpcsolutions.fr>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -148,11 +148,11 @@ echo '<td></td>';
 echo '</tr>';
 echo '<tr>';
 echo '<td>',
-    '<input type="text" name ="clientId" value="',
+    '<input type="text" name="clientId" value="',
     $conf->global->ZF_OAUTH2_CLIENT_ID, '" required="required">',
     '</td>';
 echo '<td>',
-    '<input type="text" name ="clientSecret" value="',
+    '<input type="text" name="clientSecret" value="',
     $conf->global->ZF_OAUTH2_CLIENT_SECRET . '" required="required">',
     '</td>';
 echo '<td>',
@@ -172,6 +172,11 @@ echo '<fieldset>';
 echo '<legend>', $langs->trans("ImportFrom"), ' ';
 echo '<a href="https://code.google.com/apis/console/">';
 echo 'Google API Console</a></legend>';
+// FIXME: Add instructions
+$callback_url = dol_buildpath('/zenfusionoauth/oauth2callback.php', 2);
+echo $langs->trans('RedirectURL') . ' <input type=text name="callback_url" value="' . $callback_url . '">';
+echo zfCopyToClipboardButton($callback_url);
+echo '<br>';
 echo  $langs->trans("JSONConfigFile"), ' ';
 echo '<input type="file" name = "jsonConfig" required="required">';
 echo '<input type="submit" class="button" value ="',

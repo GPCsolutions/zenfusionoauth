@@ -1,0 +1,3 @@
+[submodule "lib/zeroclipboard"]
+	path = lib/zeroclipboard
+	url = https://github.com/zeroclipboard/ZeroClipboard.git

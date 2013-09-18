@@ -10,6 +10,7 @@ About=About
 # Config
 GoogleApiConfig=Google API configuration
 ImportFrom=Import from
+RedirectURL=Redirect URL
 JSONConfigFile=JSON configuration file
 ClientId=Client ID
 ClientSecret=Client Secret
@@ -53,3 +54,6 @@ MissingCURL=php-curl is missing
 NoScope=This module can't work on its own. See the list of compatibles modules on zenfusion.fr
 Permission7345701=Use ZenFusion OAuth
 NotSameEmail=The authentified email doesn't match this user's email
+# ZeroClipBoard
+CopyToClipboard=Copy to clipboard
+CopiedToClipboard=Copied to clipboard

@@ -13,6 +13,7 @@ ImportFrom=Importation depuis
 JSONConfigFile=Fichier de configuration JSON
 ClientId=Client ID
 ClientSecret=Client Secret
+RedirectURL=Redirect URL
 ## Messages
 Saved=Enregistré
 BadFile=Mauvais fichier
@@ -53,3 +54,6 @@ MissingCURL=php-curl n'est pas installé
 NoScope=Ce module ne peut pas fonctionner seul. Voir la liste des modules compatibles sur zenfusion.fr
 Permission7345701=Utiliser ZenFusion OAuth
 NotSameEmail=L'email authentifié ne correspond pas à l'email Dolibarr de cet utilisateur
+# ZeroClipboard
+CopyToClipboard=Copier dans le presse-papier
+CopiedToClipboard=Copié dans le presse-papier
