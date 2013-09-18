@@ -39,6 +39,7 @@ if (! $res) {
 
 require_once '../lib/admin.lib.php';
 require_once DOL_DOCUMENT_ROOT . '/core/lib/admin.lib.php';
+require_once '../lib/zfcopybutton.lib.php';
 require_once DOL_DOCUMENT_ROOT . '/core/class/html.form.class.php';
 
 $langs->load('zenfusionoauth@zenfusionoauth');
