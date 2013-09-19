@@ -279,7 +279,7 @@ echo '</td>',
 
 if (GETPOST('ok', 'int') > 0) {
     $mesg = '<font class="ok">' . $langs->trans("OperationSuccessful") . '</font>';
-} elseif(isset($_GET['ok']) && GETPOST('ok', 'int') == 0) {
+} elseif (isset($_GET['ok']) && GETPOST('ok', 'int') == 0) {
     $retry = true;
 }
 
