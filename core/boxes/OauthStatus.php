@@ -60,6 +60,8 @@ class OauthStatus extends ModeleBoxes
      * Load data of box into memory for a future usage
      *
      * @param int $max Maximum number of records to show
+     *
+     * @return void
      */
     public function loadBox($max = 0)
     {
@@ -178,6 +180,8 @@ class OauthStatus extends ModeleBoxes
 
     /**
      * Displays the box
+     *
+     * @return void
      */
     public function showBox()
     {
