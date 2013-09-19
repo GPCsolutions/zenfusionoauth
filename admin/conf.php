@@ -178,8 +178,8 @@ echo '<input type="hidden" name="action" value="upload">';
 echo '<input type="hidden" name="MAX_FILE_SIZE" value="1000">';
 echo '<fieldset>';
 echo '<legend>', $langs->trans("ImportFrom"), ' ';
-echo '<a href="https://code.google.com/apis/console/" target="_blank">';
-echo 'Google API Console</a></legend>';
+echo '<a href="https://cloud.google.com/console" target="_blank">';
+echo 'Google Cloud Console</a></legend>';
 // FIXME: Add instructions
 $callback_url = dol_buildpath('/zenfusionoauth/oauth2callback.php', 2);
 echo $langs->trans('RedirectURL'),
