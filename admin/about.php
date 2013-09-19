@@ -74,7 +74,11 @@ dol_fiche_head(
     'oauth@zenfusionoauth'
 );
 
-echo '<h3>', $langs->trans("Module105001Name"), '</h3>';
+echo '<h3>',
+    $langs->trans("Module105001Name"),
+    ' — ',
+    $langs->Trans('Module105001Desc'),
+    '</h3>';
 echo '<em>', $langs->trans("Version"), ' ',
  $module->version, '</em><br>';
 echo '<em>&copy;2011-2013 GPC.solutions<br><em>';

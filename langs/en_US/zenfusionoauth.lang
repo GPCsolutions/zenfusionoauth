@@ -2,7 +2,7 @@
 CHARSET=UTF-8
 # Module
 Module105001Name=ZenFusion OAuth
-Module105001Desc=Oauth authentification for Google APIs
+Module105001Desc=Oauth2 authentification for Google APIs
 # Admin
 Config=Configuration
 Support=Support
