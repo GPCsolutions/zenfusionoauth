@@ -171,12 +171,13 @@ echo '<input type="hidden" name="action" value="upload">';
 echo '<input type="hidden" name="MAX_FILE_SIZE" value="1000">';
 echo '<fieldset>';
 echo '<legend>', $langs->trans("ImportFrom"), ' ';
-echo '<a href="https://code.google.com/apis/console/">';
+echo '<a href="https://code.google.com/apis/console/" target="_blank">';
 echo 'Google API Console</a></legend>';
 // FIXME: Add instructions
 $callback_url = dol_buildpath('/zenfusionoauth/oauth2callback.php', 2);
-echo $langs->trans('RedirectURL') . ' <input type=text name="callback_url" value="' . $callback_url . '">';
-echo zfCopyToClipboardButton($callback_url);
+echo $langs->trans('RedirectURL'),
+    ' <input type=text name="callback_url" value="' . $callback_url . '">',
+    zfCopyToClipboardButton($callback_url);
 echo '<br>';
 echo  $langs->trans("JSONConfigFile"), ' ';
 echo '<input type="file" name = "jsonConfig" required="required">';
