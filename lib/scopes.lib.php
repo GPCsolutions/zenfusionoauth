@@ -37,6 +37,8 @@ function addScope($scope)
 
     global $conf, $db;
 
+    $error = 0; // Error counter
+
     $scopes = json_decode($conf->global->ZF_OAUTH2_SCOPES);
     // This can fail, let's initialize it
     if ($scopes === null) {
@@ -83,6 +85,8 @@ function removeScope($scope)
     include_once DOL_DOCUMENT_ROOT . '/core/lib/admin.lib.php';
 
     global $conf, $db;
+
+    $error = 0; // Error counter
 
     $scopes = json_decode($conf->global->ZF_OAUTH2_SCOPES);
     // This can fail, let's initialize it

@@ -42,6 +42,13 @@ require_once DOL_DOCUMENT_ROOT . '/core/lib/admin.lib.php';
 require_once '../lib/zfcopybutton.lib.php';
 require_once DOL_DOCUMENT_ROOT . '/core/class/html.form.class.php';
 
+global $conf, $db, $user, $langs;
+
+$mesg = ""; // User message
+// Oauth2 params
+$client_id = '';
+$client_secret = '';
+
 $langs->load('zenfusionoauth@zenfusionoauth');
 $langs->load('admin');
 $langs->load('help');

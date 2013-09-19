@@ -39,6 +39,8 @@ if (! $res) {
 require_once '../core/modules/modZenFusionOAuth.class.php';
 require_once '../lib/admin.lib.php';
 
+global $conf, $db, $user, $langs;
+
 $langs->load('zenfusionoauth@zenfusionoauth');
 $langs->load('admin');
 $langs->load('help');

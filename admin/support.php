@@ -38,6 +38,8 @@ if (! $res) {
 
 require_once '../lib/admin.lib.php';
 
+global $langs, $user;
+
 $langs->load('zenfusionoauth@zenfusionoauth');
 $langs->load('admin');
 $langs->load('help');

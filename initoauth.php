@@ -52,6 +52,8 @@ require_once './class/Zenfusion_Oauth2Client.class.php';
 require_once './lib/scopes.lib.php';
 require_once './inc/oauth.inc.php';
 
+global $db, $conf, $user, $langs;
+
 $langs->load('zenfusionoauth@zenfusionoauth');
 $langs->load('admin');
 $langs->load('users');

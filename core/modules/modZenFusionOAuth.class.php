@@ -149,6 +149,9 @@ class modZenFusionOAuth extends DolibarrModules
     public function init()
     {
         global $langs;
+
+        $msg = ""; // User message
+
         $sql = array();
         $this->load_tables();
         if (function_exists('curl_init')) {
