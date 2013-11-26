@@ -296,9 +296,10 @@ if (! $lock) {
                  '<tr><td colspan="2" align="center">',
                  '<input class="button" type="submit" value="' , $langs->trans("DeleteToken") , '"></tr>';
         } elseif (isValidEmail($doluser->email)
-                  && ($availableservices || $enabledservices)
-                  && $conf->global->ZF_OAUTH2_CLIENT_ID
-                  && ($user->rights->zenfusionoauth->use || $user->admin)) {
+            && ($availableservices || $enabledservices)
+            && $conf->global->ZF_OAUTH2_CLIENT_ID
+            && ($user->rights->zenfusionoauth->use || $user->admin)
+        ) {
             // if no access token propose to request
             echo '<input type="hidden" name="action" value="request">',
                  '<input type="hidden" name="id" value="' , $id , '">',
