@@ -76,7 +76,7 @@ function getAllTokens($db, $scope = null, $filter=null)
  * @param DoliDB $db      Database
  * @param int    $user_id The user ID
  *
- * @return stdObject or false
+ * @return Object or false
  */
 function getToken($db, $user_id)
 {
