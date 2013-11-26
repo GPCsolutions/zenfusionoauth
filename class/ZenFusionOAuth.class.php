@@ -76,7 +76,6 @@ class ZenFusionOAuth extends CommonObject
      */
     public function create($user, $notrigger = 0)
     {
-        global $conf, $langs;
         $error = 0;
         // Clean parameters
         if (isset($this->token)) {
@@ -176,7 +175,6 @@ class ZenFusionOAuth extends CommonObject
      */
     public function fetch($id)
     {
-        global $langs;
         $sql = "SELECT";
         $sql.= " t.rowid,";
         $sql.= " t.token,";
@@ -217,7 +215,6 @@ class ZenFusionOAuth extends CommonObject
      */
     public function update($user = null, $notrigger = 0)
     {
-        global $conf, $langs;
         $error = 0;
         // Clean parameters
         if (isset($this->token)) {
@@ -289,7 +286,6 @@ class ZenFusionOAuth extends CommonObject
      */
     public function delete($id)
     {
-        global $conf, $langs;
         $error = 0;
         $sql = "DELETE FROM " . MAIN_DB_PREFIX . "zenfusion_oauth";
         $sql.= " WHERE rowid=" . $id;

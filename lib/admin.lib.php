@@ -32,7 +32,7 @@
  */
 function zfPrepareHead()
 {
-    global $langs, $conf, $user;
+    global $langs, $conf;
     $h = 0;
     $head = array();
 
