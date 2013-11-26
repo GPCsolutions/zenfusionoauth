@@ -148,7 +148,7 @@ print_titre($langs->trans("GoogleApiConfig"));
 echo '<form method="POST" action="', $_SERVER['PHP_SELF'], '">';
 echo '<input type="hidden" name="token" value="', $_SESSION['newtoken'], '">';
 echo '<input type="hidden" name="action" value="update">';
-echo '<table class="noborder" width="40%">';
+echo '<table class="noborder">';
 echo '<tr class="liste_titre">';
 echo '<td>', $langs->trans("ClientId"), '</td>';
 echo '<td>', $langs->trans("ClientSecret"), '</td>';
