@@ -186,7 +186,7 @@ if ($client) {
 $head = user_prepare_head($doluser);
 $title = $langs->trans("User");
 
-dol_fiche_head($head, 'tab' . $tabname, $title, 0, 'user');
+dol_fiche_head($head, strtolower($tabname), $title, 0, 'user');
 
 $lock = false; // Lock page if required informations are missing
 
