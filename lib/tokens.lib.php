@@ -87,13 +87,13 @@ function getToken($db, $user_id)
     if ($resql) {
         if ($db->num_rows($resql)) {
             $num = $db->num_rows($resql);
-            for ($i = 0; $i < $num; $i ++) {
+            if ($num == 1) {
                 $token = $db->fetch_object($resql);
-
                 return $token;
             }
+            // We didn't get the expected number of results, bail out
+            return false;
         }
     }
-
     return false;
 }
