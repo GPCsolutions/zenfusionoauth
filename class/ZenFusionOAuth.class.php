@@ -57,7 +57,7 @@ class ZenFusionOAuth extends CommonObject
     /**
      * Instanciates a new database object
      *
-     * @param string $db Database handler
+     * @param DoliDB $db Database handler
      */
     public function __construct($db)
     {
