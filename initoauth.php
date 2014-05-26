@@ -188,6 +188,8 @@ $title = $langs->trans("User");
 
 dol_fiche_head($head, 'tab' . $tabname, $title, 0, 'user');
 
+$lock = false; // Lock page if required informations are missing
+
 if (!isValidEmail($doluser->email)) {
     $lock = true;
     $langs->load("errors");
