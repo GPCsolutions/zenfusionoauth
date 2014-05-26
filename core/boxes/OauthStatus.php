@@ -132,7 +132,7 @@ class OauthStatus extends ModeleBoxes
                                 'td' => 'align="left"',
                                 'text' => $langs->trans("StatusOk")
                             );
-                        } catch (Google_AuthException $e) {
+                        } catch (Google_Auth_Exception $e) {
                             $this->info_box_contents[$i][2] = array(
                                 'td' => 'align="left"',
                                 'text' => $langs->trans("Error").": ".$e->getMessage(),

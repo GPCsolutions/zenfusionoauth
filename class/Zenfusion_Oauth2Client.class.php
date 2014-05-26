@@ -23,8 +23,8 @@
  * \ingroup zenfusionoauth
  * \authors Raphaël Doursenaud <rdoursenaud@gpcsolutions.fr>
  */
-
-dol_include_once('/zenfusionoauth/lib/google-api-php-client/src/Google_Client.php');
+set_include_path(dol_buildpath('/zenfusionoauth/lib/google-api-php-client/src'));
+dol_include_once('/zenfusionoauth/lib/google-api-php-client/src/Google/Client.php');
 dol_include_once('/zenfusionoauth/inc/oauth.inc.php');
 
 /**
@@ -63,6 +63,8 @@ class Oauth2Client extends Google_Client
         $this->setClientId($conf->global->ZF_OAUTH2_CLIENT_ID);
         $this->setClientSecret($conf->global->ZF_OAUTH2_CLIENT_SECRET);
         $this->setRedirectUri($callback);
+        //TODO:
+        //$this->setApprovalPrompt();
         // We want to be able to access the user's data
         // even if he's not connected
         $this->setAccessType('offline');
@@ -80,11 +82,11 @@ class Oauth2Client extends Google_Client
     public function validateToken()
     {
         if ($this->isAccessTokenExpired()) {
-            $this->refreshToken(self::$auth->token['refresh_token']);
+            $this->refreshToken($this->getAccessToken()['refresh_token']);
         }
         // TODO: use CURL instead of FGC
         return file_get_contents(
-            GOOGLE_TOKEN_INFO . self::$auth->token['access_token']
+            GOOGLE_TOKEN_INFO . $this->getAccessToken()['access_token']
         );
     }
 

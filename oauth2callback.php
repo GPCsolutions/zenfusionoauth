@@ -39,8 +39,8 @@
 // FIXME: Factorize with request.lib.php
 function getRequest($uri, $client)
 {
-    $get = new Google_HttpRequest($uri, 'GET');
-    $val = $client->getIo()->authenticatedRequest($get);
+    $get = new Google_Http_Request($uri, 'GET');
+    $val = $client->getAuth()->authenticatedRequest($get);
     dol_syslog('GET response code: ' . $val->getResponseHttpCode(), LOG_INFO);
     if ($val->getResponseHttpCode() == 401) {
         $_SESSION['warning'] = 'HTTP401Unauthorized';
@@ -133,8 +133,8 @@ if ((!$state || !$code || !$user->rights->zenfusionoauth->use) && !$user->admin)
         try {
             $cback= dol_buildpath('/zenfusionoauth/oauth2callback.php', 2);
             $client->setRedirectUri($cback);
-            $client->authenticate();
-        } catch (Google_AuthException $e) {
+            $client->authenticate($_GET['code']);
+        } catch (Google_Auth_Exception $e) {
             dol_syslog("Access token " . $e->getMessage());
             $retry = true;
         }
@@ -171,7 +171,7 @@ if ((!$state || !$code || !$user->rights->zenfusionoauth->use) && !$user->admin)
             'refresh:0;url=' . dol_buildpath(
                 '/zenfusionoauth/initoauth.php',
                 1
-            ) . '?id=' . $state. '&ok=' . (int)$ok . $mesg
+            ) . '?id=' . $state. '&ok=' . (int) $ok . $mesg
         );
         exit;
     }

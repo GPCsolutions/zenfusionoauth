@@ -100,7 +100,7 @@ $oauth->fetch($id);
 try {
     $client = new Oauth2Client();
 
-} catch (Google_AuthException $e) {
+} catch (Google_Auth_Exception $e) {
     // Ignore
 }
 
@@ -111,7 +111,7 @@ case 'delete_token':
     $token = json_decode($oauth->token);
     try {
         $client->revokeToken($token->{'refresh_token'});
-    } catch (Google_AuthException $e) {
+    } catch (Google_Auth_Exception $e) {
         dol_syslog("Delete token " . $e->getMessage());
         // TODO: print message and user panel URL to manually revoke access
     }
@@ -166,7 +166,7 @@ $availableservices = array_diff(readScopes(json_decode($conf->global->ZF_OAUTH2_
 if ($client) {
     try {
         $client->setAccessToken($oauth->token);
-    } catch (Google_AuthException $e) {
+    } catch (Google_Auth_Exception $e) {
         $token_good = false;
     }
 
