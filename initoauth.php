@@ -215,15 +215,15 @@ if (! $client || ! $conf->global->ZF_OAUTH2_CLIENT_ID) {
 
  //user->nom and user->prenom are deprecated and won't be supported in the future
  //so test to make insure compatibility
-if ($doluser->nom) {
-    $lastname = $doluser->nom;
-} else {
+if ($doluser->lastname) {
     $lastname = $doluser->lastname;
-}
-if ($doluser->prenom) {
-    $firstname = $doluser->prenom;
 } else {
+    $lastname = $doluser->nom;
+}
+if ($doluser->firstname) {
     $firstname = $doluser->firstname;
+} else {
+    $firstname = $doluser->prenom;
 }
 
 echo '<table class="border" width="100%">',
