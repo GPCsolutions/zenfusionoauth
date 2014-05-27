@@ -64,11 +64,11 @@ class Oauth2Client extends Google_Client
         $this->setClientId($conf->global->ZF_OAUTH2_CLIENT_ID);
         $this->setClientSecret($conf->global->ZF_OAUTH2_CLIENT_SECRET);
         $this->setRedirectUri($callback);
-        //TODO:
-        //$this->setApprovalPrompt();
         // We want to be able to access the user's data
         // even if he's not connected
         $this->setAccessType('offline');
+        // We don't get a refresh token unless we set this
+        $this->setApprovalPrompt('force');
         // We set the scope against other known modules
         if ($scopes) {
             $this->setScopes($scopes);
