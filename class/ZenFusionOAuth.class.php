@@ -150,20 +150,7 @@ class ZenFusionOAuth extends CommonObject
                 //// End call triggers
             }
         }
-        // Commit or rollback
-        if ($error) {
-            foreach ($this->errors as $errmsg) {
-                dol_syslog(get_class($this) . "::create " . $errmsg, LOG_ERR);
-                $this->error.= ($this->error ? ', ' . $errmsg : $errmsg);
-            }
-            $this->db->rollback();
-
-            return -1 * $error;
-        } else {
-            $this->db->commit();
-
-            return $this->id;
-        }
+        return $this->commitorrollback($error, __METHOD__);
     }
 
     /**
@@ -261,20 +248,7 @@ class ZenFusionOAuth extends CommonObject
                 //// End call triggers
             }
         }
-        // Commit or rollback
-        if ($error) {
-            foreach ($this->errors as $errmsg) {
-                dol_syslog(get_class($this) . "::update " . $errmsg, LOG_ERR);
-                $this->error.= ($this->error ? ', ' . $errmsg : $errmsg);
-            }
-            $this->db->rollback();
-
-            return -1 * $error;
-        } else {
-            $this->db->commit();
-
-            return 1;
-        }
+        return $this->commitorrollback($error, __METHOD__);
     }
 
     /**
@@ -296,20 +270,7 @@ class ZenFusionOAuth extends CommonObject
             $error ++;
             $this->errors[] = "Error " . $this->db->lasterror();
         }
-        // Commit or rollback
-        if ($error) {
-            foreach ($this->errors as $errmsg) {
-                dol_syslog(get_class($this) . "::delete " . $errmsg, LOG_ERR);
-                $this->error.= ($this->error ? ', ' . $errmsg : $errmsg);
-            }
-            $this->db->rollback();
-
-            return -1 * $error;
-        } else {
-            $this->db->commit();
-
-            return 1;
-        }
+        return $this->commitorrollback($error, __METHOD__);
     }
 
     /**
@@ -332,6 +293,31 @@ class ZenFusionOAuth extends CommonObject
             return $obj->rowid;
         } else {
             return - 1;
+        }
+    }
+
+    /**
+     * Commit or rollback
+     *
+     * @param string $error The error count
+     * @param string $method_name The calling method name
+     *
+     * @return int <0 if KO, Id of created object if OK
+     */
+
+    function commitorrollback($error, $method_name) {
+        if ($error) {
+            foreach ($this->errors as $errmsg) {
+                dol_syslog($method_name . $errmsg, LOG_ERR);
+                $this->error.= ($this->error ? ', ' . $errmsg : $errmsg);
+            }
+            $this->db->rollback();
+
+            return -1 * $error;
+        } else {
+            $this->db->commit();
+
+            return $this->id;
         }
     }
 }
