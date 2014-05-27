@@ -54,7 +54,7 @@ function getRequest($uri, $client)
         && $val->getResponseHttpCode() != 200
         && $val->getResponseHttpCode() != 404
     ) {
-        //FIX ME use a library to handle these errors separetely
+        //FIXME use a library to handle these errors separetely
 
         $_SESSION['warning'] = 'UnknownHTTPError';
 
