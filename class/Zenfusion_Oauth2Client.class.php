@@ -76,22 +76,6 @@ class Oauth2Client extends Google_Client
     }
 
     /**
-     * Check token validity
-     *
-     * @return string Token info
-     */
-    public function validateToken()
-    {
-        if ($this->isAccessTokenExpired()) {
-            $this->refreshToken($this->getAccessToken()['refresh_token']);
-        }
-        // TODO: use CURL instead of FGC
-        return file_get_contents(
-            GOOGLE_TOKEN_INFO . $this->getAccessToken()['access_token']
-        );
-    }
-
-    /**
      * Generates the authentication URL
      *
      * @param null $email The email address to authenticate with
