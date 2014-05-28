@@ -8,7 +8,7 @@ It is designed to be used with other ZenFusion modules.
 Licence
 -------
 
-Copyright (C) 2013 GPC.solutions
+Copyright (C) 2014 GPC.solutions
 
 GPLv3 or (at your option) any later version.
 
