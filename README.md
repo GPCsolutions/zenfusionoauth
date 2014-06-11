@@ -13,3 +13,8 @@ Copyright (C) 2014 GPC.solutions
 GPLv3 or (at your option) any later version.
 
 See COPYING for more information.
+
+GIT Submodules
+--------------
+
+This project uses GIT submodules. Please use `git submodule update --recursive` after cloning or pulling
