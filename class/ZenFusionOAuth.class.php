@@ -69,8 +69,8 @@ class ZenFusionOAuth extends CommonObject
     /**
      * Create in database
      *
-     * @param User $user      User that create
-     * @param int  $notrigger 0=launch triggers after, 1=disable triggers
+     * @param User $user User that create
+     * @param int $notrigger 0=launch triggers after, 1=disable triggers
      *
      * @return int <0 if KO, Id of created object if OK
      */
@@ -79,10 +79,10 @@ class ZenFusionOAuth extends CommonObject
         $error = 0;
         // Clean parameters
         if (isset($this->token)) {
-                $this->token = trim($this->token);
+            $this->token = trim($this->token);
         }
         if (isset($this->scopes)) {
-                $this->scopes = trim($this->scopes);
+            $this->scopes = trim($this->scopes);
         }
         if (isset($this->email)) {
             $this->email = trim($this->email);
@@ -109,7 +109,7 @@ class ZenFusionOAuth extends CommonObject
 
                 $sql = "SELECT setval('" . MAIN_DB_PREFIX . "zenfusion_oauth_rowid_seq', " . ($maxrowid) . ")";
                 $resqlrowidset = $this->db->query($sql);
-                if (! $resqlrowidset) {
+                if (!$resqlrowidset) {
                     dol_print_error($this->db);
                 }
             } else {
@@ -118,28 +118,28 @@ class ZenFusionOAuth extends CommonObject
         }
 
         $sql = "INSERT INTO " . MAIN_DB_PREFIX . "zenfusion_oauth(";
-        $sql.= "rowid";
-        $sql.= ", token";
-        $sql.= ", scopes";
-        $sql.= ", email";
-        $sql.= ", oauth_id";
-        $sql.= ") VALUES (";
-        $sql.= " " . (! isset($this->id) ? 'NULL' : "'" . $this->id . "'") . ",";
-        $sql.= " " . (! isset($this->token) ? 'NULL' : "'" . $this->token . "'") . ",";
-        $sql.= " " . (! isset($this->scopes) ? 'NULL' : "'" . $this->scopes . "'") . "";
-        $sql.= ", " . (! isset($this->email) ? 'NULL' : "'" . $this->db->escape($this->email) . "'") . "";
-        $sql.= ", " . (! isset($this->oauth_id ) || $this->oauth_id == '' ? 'NULL' : "'" . $this->oauth_id . "'") . "";
-        $sql.= ")";
+        $sql .= "rowid";
+        $sql .= ", token";
+        $sql .= ", scopes";
+        $sql .= ", email";
+        $sql .= ", oauth_id";
+        $sql .= ") VALUES (";
+        $sql .= " " . (!isset($this->id) ? 'NULL' : "'" . $this->id . "'") . ",";
+        $sql .= " " . (!isset($this->token) ? 'NULL' : "'" . $this->token . "'") . ",";
+        $sql .= " " . (!isset($this->scopes) ? 'NULL' : "'" . $this->scopes . "'") . "";
+        $sql .= ", " . (!isset($this->email) ? 'NULL' : "'" . $this->db->escape($this->email) . "'") . "";
+        $sql .= ", " . (!isset($this->oauth_id) || $this->oauth_id == '' ? 'NULL' : "'" . $this->oauth_id . "'") . "";
+        $sql .= ")";
         $this->db->begin();
         dol_syslog(get_class($this) . "::create sql=" . $sql, LOG_DEBUG);
         $resql = $this->db->query($sql);
-        if (! $resql) {
-            $error ++;
+        if (!$resql) {
+            $error++;
             $this->errors[] = "Error " . $this->db->lasterror();
         }
-        if (! $error) {
+        if (!$error) {
             $this->id = $this->db->last_insert_id(MAIN_DB_PREFIX . "zenfusion_oauth");
-            if (! $notrigger) {
+            if (!$notrigger) {
                 // Uncomment this and change MYOBJECT to your own tag if you
                 // want this action call a trigger.
                 //// Call triggers
@@ -154,6 +154,32 @@ class ZenFusionOAuth extends CommonObject
     }
 
     /**
+     * Commit or rollback
+     *
+     * @param string $error The error count
+     * @param string $method_name The calling method name
+     *
+     * @return int <0 if KO, Id of created object if OK
+     */
+
+    function commitorrollback($error, $method_name)
+    {
+        if ($error) {
+            foreach ($this->errors as $errmsg) {
+                dol_syslog($method_name . $errmsg, LOG_ERR);
+                $this->error .= ($this->error ? ', ' . $errmsg : $errmsg);
+            }
+            $this->db->rollback();
+
+            return -1 * $error;
+        } else {
+            $this->db->commit();
+
+            return $this->id;
+        }
+    }
+
+    /**
      * Load Access token and Secret token in memory from database
      *
      * @param int $id id object
@@ -163,13 +189,13 @@ class ZenFusionOAuth extends CommonObject
     public function fetch($id)
     {
         $sql = "SELECT";
-        $sql.= " t.rowid,";
-        $sql.= " t.token,";
-        $sql.= " t.scopes";
-        $sql.= ", t.email";
-        $sql.= ", t.oauth_id";
-        $sql.= " FROM " . MAIN_DB_PREFIX . "zenfusion_oauth as t";
-        $sql.= " WHERE t.rowid = " . $id;
+        $sql .= " t.rowid,";
+        $sql .= " t.token,";
+        $sql .= " t.scopes";
+        $sql .= ", t.email";
+        $sql .= ", t.oauth_id";
+        $sql .= " FROM " . MAIN_DB_PREFIX . "zenfusion_oauth as t";
+        $sql .= " WHERE t.rowid = " . $id;
         dol_syslog(get_class($this) . "::fetch sql=" . $sql, LOG_DEBUG);
         $resql = $this->db->query($sql);
         if ($resql) {
@@ -195,8 +221,8 @@ class ZenFusionOAuth extends CommonObject
     /**
      * Update Access token and Secret token database
      *
-     * @param User $user      User that modify
-     * @param int  $notrigger 0=launch triggers after, 1=disable triggers
+     * @param User $user User that modify
+     * @param int $notrigger 0=launch triggers after, 1=disable triggers
      *
      * @return int <0 if KO, >0 if OK
      */
@@ -205,10 +231,10 @@ class ZenFusionOAuth extends CommonObject
         $error = 0;
         // Clean parameters
         if (isset($this->token)) {
-                $this->token = trim($this->token);
+            $this->token = trim($this->token);
         }
         if (isset($this->scopes)) {
-                $this->scopes = trim($this->scopes);
+            $this->scopes = trim($this->scopes);
         }
         if (isset($this->email)) {
             $this->email = trim($this->email);
@@ -220,24 +246,24 @@ class ZenFusionOAuth extends CommonObject
         // Put here code to add control on parameters values
         // Update request
         $sql = "UPDATE " . MAIN_DB_PREFIX . "zenfusion_oauth SET";
-        $sql.= " token=" . (isset($this->token) ? "'" . $this->token . "'"
-                    : "null") . ",";
-        $sql.= " scopes=" . (isset($this->scopes) ? "'" . $this->scopes . "'"
-                    : "null") . "";
-        $sql.= ", email=" . (isset($this->email) ? "'" . $this->db->escape($this->email) . "'"
-                    : "null") . "";
-        $sql.= ", oauth_id=" . (isset($this->oauth_id) ? "'" . $this->oauth_id . "'"
-                    : "null") . "";
-        $sql.= " WHERE rowid=" . $this->id;
+        $sql .= " token=" . (isset($this->token) ? "'" . $this->token . "'"
+                : "null") . ",";
+        $sql .= " scopes=" . (isset($this->scopes) ? "'" . $this->scopes . "'"
+                : "null") . "";
+        $sql .= ", email=" . (isset($this->email) ? "'" . $this->db->escape($this->email) . "'"
+                : "null") . "";
+        $sql .= ", oauth_id=" . (isset($this->oauth_id) ? "'" . $this->oauth_id . "'"
+                : "null") . "";
+        $sql .= " WHERE rowid=" . $this->id;
         $this->db->begin();
         dol_syslog(get_class($this) . "::update sql=" . $sql, LOG_DEBUG);
         $resql = $this->db->query($sql);
-        if (! $resql) {
-            $error ++;
+        if (!$resql) {
+            $error++;
             $this->errors[] = "Error " . $this->db->lasterror();
         }
-        if (! $error) {
-            if (! $notrigger) {
+        if (!$error) {
+            if (!$notrigger) {
                 // Uncomment this and change MYOBJECT to your own tag if you
                 // want this action call a trigger.
                 //// Call triggers
@@ -262,12 +288,12 @@ class ZenFusionOAuth extends CommonObject
     {
         $error = 0;
         $sql = "DELETE FROM " . MAIN_DB_PREFIX . "zenfusion_oauth";
-        $sql.= " WHERE rowid=" . $id;
+        $sql .= " WHERE rowid=" . $id;
         $this->db->begin();
         dol_syslog(get_class($this) . "::delete sql=" . $sql);
         $resql = $this->db->query($sql);
-        if (! $resql) {
-            $error ++;
+        if (!$resql) {
+            $error++;
             $this->errors[] = "Error " . $this->db->lasterror();
         }
         return $this->commitorrollback($error, __METHOD__);
@@ -276,15 +302,15 @@ class ZenFusionOAuth extends CommonObject
     /**
      * Provides the user ID associated with the provided email address and oauth ID
      *
-     * @param string $email    The user's email address
-     * @param int    $oauth_id The user's Oauth ID
+     * @param string $email The user's email address
+     * @param int $oauth_id The user's Oauth ID
      *
      * @return int      The user's ID or -1 on error
      */
     public function search($email, $oauth_id)
     {
-        $sql = 'select rowid from '.MAIN_DB_PREFIX.'zenfusion_oauth ';
-        $sql .= 'where email="'.$email.'" and oauth_id="'.$oauth_id.'"';
+        $sql = 'select rowid from ' . MAIN_DB_PREFIX . 'zenfusion_oauth ';
+        $sql .= 'where email="' . $email . '" and oauth_id="' . $oauth_id . '"';
         $resql = $this->db->query($sql);
         if ($resql && $this->db->num_rows($resql) > 0) {
             $obj = $this->db->fetch_object($resql);
@@ -292,32 +318,7 @@ class ZenFusionOAuth extends CommonObject
 
             return $obj->rowid;
         } else {
-            return - 1;
-        }
-    }
-
-    /**
-     * Commit or rollback
-     *
-     * @param string $error The error count
-     * @param string $method_name The calling method name
-     *
-     * @return int <0 if KO, Id of created object if OK
-     */
-
-    function commitorrollback($error, $method_name) {
-        if ($error) {
-            foreach ($this->errors as $errmsg) {
-                dol_syslog($method_name . $errmsg, LOG_ERR);
-                $this->error.= ($this->error ? ', ' . $errmsg : $errmsg);
-            }
-            $this->db->rollback();
-
-            return -1 * $error;
-        } else {
-            $this->db->commit();
-
-            return $this->id;
+            return -1;
         }
     }
 }

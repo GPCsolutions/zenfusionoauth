@@ -25,14 +25,14 @@
  */
 $res = 0;
 // from standard dolibarr install
-if (! $res && file_exists('../../main.inc.php')) {
-        $res = @include '../../main.inc.php';
+if (!$res && file_exists('../../main.inc.php')) {
+    $res = @include '../../main.inc.php';
 }
 // from custom dolibarr install
-if (! $res && file_exists('../../../main.inc.php')) {
-        $res = @include '../../../main.inc.php';
+if (!$res && file_exists('../../../main.inc.php')) {
+    $res = @include '../../../main.inc.php';
 }
-if (! $res) {
+if (!$res) {
     die("Main include failed");
 }
 
@@ -46,7 +46,7 @@ $langs->load('admin');
 $langs->load('help');
 
 // only readable by admin
-if (! $user->admin) {
+if (!$user->admin) {
     accessforbidden();
 }
 
@@ -75,29 +75,29 @@ dol_fiche_head(
 );
 
 echo '<h3>',
-    $langs->trans("Module105001Name"),
-    ' — ',
-    $langs->Trans('Module105001Desc'),
-    '</h3>';
+$langs->trans("Module105001Name"),
+' — ',
+$langs->Trans('Module105001Desc'),
+'</h3>';
 echo '<em>', $langs->trans("Version"), ' ',
- $module->version, '</em><br>';
+$module->version, '</em><br>';
 echo '<em>&copy;2011-2013 GPC.solutions<br><em>';
 echo '<a target="_blank" href="http://www.zenfusion.net/">',
- '<img src="../img/logo_zf.png" alt="Logo ZenFusion"></a>';
+'<img src="../img/logo_zf.png" alt="Logo ZenFusion"></a>';
 
 echo '<h3>', $langs->trans("Publisher"), '</h3>';
 echo '<a target="_blank" href="http://www.gpcsolutions.fr">',
- '<img src="../img/logo_gpc.png" alt="GPC.solutions"></a>';
+'<img src="../img/logo_gpc.png" alt="GPC.solutions"></a>';
 echo '<address>Technopole Hélioparc<br>',
- '2 avenue du Président Pierre Angot<br>',
- '64053 PAU CEDEX 9<br>',
- 'FRANCE<br>',
- '+33 (0)5 35 53 97 12</address>',
- '<a href="mailto:contact@gpcsolutions.fr">contact@gpcsolutions.fr</a>';
+'2 avenue du Président Pierre Angot<br>',
+'64053 PAU CEDEX 9<br>',
+'FRANCE<br>',
+'+33 (0)5 35 53 97 12</address>',
+'<a href="mailto:contact@gpcsolutions.fr">contact@gpcsolutions.fr</a>';
 
 echo '<h3>', $langs->trans("License"), '</h3>';
 echo '<a target="_blank" href="http://www.gnu.org/licenses/gpl-3.0.html">',
- '<img src="../img/logo_gpl.png" alt="GPL v.3"></a>';
+'<img src="../img/logo_gpl.png" alt="GPL v.3"></a>';
 
 echo '<h3>', $langs->trans("Credits"), '</h3>';
 
@@ -111,56 +111,56 @@ echo '</ul>';
 
 echo '<h4>' . $langs->trans("Libraries") . '</h4>';
 echo '<ul>',
-    '<li>',
-    '<a href="https://code.google.com/p/google-api-php-client/" target="_blank">',
-    'Google APIs Client Library for PHP',
-    '</a>',
-    '<br>',
-    '©2008-2014 Google Inc.',
-    '<br>',
-    'Apache License 2.0',
-    '<br>',
-    $langs->trans("Contains"),
-    '<ul>',
-    '<li>',
-    '<a href="http://code.google.com/p/diso/" target="_blank">',
-    'XRDS-Simple library',
-    '</a>',
-    '<br>',
-    'Apache License 2.0',
-    '</li>',
-    '</ul>',
-    '</li>',
-    '<li>',
-    '<a href="http://zeroclipboard.org" target="_blank">',
-    'ZeroClipboard',
-    '</a>',
-    '<br>',
-    '©2014 Jon Rohan, James M. Greene',
-    '<br>',
-    'MIT License',
-    '<br>',
-    '</li>',
-    '</ul>';
+'<li>',
+'<a href="https://code.google.com/p/google-api-php-client/" target="_blank">',
+'Google APIs Client Library for PHP',
+'</a>',
+'<br>',
+'©2008-2014 Google Inc.',
+'<br>',
+'Apache License 2.0',
+'<br>',
+$langs->trans("Contains"),
+'<ul>',
+'<li>',
+'<a href="http://code.google.com/p/diso/" target="_blank">',
+'XRDS-Simple library',
+'</a>',
+'<br>',
+'Apache License 2.0',
+'</li>',
+'</ul>',
+'</li>',
+'<li>',
+'<a href="http://zeroclipboard.org" target="_blank">',
+'ZeroClipboard',
+'</a>',
+'<br>',
+'©2014 Jon Rohan, James M. Greene',
+'<br>',
+'MIT License',
+'<br>',
+'</li>',
+'</ul>';
 
 echo '<h4>' . $langs->trans("Ressources") . '</h4>';
 
 echo '<ul>',
- '<li>OAuth logo<br>',
- '&copy; <a target="_blank" href="http://factoryjoe.com/">Chris Messina</a><br>',
- '<a target="_blank" href="http://creativecommons.org/licenses/by-sa/3.0/legalcode">',
- '<img src="../img/ccbysa.png" alt="Creative Commons Attribution Share Alike 3.0 license"></a>',
- '</li>',
- '<li>GPLv3 logo<br>',
- '&copy;2007, 2008 ',
- '<a target="_blank" href="http://fsf.org">Free Software Foundation</a>',
- '</li>',
- '<li>ZenFusion logo<br>',
- '&copy;2011 GPC.solutions<br>',
- 'Trademark Pending',
- '</li>',
- '<li>GPC.solutions logo<br>',
- '&copy;2010-2013 GPC.solutions',
- '</li>',
- '</ul>';
+'<li>OAuth logo<br>',
+'&copy; <a target="_blank" href="http://factoryjoe.com/">Chris Messina</a><br>',
+'<a target="_blank" href="http://creativecommons.org/licenses/by-sa/3.0/legalcode">',
+'<img src="../img/ccbysa.png" alt="Creative Commons Attribution Share Alike 3.0 license"></a>',
+'</li>',
+'<li>GPLv3 logo<br>',
+'&copy;2007, 2008 ',
+'<a target="_blank" href="http://fsf.org">Free Software Foundation</a>',
+'</li>',
+'<li>ZenFusion logo<br>',
+'&copy;2011 GPC.solutions<br>',
+'Trademark Pending',
+'</li>',
+'<li>GPC.solutions logo<br>',
+'&copy;2010-2013 GPC.solutions',
+'</li>',
+'</ul>';
 llxFooter();

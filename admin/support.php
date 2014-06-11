@@ -25,14 +25,14 @@
  */
 $res = 0;
 // from standard dolibarr install
-if (! $res && file_exists('../../main.inc.php')) {
-        $res = @include '../../main.inc.php';
+if (!$res && file_exists('../../main.inc.php')) {
+    $res = @include '../../main.inc.php';
 }
 // from custom dolibarr install
-if (! $res && file_exists('../../../main.inc.php')) {
-        $res = @include '../../../main.inc.php';
+if (!$res && file_exists('../../../main.inc.php')) {
+    $res = @include '../../../main.inc.php';
 }
-if (! $res) {
+if (!$res) {
     die("Main include failed");
 }
 
@@ -45,7 +45,7 @@ $langs->load('admin');
 $langs->load('help');
 
 // only readable by admin
-if (! $user->admin) {
+if (!$user->admin) {
     accessforbidden();
 }
 
@@ -67,8 +67,8 @@ dol_fiche_head($head, 'help', $langs->trans("Module105001Name"), 0, 'oauth@zenfu
 
 echo '<a target="_blank" href="http://assistance.gpcsolutions.fr">',
 //	'<img src="../img/logo_assist.png" alt="', $langs->trans("HelpCenter"),'">',
-    $langs->trans("Support"),
-    '</a>',
-    '<br>';
+$langs->trans("Support"),
+'</a>',
+'<br>';
 
 llxFooter();

@@ -44,7 +44,7 @@ function addScope($scope)
     if ($scopes === null) {
         $scopes = array();
     }
-    if (! in_array($scope, $scopes)) {
+    if (!in_array($scope, $scopes)) {
         array_push($scopes, $scope);
     }
     $json = json_encode($scopes);
@@ -57,10 +57,10 @@ function addScope($scope)
         '',
         $conf->entity
     );
-    if (! $res > 0) {
+    if (!$res > 0) {
         $error++;
     }
-    if (! $error) {
+    if (!$error) {
         $db->commit();
 
         return true;
@@ -107,10 +107,10 @@ function removeScope($scope)
         '',
         $conf->entity
     );
-    if (! $res > 0) {
+    if (!$res > 0) {
         $error++;
     }
-    if (! $error) {
+    if (!$error) {
         $db->commit();
 
         return true;
@@ -134,7 +134,7 @@ function readScopes($scopes)
     $hr_scopes = array();
 
     // Check if we got something
-    if (! $scopes) {
+    if (!$scopes) {
         array_push($hr_scopes, 'None');
 
         return $hr_scopes;

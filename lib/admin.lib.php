@@ -39,7 +39,7 @@ function zfPrepareHead()
     $head[$h][0] = dol_buildpath("/zenfusionoauth/admin/conf.php", 1);
     $head[$h][1] = $langs->trans("Config");
     $head[$h][2] = 'conf';
-    $h ++;
+    $h++;
 
     if ($conf->global->ZF_SUPPORT) {
         $head[$h][0] = dol_buildpath(
@@ -48,13 +48,13 @@ function zfPrepareHead()
         );
         $head[$h][1] = $langs->trans("HelpCenter");
         $head[$h][2] = 'help';
-        $h ++;
+        $h++;
     }
 
     $head[$h][0] = dol_buildpath("/zenfusionoauth/admin/about.php", 1);
     $head[$h][1] = $langs->trans("About");
     $head[$h][2] = 'about';
-    $h ++;
+    $h++;
 
     return $head;
 }

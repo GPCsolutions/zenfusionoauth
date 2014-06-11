@@ -22,8 +22,8 @@
 /**
  * Button to copy text to clipboard
  *
- * @param string $text  The text to copy
- * @param string $id    Id of the element
+ * @param string $text The text to copy
+ * @param string $id Id of the element
  * @param string $title Title of the element
  *
  * @return string HTML for the button
@@ -32,7 +32,7 @@ function zfCopyToClipboardButton($text, $id = 'copy-button', $title = 'CopyToCli
 {
     global $langs;
 
-    $zeroclipboard_path =  dol_buildpath('/zenfusionoauth/lib/zeroclipboard/dist/', 2);
+    $zeroclipboard_path = dol_buildpath('/zenfusionoauth/lib/zeroclipboard/dist/', 2);
     return '
         <button
             type="button"
@@ -45,7 +45,7 @@ function zfCopyToClipboardButton($text, $id = 'copy-button', $title = 'CopyToCli
         <script src="' . $zeroclipboard_path . 'ZeroClipboard.js"></script>
         <script type="text/javascript">
             ZeroClipboard.config( {
-                swfPath: "'. $zeroclipboard_path .'ZeroClipboard.swf"
+                swfPath: "' . $zeroclipboard_path . 'ZeroClipboard.swf"
             } );
 
             var client = new ZeroClipboard( document.getElementById("' . $id . '") );

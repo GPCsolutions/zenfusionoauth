@@ -81,13 +81,13 @@ class OauthStatus extends ModeleBoxes
                 $name = 'u.lastname';
             }
             $sql = 'SELECT u.rowid AS userid, u.firstname, u.email,';
-            $sql.= ' g.rowid, g.token';
+            $sql .= ' g.rowid, g.token';
             $sql .= ', ' . $name;
-            $sql.= ' FROM ' . MAIN_DB_PREFIX . 'user as u';
-            $sql.= ' LEFT JOIN ' . MAIN_DB_PREFIX . 'zenfusion_oauth as g';
-            $sql.= ' ON g.rowid = u.rowid';
+            $sql .= ' FROM ' . MAIN_DB_PREFIX . 'user as u';
+            $sql .= ' LEFT JOIN ' . MAIN_DB_PREFIX . 'zenfusion_oauth as g';
+            $sql .= ' ON g.rowid = u.rowid';
             $extra = array();
-            if (! $user->admin) {
+            if (!$user->admin) {
                 // Shows only self
                 $extra[] = 'u.rowid = ' . $user->id;
             }
@@ -135,11 +135,11 @@ class OauthStatus extends ModeleBoxes
                         } catch (Google_Auth_Exception $e) {
                             $this->info_box_contents[$i][2] = array(
                                 'td' => 'align="left"',
-                                'text' => $langs->trans("Error").": ".$e->getMessage(),
+                                'text' => $langs->trans("Error") . ": " . $e->getMessage(),
                                 'url' => dol_buildpath(
-                                    '/zenfusionoauth/initoauth.php',
-                                    1
-                                ) . '?id=' . $objp->userid . '&action=delete_token'
+                                        '/zenfusionoauth/initoauth.php',
+                                        1
+                                    ) . '?id=' . $objp->userid . '&action=delete_token'
                             );
                         }
                     } else {
@@ -148,9 +148,9 @@ class OauthStatus extends ModeleBoxes
                             'td' => 'align="left"',
                             'text' => $langs->trans("NoToken"),
                             'url' => dol_buildpath(
-                                '/zenfusionoauth/initoauth.php',
-                                1
-                            ) . '?id=' . $objp->userid . '&action=request'
+                                    '/zenfusionoauth/initoauth.php',
+                                    1
+                                ) . '?id=' . $objp->userid . '&action=request'
 
                         );
                     }
@@ -159,14 +159,14 @@ class OauthStatus extends ModeleBoxes
                         'text' => $objp->email
                     );
 
-                    $i ++;
+                    $i++;
                 }
 
                 if ($num == 0) {
-                        $this->info_box_contents[$i][0] = array(
-                            'td' => 'align="center"',
-                            'text' => $langs->trans("NoUserFound")
-                        );
+                    $this->info_box_contents[$i][0] = array(
+                        'td' => 'align="center"',
+                        'text' => $langs->trans("NoUserFound")
+                    );
                 }
             } else {
                 $this->info_box_contents[0][0] = array(

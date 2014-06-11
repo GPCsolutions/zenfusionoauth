@@ -26,14 +26,14 @@
  */
 $res = 0;
 // from standard dolibarr install
-if (! $res && file_exists('../../main.inc.php')) {
-        $res = @include '../../main.inc.php';
+if (!$res && file_exists('../../main.inc.php')) {
+    $res = @include '../../main.inc.php';
 }
 // from custom dolibarr install
-if (! $res && file_exists('../../../main.inc.php')) {
-        $res = @include '../../../main.inc.php';
+if (!$res && file_exists('../../../main.inc.php')) {
+    $res = @include '../../../main.inc.php';
 }
-if (! $res) {
+if (!$res) {
     die("Main include failed");
 }
 
@@ -54,7 +54,7 @@ $langs->load('admin');
 $langs->load('help');
 
 // Access control
-if (! $user->admin) {
+if (!$user->admin) {
     accessforbidden();
 }
 
@@ -72,7 +72,7 @@ if ($action == 'upload') {
         $error++;
     } else {
         $client_id = $params['web']['client_id'];
-        $client_secret = $params['web']['client_secret'] ;
+        $client_secret = $params['web']['client_secret'];
     }
     if ($error) {
         $mesg = '<font class="error">' . $langs->trans("BadFile") . '</font>';
@@ -85,7 +85,7 @@ if ($action == 'update') {
 }
 
 // Set constants common to update and upload actions
-if (($action == 'upload' || $action == 'update') && ! $error) {
+if (($action == 'upload' || $action == 'update') && !$error) {
     $res = dolibarr_set_const(
         $db,
         'ZF_OAUTH2_CLIENT_ID',
@@ -95,7 +95,7 @@ if (($action == 'upload' || $action == 'update') && ! $error) {
         '',
         $conf->entity
     );
-    if (! $res > 0) {
+    if (!$res > 0) {
         $error++;
     }
     $res = dolibarr_set_const(
@@ -107,10 +107,10 @@ if (($action == 'upload' || $action == 'update') && ! $error) {
         '',
         $conf->entity
     );
-    if (! $res > 0) {
+    if (!$res > 0) {
         $error++;
     }
-    if (! $error) {
+    if (!$error) {
         $db->commit();
         $mesg = '<font class="ok">' . $langs->trans("Saved") . '</font>';
     } else {
@@ -156,23 +156,23 @@ echo '<td></td>';
 echo '</tr>';
 echo '<tr>';
 echo '<td>',
-    '<input type="text" name="clientId" value="',
-    $conf->global->ZF_OAUTH2_CLIENT_ID, '" required="required">',
-    '</td>';
+'<input type="text" name="clientId" value="',
+$conf->global->ZF_OAUTH2_CLIENT_ID, '" required="required">',
+'</td>';
 echo '<td>',
-    '<input type="text" name="clientSecret" value="',
+'<input type="text" name="clientSecret" value="',
     $conf->global->ZF_OAUTH2_CLIENT_SECRET . '" required="required">',
-    '</td>';
+'</td>';
 echo '<td>',
-    '<input type="submit" class="button" value ="',
-    $langs->trans("Save"), '">',
-    '</td>';
+'<input type="submit" class="button" value ="',
+$langs->trans("Save"), '">',
+'</td>';
 echo '</table>';
 echo '</form>';
 
 // Import configuration from google's api console json file
 echo '<form enctype="multipart/form-data" method="POST" ',
-    'action="', $_SERVER['PHP_SELF'], '">';
+'action="', $_SERVER['PHP_SELF'], '">';
 echo '<input type="hidden" name="token" value="', $_SESSION['newtoken'], '">';
 echo '<input type="hidden" name="action" value="upload">';
 echo '<input type="hidden" name="MAX_FILE_SIZE" value="1000">';
@@ -184,9 +184,9 @@ echo 'Google Cloud Console</a></legend>';
 $callback_url = dol_buildpath('/zenfusionoauth/oauth2callback.php', 2);
 echo $langs->trans('RedirectURL'),
     ' <input type=text name="callback_url" value="' . $callback_url . '">',
-    zfCopyToClipboardButton($callback_url);
+zfCopyToClipboardButton($callback_url);
 echo '<br>';
-echo  $langs->trans("JSONConfigFile"), ' ';
+echo $langs->trans("JSONConfigFile"), ' ';
 echo '<input type="file" name = "jsonConfig" required="required">';
 echo '<input type="submit" class="button" value ="',
 $langs->trans("Upload"), '">';

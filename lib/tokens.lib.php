@@ -26,13 +26,13 @@
 /**
  * Return all tokens eventually with the corresponding scope.
  *
- * @param DoliDB      $db     Database
- * @param null|string $scope  Scope filter
+ * @param DoliDB $db Database
+ * @param null|string $scope Scope filter
  * @param null|string $filter SQL filter
  *
  * @return array of stdObject Tokens
  */
-function getAllTokens($db, $scope = null, $filter=null)
+function getAllTokens($db, $scope = null, $filter = null)
 {
     $db_tokens = array();
     $all_tokens = array();
@@ -40,13 +40,13 @@ function getAllTokens($db, $scope = null, $filter=null)
     $sql = 'SELECT rowid, token, email, scopes ';
     $sql .= 'FROM ' . MAIN_DB_PREFIX . 'zenfusion_oauth';
     if ($filter) {
-        $sql .= ' WHERE '.$filter;
+        $sql .= ' WHERE ' . $filter;
     }
     $resql = $db->query($sql);
     if ($resql) {
         if ($db->num_rows($resql)) {
             $num = $db->num_rows($resql);
-            for ($i = 0; $i < $num; $i ++) {
+            for ($i = 0; $i < $num; $i++) {
                 $obj = $db->fetch_object($resql);
                 if (json_decode($obj->token)) {
                     array_push($db_tokens, $obj);
@@ -73,8 +73,8 @@ function getAllTokens($db, $scope = null, $filter=null)
 /**
  * Returns the token associated with the user
  *
- * @param DoliDB $db      Database
- * @param int    $user_id The user ID
+ * @param DoliDB $db Database
+ * @param int $user_id The user ID
  *
  * @return Object or false
  */

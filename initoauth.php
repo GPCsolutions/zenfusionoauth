@@ -34,14 +34,14 @@
  */
 $res = 0;
 // from standard dolibarr install
-if (! $res && file_exists('../main.inc.php')) {
-        $res = @include '../main.inc.php';
+if (!$res && file_exists('../main.inc.php')) {
+    $res = @include '../main.inc.php';
 }
 // from custom dolibarr install
-if (! $res && file_exists('../../main.inc.php')) {
-        $res = @include '../../main.inc.php';
+if (!$res && file_exists('../../main.inc.php')) {
+    $res = @include '../../main.inc.php';
 }
-if (! $res) {
+if (!$res) {
     die("Main include failed");
 }
 
@@ -80,8 +80,8 @@ if ($user->id == $id) {
     $canreaduser = 1;
 }
 $result = restrictedArea($user, 'user', $id, '&user', $feature2);
-if (! $conf->global->MAIN_MODULE_ZENFUSIONOAUTH
-    || ($user->id <> $id && ! $canreaduser)
+if (!$conf->global->MAIN_MODULE_ZENFUSIONOAUTH
+    || ($user->id <> $id && !$canreaduser)
 ) {
     accessforbidden();
 }
@@ -106,46 +106,46 @@ try {
 
 // Actions
 switch ($action) {
-case 'delete_token':
-    // Get token from database
-    $token = json_decode($oauth->token);
-    try {
-        $client->revokeToken($token->{'refresh_token'});
-    } catch (Google_Auth_Exception $e) {
-        dol_syslog("Delete token " . $e->getMessage());
-        // TODO: print message and user panel URL to manually revoke access
-    }
-    // Delete token in database
-    $result = $oauth->delete($id);
-    if ($result < 0) {
-        dol_print_error($db, $oauth->error);
-    }
-    header(
-        'refresh:0;url=' . dol_buildpath(
-            '/zenfusionoauth/initoauth.php',
-            1
-        ) . '?id=' . $id . '&ok=1'
-    );
+    case 'delete_token':
+        // Get token from database
+        $token = json_decode($oauth->token);
+        try {
+            $client->revokeToken($token->{'refresh_token'});
+        } catch (Google_Auth_Exception $e) {
+            dol_syslog("Delete token " . $e->getMessage());
+            // TODO: print message and user panel URL to manually revoke access
+        }
+        // Delete token in database
+        $result = $oauth->delete($id);
+        if ($result < 0) {
+            dol_print_error($db, $oauth->error);
+        }
+        header(
+            'refresh:0;url=' . dol_buildpath(
+                '/zenfusionoauth/initoauth.php',
+                1
+            ) . '?id=' . $id . '&ok=1'
+        );
 
-    break;
-case 'request':
-    // Save the current user to the state
-    $oauth->delete($id);
-    $oauth->id = $id;
-    $oauth->scopes = json_encode($client->getScopes());
-    $oauth->email = $doluser->email;
-    $oauth->oauth_id = '';
-    $req = $oauth->create($doluser);
-    if ($req < 0) {
-        dol_print_error($db, $oauth->error);
-    }
-    $client->setState($id);
-    $cback= dol_buildpath('/zenfusionoauth/oauth2callback.php', 2);
-    $client->setRedirectUri($cback);
-    // Go to Google for authentication
-    $auth = $client->createAuthUrl($doluser->email);
-    header('Location: ' . $auth);
-    break;
+        break;
+    case 'request':
+        // Save the current user to the state
+        $oauth->delete($id);
+        $oauth->id = $id;
+        $oauth->scopes = json_encode($client->getScopes());
+        $oauth->email = $doluser->email;
+        $oauth->oauth_id = '';
+        $req = $oauth->create($doluser);
+        if ($req < 0) {
+            dol_print_error($db, $oauth->error);
+        }
+        $client->setState($id);
+        $cback = dol_buildpath('/zenfusionoauth/oauth2callback.php', 2);
+        $client->setRedirectUri($cback);
+        // Go to Google for authentication
+        $auth = $client->createAuthUrl($doluser->email);
+        header('Location: ' . $auth);
+        break;
 }
 /*
  * View
@@ -204,7 +204,7 @@ if (empty($doluser->email)) {
 if (!$availableservices && !$enabledservices) {
     $mesg = '<font class="error">' . $langs->trans("NoScope") . '</font>';
 }
-if (! $client || ! $conf->global->ZF_OAUTH2_CLIENT_ID) {
+if (!$client || !$conf->global->ZF_OAUTH2_CLIENT_ID) {
     $lock = true;
     $mesg = '<font class="error">' . $langs->trans("NotConfigured") . '</font>';
 }
@@ -213,8 +213,8 @@ if (! $client || ! $conf->global->ZF_OAUTH2_CLIENT_ID) {
  * Common part of the user's tabs
  */
 
- //user->nom and user->prenom are deprecated and won't be supported in the future
- //so test to make insure compatibility
+//user->nom and user->prenom are deprecated and won't be supported in the future
+//so test to make insure compatibility
 if ($doluser->lastname) {
     $lastname = $doluser->lastname;
 } else {
@@ -229,55 +229,55 @@ if ($doluser->firstname) {
 echo '<table class="border" width="100%">',
 
 // Ref
-     '<tr><td width="25%" valign="top">' , $langs->trans("Ref") , '</td>',
-     '<td colspan="2">',
-    $form->showrefnav(
-        $doluser,
-        'id',
-        '',
-        $user->rights->user->user->lire || $user->admin
-    ),
-     '</td>',
-     '</tr>',
+'<tr><td width="25%" valign="top">', $langs->trans("Ref"), '</td>',
+'<td colspan="2">',
+$form->showrefnav(
+    $doluser,
+    'id',
+    '',
+    $user->rights->user->user->lire || $user->admin
+),
+'</td>',
+'</tr>',
 
 // Nom
-     '<tr><td width="25%" valign="top">' , $langs->trans("Lastname") , '</td>',
-     '<td colspan="2">' , $lastname , '</td>',
-     '</tr>',
+'<tr><td width="25%" valign="top">', $langs->trans("Lastname"), '</td>',
+'<td colspan="2">', $lastname, '</td>',
+'</tr>',
 
 // First name
-     '<tr><td width="25%" valign="top">' , $langs->trans("Firstname") , '</td>',
-     '<td colspan="2">' . $firstname . '</td>',
-     '</tr>',
+'<tr><td width="25%" valign="top">', $langs->trans("Firstname"), '</td>',
+    '<td colspan="2">' . $firstname . '</td>',
+'</tr>',
 
 // Email
-     '<tr><td width="25%" valign="top">' , $langs->trans("Email") , '</td>',
-     '<td colspan="2">' , $doluser->email , '</td>',
-     '</tr>',
+'<tr><td width="25%" valign="top">', $langs->trans("Email"), '</td>',
+'<td colspan="2">', $doluser->email, '</td>',
+'</tr>',
 
-     '<tr><td width="25%" valign="top">' , $langs->trans("AvailableServices") , '</td>',
-     '<td colspan="2">';
+'<tr><td width="25%" valign="top">', $langs->trans("AvailableServices"), '</td>',
+'<td colspan="2">';
 foreach ($availableservices as $as) {
     echo $langs->trans($as), '<br>';
 }
 echo '</td>',
-     '</tr>',
+'</tr>',
 
 // Scopes
-     '<tr><td width="25%" valign="top">' , $langs->trans("Services") , '</td>',
-     '<td colspan="2">';
+'<tr><td width="25%" valign="top">', $langs->trans("Services"), '</td>',
+'<td colspan="2">';
 foreach ($enabledservices as $es) {
     echo $langs->trans($es), '<br>';
 }
 echo '</td>',
-     '</tr>',
+'</tr>',
 
 // Access Token
-     '<tr><td width="25%" valign="top">' , $langs->trans("AccessToken") , '</td>',
-     '<td colspan="2">' , $langs->trans($token_status) , '</td>',
-     '</tr>',
+'<tr><td width="25%" valign="top">', $langs->trans("AccessToken"), '</td>',
+'<td colspan="2">', $langs->trans($token_status), '</td>',
+'</tr>',
 
-     '</table>';
+'</table>';
 
 if (GETPOST('ok', 'int') > 0) {
     $mesg = '<font class="ok">' . $langs->trans("OperationSuccessful") . '</font>';
@@ -285,18 +285,18 @@ if (GETPOST('ok', 'int') > 0) {
     $retry = true;
 }
 
-if (! $lock) {
+if (!$lock) {
     echo '<br>',
-         '<form action="initoauth.php" method="get">';
-    if (! $retry) {
+    '<form action="initoauth.php" method="get">';
+    if (!$retry) {
         // if no error
         if ($client->getAccessToken()) {
             // if access token exists or/and bad propose to delete it
             echo '<input type="hidden" name="action" value="delete_token">',
-                 '<input type="hidden" name="id" value="' , $id , '">',
-                 '<table class="border" width="100%">',
-                 '<tr><td colspan="2" align="center">',
-                 '<input class="button" type="submit" value="' , $langs->trans("DeleteToken") , '"></tr>';
+            '<input type="hidden" name="id" value="', $id, '">',
+            '<table class="border" width="100%">',
+            '<tr><td colspan="2" align="center">',
+            '<input class="button" type="submit" value="', $langs->trans("DeleteToken"), '"></tr>';
         } elseif (isValidEmail($doluser->email)
             && ($availableservices || $enabledservices)
             && $conf->global->ZF_OAUTH2_CLIENT_ID
@@ -304,20 +304,20 @@ if (! $lock) {
         ) {
             // if no access token propose to request
             echo '<input type="hidden" name="action" value="request">',
-                 '<input type="hidden" name="id" value="' , $id , '">',
-                 '<table class="border" width="100%">',
-                 '<tr><td colspan="2" align="center">',
-                 '<input class="button" type="submit" value="' , $langs->trans("RequestToken") , '"></tr>';
+            '<input type="hidden" name="id" value="', $id, '">',
+            '<table class="border" width="100%">',
+            '<tr><td colspan="2" align="center">',
+            '<input class="button" type="submit" value="', $langs->trans("RequestToken"), '"></tr>';
         }
     } else {
         // We have errors
         $langs->load("errors");
         $mesg = '<font class="error">' . $langs->trans("OperationFailed") . '</font>';
         echo '<input type="hidden" name="action" value="request">',
-             '<input type="hidden" name="id" value="' , $id , '">',
-             '<table class="border" width="100%">',
-             '<tr><td colspan="2" align="center">',
-             '<input class="button" type="submit" value="' , $langs->trans("Retry") , '"></tr>';
+        '<input type="hidden" name="id" value="', $id, '">',
+        '<table class="border" width="100%">',
+        '<tr><td colspan="2" align="center">',
+        '<input class="button" type="submit" value="', $langs->trans("Retry"), '"></tr>';
     }
     echo '</table></form>';
 }

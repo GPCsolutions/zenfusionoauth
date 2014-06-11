@@ -76,7 +76,8 @@ class modZenFusionOAuth extends DolibarrModules
         $this->requiredby = array(
             "modZenFusionContacts",
             "modZenFusionSSO",
-            "modZenFusionDrive");
+            "modZenFusionDrive"
+        );
         $this->phpmin = array(5, 3);
         $this->need_dolibarr_version = array(3, 2);
         $this->langfiles = array("zenfusionoauth@zenfusionoauth");
@@ -126,7 +127,7 @@ class modZenFusionOAuth extends DolibarrModules
         $r++;
         $this->tabs = array(
             'user:+google:Google:@zenfusionoauth:$user->rights->zenfusionoauth->use'
-                . ':/zenfusionoauth/initoauth.php?id=__ID__'
+            . ':/zenfusionoauth/initoauth.php?id=__ID__'
         );
         $this->boxes = array();
         $this->boxes[0][1] = "OauthStatus@zenfusionoauth";
@@ -172,6 +173,20 @@ class modZenFusionOAuth extends DolibarrModules
     }
 
     /**
+     * Create tables, keys and data required by module
+     * Files llx_table1.sql, llx_table1.key.sql llx_data.sql
+     * with create table, create keys
+     * and create data commands must be stored in directory /mymodule/sql/
+     * This function is called by this->init.
+     *
+     * @return int <=0 if KO, >0 if OK
+     */
+    public function load_tables()
+    {
+        return $this->_load_tables('/zenfusionoauth/sql/');
+    }
+
+    /**
      * Function called when module is disabled.
      * Remove from database constants, boxes and permissions
      * from Dolibarr database.
@@ -184,19 +199,5 @@ class modZenFusionOAuth extends DolibarrModules
         $sql = array();
 
         return $this->_remove($sql);
-    }
-
-    /**
-     * Create tables, keys and data required by module
-     * Files llx_table1.sql, llx_table1.key.sql llx_data.sql
-     * with create table, create keys
-     * and create data commands must be stored in directory /mymodule/sql/
-     * This function is called by this->init.
-     *
-     *  @return int <=0 if KO, >0 if OK
-     */
-    public function load_tables()
-    {
-        return $this->_load_tables('/zenfusionoauth/sql/');
     }
 }

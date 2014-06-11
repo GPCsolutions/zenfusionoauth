@@ -50,15 +50,17 @@ function getRequest($uri, $client)
         //404, no error message
         return null;
 
-    } else if ($val->getResponseHttpCode() != 401
-        && $val->getResponseHttpCode() != 200
-        && $val->getResponseHttpCode() != 404
-    ) {
-        //FIXME use a library to handle these errors separetely
+    } else {
+        if ($val->getResponseHttpCode() != 401
+            && $val->getResponseHttpCode() != 200
+            && $val->getResponseHttpCode() != 404
+        ) {
+            //FIXME use a library to handle these errors separetely
 
-        $_SESSION['warning'] = 'UnknownHTTPError';
+            $_SESSION['warning'] = 'UnknownHTTPError';
 
-        return null;
+            return null;
+        }
     }
     $rep = $val->getResponseBody();
     // FIXME: validate response, it might not be what we expect
@@ -68,14 +70,14 @@ function getRequest($uri, $client)
 
 $res = 0;
 // from standard dolibarr install
-if (! $res && file_exists('../main.inc.php')) {
-        $res = @include '../main.inc.php';
+if (!$res && file_exists('../main.inc.php')) {
+    $res = @include '../main.inc.php';
 }
 // from custom dolibarr install
-if (! $res && file_exists('../../main.inc.php')) {
-        $res = @include '../../main.inc.php';
+if (!$res && file_exists('../../main.inc.php')) {
+    $res = @include '../../main.inc.php';
 }
-if (! $res) {
+if (!$res) {
     die("Main include failed");
 }
 
@@ -131,7 +133,7 @@ if ((!$state || !$code || !$user->rights->zenfusionoauth->use) && !$user->admin)
         );
     } else {
         try {
-            $cback= dol_buildpath('/zenfusionoauth/oauth2callback.php', 2);
+            $cback = dol_buildpath('/zenfusionoauth/oauth2callback.php', 2);
             $client->setRedirectUri($cback);
             $client->authenticate($_GET['code']);
         } catch (Google_Auth_Exception $e) {
@@ -160,9 +162,9 @@ if ((!$state || !$code || !$user->rights->zenfusionoauth->use) && !$user->admin)
                 setEventMessage($langs->trans('NotSameEmail'), 'errors');
             } else {
                 $mesg = '&mesg=' . urlencode(
-                    '<font class="error">' .
-                    $langs->trans('NotSameEmail') . '</font>'
-                );
+                        '<font class="error">' .
+                        $langs->trans('NotSameEmail') . '</font>'
+                    );
             }
             $oauth->delete($state);
         }
@@ -171,7 +173,7 @@ if ((!$state || !$code || !$user->rights->zenfusionoauth->use) && !$user->admin)
             'refresh:0;url=' . dol_buildpath(
                 '/zenfusionoauth/initoauth.php',
                 1
-            ) . '?id=' . $state. '&ok=' . (int) $ok . $mesg
+            ) . '?id=' . $state . '&ok=' . (int)$ok . $mesg
         );
         exit;
     }
