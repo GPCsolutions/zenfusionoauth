@@ -32,9 +32,10 @@ function zfCopyToClipboardButton($text, $id = 'copy-button', $title = 'CopyToCli
 {
     global $langs;
 
-    $zeroclipboard_path =  dol_buildpath('/zenfusionoauth/lib/zeroclipboard/', 2);
+    $zeroclipboard_path =  dol_buildpath('/zenfusionoauth/lib/zeroclipboard/dist/', 2);
     return '
         <button
+            type="button"
             class="button"
             id="' . $id . '"
             data-clipboard-text="' . $text . '"
@@ -43,18 +44,20 @@ function zfCopyToClipboardButton($text, $id = 'copy-button', $title = 'CopyToCli
         </button>
         <script src="' . $zeroclipboard_path . 'ZeroClipboard.js"></script>
         <script type="text/javascript">
-            var clip = new ZeroClipboard( document.getElementById("' . $id . '"), {
-              moviePath: "'. $zeroclipboard_path .'ZeroClipboard.swf"
-            } );
-            clip.on( \'complete\', function(client, args) {
-                //this.style.display = \'none\'; // "this" is the element that was clicked
-                $.jnotify(
-                    \'' . $langs->trans('CopiedToClipboard') . '\',
-                    \'3000\',
-                    \'true\'
-                );
-                //alert("Copied text to clipboard: " + args.text );
+            ZeroClipboard.config( {
+                swfPath: "'. $zeroclipboard_path .'ZeroClipboard.swf"
             } );
 
+            var client = new ZeroClipboard( document.getElementById("' . $id . '") );
+
+            client.on( "ready", function( readyEvent ) {
+                client.on( "aftercopy", function( event ) {
+                    $.jnotify(
+                        \'' . $langs->trans('CopiedToClipboard') . '\',
+                        \'3000\',
+                        \'true\'
+                    );
+                } );
+            } );
         </script>';
 }
