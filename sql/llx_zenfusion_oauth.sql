@@ -16,10 +16,10 @@
 -- You should have received a copy of the GNU General Public License
 -- along with this program.  If not, see <http://www.gnu.org/licenses/>.
 CREATE TABLE IF NOT EXISTS llx_zenfusion_oauth (
-  rowid    INTEGER      NOT NULL AUTO_INCREMENT PRIMARY KEY,
-  token    TEXT         NULL,
-  scopes   VARCHAR(255) NULL,
-  email    VARCHAR(255) NULL,
-  oauth_id VARCHAR(255) NULL
+	rowid    INTEGER      NOT NULL AUTO_INCREMENT PRIMARY KEY,
+	token    TEXT         NULL,
+	scopes   VARCHAR(255) NULL,
+	email    VARCHAR(255) NULL,
+	oauth_id VARCHAR(255) NULL
 )
-  ENGINE = InnoDB;
+	ENGINE = InnoDB;
