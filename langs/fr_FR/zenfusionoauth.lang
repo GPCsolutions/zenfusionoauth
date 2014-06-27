@@ -30,7 +30,7 @@ Libraries=Bibliothèques
 Contains=Contient :
 Ressources=Ressources
 # User card tab
-Services=Services activés
+EnabledServices=Services activés
 AvailableServices=Services disponibles
 AccessToken=Accès aux services
 TokenOk=Activé

@@ -30,7 +30,7 @@ Libraries=Libraries
 Contains=Contains:
 Ressources=Resources
 # User card tab
-Services=Active services
+EnabledServices=Active services
 AvailableServices=Available services
 AccessToken=Services access
 TokenOk=Active

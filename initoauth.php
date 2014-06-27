@@ -264,7 +264,7 @@ echo '</td>',
 '</tr>',
 
 // Scopes
-'<tr><td width="25%" valign="top">', $langs->trans("Services"), '</td>',
+'<tr><td width="25%" valign="top">', $langs->trans("EnabledServices"), '</td>',
 '<td colspan="2">';
 foreach ($enabledservices as $es) {
     echo $langs->trans($es), '<br>';
@@ -297,8 +297,9 @@ if (!$lock) {
             '<table class="border" width="100%">',
             '<tr><td colspan="2" align="center">',
             '<input class="button" type="submit" value="', $langs->trans("DeleteToken"), '"></tr>';
-        } elseif (isValidEmail($doluser->email)
-            && ($availableservices || $enabledservices)
+        }
+        if (isValidEmail($doluser->email)
+            && ($availableservices)
             && $conf->global->ZF_OAUTH2_CLIENT_ID
             && ($user->rights->zenfusionoauth->use || $user->admin)
         ) {
