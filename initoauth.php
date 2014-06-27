@@ -32,6 +32,9 @@
  * \authors Raphaël Doursenaud <rdoursenaud@gpcsolutions.fr>
  * \authors Cédric Salvador <csalvador@gpcsolutions.fr>
  */
+
+// TODO: allow selecting services permissions
+
 $res = 0;
 // from standard dolibarr install
 if (!$res && file_exists('../main.inc.php')) {
@@ -255,6 +258,9 @@ $form->showrefnav(
 '<td colspan="2">', $doluser->email, '</td>',
 '</tr>',
 
+// TODO: use services icons with tooltip description
+
+// Module declared scopes
 '<tr><td width="25%" valign="top">', $langs->trans("AvailableServices"), '</td>',
 '<td colspan="2">';
 foreach ($availableservices as $as) {

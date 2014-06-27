@@ -30,7 +30,7 @@
 /**
  * Gdata version is mandatory
  */
-//TODO Put each scope in its own module
+//TODO Put each scope in its own module and add a facility to use them here
 define('GDATA_VERSION', '3.0');
 /**
  * Can be one of full, base or thin
