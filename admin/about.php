@@ -81,7 +81,7 @@ $langs->Trans('Module105001Desc'),
 '</h3>';
 echo '<em>', $langs->trans("Version"), ' ',
 $module->version, '</em><br>';
-echo '<em>&copy;2011-2013 GPC.solutions<br><em>';
+echo '<em>&copy;2011-2014 GPC.solutions<br><em>';
 echo '<a target="_blank" href="http://www.zenfusion.net/">',
 '<img src="../img/logo_zf.png" alt="Logo ZenFusion"></a>';
 
