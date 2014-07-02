@@ -23,6 +23,8 @@
  * Oauth tokens functions library
  */
 
+// FIXME: move to zenfusionoauth.class.php and use the CRUD object
+
 /**
  * Return all tokens eventually with the corresponding scope.
  *
@@ -75,10 +77,11 @@ function getAllTokens($db, $scope = null, $filter = null)
  *
  * @param DoliDB $db Database
  * @param int $user_id The user ID
+ * @param bool $fresh Request a fresh token (For client side usage, not needed if you use the API client)
  *
  * @return Object or false
  */
-function getToken($db, $user_id)
+function getToken($db, $user_id, $fresh = false)
 {
     $sql = 'SELECT rowid, token, email, scopes ';
     $sql .= 'FROM ' . MAIN_DB_PREFIX . 'zenfusion_oauth ';
@@ -88,12 +91,42 @@ function getToken($db, $user_id)
         if ($db->num_rows($resql)) {
             $num = $db->num_rows($resql);
             if ($num == 1) {
-                $token = $db->fetch_object($resql);
-                return $token;
+                $token_infos = $db->fetch_object($resql);
+                if ($fresh === true) {
+                    refreshTokenIfExpired($token_infos);
+                }
+                return $token_infos;
             }
             // We didn't get the expected number of results, bail out
             return false;
         }
     }
     return false;
+}
+
+/**
+ * Refresh the obtained access token if needed
+ *
+ * This is usefull for client side usage (Javascript)
+ * This is not needed for calls using the API Client because the client takes care of it for us
+ *
+ * @param StdObject $token_infos Token informations from the database
+ */
+function refreshTokenIfExpired(&$token_infos)
+{
+    global $db;
+    dol_include_once('/zenfusionoauth/class/Zenfusion_Oauth2Client.class.php');
+    dol_include_once('/zenfusionoauth/class/ZenFusionOAuth.class.php');
+    $client = new Oauth2Client();
+    $client->setAccessToken($token_infos->token);
+    if ($client->isAccessTokenExpired()) {
+        $client->refreshToken(json_decode($token_infos->token)->refresh_token);
+    }
+    $token_infos->token = $client->getAccessToken();
+    // Store the new refresh token in database
+    $database = new ZenFusionOAuth($db);
+    // FIXME: avoid a second fetch by using a CRUD object in caller function
+    $database->fetch($token_infos->rowid);
+    $database->token = $token_infos->token;
+    $database->update();
 }
