@@ -17,4 +17,4 @@ See COPYING for more information.
 GIT Submodules
 --------------
 
-This project uses GIT submodules. Please use `git submodule update --recursive` after cloning or pulling
+This project uses GIT submodules. Please use `git submodule update --recursive` at the projects root after cloning or pulling to update their content.
