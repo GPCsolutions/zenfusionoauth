@@ -216,8 +216,8 @@ if (!$client || !$conf->global->ZF_OAUTH2_CLIENT_ID) {
  * Common part of the user's tabs
  */
 
-//user->nom and user->prenom are deprecated and won't be supported in the future
-//so test to make insure compatibility
+// user->nom and user->prenom are deprecated and won't be supported in the future
+// test to insure compatibility
 if ($doluser->lastname) {
     $lastname = $doluser->lastname;
 } else {

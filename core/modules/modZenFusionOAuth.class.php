@@ -124,7 +124,7 @@ class modZenFusionOAuth extends DolibarrModules
             'current',
             0
         );
-        $r++;
+
         $this->tabs = array(
             'user:+google:Google:@zenfusionoauth:$user->rights->zenfusionoauth->use'
             . ':/zenfusionoauth/initoauth.php?id=__ID__'

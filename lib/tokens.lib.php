@@ -32,7 +32,7 @@
  * @param null|string $scope Scope filter
  * @param null|string $filter SQL filter
  *
- * @return array of stdObject Tokens
+ * @return stdClass[] Tokens
  */
 function getAllTokens($db, $scope = null, $filter = null)
 {
@@ -110,7 +110,7 @@ function getToken($db, $user_id, $fresh = false)
  * This is usefull for client side usage (Javascript)
  * This is not needed for calls using the API Client because the client takes care of it for us
  *
- * @param StdObject $token_infos Token informations from the database
+ * @param stdClass $token_infos Token informations from the database
  */
 function refreshTokenIfExpired(&$token_infos)
 {

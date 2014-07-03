@@ -150,7 +150,7 @@ class ZenFusionOAuth extends CommonObject
                 //// End call triggers
             }
         }
-        return $this->commitorrollback($error, __METHOD__);
+        return $this->commitOrRollback($error, __METHOD__);
     }
 
     /**
@@ -162,7 +162,7 @@ class ZenFusionOAuth extends CommonObject
      * @return int <0 if KO, Id of created object if OK
      */
 
-    function commitorrollback($error, $method_name)
+    private function commitOrRollback($error, $method_name)
     {
         if ($error) {
             foreach ($this->errors as $errmsg) {
@@ -274,7 +274,7 @@ class ZenFusionOAuth extends CommonObject
                 //// End call triggers
             }
         }
-        return $this->commitorrollback($error, __METHOD__);
+        return $this->commitOrRollback($error, __METHOD__);
     }
 
     /**
@@ -296,7 +296,7 @@ class ZenFusionOAuth extends CommonObject
             $error++;
             $this->errors[] = "Error " . $this->db->lasterror();
         }
-        return $this->commitorrollback($error, __METHOD__);
+        return $this->commitOrRollback($error, __METHOD__);
     }
 
     /**
