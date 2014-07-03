@@ -145,52 +145,74 @@ dol_fiche_head(
 dol_htmloutput_mesg($mesg);
 
 print_titre($langs->trans("GoogleApiConfig"));
-echo '<form method="POST" action="', $_SERVER['PHP_SELF'], '">';
-echo '<input type="hidden" name="token" value="', $_SESSION['newtoken'], '">';
-echo '<input type="hidden" name="action" value="update">';
-echo '<table class="noborder">';
-echo '<tr class="liste_titre">';
-echo '<td>', $langs->trans("ClientId"), '</td>';
-echo '<td>', $langs->trans("ClientSecret"), '</td>';
-echo '<td></td>';
-echo '</tr>';
-echo '<tr>';
-echo '<td>',
-'<input type="text" name="clientId" value="',
-$conf->global->ZF_OAUTH2_CLIENT_ID, '" required="required">',
-'</td>';
-echo '<td>',
-'<input type="text" name="clientSecret" value="',
-    $conf->global->ZF_OAUTH2_CLIENT_SECRET . '" required="required">',
-'</td>';
-echo '<td>',
-'<input type="submit" class="button" value ="',
-$langs->trans("Save"), '">',
-'</td>';
-echo '</table>';
-echo '</form>';
 
 // Import configuration from google's api console json file
-echo '<form enctype="multipart/form-data" method="POST" ',
-'action="', $_SERVER['PHP_SELF'], '">';
-echo '<input type="hidden" name="token" value="', $_SESSION['newtoken'], '">';
-echo '<input type="hidden" name="action" value="upload">';
-echo '<input type="hidden" name="MAX_FILE_SIZE" value="1000">';
-echo '<fieldset>';
-echo '<legend>', $langs->trans("ImportFrom"), ' ';
-echo '<a href="https://cloud.google.com/console" target="_blank">';
-echo 'Google Cloud Console</a></legend>';
-// FIXME: Add instructions
+echo '<p>',
+$langs->trans("Instructions1");
+// TODO: derive table from installed modules
+echo '<table class="border">
+    <tr class="liste_titre">
+        <th>', $langs->trans("Module"), '</th>
+        <th>', $langs->trans("APIs"), '</th>
+    </tr>
+    <tr>
+        <td>ZenFusion Contacts</td>
+        <td>Contacts API</td>
+    </tr>
+    <tr>
+        <td>ZenFusion Drive</td>
+        <td>Drive API<br>Google Picker API</td>
+    </tr>
+<table>
+<br>';
+echo $langs->trans("Instructions2");
 $callback_url = dol_buildpath('/zenfusionoauth/oauth2callback.php', 2);
-echo $langs->trans('RedirectURL'),
-    ' <input type=text name="callback_url" value="' . $callback_url . '">',
-zfCopyToClipboardButton($callback_url);
-echo '<br>';
-echo $langs->trans("JSONConfigFile"), ' ';
-echo '<input type="file" name = "jsonConfig" required="required">';
-echo '<input type="submit" class="button" value ="',
-$langs->trans("Upload"), '">';
-echo '</fieldset>';
-echo '</form>';
+echo '<form>',
+    '<fieldset>',
+    '<legend>', $langs->trans('RedirectURL'), '</legend>',
+    ' <input type="text" disabled="disabled" name="callback_url" size="80" value="' . $callback_url . '">',
+    zfCopyToClipboardButton($callback_url),
+    '</fieldset>',
+    '</form>',
+    '<br>';
+echo $langs->trans("Instructions3");
+echo '<form enctype="multipart/form-data" method="POST" action="', $_SERVER['PHP_SELF'], '">',
+    '<fieldset>',
+    '<legend>', $langs->trans("JSONConfigFile"), '</legend>',
+    '<input type="hidden" name="token" value="', $_SESSION['newtoken'], '">',
+    '<input type="hidden" name="action" value="upload">',
+    '<input type="hidden" name="MAX_FILE_SIZE" value="1000">',
+    '<input type="file" name = "jsonConfig" required="required">',
+    '<input type="submit" class="button" value ="',
+    $langs->trans("Upload"), '">',
+    '</fieldset>',
+    '</form>',
+    '<br>';
+echo $langs->trans("Instructions4"),
+    '</p>';
+
+print_titre($langs->trans("ManualConfiguration"));
+
+echo '<form method="POST" action="', $_SERVER['PHP_SELF'], '">',
+    '<input type="hidden" name="token" value="', $_SESSION['newtoken'], '">',
+    '<input type="hidden" name="action" value="update">',
+    '<table class="noborder">',
+    '<tr class="liste_titre">',
+    '<td>', $langs->trans("ClientId"), '</td>',
+    '<td>', $langs->trans("ClientSecret"), '</td>',
+    '<td></td>',
+    '</tr>',
+    '<tr>',
+    '<td>',
+    '<input type="text" name="clientId" value="', $conf->global->ZF_OAUTH2_CLIENT_ID, '" required="required">',
+    '</td>',
+    '<td>',
+    '<input type="password" name="clientSecret" value="', $conf->global->ZF_OAUTH2_CLIENT_SECRET . '" required="required">',
+    '</td>',
+    '<td>',
+    '<input type="submit" class="button" value ="', $langs->trans("Save"), '">',
+    '</td>',
+    '</table>',
+    '</form>';
 
 llxFooter();

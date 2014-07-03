@@ -38,10 +38,10 @@ function zfCopyToClipboardButton($text, $id = 'copy-button', $title = 'CopyToCli
             type="button"
             class="button"
             id="' . $id . '"
-            data-clipboard-text="' . $text . '"
-            title="' . $langs->trans($title) . '">
-        <img src="' . dol_buildpath('/zenfusionoauth/img/', 2) . 'copy.png">
-        </button>
+            data-clipboard-text="' . $text . '">
+        <img src="' . dol_buildpath('/zenfusionoauth/img/', 2) . 'copy.png">'
+        . '&nbsp;' . $langs->trans($title)
+        . '</button>
         <script src="' . $zeroclipboard_path . 'ZeroClipboard.js"></script>
         <script type="text/javascript">
             ZeroClipboard.config( {
