@@ -1,4 +1,10 @@
+# Netbeans Project Files
 /nbproject
+# IntellijIDEA Project Files
 /.idea
 *.iml
+# Binaries
 build/*.zip
+# Doxygen Generated Files
+build/html
+build/latex
