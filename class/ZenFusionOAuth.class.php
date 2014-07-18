@@ -46,13 +46,13 @@ class ZenFusionOAuth extends CommonObject
     public $db; //!< To store db handler
     public $error; //!< To return error code (or message)
     public $errors = array(); //!< To return several error codes (or messages)
-    // public $element='zenfusion_oauth';			//!< Id that identify managed objects
+    // public $element='zenfusion_oauth'; //!< Id that identify managed objects
     // public $table_element='zenfusion_oauth';	//!< Name of table without prefix where object is stored
-    public $id; ///< object id
+    public $id; ///< Object ID
     public $token; ///< Access token
     public $scopes; ///< Registered scopes
     public $email; ///< Registered email
-    public $oauth_id; //registered id for oauth
+    public $oauth_id; ///< Registered ID for SSO
 
     /**
      * Instanciates a new database object
