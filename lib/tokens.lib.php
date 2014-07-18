@@ -26,6 +26,29 @@
 // FIXME: move to zenfusionoauth.class.php and use the CRUD object
 
 /**
+ * @param $scope
+ * @param $tokens
+ * @return mixed
+ */
+function filterByScope($scope, $tokens)
+{
+    $filtered_tokens =  array();
+
+    if ($scope === null) {
+        $filtered_tokens = $tokens;
+    } else {
+        foreach ($tokens as $token) {
+            $token_scopes = json_decode($token->scopes);
+            if (in_array($scope, $token_scopes)) {
+                array_push($filtered_tokens, $token);
+            }
+        }
+    }
+
+    return $filtered_tokens;
+}
+
+/**
  * Return all tokens eventually with the corresponding scope.
  *
  * @param DoliDB $db Database
@@ -37,7 +60,6 @@
 function getAllTokens($db, $scope = null, $filter = null)
 {
     $db_tokens = array();
-    $all_tokens = array();
 
     $sql = 'SELECT rowid, token, email, scopes ';
     $sql .= 'FROM ' . MAIN_DB_PREFIX . 'zenfusion_oauth';
@@ -57,19 +79,7 @@ function getAllTokens($db, $scope = null, $filter = null)
         }
     }
 
-    // Filter by scope
-    if ($scope === null) {
-        $all_tokens = $db_tokens;
-    } else {
-        foreach ($db_tokens as $token) {
-            $token_scopes = json_decode($token->scopes);
-            if (in_array($scope, $token_scopes)) {
-                array_push($all_tokens, $token);
-            }
-        }
-    }
-
-    return $all_tokens;
+    return filterByScope($scope, $db_tokens);
 }
 
 /**
@@ -81,7 +91,7 @@ function getAllTokens($db, $scope = null, $filter = null)
  *
  * @return Object or false
  */
-function getToken($db, $user_id, $fresh = false)
+function getToken($db, $user_id, $fresh = false, $scope = null)
 {
     $sql = 'SELECT rowid, token, email, scopes ';
     $sql .= 'FROM ' . MAIN_DB_PREFIX . 'zenfusion_oauth ';
@@ -95,7 +105,7 @@ function getToken($db, $user_id, $fresh = false)
                 if ($fresh === true) {
                     refreshTokenIfExpired($token_infos);
                 }
-                return $token_infos;
+                return filterByScope($scope, $token_infos);
             }
             // We didn't get the expected number of results, bail out
             return false;
