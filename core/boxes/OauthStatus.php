@@ -137,9 +137,9 @@ class OauthStatus extends ModeleBoxes
                                 'td' => 'align="left"',
                                 'text' => $langs->trans("Error") . ": " . $e->getMessage(),
                                 'url' => dol_buildpath(
-                                        '/zenfusionoauth/initoauth.php',
-                                        1
-                                    ) . '?id=' . $objp->userid . '&action=delete_token'
+                                    '/zenfusionoauth/initoauth.php',
+                                    1
+                                ) . '?id=' . $objp->userid . '&action=delete_token'
                             );
                         }
                     } else {
@@ -148,9 +148,9 @@ class OauthStatus extends ModeleBoxes
                             'td' => 'align="left"',
                             'text' => $langs->trans("NoToken"),
                             'url' => dol_buildpath(
-                                    '/zenfusionoauth/initoauth.php',
-                                    1
-                                ) . '?id=' . $objp->userid . '&action=request'
+                                '/zenfusionoauth/initoauth.php',
+                                1
+                            ) . '?id=' . $objp->userid . '&action=request'
 
                         );
                     }

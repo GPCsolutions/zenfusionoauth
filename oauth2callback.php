@@ -162,9 +162,9 @@ if ((!$state || !$code || !$user->rights->zenfusionoauth->use) && !$user->admin)
                 setEventMessage($langs->trans('NotSameEmail'), 'errors');
             } else {
                 $mesg = '&mesg=' . urlencode(
-                        '<font class="error">' .
-                        $langs->trans('NotSameEmail') . '</font>'
-                    );
+                    '<font class="error">' .
+                    $langs->trans('NotSameEmail') . '</font>'
+                );
             }
             $oauth->delete($state);
         }

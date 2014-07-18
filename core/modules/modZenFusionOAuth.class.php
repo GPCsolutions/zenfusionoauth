@@ -168,7 +168,6 @@ class modZenFusionOAuth extends DolibarrModules
                 $msg = '&mesg=' . $mesg;
             }
             header("Location: modules.php?mode=interfaces" . $msg);
-            exit;
         }
     }
 
