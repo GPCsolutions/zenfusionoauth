@@ -2,7 +2,7 @@
 /*
  * ZenFusion OAuth - A Google Oauth authorization module for Dolibarr
  * Copyright (C) 2011 Sebastien Bodrero <sbodrero@gpcsolutions.fr>
- * Copyright (C) 2011-2012 Raphaël Doursenaud <rdoursenaud@gpcsolutions.fr>
+ * Copyright (C) 2011-2014 Raphaël Doursenaud <rdoursenaud@gpcsolutions.fr>
  * Copyright (C) 2012 Cédric Salvador <csalvador@gpcsolutions.fr>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -22,11 +22,10 @@
  * \file class/ZenFusionOAuth.class.php
  * CRUD for zenfusion_oauth
  *
- * Creates/Reads/Updates/Deletes access token and secret token
+ * Creates/Reads/Updates/Deletes Oauth tokens informations
  * from llx_zenfusion_oauth table.
  *
  * \remarks Mostly automatically generated
- *
  *
  * \ingroup zenfusionoauth
  * \authors Sebastien Bodrero <sbodrero@gpcsolutions.fr>
@@ -41,18 +40,47 @@ require_once DOL_DOCUMENT_ROOT . '/core/class/commonobject.class.php';
  *
  * Manages Access and Secret tokens for each user
  */
-class ZenFusionOAuth extends CommonObject
+class ZenFusionOAuth
 {
-    public $db; //!< To store db handler
-    public $error; //!< To return error code (or message)
-    public $errors = array(); //!< To return several error codes (or messages)
-    // public $element='zenfusion_oauth'; //!< Id that identify managed objects
-    // public $table_element='zenfusion_oauth';	//!< Name of table without prefix where object is stored
-    public $id; ///< Object ID
-    public $token; ///< Access token
-    public $scopes; ///< Registered scopes
-    public $email; ///< Registered email
-    public $oauth_id; ///< Registered ID for SSO
+    /**
+     * @var DoliDB Database handler
+     */
+    protected $db;
+
+    /**
+     * @var string Error code (or message)
+     */
+    public $error;
+
+    /**
+     * @var string[] Several error codes (or messages)
+     */
+    public $errors = array();
+
+    /**
+     * @var int Object ID
+     */
+    public $id;
+
+    /**
+     * @var string JSON token bundle
+     */
+    public $token;
+
+    /**
+     * @var string[] Registered scopes for this token
+     */
+    public $scopes;
+
+    /**
+     * @var string Registered email for this token
+     */
+    public $email;
+
+    /**
+     * @var string registered ID for SSO
+     */
+    public $oauth_id;
 
     /**
      * Instanciates a new database object
