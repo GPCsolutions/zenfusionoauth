@@ -26,7 +26,7 @@
  *  \authors Raphaël Doursenaud <rdoursenaud@gpcsolutions.fr>
  */
 require_once DOL_DOCUMENT_ROOT . '/core/boxes/modules_boxes.php';
-dol_include_once('/zenfusionoauth/class/Zenfusion_Oauth2Client.class.php');
+dol_include_once('/zenfusionoauth/class/Oauth2Client.class.php');
 
 /**
  * \class OauthStatus
@@ -125,7 +125,7 @@ class OauthStatus extends ModeleBoxes
 
                     $token = $objp->token;
                     if ($objp->rowid) {
-                        $client = new Oauth2Client();
+                        $client = new \zenfusion\oauth\Oauth2Client();
                         try {
                             $client->setAccessToken($token);
                             $this->info_box_contents[$i][2] = array(

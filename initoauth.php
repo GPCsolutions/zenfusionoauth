@@ -51,7 +51,7 @@ if (!$res) {
 require_once DOL_DOCUMENT_ROOT . '/user/class/user.class.php';
 require_once DOL_DOCUMENT_ROOT . '/core/lib/usergroups.lib.php';
 require_once './class/ZenFusionOAuth.class.php';
-require_once './class/Zenfusion_Oauth2Client.class.php';
+require_once './class/Oauth2Client.class.php';
 require_once './lib/scopes.lib.php';
 require_once './inc/oauth.inc.php';
 
@@ -101,7 +101,7 @@ $oauth = new ZenFusionOAuth($db);
 $oauth->fetch($id);
 // Google API client
 try {
-    $client = new Oauth2Client();
+    $client = new \zenfusion\oauth\Oauth2Client();
 
 } catch (Google_Auth_Exception $e) {
     // Ignore

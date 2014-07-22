@@ -84,7 +84,7 @@ if (!$res) {
 require_once DOL_DOCUMENT_ROOT . '/user/class/user.class.php';
 require_once DOL_DOCUMENT_ROOT . '/core/lib/usergroups.lib.php';
 require_once './class/ZenFusionOAuth.class.php';
-require_once './class/Zenfusion_Oauth2Client.class.php';
+require_once './class/Oauth2Client.class.php';
 require_once './lib/scopes.lib.php';
 require_once './inc/oauth.inc.php';
 
@@ -119,8 +119,8 @@ if ((!$state || !$code || !$user->rights->zenfusionoauth->use) && !$user->admin)
     $oauth->fetch($state);
     // Google API client
     try {
-        $client = new Oauth2Client();
-    } catch (Oauth2Exception $e) {
+        $client = new \zenfusion\oauth\Oauth2Client();
+    } catch (\zenfusion\oauth\Oauth2Exception $e) {
         // Ignore
     }
     if ($callback_error) {

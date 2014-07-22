@@ -125,9 +125,9 @@ function getToken($db, $user_id, $fresh = false, $scope = null)
 function refreshTokenIfExpired(&$token_infos)
 {
     global $db;
-    dol_include_once('/zenfusionoauth/class/Zenfusion_Oauth2Client.class.php');
+    dol_include_once('/zenfusionoauth/class/Oauth2Client.class.php');
     dol_include_once('/zenfusionoauth/class/ZenFusionOAuth.class.php');
-    $client = new Oauth2Client();
+    $client = new \zenfusion\oauth\Oauth2Client();
     $client->setAccessToken($token_infos->token);
     if ($client->isAccessTokenExpired()) {
         $client->refreshToken(json_decode($token_infos->token)->refresh_token);
