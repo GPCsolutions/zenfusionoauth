@@ -26,9 +26,9 @@
 // FIXME: move to zenfusionoauth.class.php and use the CRUD object
 
 /**
- * @param $scope
- * @param $tokens
- * @return mixed
+ * @param string $scope
+ * @param string[] $tokens
+ * @return string[] Filtered tokens
  */
 function filterByScope($scope, $tokens)
 {
@@ -88,6 +88,7 @@ function getAllTokens($db, $scope = null, $filter = null)
  * @param DoliDB $db Database
  * @param int $user_id The user ID
  * @param bool $fresh Request a fresh token (For client side usage, not needed if you use the API client)
+ * @param string $scope Scope to be filtered against
  *
  * @return Object or false
  */
