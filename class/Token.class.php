@@ -20,6 +20,10 @@
 namespace zenfusion\oauth;
 
 
+/**
+ * Class Token
+ * @package zenfusion\oauth
+ */
 class Token
 {
     /**
@@ -28,23 +32,23 @@ class Token
     protected $token;
 
     /**
-     * @return string
+     * @return string JSON token bundle
      */
-    public function getToken()
+    public function getTokenBundle()
     {
         return $this->token;
     }
 
     /**
-     * @param string $token
+     * @param string $token JSON token bundle
      */
-    public function setToken($token)
+    public function setTokenBundle($token)
     {
         $this->token = $token;
     }
 
     /**
-     * @param string $token
+     * @param string $token JSON token bundle
      */
     public function __construct($token)
     {
@@ -52,7 +56,7 @@ class Token
     }
 
     /**
-     * @return string
+     * @return string Access token
      */
     public function getAccessToken()
     {
@@ -60,7 +64,7 @@ class Token
     }
 
     /**
-     * @return string
+     * @return string Token type
      */
     public function getTokenType()
     {
@@ -68,7 +72,7 @@ class Token
     }
 
     /**
-     * @return string
+     * @return string Refresh token
      */
     public function getRefreshToken()
     {
