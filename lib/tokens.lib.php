@@ -127,12 +127,15 @@ function refreshTokenIfExpired(&$token_infos)
     global $db;
     dol_include_once('/zenfusionoauth/class/Oauth2Client.class.php');
     dol_include_once('/zenfusionoauth/class/ZenFusionOAuth.class.php');
+    dol_include_once('/zenfusionoauth/class/Token.class.php');
+    $token = new \zenfusion\oauth\Token($token_infos->token);
     $client = new \zenfusion\oauth\Oauth2Client();
-    $client->setAccessToken($token_infos->token);
+    $client->setAccessToken($token->getToken());
     if ($client->isAccessTokenExpired()) {
-        $client->refreshToken(json_decode($token_infos->token)->refresh_token);
+        $client->refreshToken($token->getRefreshToken());
     }
-    $token_infos->token = $client->getAccessToken();
+    $token->setToken($client->getAccessToken());
+    $token_infos->token = $token->getToken();
     // Store the new refresh token in database
     $database = new ZenFusionOAuth($db);
     // FIXME: avoid a second fetch by using a CRUD object in caller function
