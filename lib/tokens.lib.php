@@ -23,7 +23,7 @@
  * Oauth tokens functions library
  */
 
-// FIXME: move to zenfusionoauth.class.php and use the CRUD object
+// FIXME: move to TokenStorage.class.php and use the CRUD object
 
 /**
  * @param string $scope
