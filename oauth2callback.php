@@ -26,6 +26,8 @@
  * \authors Raphaël Doursenaud <rdoursenaud@gpcsolutions.fr>
  * \authors Cédric Salvador <csalvador@gpcsolutions.fr>
  */
+use zenfusion\oauth\Oauth2Client;
+use zenfusion\oauth\Oauth2Exception;
 use zenfusion\oauth\OauthStorage;
 
 /**
@@ -120,8 +122,8 @@ if ((!$state || !$code || !$user->rights->zenfusionoauth->use) && !$user->admin)
     $oauth->fetch($state);
     // Google API client
     try {
-        $client = new \zenfusion\oauth\Oauth2Client();
-    } catch (\zenfusion\oauth\Oauth2Exception $e) {
+        $client = new Oauth2Client();
+    } catch (Oauth2Exception $e) {
         // Ignore
     }
     if ($callback_error) {

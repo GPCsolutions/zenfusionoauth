@@ -127,7 +127,7 @@ function refreshTokenIfExpired(&$token_infos)
 {
     global $db;
     dol_include_once('/zenfusionoauth/class/Oauth2Client.class.php');
-    dol_include_once('/zenfusionoauth/class/OauthStorage.class.php;
+    dol_include_once('/zenfusionoauth/class/OauthStorage.class.php');
     dol_include_once('/zenfusionoauth/class/Token.class.php');
     $token = new \zenfusion\oauth\Token($token_infos->token);
     $client = new \zenfusion\oauth\Oauth2Client();
