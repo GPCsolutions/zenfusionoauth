@@ -36,7 +36,7 @@ class OauthStatus extends ModeleBoxes
 {
 
     public $boxcode = 'Tokenstatus'; ///< Box Codename
-    public $boximg = 'object_user'; ///< Box img
+    public $boximg = 'oauth@zenfusionoauth'; ///< Box img
     public $boxlabel; ///< Box name
     public $depends = array(); /// Box dependencies
     public $db; ///< Database handler
