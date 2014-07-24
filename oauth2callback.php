@@ -28,7 +28,7 @@
  */
 use zenfusion\oauth\Oauth2Client;
 use zenfusion\oauth\Oauth2Exception;
-use zenfusion\oauth\OauthStorage;
+use zenfusion\oauth\TokenStorage;
 
 /**
  *
@@ -86,7 +86,7 @@ if (!$res) {
 
 require_once DOL_DOCUMENT_ROOT . '/user/class/user.class.php';
 require_once DOL_DOCUMENT_ROOT . '/core/lib/usergroups.lib.php';
-require_once './class/OauthStorage.class.php';
+require_once './class/TokenStorage.class.php';
 require_once './class/Oauth2Client.class.php';
 require_once './lib/scopes.lib.php';
 require_once './inc/oauth.inc.php';
@@ -118,7 +118,7 @@ if ((!$state || !$code || !$user->rights->zenfusionoauth->use) && !$user->admin)
     // Load current user's informations
     $doluser->fetch($state);
     // Create an object to use llx_zenfusion_oauth table
-    $oauth = new OauthStorage($db);
+    $oauth = new TokenStorage($db);
     $oauth->fetch($state);
     // Google API client
     try {

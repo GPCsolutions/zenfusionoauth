@@ -19,7 +19,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 /**
- * \file class/OauthStorage.class.php CRUD for zenfusion_oauth
+ * \file class/TokenStorage.class.php CRUD for zenfusion_oauth
  *
  * Creates/Reads/Updates/Deletes Oauth tokens informations
  * from llx_zenfusion_oauth table.
@@ -35,12 +35,12 @@
 namespace zenfusion\oauth;
 
 /**
- * Class OauthStorage
+ * Class TokenStorage
  * @package zenfusion\oauth
  *
  * Manages Access and Secret tokens for each user
  */
-class OauthStorage
+class TokenStorage
 {
     /**
      * @var \DoliDB Database handler
