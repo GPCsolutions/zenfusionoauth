@@ -30,6 +30,7 @@ set_include_path(dol_buildpath('/zenfusionoauth/lib/google-api-php-client/src'))
 dol_include_once('/zenfusionoauth/lib/google-api-php-client/src/Google/Client.php');
 dol_include_once('/zenfusionoauth/lib/google-api-php-client/src/Google/Auth/Exception.php');
 dol_include_once('/zenfusionoauth/inc/oauth.inc.php');
+require_once('Oauth2Exception.class.php');
 
 /**
  * \class Oauth2Client

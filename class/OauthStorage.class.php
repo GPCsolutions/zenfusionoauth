@@ -19,8 +19,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 /**
- * \file class/ZenFusionOAuth.class.php
- * CRUD for zenfusion_oauth
+ * \file class/OauthStorage.class.php* CRUD for zenfusion_oauth
  *
  * Creates/Reads/Updates/Deletes Oauth tokens informations
  * from llx_zenfusion_oauth table.
@@ -36,11 +35,11 @@
 require_once DOL_DOCUMENT_ROOT . '/core/class/commonobject.class.php';
 
 /**
- * \class ZenFusionOAuth
+ * \class OauthStorage
  *
  * Manages Access and Secret tokens for each user
  */
-class ZenFusionOAuth
+class OauthStorage
 {
     /**
      * @var DoliDB Database handler

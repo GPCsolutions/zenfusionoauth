@@ -50,7 +50,7 @@ if (!$res) {
 
 require_once DOL_DOCUMENT_ROOT . '/user/class/user.class.php';
 require_once DOL_DOCUMENT_ROOT . '/core/lib/usergroups.lib.php';
-require_once './class/ZenFusionOAuth.class.php';
+require_once './class/OauthStorage.class.php';
 require_once './class/Oauth2Client.class.php';
 require_once './lib/scopes.lib.php';
 require_once './inc/oauth.inc.php';
@@ -97,7 +97,7 @@ $doluser = new User($db);
 // Load current user's informations
 $doluser->fetch($id);
 // Create an object to use llx_zenfusion_oauth table
-$oauth = new ZenFusionOAuth($db);
+$oauth = new OauthStorage($db);
 $oauth->fetch($id);
 // Google API client
 try {

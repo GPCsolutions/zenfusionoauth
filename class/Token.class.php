@@ -19,7 +19,6 @@
 
 namespace zenfusion\oauth;
 
-
 /**
  * Class Token
  * @package zenfusion\oauth
