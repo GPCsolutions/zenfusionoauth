@@ -349,4 +349,40 @@ class TokenStorage
             return -1;
         }
     }
+
+    /**
+     * Return all tokens eventually with the corresponding scope.
+     *
+     * @param \DoliDB $db database
+     * @param null|string $scope Scope filter
+     * @param null|string $filter SQL filter
+     *
+     * @return \stdClass[] Tokens
+     */
+    public static function getAllTokens($db, $scope = null, $filter = null)
+    {
+        require_once('../lib/tokens.lib.php');
+
+        $db_tokens = array();
+
+        $sql = 'SELECT rowid, token, email, scopes ';
+        $sql .= 'FROM ' . MAIN_DB_PREFIX . 'zenfusion_oauth';
+        if ($filter) {
+            $sql .= ' WHERE ' . $filter;
+        }
+        $resql = $db->query($sql);
+        if ($resql) {
+            if ($db->num_rows($resql)) {
+                $num = $db->num_rows($resql);
+                for ($i = 0; $i < $num; $i++) {
+                    $obj = $db->fetch_object($resql);
+                    if (json_decode($obj->token)) {
+                        array_push($db_tokens, $obj);
+                    }
+                }
+            }
+        }
+
+        return filterByScope($scope, $db_tokens);
+    }
 }
