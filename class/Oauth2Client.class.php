@@ -44,7 +44,6 @@ class Oauth2Client extends \Google_Client
     public function __construct()
     {
         global $conf;
-        dol_include_once('/zenfusionoauth/class/Oauth2Exception.class.php');
 
         // Check if the module is configured
         if ($conf->global->ZF_OAUTH2_CLIENT_ID === null
