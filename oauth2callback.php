@@ -26,6 +26,7 @@
  * \authors Raphaël Doursenaud <rdoursenaud@gpcsolutions.fr>
  * \authors Cédric Salvador <csalvador@gpcsolutions.fr>
  */
+use zenfusion\oauth\OauthStorage;
 
 /**
  *

@@ -138,7 +138,7 @@ function refreshTokenIfExpired(&$token_infos)
     $token->setTokenBundle($client->getAccessToken());
     $token_infos->token = $token->getTokenBundle();
     // Store the new refresh token in database
-    $database = new OauthStorage($db);
+    $database = new zenfusion\oauth\OauthStorage($db);
     // FIXME: avoid a second fetch by using a CRUD object in caller function
     $database->fetch($token_infos->rowid);
     $database->token = $token_infos->token;

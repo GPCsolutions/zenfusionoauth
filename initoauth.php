@@ -35,6 +35,8 @@
 
 // TODO: allow selecting services permissions
 
+use zenfusion\oauth\OauthStorage;
+
 $res = 0;
 // from standard dolibarr install
 if (!$res && file_exists('../main.inc.php')) {

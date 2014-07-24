@@ -19,7 +19,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 /**
- * \file class/OauthStorage.class.php* CRUD for zenfusion_oauth
+ * \file class/OauthStorage.class.php CRUD for zenfusion_oauth
  *
  * Creates/Reads/Updates/Deletes Oauth tokens informations
  * from llx_zenfusion_oauth table.
@@ -32,17 +32,20 @@
  * \authors Cédric Salvador <csalvador@gpcsolutions.fr>
  */
 
+namespace zenfusion\oauth;
+
 require_once DOL_DOCUMENT_ROOT . '/core/class/commonobject.class.php';
 
 /**
- * \class OauthStorage
+ * Class OauthStorage
+ * @package zenfusion\oauth
  *
  * Manages Access and Secret tokens for each user
  */
 class OauthStorage
 {
     /**
-     * @var DoliDB Database handler
+     * @var \DoliDB Database handler
      */
     protected $db;
 
@@ -84,7 +87,7 @@ class OauthStorage
     /**
      * Instanciates a new database object
      *
-     * @param DoliDB $db Database handler
+     * @param \DoliDB $db Database handler
      */
     public function __construct($db)
     {
@@ -96,7 +99,7 @@ class OauthStorage
     /**
      * Create in database
      *
-     * @param User $user User that create
+     * @param \User $user User that create
      * @param int $notrigger 0=launch triggers after, 1=disable triggers
      *
      * @return int <0 if KO, Id of created object if OK
@@ -248,7 +251,7 @@ class OauthStorage
     /**
      * Update Access token and Secret token database
      *
-     * @param User $user User that modify
+     * @param \User $user User that modify
      * @param int $notrigger 0=launch triggers after, 1=disable triggers
      *
      * @return int <0 if KO, >0 if OK
