@@ -57,6 +57,8 @@ require_once './class/Oauth2Client.class.php';
 require_once './lib/scopes.lib.php';
 require_once './inc/oauth.inc.php';
 
+use \zenfusion\oauth\Oauth2Client;
+
 global $db, $conf, $user, $langs;
 
 $langs->load('zenfusionoauth@zenfusionoauth');
@@ -103,7 +105,7 @@ $oauth = new TokenStorage($db);
 $oauth->fetch($id);
 // Google API client
 try {
-    $client = new \zenfusion\oauth\Oauth2Client();
+    $client = new Oauth2Client();
 
 } catch (Google_Auth_Exception $e) {
     // Ignore

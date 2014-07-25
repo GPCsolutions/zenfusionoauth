@@ -29,6 +29,8 @@
 require_once DOL_DOCUMENT_ROOT . '/core/boxes/modules_boxes.php';
 dol_include_once('/zenfusionoauth/class/Oauth2Client.class.php');
 
+use \zenfusion\oauth\Oauth2Client;
+
 /**
  * \class OauthStatus
  * Display OAuth token status
@@ -126,7 +128,7 @@ class OauthStatus extends ModeleBoxes
 
                     $token = $objp->token;
                     if ($objp->rowid) {
-                        $client = new \zenfusion\oauth\Oauth2Client();
+                        $client = new Oauth2Client();
                         try {
                             $client->setAccessToken($token);
                             $this->info_box_contents[$i][2] = array(
