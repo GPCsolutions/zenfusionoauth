@@ -361,7 +361,7 @@ class TokenStorage
      */
     public static function getAllTokens($db, $scope = null, $filter = null)
     {
-        require_once('../lib/tokens.lib.php');
+        dol_include_once('zenfusionoauth/lib/tokens.lib.php');
 
         $db_tokens = array();
 
