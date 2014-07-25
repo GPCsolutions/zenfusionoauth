@@ -25,6 +25,7 @@
  *  \authors Sebastien Bodrero <sbodrero@gpcsolutions.fr>
  *  \authors Raphaël Doursenaud <rdoursenaud@gpcsolutions.fr>
  */
+
 require_once DOL_DOCUMENT_ROOT . '/core/boxes/modules_boxes.php';
 dol_include_once('/zenfusionoauth/class/Oauth2Client.class.php');
 

@@ -30,6 +30,7 @@
  * Allows using Oauth for Google contacts API accesses.
  *
  */
+
 /**
  * \file core/modules/modZenFusionOAuth.class.php
  * Zenfusion OAuth module
@@ -41,6 +42,7 @@
  * \authors Raphaël Doursenaud <rdoursenaud@gpcsolutions.fr>
  * \authors Cédric Salvador <csalvador@gpcsolutions.fr>
  */
+
 require_once DOL_DOCUMENT_ROOT . '/core/modules/DolibarrModules.class.php';
 dol_include_once('/zenfusionoauth/inc/oauth.inc.php');
 dol_include_once('/zenfusionoauth/lib/scopes.lib.php');
