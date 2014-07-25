@@ -34,6 +34,10 @@
 
 namespace zenfusion\oauth;
 
+use \zenfusion\oauth\Token;
+
+require_once 'Token.class.php';
+
 /**
  * Class TokenStorage
  * @package zenfusion\oauth
@@ -63,10 +67,33 @@ class TokenStorage
     public $id;
 
     /**
-     * @var string JSON token bundle
-     * FIXME: Use a Token object
+     * @var Token The token
      */
-    public $token;
+    protected $token;
+
+    /**
+     * @return Token
+     */
+    public function getToken()
+    {
+        return $this->token;
+    }
+
+    /**
+     * @param Token $token
+     */
+    public function setToken($token)
+    {
+        $this->token = $token;
+    }
+
+    /**
+     * @param string $token A token bundle
+     */
+    public function setTokenFromBundle($token)
+    {
+        $this->token = new Token($token);
+    }
 
     /**
      * @var string[] Registered scopes for this token
@@ -107,9 +134,6 @@ class TokenStorage
     {
         $error = 0;
         // Clean parameters
-        if (isset($this->token)) {
-            $this->token = trim($this->token);
-        }
         if (isset($this->scopes)) {
             $this->scopes = trim($this->scopes);
         }
@@ -154,7 +178,7 @@ class TokenStorage
         $sql .= ", oauth_id";
         $sql .= ") VALUES (";
         $sql .= " " . (!isset($this->id) ? 'NULL' : "'" . $this->id . "'") . ",";
-        $sql .= " " . (!isset($this->token) ? 'NULL' : "'" . $this->token . "'") . ",";
+        $sql .= " " . (!isset($this->token) ? 'NULL' : "'" . $this->token->getTokenBundle() . "'") . ",";
         $sql .= " " . (!isset($this->scopes) ? 'NULL' : "'" . $this->scopes . "'") . "";
         $sql .= ", " . (!isset($this->email) ? 'NULL' : "'" . $this->db->escape($this->email) . "'") . "";
         $sql .= ", " . (!isset($this->oauth_id) || $this->oauth_id == '' ? 'NULL' : "'" . $this->oauth_id . "'") . "";
@@ -231,7 +255,7 @@ class TokenStorage
             if ($this->db->num_rows($resql)) {
                 $obj = $this->db->fetch_object($resql);
                 $this->id = $obj->rowid;
-                $this->token = $obj->token;
+                $this->setTokenFromBundle($obj->token);
                 $this->scopes = $obj->scopes;
                 $this->email = $obj->email;
                 $this->oauth_id = $obj->oauth_id;
@@ -259,9 +283,6 @@ class TokenStorage
     {
         $error = 0;
         // Clean parameters
-        if (isset($this->token)) {
-            $this->token = trim($this->token);
-        }
         if (isset($this->scopes)) {
             $this->scopes = trim($this->scopes);
         }
@@ -275,7 +296,7 @@ class TokenStorage
         // Put here code to add control on parameters values
         // Update request
         $sql = "UPDATE " . MAIN_DB_PREFIX . "zenfusion_oauth SET";
-        $sql .= " token=" . (isset($this->token) ? "'" . $this->token . "'"
+        $sql .= " token=" . (isset($this->token) ? "'" . $this->token->getTokenBundle() . "'"
                 : "null") . ",";
         $sql .= " scopes=" . (isset($this->scopes) ? "'" . $this->scopes . "'"
                 : "null") . "";
@@ -378,7 +399,7 @@ class TokenStorage
                     if (json_decode($obj->token)) {
                         $tokenstorage = new TokenStorage($db);
                         $tokenstorage->id = $obj->rowid;
-                        $tokenstorage->token = $obj->token;
+                        $tokenstorage->setTokenFromBundle($obj->token);
                         $tokenstorage->email = $obj->email;
                         $tokenstorage->scopes = $obj->scopes;
                         array_push($db_tokens, $tokenstorage);
@@ -403,9 +424,6 @@ class TokenStorage
      */
     public static function getUserToken($db, $user_id, $fresh = false, $scope = null)
     {
-        // FIXME: move refreshTokenIfExpired in the Token class
-        dol_include_once('zenfusionoauth/lib/tokens.lib.php');
-
         $sql = 'SELECT rowid, token, email, scopes ';
         $sql .= 'FROM ' . MAIN_DB_PREFIX . 'zenfusion_oauth ';
         $sql .= 'WHERE rowid=' . $user_id;
@@ -417,11 +435,11 @@ class TokenStorage
                     $token_infos = $db->fetch_object($resql);
                     $tokenstorage = new TokenStorage($db);
                     $tokenstorage->id = $token_infos->rowid;
-                    $tokenstorage->token = $token_infos->token;
+                    $tokenstorage->setTokenFromBundle($token_infos->token);
                     $tokenstorage->email = $token_infos->email;
                     $tokenstorage->scopes = $token_infos->scopes;
                     if ($fresh === true) {
-                        refreshTokenIfExpired($tokenstorage);
+                        $tokenstorage->refreshTokenIfExpired();
                     }
                     return self::filterTokensByScope($scope, $tokenstorage);
                 }
@@ -452,5 +470,16 @@ class TokenStorage
             }
         }
         return $filtered_tokens;
+    }
+
+    /**
+     * Refresh the token if it is expired
+     */
+    protected function refreshTokenIfExpired()
+    {
+        if ($this->token->refreshIfExpired()) {
+            // Store the new refresh token in database
+            $this->update();
+        }
     }
 }

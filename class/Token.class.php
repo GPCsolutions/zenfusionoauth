@@ -51,7 +51,7 @@ class Token
      */
     public function __construct($token)
     {
-        $this->token = $token;
+        $this->token = trim($token);
     }
 
     /**
@@ -76,5 +76,22 @@ class Token
     public function getRefreshToken()
     {
         return json_decode($this->token)->refresh_token;
+    }
+
+    /**
+     * @return bool Refreshed
+     */
+    public function refreshIfExpired()
+    {
+        require_once 'Oauth2Client.class.php';
+
+        $client = new Oauth2Client();
+        $client->setAccessToken($this->getTokenBundle());
+        if ($client->isAccessTokenExpired()) {
+            $client->refreshToken($this->getRefreshToken());
+            $this->setTokenBundle($client->getAccessToken());
+            return true;
+        }
+        return false;
     }
 }
