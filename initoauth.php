@@ -166,7 +166,7 @@ $enabledservices = readScopes(json_decode($oauth->scopes));
 $availableservices = array_diff(readScopes(json_decode($conf->global->ZF_OAUTH2_SCOPES)), $enabledservices);
 
 // Verify if the user's got an access token
-if ($client) {
+if ($client && is_a($oauth->token, 'Token')) {
     try {
         $client->setAccessToken($oauth->token->getTokenBundle());
     } catch (Google_Auth_Exception $e) {
