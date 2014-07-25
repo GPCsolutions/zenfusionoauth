@@ -112,10 +112,8 @@ try {
 // Actions
 switch ($action) {
     case 'delete_token':
-        // Get token from database
-        $token = json_decode($oauth->token);
         try {
-            $client->revokeToken($token->{'refresh_token'});
+            $client->revokeToken($oauth->token->getRefreshToken());
         } catch (Google_Auth_Exception $e) {
             dol_syslog("Delete token " . $e->getMessage());
             // TODO: print message and user panel URL to manually revoke access
@@ -170,7 +168,7 @@ $availableservices = array_diff(readScopes(json_decode($conf->global->ZF_OAUTH2_
 // Verify if the user's got an access token
 if ($client) {
     try {
-        $client->setAccessToken($oauth->token);
+        $client->setAccessToken($oauth->token->getTokenBundle());
     } catch (Google_Auth_Exception $e) {
         $token_good = false;
     }

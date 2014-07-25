@@ -69,23 +69,7 @@ class TokenStorage
     /**
      * @var Token The token
      */
-    protected $token;
-
-    /**
-     * @return Token
-     */
-    public function getToken()
-    {
-        return $this->token;
-    }
-
-    /**
-     * @param Token $token
-     */
-    public function setToken($token)
-    {
-        $this->token = $token;
-    }
+    public $token;
 
     /**
      * @param string $token A token bundle

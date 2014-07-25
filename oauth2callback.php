@@ -146,9 +146,9 @@ if ((!$state || !$code || !$user->rights->zenfusionoauth->use) && !$user->admin)
         $token = $client->getAccessToken();
         // Save the access token into database
         dol_syslog($script_file . " CREATE", LOG_DEBUG);
-        $oauth->token = $token;
+        $oauth->setTokenFromBundle($token);
         $oauth->oauth_id = null;
-        $access_token = json_decode($token)->access_token;
+        $access_token = $oauth->token->getAccessToken();
         $info = getRequest('https://www.googleapis.com/oauth2/v1/userinfo?access_token=' . $access_token, $client);
         $info = json_decode($info);
         $oauth->oauth_id = $info->id;
