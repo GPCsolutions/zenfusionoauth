@@ -64,6 +64,7 @@ class TokenStorage
 
     /**
      * @var string JSON token bundle
+     * FIXME: Use a Token object
      */
     public $token;
 
@@ -361,6 +362,7 @@ class TokenStorage
      */
     public static function getAllTokens($db, $scope = null, $filter = null)
     {
+        // FIXME: move filterByScope in this class
         dol_include_once('zenfusionoauth/lib/tokens.lib.php');
 
         $db_tokens = array();
@@ -389,5 +391,46 @@ class TokenStorage
         }
 
         return filterByScope($scope, $db_tokens);
+    }
+
+    /**
+     * Returns the token associated with the user
+     *
+     * @param \DoliDB $db Database
+     * @param int $user_id The user ID
+     * @param bool $fresh Request a fresh token (For client side usage, not needed if you use the API client)
+     * @param string $scope Scope to be filtered against
+     *
+     * @return TokenStorage or false
+     */
+    public static function getUserToken($db, $user_id, $fresh = false, $scope = null)
+    {
+        // FIXME: move filterByScope in this class and refreshTokenIfExpired in the Token class
+        dol_include_once('zenfusionoauth/lib/tokens.lib.php');
+
+        $sql = 'SELECT rowid, token, email, scopes ';
+        $sql .= 'FROM ' . MAIN_DB_PREFIX . 'zenfusion_oauth ';
+        $sql .= 'WHERE rowid=' . $user_id;
+        $resql = $db->query($sql);
+        if ($resql) {
+            if ($db->num_rows($resql)) {
+                $num = $db->num_rows($resql);
+                if ($num == 1) {
+                    $token_infos = $db->fetch_object($resql);
+                    $tokenstorage = new TokenStorage($db);
+                    $tokenstorage->id = $token_infos->rowid;
+                    $tokenstorage->token = $token_infos->token;
+                    $tokenstorage->email = $token_infos->email;
+                    $tokenstorage->scopes = $token_infos->scopes;
+                    if ($fresh === true) {
+                        refreshTokenIfExpired($tokenstorage);
+                    }
+                    return filterByScope($scope, $tokenstorage);
+                }
+                // We didn't get the expected number of results, bail out
+                return false;
+            }
+        }
+        return false;
     }
 }
