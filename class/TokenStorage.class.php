@@ -362,9 +362,6 @@ class TokenStorage
      */
     public static function getAllTokens($db, $scope = null, $filter = null)
     {
-        // FIXME: move filterByScope in this class
-        dol_include_once('zenfusionoauth/lib/tokens.lib.php');
-
         $db_tokens = array();
 
         $sql = 'SELECT rowid, token, email, scopes ';
@@ -390,7 +387,7 @@ class TokenStorage
             }
         }
 
-        return filterByScope($scope, $db_tokens);
+        return self::filterTokensByScope($scope, $db_tokens);
     }
 
     /**
@@ -398,6 +395,7 @@ class TokenStorage
      *
      * @param \DoliDB $db Database
      * @param int $user_id The user ID
+     * FIXME: rather use a \User object
      * @param bool $fresh Request a fresh token (For client side usage, not needed if you use the API client)
      * @param string $scope Scope to be filtered against
      *
@@ -405,7 +403,7 @@ class TokenStorage
      */
     public static function getUserToken($db, $user_id, $fresh = false, $scope = null)
     {
-        // FIXME: move filterByScope in this class and refreshTokenIfExpired in the Token class
+        // FIXME: move refreshTokenIfExpired in the Token class
         dol_include_once('zenfusionoauth/lib/tokens.lib.php');
 
         $sql = 'SELECT rowid, token, email, scopes ';
@@ -425,12 +423,34 @@ class TokenStorage
                     if ($fresh === true) {
                         refreshTokenIfExpired($tokenstorage);
                     }
-                    return filterByScope($scope, $tokenstorage);
+                    return self::filterTokensByScope($scope, $tokenstorage);
                 }
                 // We didn't get the expected number of results, bail out
                 return false;
             }
         }
         return false;
+    }
+
+    /**
+     * @param string $scope
+     * @param TokenStorage[] $tokens
+     * @return TokenStorage[] Filtered tokens
+     */
+    protected static function filterTokensByScope($scope, $tokens)
+    {
+        $filtered_tokens =  array();
+
+        if ($scope === null) {
+            $filtered_tokens = $tokens;
+        } else {
+            foreach ($tokens as $token) {
+                $token_scopes = json_decode($token->scopes);
+                if (in_array($scope, $token_scopes)) {
+                    array_push($filtered_tokens, $token);
+                }
+            }
+        }
+        return $filtered_tokens;
     }
 }

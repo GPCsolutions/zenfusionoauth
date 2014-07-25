@@ -26,29 +26,6 @@
 // FIXME: move to TokenStorage.class.php and use the CRUD object
 
 /**
- * @param string $scope
- * @param TokenStorage[] $tokens
- * @return TokenStorage[] Filtered tokens
- */
-function filterByScope($scope, $tokens)
-{
-    $filtered_tokens =  array();
-
-    if ($scope === null) {
-        $filtered_tokens = $tokens;
-    } else {
-        foreach ($tokens as $token) {
-            $token_scopes = json_decode($token->scopes);
-            if (in_array($scope, $token_scopes)) {
-                array_push($filtered_tokens, $token);
-            }
-        }
-    }
-
-    return $filtered_tokens;
-}
-
-/**
  * Refresh the obtained access token if needed
  *
  * This is usefull for client side usage (Javascript)
