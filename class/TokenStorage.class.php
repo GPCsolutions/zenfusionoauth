@@ -357,7 +357,7 @@ class TokenStorage
      * @param null|string $scope Scope filter
      * @param null|string $filter SQL filter
      *
-     * @return \stdClass[] Tokens
+     * @return TokenStorage[] Tokens
      */
     public static function getAllTokens($db, $scope = null, $filter = null)
     {
@@ -377,7 +377,12 @@ class TokenStorage
                 for ($i = 0; $i < $num; $i++) {
                     $obj = $db->fetch_object($resql);
                     if (json_decode($obj->token)) {
-                        array_push($db_tokens, $obj);
+                        $tokenstorage = new TokenStorage($db);
+                        $tokenstorage->id = $obj->rowid;
+                        $tokenstorage->token = $obj->token;
+                        $tokenstorage->email = $obj->email;
+                        $tokenstorage->scopes = $obj->scopes;
+                        array_push($db_tokens, $tokenstorage);
                     }
                 }
             }
