@@ -425,7 +425,7 @@ class TokenStorage
                     if ($fresh === true) {
                         $tokenstorage->refreshTokenIfExpired();
                     }
-                    return self::filterTokensByScope($scope, $tokenstorage);
+                    return self::filterTokensByScope($scope, $tokenstorage)[0];
                 }
                 // We didn't get the expected number of results, bail out
                 return false;
@@ -436,12 +436,17 @@ class TokenStorage
 
     /**
      * @param string $scope
-     * @param TokenStorage[] $tokens
+     * @param TokenStorage[]|TokenStorage $tokens
      * @return TokenStorage[] Filtered tokens
      */
     protected static function filterTokensByScope($scope, $tokens)
     {
         $filtered_tokens =  array();
+
+        // Allow single object
+        if (! is_array($tokens)) {
+            $tokens = array($tokens);
+        }
 
         if ($scope === null) {
             $filtered_tokens = $tokens;
