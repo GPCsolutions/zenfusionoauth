@@ -2,7 +2,7 @@
 /*
  * ZenFusion OAuth - A Google Oauth authorization module for Dolibarr
  * Copyright (C) 2011 Sebastien Bodrero <sbodrero@gpcsolutions.fr>
- * Copyright (C) 2011-2012 Raphaël Doursenaud <rdoursenaud@gpcsolutions.fr>
+ * Copyright (C) 2011-2014 Raphaël Doursenaud <rdoursenaud@gpcsolutions.fr>
  * Copyright (C) 2013 Cédric Salvador <csalvador@gpcsolutions.fr>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -18,6 +18,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 /**
  * \file inc/oauth.inc.php
  * Oauth constants
