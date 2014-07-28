@@ -35,6 +35,9 @@
 
 namespace zenfusion\oauth;
 
+use DoliDB;
+use User;
+
 require_once 'Token.class.php';
 
 /**
@@ -46,7 +49,7 @@ require_once 'Token.class.php';
 class TokenStorage
 {
     /**
-     * @var \DoliDB Database handler
+     * @var DoliDB Database handler
      */
     protected $db;
 
@@ -96,9 +99,9 @@ class TokenStorage
     /**
      * Instanciates a new database object
      *
-     * @param \DoliDB $db Database handler
+     * @param DoliDB $db Database handler
      */
-    public function __construct($db)
+    public function __construct(DoliDB $db)
     {
         $this->db = $db;
 
@@ -108,12 +111,12 @@ class TokenStorage
     /**
      * Create in database
      *
-     * @param \User $user User that create
+     * @param User $user User that create
      * @param int $notrigger 0=launch triggers after, 1=disable triggers
      *
      * @return int <0 if KO, Id of created object if OK
      */
-    public function create($user, $notrigger = 0)
+    public function create(User $user, $notrigger = 0)
     {
         $error = 0;
         // Clean parameters
@@ -257,7 +260,7 @@ class TokenStorage
     /**
      * Update Access token and Secret token database
      *
-     * @param \User $user User that modify
+     * @param User $user User that modify
      * @param int $notrigger 0=launch triggers after, 1=disable triggers
      *
      * @return int <0 if KO, >0 if OK
@@ -358,13 +361,13 @@ class TokenStorage
     /**
      * Return all tokens eventually with the corresponding scope.
      *
-     * @param \DoliDB $db database
+     * @param DoliDB $db database
      * @param null|string $scope Scope filter
      * @param null|string $filter SQL filter
      *
      * @return TokenStorage[] Tokens
      */
-    public static function getAllTokens($db, $scope = null, $filter = null)
+    public static function getAllTokens(DoliDB $db, $scope = null, $filter = null)
     {
         $db_tokens = array();
 
@@ -397,19 +400,17 @@ class TokenStorage
     /**
      * Returns the token associated with the user
      *
-     * @param \DoliDB $db Database
-     * @param int $user_id The user ID
-     * FIXME: rather use a \User object
+     * @param DoliDB $db Database
+     * @param User $user The user
      * @param bool $fresh Request a fresh token (For client side usage, not needed if you use the API client)
      * @param string $scope Scope to be filtered against
-     *
-     * @return TokenStorage or false
+     * @return TokenStorage|false
      */
-    public static function getUserToken($db, $user_id, $fresh = false, $scope = null)
+    public static function getUserToken(DoliDB $db, User $user, $fresh = false, $scope = null)
     {
         $sql = 'SELECT rowid, token, email, scopes ';
         $sql .= 'FROM ' . MAIN_DB_PREFIX . 'zenfusion_oauth ';
-        $sql .= 'WHERE rowid=' . $user_id;
+        $sql .= 'WHERE rowid=' . $user->id;
         $resql = $db->query($sql);
         if ($resql) {
             if ($db->num_rows($resql)) {

@@ -19,10 +19,12 @@
 
 namespace zenfusion\oauth;
 
+use Exception;
+
 /**
  * \class Oauth2Exception
  * Exception for Oauth2Client
  */
-class Oauth2Exception extends \Exception
+class Oauth2Exception extends Exception
 {
 }
