@@ -36,7 +36,7 @@
 
 // TODO: allow selecting services permissions
 
-use zenfusion\oauth\TokenStorage;
+use \zenfusion\oauth\TokenStorage;
 
 $res = 0;
 // from standard dolibarr install

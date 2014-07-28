@@ -35,8 +35,8 @@
 
 namespace zenfusion\oauth;
 
-use DoliDB;
-use User;
+use \DoliDB;
+use \User;
 
 require_once 'Token.class.php';
 

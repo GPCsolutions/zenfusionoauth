@@ -27,9 +27,9 @@
  * \authors Raphaël Doursenaud <rdoursenaud@gpcsolutions.fr>
  * \authors Cédric Salvador <csalvador@gpcsolutions.fr>
  */
-use zenfusion\oauth\Oauth2Client;
-use zenfusion\oauth\Oauth2Exception;
-use zenfusion\oauth\TokenStorage;
+use \zenfusion\oauth\Oauth2Client;
+use \zenfusion\oauth\Oauth2Exception;
+use \zenfusion\oauth\TokenStorage;
 
 /**
  *

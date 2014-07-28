@@ -19,7 +19,7 @@
 
 namespace zenfusion\oauth;
 
-use Exception;
+use \Exception;
 
 /**
  * \class Oauth2Exception
