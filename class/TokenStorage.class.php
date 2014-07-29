@@ -425,7 +425,8 @@ class TokenStorage
                     if ($fresh === true) {
                         $tokenstorage->refreshTokenIfExpired();
                     }
-                    return self::filterTokensByScope($scope, $tokenstorage)[0];
+                    $tokenstorage = self::filterTokensByScope($scope, $tokenstorage);
+                    return $tokenstorage[0];
                 }
                 // We didn't get the expected number of results, bail out
                 return false;
