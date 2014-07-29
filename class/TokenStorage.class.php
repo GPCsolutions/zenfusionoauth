@@ -425,6 +425,7 @@ class TokenStorage
                     if ($fresh === true) {
                         $tokenstorage->refreshTokenIfExpired();
                     }
+                    // Keep separated on two lines for PHP 5.4 compat
                     $tokenstorage = self::filterTokensByScope($scope, $tokenstorage);
                     return $tokenstorage[0];
                 }
