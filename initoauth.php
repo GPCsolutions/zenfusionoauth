@@ -36,8 +36,6 @@
 
 // TODO: allow selecting services permissions
 
-use \zenfusion\oauth\TokenStorage;
-
 $res = 0;
 // from standard dolibarr install
 if (!$res && file_exists('../main.inc.php')) {
@@ -58,6 +56,7 @@ require_once './class/Oauth2Client.class.php';
 require_once './lib/scopes.lib.php';
 require_once './inc/oauth.inc.php';
 
+use \zenfusion\oauth\TokenStorage;
 use \zenfusion\oauth\Oauth2Client;
 
 global $db, $conf, $user, $langs;
@@ -102,12 +101,11 @@ $doluser = new User($db);
 // Load current user's informations
 $doluser->fetch($id);
 // Create an object to use llx_zenfusion_oauth table
-$oauth = new TokenStorage($db);
-$oauth->fetch($id);
+$tokenstorage = new TokenStorage($db);
+$tokenstorage->fetch($id);
 // Google API client
 try {
     $client = new Oauth2Client();
-
 } catch (Google_Auth_Exception $e) {
     // Ignore
 }
@@ -116,15 +114,15 @@ try {
 switch ($action) {
     case 'delete_token':
         try {
-            $client->revokeToken($oauth->token->getRefreshToken());
+            $client->revokeToken($tokenstorage->token->getRefreshToken());
         } catch (Google_Auth_Exception $e) {
             dol_syslog("Delete token " . $e->getMessage());
             // TODO: print message and user panel URL to manually revoke access
         }
         // Delete token in database
-        $result = $oauth->delete($id);
+        $result = $tokenstorage->delete($id);
         if ($result < 0) {
-            dol_print_error($db, $oauth->error);
+            dol_print_error($db, $tokenstorage->error);
         }
         header(
             'refresh:0;url=' . dol_buildpath(
@@ -136,14 +134,14 @@ switch ($action) {
         break;
     case 'request':
         // Save the current user to the state
-        $oauth->delete($id);
-        $oauth->id = $id;
-        $oauth->scopes = json_encode($client->getScopes());
-        $oauth->email = $doluser->email;
-        $oauth->oauth_id = '';
-        $req = $oauth->create($doluser);
+        $tokenstorage->delete($id);
+        $tokenstorage->id = $id;
+        $tokenstorage->scopes = json_encode($client->getScopes());
+        $tokenstorage->email = $doluser->email;
+        $tokenstorage->oauth_id = '';
+        $req = $tokenstorage->create($doluser);
         if ($req < 0) {
-            dol_print_error($db, $oauth->error);
+            dol_print_error($db, $tokenstorage->error);
         }
         $client->setState($id);
         $cback = dol_buildpath('/zenfusionoauth/oauth2callback.php', 2);
@@ -165,13 +163,13 @@ llxHeader("", $tabname);
 $token_good = true;
 // Services for the form
 
-$enabledservices = readScopes(json_decode($oauth->scopes));
+$enabledservices = readScopes(json_decode($tokenstorage->scopes));
 $availableservices = array_diff(readScopes(json_decode($conf->global->ZF_OAUTH2_SCOPES)), $enabledservices);
 
 // Verify if the user's got an access token
-if ($client && is_a($oauth->token, 'Token')) {
+if ($client && is_a($tokenstorage->token, '\zenfusion\oauth\Token')) {
     try {
-        $client->setAccessToken($oauth->token->getTokenBundle());
+        $client->setAccessToken($tokenstorage->token->getTokenBundle());
     } catch (Google_Auth_Exception $e) {
         $token_good = false;
     }
