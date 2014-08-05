@@ -173,15 +173,23 @@ echo '<table class="border">
 <table>
 <br>';
 echo $langs->trans("Instructions2");
+echo zfInitCopyToClipboardButton();
 echo '<form>',
     '<fieldset>',
-    '<legend>', $langs->trans('RedirectURL'), '</legend>',
-    ' <input type="text" disabled="disabled" name="callback_url" size="80" value="' . $callback_url . '">',
-    zfCopyToClipboardButton($callback_url),
+    '<legend>', $langs->trans('JavascriptOrigin'), '</legend>',
+    '<input type="text" disabled="disabled" name="javascript_origin" size="80" value="' . $javascript_origin . '">',
+    zfCopyToClipboardButton($javascript_origin, 'javascript_origin'),
     '</fieldset>',
     '</form>',
     '<br>';
-// FIXME: display javascript_origin
+echo '<form>',
+    '<fieldset>',
+    '<legend>', $langs->trans('RedirectURL'), '</legend>',
+    '<input type="text" disabled="disabled" name="callback_url" size="80" value="' . $callback_url . '">',
+    zfCopyToClipboardButton($callback_url, 'callback_url'),
+    '</fieldset>',
+    '</form>',
+    '<br>';
 echo $langs->trans("Instructions3");
 echo '<form enctype="multipart/form-data" method="POST" action="', $_SERVER['PHP_SELF'], '">',
     '<fieldset>',

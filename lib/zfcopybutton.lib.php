@@ -18,6 +18,22 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+/**
+ * Loads scripts for copy to clipboard
+ * @return string HTML scripts
+ */
+function zfInitCopyToClipboardButton()
+{
+    $zeroclipboard_path = dol_buildpath('/zenfusionoauth/lib/zeroclipboard/dist/', 2);
+
+    return '
+        <script type="text/javascript" src="' . $zeroclipboard_path . 'ZeroClipboard.js"></script>
+        <script type="text/javascript">
+            ZeroClipboard.config( {
+                swfPath: "' . $zeroclipboard_path . 'ZeroClipboard.swf"
+            } );
+        </script>';
+}
 
 /**
  * Button to copy text to clipboard
@@ -32,7 +48,6 @@ function zfCopyToClipboardButton($text, $id = 'copy-button', $title = 'CopyToCli
 {
     global $langs;
 
-    $zeroclipboard_path = dol_buildpath('/zenfusionoauth/lib/zeroclipboard/dist/', 2);
     return '
         <button
             type="button"
@@ -42,16 +57,11 @@ function zfCopyToClipboardButton($text, $id = 'copy-button', $title = 'CopyToCli
         <img src="' . dol_buildpath('/zenfusionoauth/img/', 2) . 'copy.png">'
         . '&nbsp;' . $langs->trans($title)
         . '</button>
-        <script src="' . $zeroclipboard_path . 'ZeroClipboard.js"></script>
         <script type="text/javascript">
-            ZeroClipboard.config( {
-                swfPath: "' . $zeroclipboard_path . 'ZeroClipboard.swf"
-            } );
+            var client'.$id.' = new ZeroClipboard( document.getElementById("' . $id . '") );
 
-            var client = new ZeroClipboard( document.getElementById("' . $id . '") );
-
-            client.on( "ready", function( readyEvent ) {
-                client.on( "aftercopy", function( event ) {
+            client'.$id.'.on( "ready", function( event ) {
+                client'.$id.'.on( "aftercopy", function( event ) {
                     $.jnotify(
                         \'' . $langs->trans('CopiedToClipboard') . '\',
                         \'3000\',
