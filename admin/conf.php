@@ -48,6 +48,8 @@ $mesg = ""; // User message
 // Oauth2 params
 $client_id = '';
 $client_secret = '';
+$callback_url = dol_buildpath('/zenfusionoauth/oauth2callback.php', 2);
+$javascript_origin = dol_buildpath('', 2);
 
 $langs->load('zenfusionoauth@zenfusionoauth');
 $langs->load('admin');
@@ -68,7 +70,12 @@ $error = 0; // Error counter
 if ($action == 'upload') {
     $file = file_get_contents($_FILES['jsonConfig']['tmp_name']);
     $params = json_decode($file, true);
-    if ($params === null) {
+    // TODO: write a file verification function to have better error messages for each case
+    if (
+        $params === null ||
+        ! in_array($callback_url, $params['web']['redirect_uris']) ||
+        ! in_array($javascript_origin, $params['web']['javascript_origins'])
+    ) {
         $error++;
     } else {
         $client_id = $params['web']['client_id'];
@@ -166,7 +173,6 @@ echo '<table class="border">
 <table>
 <br>';
 echo $langs->trans("Instructions2");
-$callback_url = dol_buildpath('/zenfusionoauth/oauth2callback.php', 2);
 echo '<form>',
     '<fieldset>',
     '<legend>', $langs->trans('RedirectURL'), '</legend>',
@@ -175,6 +181,7 @@ echo '<form>',
     '</fieldset>',
     '</form>',
     '<br>';
+// FIXME: display javascript_origin
 echo $langs->trans("Instructions3");
 echo '<form enctype="multipart/form-data" method="POST" action="', $_SERVER['PHP_SELF'], '">',
     '<fieldset>',
