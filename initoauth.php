@@ -303,8 +303,7 @@ if (!$lock) {
             '<table class="border" width="100%">',
             '<tr><td colspan="2" align="center">',
             '<input class="button" type="submit" value="', $langs->trans("DeleteToken"), '"></tr>';
-        }
-        if (isValidEmail($doluser->email)
+        } elseif (isValidEmail($doluser->email)
             && ($availableservices)
             && $conf->global->ZF_OAUTH2_CLIENT_ID
             && ($user->rights->zenfusionoauth->use || $user->admin)
@@ -315,6 +314,8 @@ if (!$lock) {
             '<table class="border" width="100%">',
             '<tr><td colspan="2" align="center">',
             '<input class="button" type="submit" value="', $langs->trans("RequestToken"), '"></tr>';
+        } else {
+            $mesg = '<font class="warning">' . $langs->trans("InvalidConfiguration") . '</font>';
         }
     } else {
         // We have errors

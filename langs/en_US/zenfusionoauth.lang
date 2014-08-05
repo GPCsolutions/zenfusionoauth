@@ -45,7 +45,7 @@ DeleteToken=Disable
 Retry=Retry
 ## Messages
 NoEmail=Unspecified email address
-Oauth_error=Error please contact your system administrator
+InvalidConfiguration=Your configuration is invalid<br>Please contact your system administrator
 OperationSuccessful=Operation successful
 OperationFailed=Operation failed
 # Box
