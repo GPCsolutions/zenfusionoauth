@@ -65,7 +65,7 @@ class modZenFusionOAuth extends DolibarrModules
         $this->family = "other";
         $this->name = preg_replace('/^mod/i', '', get_class($this));
         $this->description = "Oauth authentification for Google APIs";
-        $this->version = '2.0.0';
+        $this->version = '2.0.1';
         $this->const_name = 'MAIN_MODULE_' . strtoupper($this->name);
         $this->special = 1;
         $this->picto = 'oauth@zenfusionoauth';
