@@ -162,8 +162,10 @@ llxHeader("", $tabname);
 // Token status for the form
 $token_good = true;
 // Services for the form
-
-$enabledservices = readScopes(json_decode($tokenstorage->scopes));
+$enabledservices = array();
+if ($tokenstorage->token->getTokenBundle()) {
+    $enabledservices = readScopes(json_decode($tokenstorage->scopes));
+}
 $availableservices = array_diff(readScopes(json_decode($conf->global->ZF_OAUTH2_SCOPES)), $enabledservices);
 
 // Verify if the user's got an access token
