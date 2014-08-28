@@ -45,7 +45,7 @@ RequestToken=Enable
 DeleteToken=Disable
 Retry=Retry
 ## Messages
-NoEmail=Unspecified email address
+NoEmail=Please fill your Google email address in your user card
 InvalidConfiguration=Your configuration is invalid<br>Please contact your system administrator
 OperationSuccessful=Operation successful
 OperationFailed=Operation failed

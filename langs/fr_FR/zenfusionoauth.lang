@@ -45,7 +45,7 @@ RequestToken=Activer
 DeleteToken=Désactiver
 Retry=Réessayer
 ## Messages
-NoEmail=Addresse email non renseignée
+NoEmail=Veuillez renseigner votre adresse email Google dans votre fiche utilisateur
 InvalidConfiguration=Votre configuration est invalide<br>Veuillez contacter votre administrateur système
 OperationSuccessful=Opération réussie
 OperationFailed=L'opération a échoué
