@@ -65,7 +65,7 @@ $langs->load('zenfusionoauth@zenfusionoauth');
 $langs->load('admin');
 $langs->load('users');
 
-// Defini si peux lire/modifier permisssions
+// Access rights
 $canreaduser = ($user->admin || $user->rights->zenfusionoauth->use);
 
 $id = GETPOST('id', 'int');
@@ -102,7 +102,12 @@ $doluser = new User($db);
 $doluser->fetch($id);
 // Create an object to use llx_zenfusion_oauth table
 $tokenstorage = new TokenStorage($db);
-$tokenstorage->fetch($id);
+$tokenloaded = $tokenstorage->fetch($id);
+// Cleanup bad tokens
+if ($tokenloaded && is_null($tokenstorage->oauth_id)) {
+	$tokenstorage->delete($id);
+	$tokenloaded = false;
+}
 // Google API client
 try {
     $client = new Oauth2Client();
@@ -163,7 +168,8 @@ llxHeader("", $tabname);
 $token_good = true;
 // Services for the form
 $enabledservices = array();
-if ($tokenstorage->token->getTokenBundle()) {
+if ($tokenloaded) {
+	$tokenstorage->token->getTokenBundle();
     $enabledservices = readScopes(json_decode($tokenstorage->scopes));
 }
 $availableservices = array_diff(readScopes(json_decode($conf->global->ZF_OAUTH2_SCOPES)), $enabledservices);
@@ -194,7 +200,8 @@ $title = $langs->trans("User");
 
 dol_fiche_head($head, strtolower($tabname), $title, 0, 'user');
 
-$lock = false; // Lock page if required informations are missing
+// Lock page if required informations are missing
+$lock = false;
 
 if (!isValidEmail($doluser->email)) {
     $lock = true;
