@@ -346,7 +346,7 @@ class TokenStorage
     public function search($email, $oauth_id)
     {
         $sql = 'select rowid from ' . MAIN_DB_PREFIX . 'zenfusion_oauth ';
-        $sql .= 'where email="' . $email . '" and oauth_id="' . $oauth_id . '"';
+        $sql .= 'where email="' . $this->db->escape($email) . '" and oauth_id="' . $this->db->escape($oauth_id) . '"';
         $resql = $this->db->query($sql);
         if ($resql && $this->db->num_rows($resql) > 0) {
             $obj = $this->db->fetch_object($resql);
@@ -374,7 +374,7 @@ class TokenStorage
         $sql = 'SELECT rowid, token, email, scopes ';
         $sql .= 'FROM ' . MAIN_DB_PREFIX . 'zenfusion_oauth';
         if ($filter) {
-            $sql .= ' WHERE ' . $filter;
+            $sql .= ' WHERE ' . $db->escape($filter);
         }
         $resql = $db->query($sql);
         if ($resql) {
