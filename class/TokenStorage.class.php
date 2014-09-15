@@ -223,7 +223,7 @@ class TokenStorage
      *
      * @param int $id id object
      *
-     * @return int <0 if KO, >0 if OK
+     * @return int <0 if KO, 0 if no data,  >0 if OK
      */
     public function fetch($id)
     {
@@ -245,9 +245,11 @@ class TokenStorage
                 $this->scopes = $obj->scopes;
                 $this->email = $obj->email;
                 $this->oauth_id = $obj->oauth_id;
+            } else {
+                $this->db->free($resql);
+                return 0;
             }
             $this->db->free($resql);
-
             return 1;
         } else {
             $this->error = "Error " . $this->db->lasterror();
