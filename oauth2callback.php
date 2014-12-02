@@ -87,6 +87,7 @@ if (!$res) {
 
 require_once DOL_DOCUMENT_ROOT . '/user/class/user.class.php';
 require_once DOL_DOCUMENT_ROOT . '/core/lib/usergroups.lib.php';
+require_once DOL_DOCUMENT_ROOT . '/core/lib/admin.lib.php';
 require_once './class/TokenStorage.class.php';
 require_once './class/Oauth2Client.class.php';
 require_once './lib/scopes.lib.php';
@@ -95,6 +96,7 @@ require_once './inc/oauth.inc.php';
 global $db, $langs, $user;
 
 $mesg = ""; // User message
+$dolibarr_version = versiondolibarrarray();
 
 $langs->load('zenfusionoauth@zenfusionoauth');
 $langs->load('admin');
@@ -162,7 +164,9 @@ if ((!$state || !$code || !$user->rights->zenfusionoauth->use) && !$user->admin)
                 $ok = true;
             }
         } else {
-            if (DOL_VERSION >= '3.3') {
+            if (($dolibarr_version[0] == 3 && $dolibarr_version[1] >= 7) || $dolibarr_version[0] > 3) { // DOL_VERSION >= 3.7
+                setEventMessages($langs->trans('NotSameEmail'),'' ,'errors');
+            } elseif ($dolibarr_version[0] == 3 && $dolibarr_version[1] >= 3) { // DOL_VERSION >= 3.3
                 setEventMessage($langs->trans('NotSameEmail'), 'errors');
             } else {
                 $mesg = '&mesg=' . urlencode(

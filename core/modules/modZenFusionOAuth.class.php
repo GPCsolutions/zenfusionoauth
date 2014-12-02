@@ -154,7 +154,10 @@ class modZenFusionOAuth extends DolibarrModules
     {
         global $langs;
 
+        require_once DOL_DOCUMENT_ROOT . '/core/lib/admin.lib.php';
+
         $msg = ""; // User message
+        $dolibarr_version = versiondolibarrarray();
 
         $sql = array();
         $this->load_tables();
@@ -164,7 +167,9 @@ class modZenFusionOAuth extends DolibarrModules
         } else {
             $langs->load('zenfusionoauth@zenfusionoauth');
             $mesg = $langs->trans("MissingCURL");
-            if (DOL_VERSION >= '3.3') {
+            if (($dolibarr_version[0] == 3 && $dolibarr_version[1] >= 7) || $dolibarr_version[0] > 3) { // DOL_VERSION >= 3.7
+                setEventMessages($mesg, '', 'errors');
+            } elseif ($dolibarr_version[0] == 3 && $dolibarr_version[1] >= 3) { // DOL_VERSION >= 3.3
                 setEventMessage($mesg, 'errors');
             } else {
                 $mesg = urlencode($mesg);
