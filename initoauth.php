@@ -206,20 +206,20 @@ $lock = false;
 if (!isValidEmail($doluser->email)) {
     $lock = true;
     $langs->load("errors");
-    $mesg = '<font class="error">' . $langs->trans("ErrorBadEMail", $doluser->email) . '</font>';
+    $mesg = '<div class="error">' . $langs->trans("ErrorBadEMail", $doluser->email) . '</div>';
 }
 // Verify that the user's email adress exists
 if (empty($doluser->email)) {
     $lock = true;
-    $mesg = '<font class="error">' . $langs->trans("NoEmail") . '</font>';
+    $mesg = '<div class="error">' . $langs->trans("NoEmail") . '</div>';
 }
 // Check if there is a scope
 if (!$availableservices && !$enabledservices) {
-    $mesg = '<font class="error">' . $langs->trans("NoScope") . '</font>';
+    $mesg = '<div class="error">' . $langs->trans("NoScope") . '</div>';
 }
 if (!$client || !$conf->global->ZF_OAUTH2_CLIENT_ID) {
     $lock = true;
-    $mesg = '<font class="error">' . $langs->trans("NotConfigured") . '</font>';
+    $mesg = '<div class="error">' . $langs->trans("NotConfigured") . '</div>';
 }
 
 /*
@@ -298,7 +298,7 @@ echo '</td>',
 '</table>';
 
 if (GETPOST('ok', 'int') > 0) {
-    $mesg = '<font class="ok">' . $langs->trans("OperationSuccessful") . '</font>';
+    $mesg = '<div class="ok">' . $langs->trans("OperationSuccessful") . '</div>';
 } elseif (isset($_GET['ok']) && GETPOST('ok', 'int') == 0) {
     $retry = true;
 }
@@ -327,12 +327,12 @@ if (!$lock) {
             '<tr><td colspan="2" align="center">',
             '<input class="button" type="submit" value="', $langs->trans("RequestToken"), '"></tr>';
         } else {
-            $mesg = '<font class="warning">' . $langs->trans("InvalidConfiguration") . '</font>';
+            $mesg = '<div class="warning">' . $langs->trans("InvalidConfiguration") . '</div>';
         }
     } else {
         // We have errors
         $langs->load("errors");
-        $mesg = '<font class="error">' . $langs->trans("OperationFailed") . '</font>';
+        $mesg = '<div class="error">' . $langs->trans("OperationFailed") . '</div>';
         echo '<input type="hidden" name="action" value="request">',
         '<input type="hidden" name="id" value="', $id, '">',
         '<table class="border" width="100%">',

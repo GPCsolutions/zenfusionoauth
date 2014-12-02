@@ -82,7 +82,7 @@ if ($action == 'upload') {
         $client_secret = $params['web']['client_secret'];
     }
     if ($error) {
-        $mesg = '<font class="error">' . $langs->trans("BadFile") . '</font>';
+        $mesg = '<div class="error">' . $langs->trans("BadFile") . '</div>';
     }
 }
 
@@ -119,12 +119,12 @@ if (($action == 'upload' || $action == 'update') && !$error) {
     }
     if (!$error) {
         $db->commit();
-        $mesg = '<font class="ok">' . $langs->trans("Saved") . '</font>';
+        $mesg = '<div class="ok">' . $langs->trans("Saved") . '</div>';
     } else {
         $db->rollback();
-        $mesg = '<font class="error">'
+        $mesg = '<div class="error">'
             . $langs->trans("UnexpectedError")
-            . '</font>';
+            . '</div>';
     }
 }
 
