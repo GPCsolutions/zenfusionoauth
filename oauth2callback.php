@@ -167,6 +167,7 @@ if ((!$state || !$code || !$user->rights->zenfusionoauth->use) && !$user->admin)
             if (($dolibarr_version[0] == 3 && $dolibarr_version[1] >= 7) || $dolibarr_version[0] > 3) { // DOL_VERSION >= 3.7
                 setEventMessages($langs->trans('NotSameEmail'),'' ,'errors');
             } elseif ($dolibarr_version[0] == 3 && $dolibarr_version[1] >= 3) { // DOL_VERSION >= 3.3
+                /** @noinspection PhpDeprecationInspection */
                 setEventMessage($langs->trans('NotSameEmail'), 'errors');
             } else {
                 $mesg = '&mesg=' . urlencode(

@@ -231,11 +231,13 @@ if (!$client || !$conf->global->ZF_OAUTH2_CLIENT_ID) {
 if ($doluser->lastname) {
     $lastname = $doluser->lastname;
 } else {
+    /** @noinspection PhpUndefinedFieldInspection */
     $lastname = $doluser->nom;
 }
 if ($doluser->firstname) {
     $firstname = $doluser->firstname;
 } else {
+    /** @noinspection PhpUndefinedFieldInspection */
     $firstname = $doluser->prenom;
 }
 

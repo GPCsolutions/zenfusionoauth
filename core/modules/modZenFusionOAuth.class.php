@@ -170,6 +170,7 @@ class modZenFusionOAuth extends DolibarrModules
             if (($dolibarr_version[0] == 3 && $dolibarr_version[1] >= 7) || $dolibarr_version[0] > 3) { // DOL_VERSION >= 3.7
                 setEventMessages($mesg, '', 'errors');
             } elseif ($dolibarr_version[0] == 3 && $dolibarr_version[1] >= 3) { // DOL_VERSION >= 3.3
+                /** @noinspection PhpDeprecationInspection */
                 setEventMessage($mesg, 'errors');
             } else {
                 $mesg = urlencode($mesg);
