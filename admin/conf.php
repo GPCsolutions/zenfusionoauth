@@ -49,7 +49,7 @@ $mesg = ""; // User message
 $client_id = '';
 $client_secret = '';
 $callback_url = dol_buildpath('/zenfusionoauth/oauth2callback.php', 2);
-$javascript_origin = dol_buildpath('', 2);
+$javascript_origin = rtrim(dol_buildpath('', 2), '/');
 
 $langs->load('zenfusionoauth@zenfusionoauth');
 $langs->load('admin');
