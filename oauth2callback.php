@@ -121,8 +121,8 @@ if ((!$state || !$code || !$user->rights->zenfusionoauth->use) && !$user->admin)
     // Load current user's informations
     $doluser->fetch($state);
     // Create an object to use llx_zenfusion_oauth table
-    $oauth = new TokenStorage($db);
-    $oauth->fetch($state);
+    $tokenstorage = new TokenStorage($db);
+    $tokenstorage->fetch($state);
     // Google API client
     try {
         $client = new Oauth2Client();
@@ -130,7 +130,7 @@ if ((!$state || !$code || !$user->rights->zenfusionoauth->use) && !$user->admin)
         // Ignore
     }
     if ($callback_error) {
-        $oauth->delete($state);
+        $tokenstorage->delete($state);
         header(
             'refresh:0;url=' . dol_buildpath(
                 '/zenfusionoauth/initoauth.php',
@@ -149,17 +149,17 @@ if ((!$state || !$code || !$user->rights->zenfusionoauth->use) && !$user->admin)
         $token = $client->getAccessToken();
         // Save the access token into database
         dol_syslog($script_file . " CREATE", LOG_DEBUG);
-        $oauth->setTokenFromBundle($token);
-        $oauth->oauth_id = null;
-        $access_token = $oauth->token->getAccessToken();
-        $info = getRequest('https://www.googleapis.com/oauth2/v1/userinfo?access_token=' . $access_token, $client);
+        $tokenstorage->setTokenFromBundle($token);
+        $tokenstorage->oauth_id = null;
+        $access_token = $tokenstorage->token->getAccessToken();
+        $info = getRequest(GOOGLE_TOKEN_INFO . $access_token, $client);
         $info = json_decode($info);
-        $oauth->oauth_id = $info->id;
+        $tokenstorage->oauth_id = $info->user_id;
         $ok = false;
         if ($info->verified_email && $info->email == $doluser->email) {
-            $db_id = $oauth->update($doluser);
+            $db_id = $tokenstorage->update($doluser);
             if ($db_id < 0) {
-                dol_print_error($db, $oauth->error);
+                dol_print_error($db, $tokenstorage->error);
             } else {
                 $ok = true;
             }
@@ -175,7 +175,7 @@ if ((!$state || !$code || !$user->rights->zenfusionoauth->use) && !$user->admin)
                     $langs->trans('NotSameEmail') . '</div>'
                 );
             }
-            $oauth->delete($state);
+            $tokenstorage->delete($state);
         }
         // Refresh the page to prevent multiple insertions
         header(
