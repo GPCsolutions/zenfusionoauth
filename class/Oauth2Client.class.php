@@ -85,11 +85,7 @@ class Oauth2Client extends Google_Client
         $url = parent::createAuthUrl();
 
         if ($email) {
-            // Hack to have the email pre-populated
-            // TODO: move url and parameters to an include
-            $url = 'https://accounts.google.com/ServiceLogin'
-                . '?service=lso&ltmpl=popup&Email=' . $email
-                . '&continue=' . urlencode($url);
+            $url .= '&login_hint=' . $email;
         }
 
         return $url;
