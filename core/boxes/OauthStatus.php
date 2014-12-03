@@ -164,7 +164,7 @@ class OauthStatus extends ModeleBoxes
                             'url' => dol_buildpath(
                                 '/zenfusionoauth/initoauth.php',
                                 1
-                            ) . '?id=' . $objp->userid . '&action=request'
+                            ) . '?id=' . $objp->userid
 
                         );
                     }
