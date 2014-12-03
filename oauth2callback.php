@@ -38,9 +38,9 @@ use \zenfusion\oauth\TokenStorage;
  * @param string $uri
  * @param Oauth2Client $client
  *
- * @return string $gmail
+ * @return string|null Server reply
  */
-// FIXME: Factorize with request.lib.php
+// FIXME: Factorize with requests.lib.php
 function getRequest($uri, $client)
 {
     $get = new Google_Http_Request($uri, 'GET');
@@ -59,7 +59,7 @@ function getRequest($uri, $client)
             && $val->getResponseHttpCode() != 200
             && $val->getResponseHttpCode() != 404
         ) {
-            //FIXME use a library to handle these errors separetely
+            // FIXME: use a library to handle these errors separetely
 
             $_SESSION['warning'] = 'UnknownHTTPError';
 
@@ -68,7 +68,6 @@ function getRequest($uri, $client)
     }
     $rep = $val->getResponseBody();
     // FIXME: validate response, it might not be what we expect
-    //$gmail = simplexml_load_string($rep);
     return $rep;
 }
 
