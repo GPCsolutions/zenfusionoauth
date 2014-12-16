@@ -229,13 +229,13 @@ if (!$client || !$conf->global->ZF_OAUTH2_CLIENT_ID) {
 
 // user->nom and user->prenom are deprecated and won't be supported in the future
 // test to insure compatibility
-if ($doluser->lastname) {
+if (isset($doluser->lastname)) {
     $lastname = $doluser->lastname;
 } else {
     /** @noinspection PhpUndefinedFieldInspection */
     $lastname = $doluser->nom;
 }
-if ($doluser->firstname) {
+if (isset($doluser->firstname)) {
     $firstname = $doluser->firstname;
 } else {
     /** @noinspection PhpUndefinedFieldInspection */
