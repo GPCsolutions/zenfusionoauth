@@ -1,8 +1,8 @@
 <?php
 /*
- * ZenFusion OAuth - A Google Oauth authorization module for Dolibarr
+ * ZenFusion OAuth - A Google OAuth authentication module for Dolibarr
  * Copyright (C) 2011 Sebastien Bodrero <sbodrero@gpcsolutions.fr>
- * Copyright (C) 2011-2013 Raphaël Doursenaud <rdoursenaud@gpcsolutions.fr>
+ * Copyright (C) 2011-2014 Raphaël Doursenaud <rdoursenaud@gpcsolutions.fr>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -160,7 +160,7 @@ echo '<ul>',
 'Trademark Pending',
 '</li>',
 '<li>GPC.solutions logo<br>',
-'&copy;2010-2013 GPC.solutions',
+'&copy;2010-2014 GPC.solutions',
 '</li>',
 '</ul>';
 llxFooter();

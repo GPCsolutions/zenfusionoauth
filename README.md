@@ -1,7 +1,7 @@
 ZenFusion Oauth
 ===============
 
-This module provides Google APIs OAuth 2 client capabilities to Dolibarr.
+This module provides Google APIs OAuth 2 authentication client capabilities to Dolibarr.
 
 It is designed to be used with other ZenFusion modules.
 

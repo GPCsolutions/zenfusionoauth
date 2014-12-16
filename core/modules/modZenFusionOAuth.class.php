@@ -1,6 +1,6 @@
 <?php
 /*
- * ZenFusion OAuth - A Google Oauth authorization module for Dolibarr
+ * ZenFusion OAuth - A Google OAuth authentication module for Dolibarr
  * Copyright (C) 2011 Sebastien Bodrero <sbodrero@gpcsolutions.fr>
  * Copyright (C) 2011-2014 Raphaël Doursenaud <rdoursenaud@gpcsolutions.fr>
  * Copyright (C) 2012 Cédric Salvador <csalvador@gpcsolutions.fr>
@@ -23,12 +23,12 @@
  * \defgroup zenfusionoauth Module Zenfusion OAuth
  * Zenfusion Oauth module for Dolibarr
  *
- * Manages the Oauth authentication process for Google contact API.
+ * Manages the OAuth 2 authentication process for Google APIs.
  *
  * Helps obtaining and managing user tokens through a panel on
  * each user's card.
  *
- * Allows using Oauth for Google contacts API accesses.
+ * Allows using OAuth 2 for Google APIs accesses.
  *
  */
 
@@ -67,8 +67,8 @@ class modZenFusionOAuth extends DolibarrModules
         $this->rights_class = 'zenfusionoauth';
         $this->family = "other";
         $this->name = preg_replace('/^mod/i', '', get_class($this));
-        $this->description = "Oauth authentification for Google APIs";
-        $this->version = '3.0.0-alpha';
+        $this->description = "OAuth 2 authentication for Google APIs";
+        $this->version = '3.0.0';
         $this->const_name = 'MAIN_MODULE_' . strtoupper($this->name);
         $this->special = 1;
         $this->picto = 'oauth@zenfusionoauth';

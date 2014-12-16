@@ -1,7 +1,7 @@
 {
     "name": "gpcsolutions/zenfusionoauth",
     "type": "dolibarr-module",
-    "description": "A Google OAuth module for dolibarr",
+    "description": "A Google OAuth authentication module for Dolibarr",
     "keywords": ["dolibarr","google", "oauth"],
     "homepage": "http://modules.gpcsolutions.fr/zenfusion-oauth",
     "license": "GPL-3.0+",
