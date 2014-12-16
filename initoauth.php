@@ -215,6 +215,7 @@ if (empty($doluser->email)) {
 }
 // Check if there is a scope
 if (!$availableservices && !$enabledservices) {
+    $lock = true;
     $mesg = '<div class="error">' . $langs->trans("NoScope") . '</div>';
 }
 if (!$client || !$conf->global->ZF_OAUTH2_CLIENT_ID) {
