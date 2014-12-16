@@ -1,6 +1,6 @@
 <?php
 /*
- * ZenFusion OAuth - A Google Oauth authorization module for Dolibarr
+ * ZenFusion OAuth - A Google OAuth authentication module for Dolibarr
  * Copyright (C) 2011 Sebastien Bodrero <sbodrero@gpcsolutions.fr>
  * Copyright (C) 2011-2012 Raphaël Doursenaud <rdoursenaud@gpcsolutions.fr>
  *

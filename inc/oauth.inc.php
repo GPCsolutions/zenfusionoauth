@@ -1,8 +1,8 @@
 <?php
 /*
- * ZenFusion OAuth - A Google Oauth authorization module for Dolibarr
+ * ZenFusion OAuth - A Google OAuth authentication module for Dolibarr
  * Copyright (C) 2011 Sebastien Bodrero <sbodrero@gpcsolutions.fr>
- * Copyright (C) 2011-2012 Raphaël Doursenaud <rdoursenaud@gpcsolutions.fr>
+ * Copyright (C) 2011-2014 Raphaël Doursenaud <rdoursenaud@gpcsolutions.fr>
  * Copyright (C) 2013 Cédric Salvador <csalvador@gpcsolutions.fr>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -18,6 +18,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 /**
  * \file inc/oauth.inc.php
  * Oauth constants
@@ -52,7 +53,7 @@ define('GOOGLE_CONTACTS_GROUPS_URI', GOOGLE_CONTACTS_SCOPE . '/groups');
  * Google contacts batch feed URI
  */
 define(
-'GOOGLE_CONTACTS_BATCH_URI',
+    'GOOGLE_CONTACTS_BATCH_URI',
     GOOGLE_CONTACTS_URI . '/default/' . GOOGLE_PROJECTION . '/batch'
 );
 /**
@@ -68,6 +69,6 @@ define('GOOGLE_DRIVE_SCOPE', 'https://www.googleapis.com/auth/drive');
  * Token info URI
  */
 define(
-'GOOGLE_TOKEN_INFO',
-'https://www.googleapis.com/oauth2/v1/tokeninfo?access_token='
+    'GOOGLE_TOKEN_INFO',
+    'https://www.googleapis.com/oauth2/v1/tokeninfo?access_token='
 );

@@ -1,6 +1,6 @@
 <?php
 /*
- * ZenFusion OAuth - A Google Oauth authorization module for Dolibarr
+ * ZenFusion OAuth - A Google OAuth authentication module for Dolibarr
  * Copyright (C) 2011 Sebastien Bodrero <sbodrero@gpcsolutions.fr>
  * Copyright (C) 2011-2014 Raphaël Doursenaud <rdoursenaud@gpcsolutions.fr>
  *
@@ -25,8 +25,11 @@
  *  \authors Sebastien Bodrero <sbodrero@gpcsolutions.fr>
  *  \authors Raphaël Doursenaud <rdoursenaud@gpcsolutions.fr>
  */
+
 require_once DOL_DOCUMENT_ROOT . '/core/boxes/modules_boxes.php';
-dol_include_once('/zenfusionoauth/class/Zenfusion_Oauth2Client.class.php');
+dol_include_once('/zenfusionoauth/class/Oauth2Client.class.php');
+
+use \zenfusion\oauth\Oauth2Client;
 
 /**
  * \class OauthStatus
@@ -36,7 +39,7 @@ class OauthStatus extends ModeleBoxes
 {
 
     public $boxcode = 'Tokenstatus'; ///< Box Codename
-    public $boximg = 'object_user'; ///< Box img
+    public $boximg = 'oauth@zenfusionoauth'; ///< Box img
     public $boxlabel; ///< Box name
     public $depends = array(); /// Box dependencies
     public $db; ///< Database handler
@@ -66,6 +69,10 @@ class OauthStatus extends ModeleBoxes
     public function loadBox($max = 0)
     {
         global $user, $langs, $db, $conf;
+        require_once DOL_DOCUMENT_ROOT . '/core/lib/admin.lib.php';
+
+        $dolibarr_version = versiondolibarrarray();
+
         if ($user->rights->zenfusionoauth->use || $user->admin) {
             $langs->load('zenfusionoauth@zenfusionoauth');
 
@@ -74,11 +81,11 @@ class OauthStatus extends ModeleBoxes
             $this->info_box_head = array(
                 'text' => $langs->trans("TokenStatus", $max)
             );
-            //we want compatibility with Dolibarr 3.3 and >3.4
-            if (DOL_VERSION < '3.4') {
-                $name = 'u.name';
-            } else {
+            // Dolibarr compat
+            if (($dolibarr_version[0] == 3 && $dolibarr_version[1] >= 4) || $dolibarr_version[0] > 3) { // DOL_VERSION >= 3.4
                 $name = 'u.lastname';
+            } else {
+                $name = 'u.name';
             }
             $sql = 'SELECT u.rowid AS userid, u.firstname, u.email,';
             $sql .= ' g.rowid, g.token';
@@ -117,10 +124,17 @@ class OauthStatus extends ModeleBoxes
                     } else {
                         $objname = $objp->lastname;
                     }
+
+                    // fiche.php is renamed card.php in 3.7
+                    if (($dolibarr_version[0] == 3 && $dolibarr_version[1] >= 7) || $dolibarr_version[0] > 3) { // DOL_VERSION >= 3.7
+                        $url = DOL_URL_ROOT . 'user/card.php?id=' . $objp->userid;
+                    } else {
+                        $url = DOL_URL_ROOT . 'user/fiche.php?id=' . $objp->userid;
+                    }
                     $this->info_box_contents[$i][1] = array(
                         'td' => 'align="left" ',
                         'text' => $objp->firstname . " " . $objname,
-                        'url' => DOL_URL_ROOT . 'user/fiche.php?id=' . $objp->userid
+                        'url' => $url
                     );
 
                     $token = $objp->token;
@@ -137,9 +151,9 @@ class OauthStatus extends ModeleBoxes
                                 'td' => 'align="left"',
                                 'text' => $langs->trans("Error") . ": " . $e->getMessage(),
                                 'url' => dol_buildpath(
-                                        '/zenfusionoauth/initoauth.php',
-                                        1
-                                    ) . '?id=' . $objp->userid . '&action=delete_token'
+                                    '/zenfusionoauth/initoauth.php',
+                                    1
+                                ) . '?id=' . $objp->userid . '&action=delete_token'
                             );
                         }
                     } else {
@@ -148,9 +162,9 @@ class OauthStatus extends ModeleBoxes
                             'td' => 'align="left"',
                             'text' => $langs->trans("NoToken"),
                             'url' => dol_buildpath(
-                                    '/zenfusionoauth/initoauth.php',
-                                    1
-                                ) . '?id=' . $objp->userid . '&action=request'
+                                '/zenfusionoauth/initoauth.php',
+                                1
+                            ) . '?id=' . $objp->userid
 
                         );
                     }

@@ -4,13 +4,14 @@ CHARSET=UTF-8
 Module105001Name=ZenFusion OAuth
 Module105001Desc=Oauth2 authentification for Google APIs
 # Admin
-Config=Configuration
+Config=Setup
 Support=Support
 About=About
 # Config
 GoogleApiConfig=Google API configuration
 ImportFrom=Import from
 ManualConfiguration=Manual configuration
+JavascriptOrigin=Javascript origin
 RedirectURL=Redirect URL
 JSONConfigFile=JSON configuration file
 ClientId=Client ID
@@ -20,8 +21,8 @@ Saved=Saved
 BadFile=Bad file
 UnexpectedError=Unexpected error
 Instructions1=To allow Dolibarr to communicate with Google, you need to register in the <a href="https://console.developers.google.com" target="_blank">Google Developers Console</a>.<br>Log in with your Google Account.<br>Create a new project.<br>Pick a project name (i.e. Dolibarr).<br>Any project ID will do.<br>Create the project.<br>Use "Enable an API" from the dashboard or the "API & AUTH", "APIs" menu.<br>Enable the APIs needed for your modules:
-Instructions2=Go to "APIS & AUTH, "Credentials".<br>Create a new Client ID with the following parameters:<ul><li>Application type: Web application</li><li>Authorized Javascript origins: your Dolibarr URL</li><li>Authorized redirect URI: Copy-paste the following Redirect URL:</li></ul>
-Instructions3=Download JSON from the newly created Client ID and upload it using the following form:
+Instructions2=Go to "APIS & AUTH, "Credentials".<br>Create a new Client ID with the following parameters:<ul><li>APPLICATION TYPE: Web application</li><li>AUTHORIZED JAVASCRIPT ORIGINS: copy/paste the Javascript origin below</li><li>AUTHORIZED REDIRECT URI: copy/paste the Redirect URL below</li></ul>
+Instructions3=Download JSON <b>from the newly created "Client ID for web application"</b> and upload it using the form below.
 Instructions4=Congratulations, you just allowed Dolibarr to communicate with Google.<br>Now each user needs to authorize its Google Account to communicate with Dolibarr.<br>Tell them to go to their user\'s card Google tab, click on "Enable" and follow the instructions.
 # About
 Version=Version
@@ -44,7 +45,7 @@ RequestToken=Enable
 DeleteToken=Disable
 Retry=Retry
 ## Messages
-NoEmail=Unspecified email address
+NoEmail=Please fill your Google email address in your user card
 InvalidConfiguration=Your configuration is invalid<br>Please contact your system administrator
 OperationSuccessful=Operation successful
 OperationFailed=Operation failed

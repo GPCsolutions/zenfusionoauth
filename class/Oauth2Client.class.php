@@ -1,6 +1,6 @@
 <?php
 /*
- * ZenFusion OAuth - A Google Oauth authorization module for Dolibarr
+ * ZenFusion OAuth - A Google OAuth authentication module for Dolibarr
  * Copyright (C) 2012-2014 Raphaël Doursenaud <rdoursenaud@gpcsolutions.fr>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -17,25 +17,22 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 /**
- * \file class/Zenfusion_Oauth2Client.class.php
+ * \file class/Oauth2Client.class.php
  * Oauth2 client for Zenfusion
  *
  * \ingroup zenfusionoauth
  * \authors Raphaël Doursenaud <rdoursenaud@gpcsolutions.fr>
  */
 
+namespace zenfusion\oauth;
+
+use \Google_Client;
+
 set_include_path(dol_buildpath('/zenfusionoauth/lib/google-api-php-client/src'));
 dol_include_once('/zenfusionoauth/lib/google-api-php-client/src/Google/Client.php');
 dol_include_once('/zenfusionoauth/lib/google-api-php-client/src/Google/Auth/Exception.php');
 dol_include_once('/zenfusionoauth/inc/oauth.inc.php');
-
-/**
- * \class Oauth2Exception
- * Exception for Oauth2Client
- */
-class Oauth2Exception extends Exception
-{
-}
+require_once('Oauth2Exception.class.php');
 
 /**
  * \class Oauth2Client
@@ -88,11 +85,7 @@ class Oauth2Client extends Google_Client
         $url = parent::createAuthUrl();
 
         if ($email) {
-            // Hack to have the email pre-populated
-            // TODO: move url and parameters to an include
-            $url = 'https://accounts.google.com/ServiceLogin'
-                . '?service=lso&ltmpl=popup&Email=' . $email
-                . '&continue=' . urlencode($url);
+            $url .= '&login_hint=' . $email;
         }
 
         return $url;

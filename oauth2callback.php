@@ -1,7 +1,6 @@
 <?php
-
 /*
- * ZenFusion OAuth - A Google Oauth authorization module for Dolibarr
+ * ZenFusion OAuth - A Google OAuth authentication module for Dolibarr
  * Copyright (C) 2011-2014 Raphaël Doursenaud <rdoursenaud@gpcsolutions.fr>
  * Copyright (C) 2012-2013 Cédric Salvador <csalvador@gpcsolutions.fr>
  *
@@ -18,6 +17,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 /**
  * \file callback.php
  * Callback page for OAuth
@@ -26,6 +26,9 @@
  * \authors Raphaël Doursenaud <rdoursenaud@gpcsolutions.fr>
  * \authors Cédric Salvador <csalvador@gpcsolutions.fr>
  */
+use \zenfusion\oauth\Oauth2Client;
+use \zenfusion\oauth\Oauth2Exception;
+use \zenfusion\oauth\TokenStorage;
 
 /**
  *
@@ -34,9 +37,9 @@
  * @param string $uri
  * @param Oauth2Client $client
  *
- * @return string $gmail
+ * @return string|null Server reply
  */
-// FIXME: Factorize with request.lib.php
+// FIXME: Factorize with requests.lib.php
 function getRequest($uri, $client)
 {
     $get = new Google_Http_Request($uri, 'GET');
@@ -55,7 +58,7 @@ function getRequest($uri, $client)
             && $val->getResponseHttpCode() != 200
             && $val->getResponseHttpCode() != 404
         ) {
-            //FIXME use a library to handle these errors separetely
+            // FIXME: use a library to handle these errors separetely
 
             $_SESSION['warning'] = 'UnknownHTTPError';
 
@@ -64,7 +67,6 @@ function getRequest($uri, $client)
     }
     $rep = $val->getResponseBody();
     // FIXME: validate response, it might not be what we expect
-    //$gmail = simplexml_load_string($rep);
     return $rep;
 }
 
@@ -83,14 +85,16 @@ if (!$res) {
 
 require_once DOL_DOCUMENT_ROOT . '/user/class/user.class.php';
 require_once DOL_DOCUMENT_ROOT . '/core/lib/usergroups.lib.php';
-require_once './class/ZenFusionOAuth.class.php';
-require_once './class/Zenfusion_Oauth2Client.class.php';
+require_once DOL_DOCUMENT_ROOT . '/core/lib/admin.lib.php';
+require_once './class/TokenStorage.class.php';
+require_once './class/Oauth2Client.class.php';
 require_once './lib/scopes.lib.php';
 require_once './inc/oauth.inc.php';
 
 global $db, $langs, $user;
 
 $mesg = ""; // User message
+$dolibarr_version = versiondolibarrarray();
 
 $langs->load('zenfusionoauth@zenfusionoauth');
 $langs->load('admin');
@@ -115,8 +119,8 @@ if ((!$state || !$code || !$user->rights->zenfusionoauth->use) && !$user->admin)
     // Load current user's informations
     $doluser->fetch($state);
     // Create an object to use llx_zenfusion_oauth table
-    $oauth = new ZenFusionOAuth($db);
-    $oauth->fetch($state);
+    $tokenstorage = new TokenStorage($db);
+    $tokenstorage->fetch($state);
     // Google API client
     try {
         $client = new Oauth2Client();
@@ -124,7 +128,7 @@ if ((!$state || !$code || !$user->rights->zenfusionoauth->use) && !$user->admin)
         // Ignore
     }
     if ($callback_error) {
-        $oauth->delete($state);
+        $tokenstorage->delete($state);
         header(
             'refresh:0;url=' . dol_buildpath(
                 '/zenfusionoauth/initoauth.php',
@@ -143,30 +147,33 @@ if ((!$state || !$code || !$user->rights->zenfusionoauth->use) && !$user->admin)
         $token = $client->getAccessToken();
         // Save the access token into database
         dol_syslog($script_file . " CREATE", LOG_DEBUG);
-        $oauth->token = $token;
-        $oauth->oauth_id = null;
-        $access_token = json_decode($token)->access_token;
-        $info = getRequest('https://www.googleapis.com/oauth2/v1/userinfo?access_token=' . $access_token, $client);
+        $tokenstorage->setTokenFromBundle($token);
+        $tokenstorage->oauth_id = null;
+        $access_token = $tokenstorage->token->getAccessToken();
+        $info = getRequest(GOOGLE_TOKEN_INFO . $access_token, $client);
         $info = json_decode($info);
-        $oauth->oauth_id = $info->id;
+        $tokenstorage->oauth_id = $info->user_id;
         $ok = false;
         if ($info->verified_email && $info->email == $doluser->email) {
-            $db_id = $oauth->update($doluser);
+            $db_id = $tokenstorage->update($doluser);
             if ($db_id < 0) {
-                dol_print_error($db, $oauth->error);
+                dol_print_error($db, $tokenstorage->error);
             } else {
                 $ok = true;
             }
         } else {
-            if (DOL_VERSION >= '3.3') {
+            if (($dolibarr_version[0] == 3 && $dolibarr_version[1] >= 7) || $dolibarr_version[0] > 3) { // DOL_VERSION >= 3.7
+                setEventMessages($langs->trans('NotSameEmail'),'' ,'errors');
+            } elseif ($dolibarr_version[0] == 3 && $dolibarr_version[1] >= 3) { // DOL_VERSION >= 3.3
+                /** @noinspection PhpDeprecationInspection */
                 setEventMessage($langs->trans('NotSameEmail'), 'errors');
             } else {
                 $mesg = '&mesg=' . urlencode(
-                        '<font class="error">' .
-                        $langs->trans('NotSameEmail') . '</font>'
-                    );
+                    '<div class="error">' .
+                    $langs->trans('NotSameEmail') . '</div>'
+                );
             }
-            $oauth->delete($state);
+            $tokenstorage->delete($state);
         }
         // Refresh the page to prevent multiple insertions
         header(

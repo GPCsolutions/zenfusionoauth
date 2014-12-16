@@ -1,6 +1,6 @@
 <?php
 /*
- * ZenFusion OAuth - A Google Oauth authorization module for Dolibarr
+ * ZenFusion OAuth - A Google OAuth authentication module for Dolibarr
  * Copyright (C) 2011 Sebastien Bodrero <sbodrero@gpcsolutions.fr>
  * Copyright (C) 2011-2014 Raphaël Doursenaud <rdoursenaud@gpcsolutions.fr>
  * Copyright (C) 2012-2013 Cédric Salvador <csalvador@gpcsolutions.fr>
@@ -18,6 +18,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 /**
  * \file initoauth.php
  * User card setup tab
@@ -50,10 +51,13 @@ if (!$res) {
 
 require_once DOL_DOCUMENT_ROOT . '/user/class/user.class.php';
 require_once DOL_DOCUMENT_ROOT . '/core/lib/usergroups.lib.php';
-require_once './class/ZenFusionOAuth.class.php';
-require_once './class/Zenfusion_Oauth2Client.class.php';
+require_once './class/TokenStorage.class.php';
+require_once './class/Oauth2Client.class.php';
 require_once './lib/scopes.lib.php';
 require_once './inc/oauth.inc.php';
+
+use \zenfusion\oauth\TokenStorage;
+use \zenfusion\oauth\Oauth2Client;
 
 global $db, $conf, $user, $langs;
 
@@ -61,7 +65,7 @@ $langs->load('zenfusionoauth@zenfusionoauth');
 $langs->load('admin');
 $langs->load('users');
 
-// Defini si peux lire/modifier permisssions
+// Access rights
 $canreaduser = ($user->admin || $user->rights->zenfusionoauth->use);
 
 $id = GETPOST('id', 'int');
@@ -97,12 +101,16 @@ $doluser = new User($db);
 // Load current user's informations
 $doluser->fetch($id);
 // Create an object to use llx_zenfusion_oauth table
-$oauth = new ZenFusionOAuth($db);
-$oauth->fetch($id);
+$tokenstorage = new TokenStorage($db);
+$tokenloaded = $tokenstorage->fetch($id);
+// Cleanup bad tokens
+if ($tokenloaded && is_null($tokenstorage->oauth_id)) {
+	$tokenstorage->delete($id);
+	$tokenloaded = false;
+}
 // Google API client
 try {
     $client = new Oauth2Client();
-
 } catch (Google_Auth_Exception $e) {
     // Ignore
 }
@@ -110,18 +118,16 @@ try {
 // Actions
 switch ($action) {
     case 'delete_token':
-        // Get token from database
-        $token = json_decode($oauth->token);
         try {
-            $client->revokeToken($token->{'refresh_token'});
+            $client->revokeToken($tokenstorage->token->getRefreshToken());
         } catch (Google_Auth_Exception $e) {
             dol_syslog("Delete token " . $e->getMessage());
             // TODO: print message and user panel URL to manually revoke access
         }
         // Delete token in database
-        $result = $oauth->delete($id);
+        $result = $tokenstorage->delete($id);
         if ($result < 0) {
-            dol_print_error($db, $oauth->error);
+            dol_print_error($db, $tokenstorage->error);
         }
         header(
             'refresh:0;url=' . dol_buildpath(
@@ -133,14 +139,14 @@ switch ($action) {
         break;
     case 'request':
         // Save the current user to the state
-        $oauth->delete($id);
-        $oauth->id = $id;
-        $oauth->scopes = json_encode($client->getScopes());
-        $oauth->email = $doluser->email;
-        $oauth->oauth_id = '';
-        $req = $oauth->create($doluser);
+        $tokenstorage->delete($id);
+        $tokenstorage->id = $id;
+        $tokenstorage->scopes = json_encode($client->getScopes());
+        $tokenstorage->email = $doluser->email;
+        $tokenstorage->oauth_id = '';
+        $req = $tokenstorage->create($doluser);
         if ($req < 0) {
-            dol_print_error($db, $oauth->error);
+            dol_print_error($db, $tokenstorage->error);
         }
         $client->setState($id);
         $cback = dol_buildpath('/zenfusionoauth/oauth2callback.php', 2);
@@ -161,14 +167,17 @@ llxHeader("", $tabname);
 // Token status for the form
 $token_good = true;
 // Services for the form
-
-$enabledservices = readScopes(json_decode($oauth->scopes));
+$enabledservices = array();
+if ($tokenloaded) {
+	$tokenstorage->token->getTokenBundle();
+    $enabledservices = readScopes(json_decode($tokenstorage->scopes));
+}
 $availableservices = array_diff(readScopes(json_decode($conf->global->ZF_OAUTH2_SCOPES)), $enabledservices);
 
 // Verify if the user's got an access token
-if ($client) {
+if ($client && is_a($tokenstorage->token, '\zenfusion\oauth\Token')) {
     try {
-        $client->setAccessToken($oauth->token);
+        $client->setAccessToken($tokenstorage->token->getTokenBundle());
     } catch (Google_Auth_Exception $e) {
         $token_good = false;
     }
@@ -191,25 +200,27 @@ $title = $langs->trans("User");
 
 dol_fiche_head($head, strtolower($tabname), $title, 0, 'user');
 
-$lock = false; // Lock page if required informations are missing
+// Lock page if required informations are missing
+$lock = false;
 
 if (!isValidEmail($doluser->email)) {
     $lock = true;
     $langs->load("errors");
-    $mesg = '<font class="error">' . $langs->trans("ErrorBadEMail", $doluser->email) . '</font>';
+    $mesg = '<div class="error">' . $langs->trans("ErrorBadEMail", $doluser->email) . '</div>';
 }
 // Verify that the user's email adress exists
 if (empty($doluser->email)) {
     $lock = true;
-    $mesg = '<font class="error">' . $langs->trans("NoEmail") . '</font>';
+    $mesg = '<div class="error">' . $langs->trans("NoEmail") . '</div>';
 }
 // Check if there is a scope
 if (!$availableservices && !$enabledservices) {
-    $mesg = '<font class="error">' . $langs->trans("NoScope") . '</font>';
+    $lock = true;
+    $mesg = '<div class="error">' . $langs->trans("NoScope") . '</div>';
 }
 if (!$client || !$conf->global->ZF_OAUTH2_CLIENT_ID) {
     $lock = true;
-    $mesg = '<font class="error">' . $langs->trans("NotConfigured") . '</font>';
+    $mesg = '<div class="error">' . $langs->trans("NotConfigured") . '</div>';
 }
 
 /*
@@ -218,14 +229,16 @@ if (!$client || !$conf->global->ZF_OAUTH2_CLIENT_ID) {
 
 // user->nom and user->prenom are deprecated and won't be supported in the future
 // test to insure compatibility
-if ($doluser->lastname) {
+if (isset($doluser->lastname)) {
     $lastname = $doluser->lastname;
 } else {
+    /** @noinspection PhpUndefinedFieldInspection */
     $lastname = $doluser->nom;
 }
-if ($doluser->firstname) {
+if (isset($doluser->firstname)) {
     $firstname = $doluser->firstname;
 } else {
+    /** @noinspection PhpUndefinedFieldInspection */
     $firstname = $doluser->prenom;
 }
 
@@ -286,7 +299,7 @@ echo '</td>',
 '</table>';
 
 if (GETPOST('ok', 'int') > 0) {
-    $mesg = '<font class="ok">' . $langs->trans("OperationSuccessful") . '</font>';
+    $mesg = '<div class="ok">' . $langs->trans("OperationSuccessful") . '</div>';
 } elseif (isset($_GET['ok']) && GETPOST('ok', 'int') == 0) {
     $retry = true;
 }
@@ -315,12 +328,12 @@ if (!$lock) {
             '<tr><td colspan="2" align="center">',
             '<input class="button" type="submit" value="', $langs->trans("RequestToken"), '"></tr>';
         } else {
-            $mesg = '<font class="warning">' . $langs->trans("InvalidConfiguration") . '</font>';
+            $mesg = '<div class="warning">' . $langs->trans("InvalidConfiguration") . '</div>';
         }
     } else {
         // We have errors
         $langs->load("errors");
-        $mesg = '<font class="error">' . $langs->trans("OperationFailed") . '</font>';
+        $mesg = '<div class="error">' . $langs->trans("OperationFailed") . '</div>';
         echo '<input type="hidden" name="action" value="request">',
         '<input type="hidden" name="id" value="', $id, '">',
         '<table class="border" width="100%">',

@@ -1,8 +1,8 @@
 <?php
 /*
- * ZenFusion OAuth - A Google Oauth authorization module for Dolibarr
+ * ZenFusion OAuth - A Google OAuth authentication module for Dolibarr
  * Copyright (C) 2011 Sebastien Bodrero <sbodrero@gpcsolutions.fr>
- * Copyright (C) 2011-2013 Raphaël Doursenaud <rdoursenaud@gpcsolutions.fr>
+ * Copyright (C) 2011-2014 Raphaël Doursenaud <rdoursenaud@gpcsolutions.fr>
  * Copyright (C) 2012 Cédric Salvador <csalvador@gpcsolutions.fr>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -49,7 +49,7 @@ $mesg = ""; // User message
 $client_id = '';
 $client_secret = '';
 $callback_url = dol_buildpath('/zenfusionoauth/oauth2callback.php', 2);
-$javascript_origin = dol_buildpath('', 2);
+$javascript_origin = rtrim(dol_buildpath('', 2), '/');
 
 $langs->load('zenfusionoauth@zenfusionoauth');
 $langs->load('admin');
@@ -82,7 +82,7 @@ if ($action == 'upload') {
         $client_secret = $params['web']['client_secret'];
     }
     if ($error) {
-        $mesg = '<font class="error">' . $langs->trans("BadFile") . '</font>';
+        $mesg = '<div class="error">' . $langs->trans("BadFile") . '</div>';
     }
 }
 
@@ -119,12 +119,12 @@ if (($action == 'upload' || $action == 'update') && !$error) {
     }
     if (!$error) {
         $db->commit();
-        $mesg = '<font class="ok">' . $langs->trans("Saved") . '</font>';
+        $mesg = '<div class="ok">' . $langs->trans("Saved") . '</div>';
     } else {
         $db->rollback();
-        $mesg = '<font class="error">'
+        $mesg = '<div class="error">'
             . $langs->trans("UnexpectedError")
-            . '</font>';
+            . '</div>';
     }
 }
 
@@ -173,15 +173,23 @@ echo '<table class="border">
 <table>
 <br>';
 echo $langs->trans("Instructions2");
+echo zfInitCopyToClipboardButton();
 echo '<form>',
     '<fieldset>',
-    '<legend>', $langs->trans('RedirectURL'), '</legend>',
-    ' <input type="text" disabled="disabled" name="callback_url" size="80" value="' . $callback_url . '">',
-    zfCopyToClipboardButton($callback_url),
+    '<legend>', $langs->trans('JavascriptOrigin'), '</legend>',
+    '<input type="text" disabled="disabled" name="javascript_origin" size="80" value="' . $javascript_origin . '">',
+    zfCopyToClipboardButton($javascript_origin, 'javascript_origin'),
     '</fieldset>',
     '</form>',
     '<br>';
-// FIXME: display javascript_origin
+echo '<form>',
+    '<fieldset>',
+    '<legend>', $langs->trans('RedirectURL'), '</legend>',
+    '<input type="text" disabled="disabled" name="callback_url" size="80" value="' . $callback_url . '">',
+    zfCopyToClipboardButton($callback_url, 'callback_url'),
+    '</fieldset>',
+    '</form>',
+    '<br>';
 echo $langs->trans("Instructions3");
 echo '<form enctype="multipart/form-data" method="POST" action="', $_SERVER['PHP_SELF'], '">',
     '<fieldset>',
@@ -214,7 +222,7 @@ echo '<form method="POST" action="', $_SERVER['PHP_SELF'], '">',
     '<input type="text" name="clientId" value="', $conf->global->ZF_OAUTH2_CLIENT_ID, '" required="required">',
     '</td>',
     '<td>',
-    '<input type="password" name="clientSecret" value="', $conf->global->ZF_OAUTH2_CLIENT_SECRET . '" required="required">',
+    '<input type="password" name="clientSecret" value="', $conf->global->ZF_OAUTH2_CLIENT_SECRET, '" required="required">',
     '</td>',
     '<td>',
     '<input type="submit" class="button" value ="', $langs->trans("Save"), '">',

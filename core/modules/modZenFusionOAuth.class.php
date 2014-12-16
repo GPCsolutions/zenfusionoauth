@@ -1,6 +1,6 @@
 <?php
 /*
- * ZenFusion OAuth - A Google Oauth authorization module for Dolibarr
+ * ZenFusion OAuth - A Google OAuth authentication module for Dolibarr
  * Copyright (C) 2011 Sebastien Bodrero <sbodrero@gpcsolutions.fr>
  * Copyright (C) 2011-2014 Raphaël Doursenaud <rdoursenaud@gpcsolutions.fr>
  * Copyright (C) 2012 Cédric Salvador <csalvador@gpcsolutions.fr>
@@ -18,18 +18,20 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 /**
  * \defgroup zenfusionoauth Module Zenfusion OAuth
  * Zenfusion Oauth module for Dolibarr
  *
- * Manages the Oauth authentication process for Google contact API.
+ * Manages the OAuth 2 authentication process for Google APIs.
  *
  * Helps obtaining and managing user tokens through a panel on
  * each user's card.
  *
- * Allows using Oauth for Google contacts API accesses.
+ * Allows using OAuth 2 for Google APIs accesses.
  *
  */
+
 /**
  * \file core/modules/modZenFusionOAuth.class.php
  * Zenfusion OAuth module
@@ -41,6 +43,7 @@
  * \authors Raphaël Doursenaud <rdoursenaud@gpcsolutions.fr>
  * \authors Cédric Salvador <csalvador@gpcsolutions.fr>
  */
+
 require_once DOL_DOCUMENT_ROOT . '/core/modules/DolibarrModules.class.php';
 dol_include_once('/zenfusionoauth/inc/oauth.inc.php');
 dol_include_once('/zenfusionoauth/lib/scopes.lib.php');
@@ -64,8 +67,8 @@ class modZenFusionOAuth extends DolibarrModules
         $this->rights_class = 'zenfusionoauth';
         $this->family = "other";
         $this->name = preg_replace('/^mod/i', '', get_class($this));
-        $this->description = "Oauth authentification for Google APIs";
-        $this->version = '2.0.1';
+        $this->description = "OAuth 2 authentication for Google APIs";
+        $this->version = '3.0.0';
         $this->const_name = 'MAIN_MODULE_' . strtoupper($this->name);
         $this->special = 1;
         $this->picto = 'oauth@zenfusionoauth';
@@ -151,7 +154,10 @@ class modZenFusionOAuth extends DolibarrModules
     {
         global $langs;
 
+        require_once DOL_DOCUMENT_ROOT . '/core/lib/admin.lib.php';
+
         $msg = ""; // User message
+        $dolibarr_version = versiondolibarrarray();
 
         $sql = array();
         $this->load_tables();
@@ -161,14 +167,16 @@ class modZenFusionOAuth extends DolibarrModules
         } else {
             $langs->load('zenfusionoauth@zenfusionoauth');
             $mesg = $langs->trans("MissingCURL");
-            if (DOL_VERSION >= '3.3') {
+            if (($dolibarr_version[0] == 3 && $dolibarr_version[1] >= 7) || $dolibarr_version[0] > 3) { // DOL_VERSION >= 3.7
+                setEventMessages($mesg, '', 'errors');
+            } elseif ($dolibarr_version[0] == 3 && $dolibarr_version[1] >= 3) { // DOL_VERSION >= 3.3
+                /** @noinspection PhpDeprecationInspection */
                 setEventMessage($mesg, 'errors');
             } else {
                 $mesg = urlencode($mesg);
                 $msg = '&mesg=' . $mesg;
             }
             header("Location: modules.php?mode=interfaces" . $msg);
-            exit;
         }
     }
 
