@@ -49,7 +49,21 @@ $mesg = ""; // User message
 $client_id = '';
 $client_secret = '';
 $callback_url = dol_buildpath('/zenfusionoauth/oauth2callback.php', 2);
-$javascript_origin = rtrim(dol_buildpath('', 2), '/');
+
+// Build javascript origin URI
+$javascript_origin = 'http';
+if (array_key_exists('HTTPS', $_SERVER) && $_SERVER['HTTPS'] == 'on') { // HTTPS?
+    $javascript_origin .= 's';
+}
+$javascript_origin .= '://';
+$javascript_origin .= $_SERVER['HTTP_HOST'];
+if (
+    array_key_exists('SERVER_PORT' ,$_SERVER)
+    && $_SERVER['SERVER_PORT'] != 80 // Standard HTTP
+    && $_SERVER['SERVER_PORT'] != 443 // Standard HTTPS
+) { // Non standard port?
+    $javascript_origin .= ':' . $_SERVER['SERVER_PORT'];
+}
 
 $langs->load('zenfusionoauth@zenfusionoauth');
 $langs->load('admin');
