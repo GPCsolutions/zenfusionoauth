@@ -2,7 +2,7 @@
 /*
  * ZenFusion OAuth - A Google OAuth authentication module for Dolibarr
  * Copyright (C) 2011 Sebastien Bodrero <sbodrero@gpcsolutions.fr>
- * Copyright (C) 2011-2014 Raphaël Doursenaud <rdoursenaud@gpcsolutions.fr>
+ * Copyright (C) 2011-2015 Raphaël Doursenaud <rdoursenaud@gpcsolutions.fr>
  * Copyright (C) 2012 Cédric Salvador <csalvador@gpcsolutions.fr>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -165,7 +165,7 @@ dol_fiche_head(
 // Error / confirmation messages
 dol_htmloutput_mesg($mesg);
 
-print_titre($langs->trans("GoogleApiConfig"));
+print_fiche_titre($langs->trans("GoogleApiConfig"));
 
 // Import configuration from google's api console json file
 echo '<p>',
@@ -220,7 +220,7 @@ echo '<form enctype="multipart/form-data" method="POST" action="', $_SERVER['PHP
 echo $langs->trans("Instructions4"),
     '</p>';
 
-print_titre($langs->trans("ManualConfiguration"));
+print_fiche_titre($langs->trans("ManualConfiguration"));
 
 echo '<form method="POST" action="', $_SERVER['PHP_SELF'], '">',
     '<input type="hidden" name="token" value="', $_SESSION['newtoken'], '">',
