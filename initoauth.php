@@ -105,8 +105,8 @@ $tokenstorage = new TokenStorage($db);
 $tokenloaded = $tokenstorage->fetch($id);
 // Cleanup bad tokens
 if ($tokenloaded && is_null($tokenstorage->oauth_id)) {
-	$tokenstorage->delete($id);
-	$tokenloaded = false;
+    $tokenstorage->delete($id);
+    $tokenloaded = false;
 }
 // Google API client
 try {
@@ -169,7 +169,7 @@ $token_good = true;
 // Services for the form
 $enabledservices = array();
 if ($tokenloaded) {
-	$tokenstorage->token->getTokenBundle();
+    $tokenstorage->token->getTokenBundle();
     $enabledservices = readScopes(json_decode($tokenstorage->scopes));
 }
 $availableservices = array_diff(readScopes(json_decode($conf->global->ZF_OAUTH2_SCOPES)), $enabledservices);

@@ -58,7 +58,7 @@ if (array_key_exists('HTTPS', $_SERVER) && $_SERVER['HTTPS'] == 'on') { // HTTPS
 $javascript_origin .= '://';
 $javascript_origin .= $_SERVER['HTTP_HOST'];
 if (
-    array_key_exists('SERVER_PORT' ,$_SERVER)
+    array_key_exists('SERVER_PORT', $_SERVER)
     && $_SERVER['SERVER_PORT'] != 80 // Standard HTTP
     && $_SERVER['SERVER_PORT'] != 443 // Standard HTTPS
 ) { // Non standard port?
