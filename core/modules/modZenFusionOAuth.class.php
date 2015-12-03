@@ -148,9 +148,12 @@ class modZenFusionOAuth extends DolibarrModules
      * (defined in constructor) into Dolibarr database.
      * It also creates data directories.
      *
+     * @param string $options Options when enabling module ('', 'newboxdefonly', 'noboxes')
+     *                        'noboxes' = Do not insert boxes
+     *                        'newboxdefonly' = For boxes, insert def of boxes only and not boxes activation
      * @return int 1 if OK, 0 if KO
      */
-    public function init()
+    public function init($options = '')
     {
         global $langs;
 
@@ -163,7 +166,7 @@ class modZenFusionOAuth extends DolibarrModules
         $this->load_tables();
         if (function_exists('curl_init')) {
             addscope(GOOGLE_USERINFO_EMAIL_SCOPE);
-            $this->_init($sql);
+            $this->_init($sql, $options);
         } else {
             $langs->load('zenfusionoauth@zenfusionoauth');
             $mesg = $langs->trans("MissingCURL");
@@ -200,12 +203,13 @@ class modZenFusionOAuth extends DolibarrModules
      * from Dolibarr database.
      * Data directories are not deleted.
      *
+     * @param string $options Options when enabling module ('', 'noboxes')
      * @return int 1 if OK, 0 if KO
      */
-    public function remove()
+    public function remove($options = '')
     {
         $sql = array();
 
-        return $this->_remove($sql);
+        return $this->_remove($sql, $options);
     }
 }

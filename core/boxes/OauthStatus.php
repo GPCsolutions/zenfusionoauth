@@ -2,7 +2,7 @@
 /*
  * ZenFusion OAuth - A Google OAuth authentication module for Dolibarr
  * Copyright (C) 2011 Sebastien Bodrero <sbodrero@gpcsolutions.fr>
- * Copyright (C) 2011-2014 Raphaël Doursenaud <rdoursenaud@gpcsolutions.fr>
+ * Copyright (C) 2011-2015 Raphaël Doursenaud <rdoursenaud@gpcsolutions.fr>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -195,9 +195,11 @@ class OauthStatus extends ModeleBoxes
     /**
      * Displays the box
      *
+     * @param null $head Unused
+     * @param null $contents Unused
      * @return void
      */
-    public function showBox()
+    public function showBox($head=null, $contents=null)
     {
         parent::showBox($this->info_box_head, $this->info_box_contents);
     }
