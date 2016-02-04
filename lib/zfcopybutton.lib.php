@@ -27,7 +27,7 @@ function zfInitCopyToClipboardButton()
     $zeroclipboard_path = dol_buildpath('/zenfusionoauth/vendor/zeroclipboard/zeroclipboard/dist/', 2);
 
     return '
-        <script type="text/javascript" src="' . $zeroclipboard_path . 'ZeroClipboard.js"></script>
+        <script type="text/javascript" src="' . $zeroclipboard_path . 'ZeroClipboard.min.js"></script>
         <script type="text/javascript">
             ZeroClipboard.config( {
                 swfPath: "' . $zeroclipboard_path . 'ZeroClipboard.swf"
