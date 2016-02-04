@@ -8,3 +8,5 @@ build/*.zip
 # Doxygen Generated Files
 build/html
 build/latex
+# Google Test Secrets
+/secrets
