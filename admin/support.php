@@ -71,4 +71,5 @@ $langs->trans("Support"),
 '</a>',
 '<br>';
 
+dol_fiche_end();
 llxFooter();

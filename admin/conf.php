@@ -184,7 +184,7 @@ echo '<table class="border">
         <td>ZenFusion Drive</td>
         <td>Drive API<br>Google Picker API</td>
     </tr>
-<table>
+</table>
 <br>';
 echo $langs->trans("Instructions2");
 echo zfInitCopyToClipboardButton();
@@ -244,4 +244,5 @@ echo '<form method="POST" action="', $_SERVER['PHP_SELF'], '">',
     '</table>',
     '</form>';
 
+dol_fiche_end();
 llxFooter();

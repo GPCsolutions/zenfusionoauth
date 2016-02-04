@@ -163,4 +163,6 @@ echo '<ul>',
 '&copy;2010-2014 GPC.solutions',
 '</li>',
 '</ul>';
+
+dol_fiche_end();
 llxFooter();
