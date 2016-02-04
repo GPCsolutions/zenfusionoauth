@@ -1,7 +1,7 @@
 <?php
 /*
  * ZenFusion OAuth - A Google OAuth authentication module for Dolibarr
- * Copyright (C) 2012-2014 Raphaël Doursenaud <rdoursenaud@gpcsolutions.fr>
+ * Copyright (C) 2012-2016 Raphaël Doursenaud <rdoursenaud@gpcsolutions.fr>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -28,9 +28,8 @@ namespace zenfusion\oauth;
 
 use \Google_Client;
 
-set_include_path(dol_buildpath('/zenfusionoauth/lib/google-api-php-client/src'));
-dol_include_once('/zenfusionoauth/lib/google-api-php-client/src/Google/Client.php');
-dol_include_once('/zenfusionoauth/lib/google-api-php-client/src/Google/Auth/Exception.php');
+
+require __DIR__ . '/../vendor/autoload.php';
 dol_include_once('/zenfusionoauth/inc/oauth.inc.php');
 require_once('Oauth2Exception.class.php');
 

@@ -1,8 +1,8 @@
 <?php
 /*
  * ZenFusion OAuth - A Google OAuth authentication module for Dolibarr
- * Copyright (C) 2013 Raphaël Doursenaud <rdoursenaud@gpcsolutions.fr>
- * Copyright (C) 2013 Cédric Salvador    <csalvador@gpcsolutions.fr>
+ * Copyright (C) 2013-2016  Raphaël Doursenaud  <rdoursenaud@gpcsolutions.fr>
+ * Copyright (C) 2013       Cédric Salvador     <csalvador@gpcsolutions.fr>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -24,7 +24,7 @@
  */
 function zfInitCopyToClipboardButton()
 {
-    $zeroclipboard_path = dol_buildpath('/zenfusionoauth/lib/zeroclipboard/dist/', 2);
+    $zeroclipboard_path = dol_buildpath('/zenfusionoauth/vendor/zeroclipboard/zeroclipboard/dist/', 2);
 
     return '
         <script type="text/javascript" src="' . $zeroclipboard_path . 'ZeroClipboard.js"></script>
