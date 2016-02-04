@@ -59,7 +59,7 @@ llxHeader();
 $linkback = '<a href="' . DOL_URL_ROOT . '/admin/modules.php">'
     . $langs->trans("BackToModuleList") . '</a>';
 // Folder icon title
-print_fiche_titre("ZenFusion", $linkback, 'setup');
+print load_fiche_titre("ZenFusion", $linkback, 'setup');
 
 $head = zfPrepareHead();
 

@@ -151,7 +151,7 @@ $form = new Form($db);
 $linkback = '<a href="' . DOL_URL_ROOT . '/admin/modules.php">'
     . $langs->trans("BackToModuleList") . '</a>';
 // Folder icon title
-print_fiche_titre("ZenFusion", $linkback, 'setup');
+print load_fiche_titre("ZenFusion", $linkback, 'setup');
 
 $head = zfPrepareHead();
 dol_fiche_head(
@@ -165,7 +165,7 @@ dol_fiche_head(
 // Error / confirmation messages
 dol_htmloutput_mesg($mesg);
 
-print_fiche_titre($langs->trans("GoogleApiConfig"));
+print load_fiche_titre($langs->trans("GoogleApiConfig"));
 
 // Import configuration from google's api console json file
 echo '<p>',
@@ -220,7 +220,7 @@ echo '<form enctype="multipart/form-data" method="POST" action="', $_SERVER['PHP
 echo $langs->trans("Instructions4"),
     '</p>';
 
-print_fiche_titre($langs->trans("ManualConfiguration"));
+print load_fiche_titre($langs->trans("ManualConfiguration"));
 
 echo '<form method="POST" action="', $_SERVER['PHP_SELF'], '">',
     '<input type="hidden" name="token" value="', $_SESSION['newtoken'], '">',
