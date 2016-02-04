@@ -168,8 +168,7 @@ dol_htmloutput_mesg($mesg);
 print load_fiche_titre($langs->trans("GoogleApiConfig"));
 
 // Import configuration from google's api console json file
-echo '<p>',
-$langs->trans("Instructions1");
+echo $langs->trans("Instructions1");
 // TODO: derive table from installed modules
 echo '<table class="border">
     <tr class="liste_titre">
@@ -217,8 +216,7 @@ echo '<form enctype="multipart/form-data" method="POST" action="', $_SERVER['PHP
     '</fieldset>',
     '</form>',
     '<br>';
-echo $langs->trans("Instructions4"),
-    '</p>';
+echo $langs->trans("Instructions4");
 
 print load_fiche_titre($langs->trans("ManualConfiguration"));
 
