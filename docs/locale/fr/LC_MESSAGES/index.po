@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ZenFusion OAuth 3.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-02-05 10:42+0100\n"
+"POT-Creation-Date: 2016-02-05 11:09+0100\n"
 "PO-Revision-Date: 2016-02-05 08:08+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -17,48 +17,69 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 2.2.0\n"
 
-#: ../../index.rst:10
+#: ../../index.rst:30
 msgid "Welcome to ZenFusion OAuth's documentation!"
 msgstr "Bienvenue dans la documentation de ZenFusion OAuth !"
 
-#: ../../index.rst:12
-msgid "Migration to this documentation system is a work in progress."
+#: ../../index.rst:33
+#, fuzzy
+msgid "Migration to this documentation system is still a work in progress."
 msgstr "La migration vers ce système de documentation est en cours."
 
-#: ../../index.rst:14
+#: ../../index.rst:35
 #, fuzzy
 msgid "Please check the current documentation at `modules.gpcsolutions.fr`_."
 msgstr "Merci de consulter la documentation actuelle à modules.gpcsolutions.fr_."
+
+#: ../../index.rst:37
+msgid "`Dolistore`_"
+msgstr ""
+
+#: ../../index.rst:39
+msgid "|release|"
+msgstr ""
+
+#: ../../index.rst:41
+msgid "`GPLv3+`_ ©2011-2016 GPC.solutions"
+msgstr ""
+
+#: ../../index.rst:43
+msgid "contact@gpcsolutions.fr"
+msgstr ""
+
+#: ../../index.rst:45
+msgid "`Raphaël Doursenaud`_"
+msgstr ""
+
+#: ../../index.rst:46
+msgid "Sébastien Bodrero"
+msgstr ""
+
+#: ../../index.rst:47
+msgid "Cédric Salvador"
+msgstr ""
+
+#: ../../index.rst:49 ../../index.rst:51
+msgid "N.A."
+msgstr ""
 
 #: ../../index.rst
 msgid "Todo"
 msgstr "À faire"
 
-#: ../../index.rst:18
+#: ../../index.rst:55
 msgid "Add ZenFusion OAuth logo"
 msgstr "Ajouter le logo ZenFusionOAuth"
 
-#: ../../index.rst:20
-msgid "Add link to dolistore"
-msgstr "Ajouter un lien vers le Dolistore"
+#: ../../index.rst:57
+msgid "Add GPLv3 logo"
+msgstr ""
 
-#: ../../index.rst:22
-msgid "Add developpers"
-msgstr "Ajouter les développeurs"
-
-#: ../../index.rst:24
-msgid "Add contributors"
-msgstr "Ajouter les contributeurs"
-
-#: ../../index.rst:26
-msgid "Add translators"
-msgstr "Ajouter les traducteurs"
-
-#: ../../index.rst:30
+#: ../../index.rst:61
 msgid "This module does nothing on it's own."
 msgstr "Ce module ne fait rien de lui même."
 
-#: ../../index.rst:32
+#: ../../index.rst:63
 msgid ""
 "It is designed to provide authentication services to other ZenFusion "
 "modules like Contacts and Drive."
@@ -66,10 +87,21 @@ msgstr ""
 "Il est conçu pour fournir des services d'authentification aux autres "
 "modules ZenFusion tels que Contacts et Drive."
 
-#: ../../index.rst:34
-msgid "Contents:"
-msgstr "Contenu :"
-
 #~ msgid "Add GFDL footer"
 #~ msgstr "Ajouter un pied de page GFDL"
+
+#~ msgid "Add link to dolistore"
+#~ msgstr "Ajouter un lien vers le Dolistore"
+
+#~ msgid "Add developpers"
+#~ msgstr "Ajouter les développeurs"
+
+#~ msgid "Add contributors"
+#~ msgstr "Ajouter les contributeurs"
+
+#~ msgid "Add translators"
+#~ msgstr "Ajouter les traducteurs"
+
+#~ msgid "Contents:"
+#~ msgstr "Contenu :"
 
