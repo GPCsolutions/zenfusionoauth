@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ZenFusion OAuth 3.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-02-05 08:00+0100\n"
+"POT-Creation-Date: 2016-02-05 09:42+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -22,61 +22,65 @@ msgstr ""
 msgid "Installation guide"
 msgstr ""
 
-#: ../../install.rst:5
+#: ../../install.rst:6
 msgid "Prerequisites"
 msgstr ""
 
-#: ../../install.rst:7
+#: ../../install.rst:8
 msgid "Dolibarr ≥ 3.2"
 msgstr ""
 
-#: ../../install.rst:8
+#: ../../install.rst:9
 msgid "PHP ≥ 5.3"
 msgstr ""
 
-#: ../../install.rst:12
+#: ../../install.rst:13
 msgid "PHP extensions"
 msgstr ""
 
-#: ../../install.rst:10
+#: ../../install.rst:11
 msgid "CURL"
 msgstr ""
 
-#: ../../install.rst:11
+#: ../../install.rst:12
 msgid "JSON"
 msgstr ""
 
-#: ../../install.rst:15
+#: ../../install.rst:16
 msgid "Installation"
 msgstr ""
 
-#: ../../install.rst:18
+#: ../../install.rst:20
 msgid "Recommended: \"custom\" directory"
 msgstr ""
 
-#: ../../install.rst:20
+#: ../../install.rst:22
 msgid "Make sure the custom directory is enabled [#custom]_."
 msgstr ""
 
-#: ../../install.rst:22
+#: ../../install.rst:24
 msgid "Unzip the archive in :file:`htdocs/custom` directory."
 msgstr ""
 
-#: ../../install.rst:26
+#: ../../install.rst:28
 msgid "Legacy: \"htdocs\" directory"
 msgstr ""
 
-#: ../../install.rst:28
+#: ../../install.rst:30
 msgid "Unzip archive in :file:`htdocs/` directory."
 msgstr ""
 
-#: ../../install.rst:32
+#: ../../install.rst:34
 msgid ""
 "Make sure that your webserver's user has read and directory traversal "
 "permissions on the folder and it's content."
 msgstr ""
 
-#: ../../install.rst:36
+#: ../../install.rst:37
+msgid "Footnotes"
+msgstr ""
+
+#: ../../install.rst:38
 msgid ""
 "Edit the file :file:`htdocs/conf/conf.php` and uncomment the lines "
 ":samp:`$dolibarr_main_url_root_alt` and "

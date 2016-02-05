@@ -3,15 +3,15 @@
    You can adapt this file completely to your liking, but it should at least
    contain the root `toctree` directive.
 
+.. _modules.gpcsolutions.fr: http://modules.gpcsolutions.fr
+
+
 Welcome to ZenFusion OAuth's documentation!
 ===========================================
 
-
 Migration to this documentation system is a work in progress.
 
-Please check the current documentation at modules.gpcsolutions.fr_.
-
-.. _modules.gpcsolutions.fr: http://modules.gpcsolutions.fr
+Please check the current documentation at `modules.gpcsolutions.fr`_.
 
 .. todo::
 

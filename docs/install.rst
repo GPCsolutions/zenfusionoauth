@@ -1,18 +1,20 @@
 Installation guide
 ==================
 
+
 Prerequisites
 -------------
 
 - Dolibarr ≥ 3.2
 - PHP ≥ 5.3
 - PHP extensions
-    - CURL
-    - JSON
+    * CURL
+    * JSON
 
 
 Installation
 ------------
+
 
 Recommended: "custom" directory
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
