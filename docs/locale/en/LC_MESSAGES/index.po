@@ -1,0 +1,74 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2016, GPC.solutions
+# This file is distributed under the same license as the ZenFusion OAuth
+# package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2016.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: ZenFusion OAuth 3.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2016-02-05 09:42+0100\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.2.0\n"
+
+#: ../../index.rst:10
+msgid "Welcome to ZenFusion OAuth's documentation!"
+msgstr ""
+
+#: ../../index.rst:12
+msgid "Migration to this documentation system is a work in progress."
+msgstr ""
+
+#: ../../index.rst:14
+msgid "Please check the current documentation at `modules.gpcsolutions.fr`_."
+msgstr ""
+
+#: ../../index.rst
+msgid "Todo"
+msgstr ""
+
+#: ../../index.rst:18
+msgid "Add ZenFusion OAuth logo"
+msgstr ""
+
+#: ../../index.rst:20
+msgid "Add link to dolistore"
+msgstr ""
+
+#: ../../index.rst:22
+msgid "Add developpers"
+msgstr ""
+
+#: ../../index.rst:24
+msgid "Add contributors"
+msgstr ""
+
+#: ../../index.rst:26
+msgid "Add translators"
+msgstr ""
+
+#: ../../index.rst:28
+msgid "Add GFDL footer"
+msgstr ""
+
+#: ../../index.rst:32
+msgid "This module does nothing on it's own."
+msgstr ""
+
+#: ../../index.rst:34
+msgid ""
+"It is designed to provide authentication services to other ZenFusion "
+"modules like Contacts and Drive."
+msgstr ""
+
+#: ../../index.rst:36
+msgid "Contents:"
+msgstr ""
+
