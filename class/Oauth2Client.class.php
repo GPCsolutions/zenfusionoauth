@@ -28,7 +28,6 @@ namespace zenfusion\oauth;
 
 use \Google_Client;
 
-
 require __DIR__ . '/../vendor/autoload.php';
 dol_include_once('/zenfusionoauth/inc/oauth.inc.php');
 require_once('Oauth2Exception.class.php');
