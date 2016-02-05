@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ZenFusion OAuth 3.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-02-05 09:42+0100\n"
+"POT-Creation-Date: 2016-02-05 10:42+0100\n"
 "PO-Revision-Date: 2016-02-05 08:08+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -54,15 +54,11 @@ msgstr "Ajouter les contributeurs"
 msgid "Add translators"
 msgstr "Ajouter les traducteurs"
 
-#: ../../index.rst:28
-msgid "Add GFDL footer"
-msgstr "Ajouter un pied de page GFDL"
-
-#: ../../index.rst:32
+#: ../../index.rst:30
 msgid "This module does nothing on it's own."
 msgstr "Ce module ne fait rien de lui même."
 
-#: ../../index.rst:34
+#: ../../index.rst:32
 msgid ""
 "It is designed to provide authentication services to other ZenFusion "
 "modules like Contacts and Drive."
@@ -70,7 +66,10 @@ msgstr ""
 "Il est conçu pour fournir des services d'authentification aux autres "
 "modules ZenFusion tels que Contacts et Drive."
 
-#: ../../index.rst:36
+#: ../../index.rst:34
 msgid "Contents:"
 msgstr "Contenu :"
+
+#~ msgid "Add GFDL footer"
+#~ msgstr "Ajouter un pied de page GFDL"
 
