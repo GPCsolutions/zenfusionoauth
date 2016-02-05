@@ -25,8 +25,6 @@ Please check the current documentation at `modules.gpcsolutions.fr`_.
 
    Add translators
 
-   Add GFDL footer
-
 .. warning::
 
    This module does nothing on it's own.
