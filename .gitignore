@@ -12,3 +12,7 @@ build/latex
 /secrets
 # Composer
 /vendor
+# Sphinx
+/docs/_build
+# Gettext
+*.mo
