@@ -20,3 +20,8 @@
 *.jpg binary
 *.odt binary
 *.odf binary
+
+# Ignore development files for production
+/build
+/docs
+/dev
