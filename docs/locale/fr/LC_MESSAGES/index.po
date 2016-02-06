@@ -1,33 +1,33 @@
 # SOME DESCRIPTIVE TITLE.
 # Copyright (C) 2016, GPC.solutions
-# This file is distributed under the same license as the ZenFusion OAuth
-# package.
-# FIRST AUTHOR <EMAIL@ADDRESS>, 2016.
-#
+# This file is distributed under the same license as the ZenFusion OAuth package.
+# 
+# Translators:
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2016
+# Raphaël Doursenaud <rdoursenaud@gpcsolutions.fr>, 2016
 msgid ""
 msgstr ""
-"Project-Id-Version: ZenFusion OAuth 3.0\n"
+"Project-Id-Version: ZenFusion OAuth\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-02-05 11:09+0100\n"
-"PO-Revision-Date: 2016-02-05 08:08+0100\n"
-"Last-Translator: \n"
-"Language-Team: \n"
+"POT-Creation-Date: 2016-02-06 07:42+0100\n"
+"PO-Revision-Date: 2016-02-06 06:46+0000\n"
+"Last-Translator: Raphaël Doursenaud <rdoursenaud@gpcsolutions.fr>\n"
+"Language-Team: French (http://www.transifex.com/gpcsolutions/zenfusionoauth/language/fr/)\n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=utf-8\n"
+"Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Generated-By: Babel 2.2.0\n"
+"Language: fr\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
 
 #: ../../index.rst:30
 msgid "Welcome to ZenFusion OAuth's documentation!"
 msgstr "Bienvenue dans la documentation de ZenFusion OAuth !"
 
 #: ../../index.rst:33
-#, fuzzy
 msgid "Migration to this documentation system is still a work in progress."
-msgstr "La migration vers ce système de documentation est en cours."
+msgstr "La migration vers ce système de documentation est encore en cours."
 
 #: ../../index.rst:35
-#, fuzzy
 msgid "Please check the current documentation at `modules.gpcsolutions.fr`_."
 msgstr "Merci de consulter la documentation actuelle à modules.gpcsolutions.fr_."
 
@@ -63,7 +63,7 @@ msgstr ""
 msgid "N.A."
 msgstr ""
 
-#: ../../index.rst
+#: ../../index.rst:0
 msgid "Todo"
 msgstr "À faire"
 
@@ -73,35 +73,23 @@ msgstr "Ajouter le logo ZenFusionOAuth"
 
 #: ../../index.rst:57
 msgid "Add GPLv3 logo"
-msgstr ""
+msgstr "Ajouter le logo GPLv3"
+
+#: ../../index.rst:59
+msgid "Add GFDL logo in footer"
+msgstr "Ajouter le logo GFDL dans le pieds de page"
 
 #: ../../index.rst:61
+msgid ""
+"Add contribution guidelines (code, documentation, translations of both)"
+msgstr "Ajouter le guide de contribution (code, documentation, traduction des deux)"
+
+#: ../../index.rst:65
 msgid "This module does nothing on it's own."
 msgstr "Ce module ne fait rien de lui même."
 
-#: ../../index.rst:63
+#: ../../index.rst:67
 msgid ""
-"It is designed to provide authentication services to other ZenFusion "
-"modules like Contacts and Drive."
-msgstr ""
-"Il est conçu pour fournir des services d'authentification aux autres "
-"modules ZenFusion tels que Contacts et Drive."
-
-#~ msgid "Add GFDL footer"
-#~ msgstr "Ajouter un pied de page GFDL"
-
-#~ msgid "Add link to dolistore"
-#~ msgstr "Ajouter un lien vers le Dolistore"
-
-#~ msgid "Add developpers"
-#~ msgstr "Ajouter les développeurs"
-
-#~ msgid "Add contributors"
-#~ msgstr "Ajouter les contributeurs"
-
-#~ msgid "Add translators"
-#~ msgstr "Ajouter les traducteurs"
-
-#~ msgid "Contents:"
-#~ msgstr "Contenu :"
-
+"It is designed to provide authentication services to other ZenFusion modules"
+" like Contacts and Drive."
+msgstr "Il est conçu pour fournir des services d'authentification aux autres modules ZenFusion tels que Contacts et Drive."
