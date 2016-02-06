@@ -56,6 +56,10 @@ Welcome to ZenFusion OAuth's documentation!
 
    Add GPLv3 logo
 
+   Add GFDL logo in footer
+
+   Add contribution guidelines (code, documentation, translations of both)
+
 .. warning::
 
    This module does nothing on it's own.

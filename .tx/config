@@ -1,9 +1,40 @@
 [main]
 host = https://www.transifex.com
-lang_map = es: es_ES, fr:fr_FR, uz: uz_UZ, vi: vi_VN
+type = PO
 
 [zenfusionoauth.zenfusionoauth]
 file_filter = langs/<lang>/zenfusionoauth.lang
 source_file = langs/en_US/zenfusionoauth.lang
 source_lang = en_US
+lang_map = es: es_ES, fr:fr_FR, uz: uz_UZ, vi: vi_VN
 type = MOZILLAPROPERTIES
+
+[zenfusionoauth.about]
+file_filter = docs/locale/<lang>/LC_MESSAGES/about.po
+source_file = docs/_build/locale/about.pot
+source_lang = C
+
+[zenfusionoauth.install]
+file_filter = docs/locale/<lang>/LC_MESSAGES/install.po
+source_file = docs/_build/locale/install.pot
+source_lang = C
+
+[zenfusionoauth.user]
+file_filter = docs/locale/<lang>/LC_MESSAGES/user.po
+source_file = docs/_build/locale/user.pot
+source_lang = C
+
+[zenfusionoauth.index]
+file_filter = docs/locale/<lang>/LC_MESSAGES/index.po
+source_file = docs/_build/locale/index.pot
+source_lang = C
+
+[zenfusionoauth.admin]
+file_filter = docs/locale/<lang>/LC_MESSAGES/admin.po
+source_file = docs/_build/locale/admin.pot
+source_lang = C
+
+[zenfusionoauth.sphinx]
+file_filter = docs/locale/<lang>/LC_MESSAGES/sphinx.po
+source_file = docs/_build/locale/sphinx.pot
+source_lang = C
