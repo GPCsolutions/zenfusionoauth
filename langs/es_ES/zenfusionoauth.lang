@@ -1,0 +1,65 @@
+# Dolibarr language file - en_US - ZenFusion OAuth
+CHARSET=UTF-8
+# Module
+Module105001Name=ZenFusion OAuth
+Module105001Desc=Oauth2 authentification for Google APIs
+# Admin
+Config=Setup
+Support=Support
+About=About
+# Config
+GoogleApiConfig=Google API configuration
+ImportFrom=Import from
+ManualConfiguration=Manual configuration
+JavascriptOrigin=Javascript origin
+RedirectURL=Redirect URL
+JSONConfigFile=JSON configuration file
+ClientId=Client ID
+ClientSecret=Client Secret
+## Messages
+Saved=Saved
+BadFile=Bad file
+UnexpectedError=Unexpected error
+Instructions1=<p>To allow Dolibarr to communicate with Google, you need to register in the <a href="https://console.developers.google.com" target="_blank">Google Developers Console</a>.<br>Log in with your Google Account.<br>Create a new project.<br>Pick a project name (i.e. Dolibarr).<br>Any project ID will do.<br>Create the project.<br>Use "Enable an API" from the dashboard or the "API & AUTH", "APIs" menu.<br>Enable the APIs needed for your modules:</p>
+Instructions2=<p>Go to "APIS & AUTH, "Credentials".<br>Create a new Client ID with the following parameters:</p><ul><li>APPLICATION TYPE: Web application</li><li>AUTHORIZED JAVASCRIPT ORIGINS: copy/paste the Javascript origin below</li><li>AUTHORIZED REDIRECT URI: copy/paste the Redirect URL below</li></ul>
+Instructions3=<p>Download JSON <b>from the newly created "Client ID for web application"</b> and upload it using the form below.</p>
+Instructions4=<p>Congratulations, you just allowed Dolibarr to communicate with Google.<br>Now each user needs to authorize its Google Account to communicate with Dolibarr.<br>Tell them to go to their user\\'s card Google tab, click on "Enable" and follow the instructions.</p>
+# About
+Version=Version
+Publisher=Publisher
+License=License
+Credits=Credits
+Development=Development
+ProjectManager=project manager
+SoftwareEngineer=software engineer
+Libraries=Libraries
+Contains=Contains:
+Ressources=Resources
+# User card tab
+EnabledServices=Active services
+AvailableServices=Available services
+AccessToken=Services access
+TokenOk=Active
+TokenKo=Inactive
+RequestToken=Enable
+DeleteToken=Disable
+Retry=Retry
+## Messages
+NoEmail=Please fill your Google email address in your user card
+InvalidConfiguration=Your configuration is invalid<br>Please contact your system administrator
+OperationSuccessful=Operation successful
+OperationFailed=Operation failed
+# Box
+TokenStatus=Google Apps communication state
+NoUserFound=No subscribed user
+ReadPermissionNotAllowed=Read permission not allowed
+NoToken=Not connected
+StatusOk=Enabled
+StatusKo=Disabled
+MissingCURL=php-curl is missing
+NoScope=This module can't work on its own. See the list of compatibles modules on zenfusion.fr
+Permission7345701=Use ZenFusion OAuth
+NotSameEmail=The authentified email doesn't match this user's email
+# ZeroClipBoard
+CopyToClipboard=Copy to clipboard
+CopiedToClipboard=Copied to clipboard

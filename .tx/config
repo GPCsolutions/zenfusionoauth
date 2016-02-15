@@ -2,7 +2,7 @@
 host = https://www.transifex.com
 lang_map = es: es_ES, fr:fr_FR, uz: uz_UZ, vi: vi_VN
 
-[zenfusion-oauth.zenfusionoauth]
+[zenfusionoauth.zenfusionoauth]
 file_filter = langs/<lang>/zenfusionoauth.lang
 source_file = langs/en_US/zenfusionoauth.lang
 source_lang = en_US
