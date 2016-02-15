@@ -23,17 +23,10 @@
  * \ingroup zenfusionoauth
  * Module about page
  */
-$res = 0;
-// from standard dolibarr install
-if (!$res && file_exists('../../main.inc.php')) {
-    $res = @include '../../main.inc.php';
-}
-// from custom dolibarr install
-if (!$res && file_exists('../../../main.inc.php')) {
-    $res = @include '../../../main.inc.php';
-}
-if (!$res) {
-    die("Main include failed");
+
+// Load Dolibarr environment
+if (false === (@include '../../main.inc.php')) {  // From htdocs directory
+	require '../../../main.inc.php'; // From "custom" directory
 }
 
 require_once '../core/modules/modZenFusionOAuth.class.php';

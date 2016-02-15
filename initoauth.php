@@ -2,7 +2,7 @@
 /*
  * ZenFusion OAuth - A Google OAuth authentication module for Dolibarr
  * Copyright (C) 2011 Sebastien Bodrero <sbodrero@gpcsolutions.fr>
- * Copyright (C) 2011-2014 Raphaël Doursenaud <rdoursenaud@gpcsolutions.fr>
+ * Copyright (C) 2011-2016 Raphaël Doursenaud <rdoursenaud@gpcsolutions.fr>
  * Copyright (C) 2012-2013 Cédric Salvador <csalvador@gpcsolutions.fr>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -36,17 +36,9 @@
 
 // TODO: allow selecting services permissions
 
-$res = 0;
-// from standard dolibarr install
-if (!$res && file_exists('../main.inc.php')) {
-    $res = @include '../main.inc.php';
-}
-// from custom dolibarr install
-if (!$res && file_exists('../../main.inc.php')) {
-    $res = @include '../../main.inc.php';
-}
-if (!$res) {
-    die("Main include failed");
+// Load Dolibarr environment
+if (false === (@include '../../main.inc.php')) {  // From htdocs directory
+	require '../../../main.inc.php'; // From "custom" directory
 }
 
 require_once DOL_DOCUMENT_ROOT . '/user/class/user.class.php';
