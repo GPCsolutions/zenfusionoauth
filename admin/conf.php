@@ -27,7 +27,7 @@
 
 // Load Dolibarr environment
 if (false === (@include '../../main.inc.php')) {  // From htdocs directory
-	require '../../../main.inc.php'; // From "custom" directory
+    require '../../../main.inc.php'; // From "custom" directory
 }
 
 require_once '../lib/admin.lib.php';
