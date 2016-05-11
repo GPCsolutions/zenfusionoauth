@@ -438,33 +438,34 @@ class TokenStorage
         return false;
     }
 
-	/**
-	 * Retrieve a Dolibarr username from a Google ID
-	 *
-	 * @param DolibDB $db
-	 * @param int $google_id Google ID
-	 * @return bool|TokenStorage
-	 */
-	public static function getGoogleIdUsername($db, $google_id) {
-		$sql = 'SELECT login ';
-		$sql .= 'FROM ' . MAIN_DB_PREFIX . 'user u ';
-		$sql .= 'INNER JOIN ' . MAIN_DB_PREFIX . 'zenfusion_oauth o ';
-		$sql .= 'ON u.rowid = o.rowid ';
-		$sql .= 'WHERE o.oauth_id=' . $db->escape($google_id);
-		$resql = $db->query($sql);
-		if ($resql) {
-			if ($db->num_rows($resql)) {
-				$num = $db->num_rows($resql);
-				if ($num == 1) {
-					$user_infos = $db->fetch_object($resql);
-					return $user_infos->login;
-				}
-				// We didn't get the expected number of results, bail out
-				return false;
-			}
-		}
-		return false;
-	}
+    /**
+     * Retrieve a Dolibarr username from a Google ID
+     *
+     * @param DolibDB $db
+     * @param int $google_id Google ID
+     * @return bool|TokenStorage
+     */
+    public static function getGoogleIdUsername($db, $google_id)
+    {
+        $sql = 'SELECT login ';
+        $sql .= 'FROM ' . MAIN_DB_PREFIX . 'user u ';
+        $sql .= 'INNER JOIN ' . MAIN_DB_PREFIX . 'zenfusion_oauth o ';
+        $sql .= 'ON u.rowid = o.rowid ';
+        $sql .= 'WHERE o.oauth_id=' . $db->escape($google_id);
+        $resql = $db->query($sql);
+        if ($resql) {
+            if ($db->num_rows($resql)) {
+                $num = $db->num_rows($resql);
+                if ($num == 1) {
+                    $user_infos = $db->fetch_object($resql);
+                    return $user_infos->login;
+                }
+                // We didn't get the expected number of results, bail out
+                return false;
+            }
+        }
+        return false;
+    }
 
     /**
      * @param string $scope
