@@ -50,8 +50,7 @@ if (array_key_exists('HTTPS', $_SERVER) && $_SERVER['HTTPS'] == 'on') { // HTTPS
 }
 $javascript_origin .= '://';
 $javascript_origin .= $_SERVER['HTTP_HOST'];
-if (
-    array_key_exists('SERVER_PORT', $_SERVER)
+if (array_key_exists('SERVER_PORT', $_SERVER)
     && $_SERVER['SERVER_PORT'] != 80 // Standard HTTP
     && $_SERVER['SERVER_PORT'] != 443 // Standard HTTPS
 ) { // Non standard port?
@@ -78,10 +77,9 @@ if ($action == 'upload') {
     $file = file_get_contents($_FILES['jsonConfig']['tmp_name']);
     $params = json_decode($file, true);
     // TODO: write a file verification function to have better error messages for each case
-    if (
-        $params === null ||
-        ! in_array($callback_url, $params['web']['redirect_uris']) ||
-        ! in_array($javascript_origin, $params['web']['javascript_origins'])
+    if ($params === null
+        || ! in_array($callback_url, $params['web']['redirect_uris'])
+        || ! in_array($javascript_origin, $params['web']['javascript_origins'])
     ) {
         $error++;
     } else {

@@ -17,6 +17,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+namespace GPCsolutions\ZenFusionOAuth;
 
 /**
  *  \file       core/boxes/OauthStatus.php
@@ -199,7 +200,7 @@ class OauthStatus extends ModeleBoxes
      * @param null $contents Unused
      * @return void
      */
-    public function showBox($head=null, $contents=null)
+    public function showBox($head = null, $contents = null)
     {
         parent::showBox($this->info_box_head, $this->info_box_contents);
     }

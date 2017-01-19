@@ -52,7 +52,9 @@ dol_include_once('/zenfusionoauth/lib/scopes.lib.php');
  * \class modZenFusionOAuth
  * Describes and activates Google contacts OAuth module
  */
+// @codingStandardsIgnoreStart Dolibarr modules classes need to start with a lower case.
 class modZenFusionOAuth extends DolibarrModules
+// @codingStandardsIgnoreEnd
 {
 
     /**
@@ -167,7 +169,7 @@ class modZenFusionOAuth extends DolibarrModules
         $dolibarr_version = versiondolibarrarray();
 
         $sql = array();
-        $this->load_tables();
+        $this->loadTables();
         if (function_exists('curl_init')) {
             addscope(GOOGLE_USERINFO_EMAIL_SCOPE);
             $this->_init($sql, $options);
@@ -196,7 +198,7 @@ class modZenFusionOAuth extends DolibarrModules
      *
      * @return int <=0 if KO, >0 if OK
      */
-    public function load_tables()
+    public function loadTables()
     {
         return $this->_load_tables('/zenfusionoauth/sql/');
     }
