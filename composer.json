@@ -52,6 +52,7 @@
     "git_pre_commit": "@check",
     "git_post_commit": "",
     "git_pre_push": [
+      "@doc_user_i18n",
       "@tx_push"
     ],
     "doc": [
@@ -70,6 +71,7 @@
     "doc_user_html": "cd docs; make html",
     "doc_user_pdf": "cd docs; make xelatex",
     "doc_user_epub": "cd docs; make epub",
+    "doc_user_i18n": "cd docs; make gettext; sphinx-intl update -p _build/local -l en - fr",
     "read_doc_dev": "xdg-open build/html/index.html",
     "read_doc_user": "xdg-open docs/_build/html/index.html"
   }
