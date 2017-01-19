@@ -10,7 +10,7 @@
    install
    admin
    user
-   About <about>
+.. About <about>
 
 
 .. Links
