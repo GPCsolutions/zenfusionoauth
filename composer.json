@@ -15,7 +15,7 @@
   "require": {
     "php": ">=5.3.0",
     "zeroclipboard/zeroclipboard": "^2.2.0",
-    "google/apiclient": "^1.1.7"
+    "google/apiclient": "1.1.7"
   },
   "require-dev": {
     "jakub-onderka/php-parallel-lint": "^0",
