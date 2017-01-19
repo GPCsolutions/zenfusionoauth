@@ -110,12 +110,14 @@ try {
 // Actions
 switch ($action) {
     case 'delete_token':
-        try {
-            $client->revokeToken($tokenstorage->token->getRefreshToken());
-        } catch (Google_Auth_Exception $e) {
-            dol_syslog("Delete token " . $e->getMessage());
-            // TODO: print message and user panel URL to manually revoke access
-            // https://security.google.com/settings/security/permissions
+        if ($tokenloaded) {
+            try {
+                $client->revokeToken($tokenstorage->token->getRefreshToken());
+            } catch (Google_Auth_Exception $e) {
+                dol_syslog("Delete token " . $e->getMessage());
+                // TODO: print message and user panel URL to manually revoke access
+                // https://security.google.com/settings/security/permissions
+            }
         }
         // Delete token in database
         $result = $tokenstorage->delete($id);
