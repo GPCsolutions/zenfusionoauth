@@ -3,16 +3,6 @@
    You can adapt this file completely to your liking, but it should at least
    contain the root `toctree` directive.
 
-.. toctree::
-   :hidden:
-   :maxdepth: 2
-
-   install
-   admin
-   user
-.. About <about>
-
-
 .. Links
 
 .. _modules.gpcsolutions.fr: http://modules.gpcsolutions.fr
@@ -66,3 +56,12 @@ Welcome to ZenFusion OAuth's documentation!
 
    It is designed to provide authentication services to other ZenFusion modules like Contacts and Drive.
 
+
+.. toctree::
+   :hidden:
+   :maxdepth: 2
+
+   install
+   admin
+   user
+.. About <about>
