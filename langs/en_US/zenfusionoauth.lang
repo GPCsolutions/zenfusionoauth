@@ -57,7 +57,7 @@ NoToken=Not connected
 StatusOk=Enabled
 StatusKo=Disabled
 MissingCURL=php-curl is missing
-NoScope=This module can't work on its own. See the list of compatibles modules on zenfusion.fr
+NoScope=This module can't work on its own. See the list of compatibles modules on <a href="http://zenfusion.fr" target="_blank">zenfusion.fr</a>
 Permission7345701=Use ZenFusion OAuth
 NotSameEmail=The authentified email doesn't match this user's email
 # ZeroClipBoard
