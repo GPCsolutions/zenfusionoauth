@@ -53,6 +53,24 @@
     "git_post_commit": "",
     "git_pre_push": [
       "@tx_push"
-    ]
+    ],
+    "doc": [
+      "@doc_dev",
+      "@doc_user"
+    ],
+    "doc_dev": [
+      "@doc_dev_doxygen"
+    ],
+    "doc_dev_doxygen": "cd build/doxygen; doxygen zenfusionoauth.doxyfile",
+    "doc_user": [
+      "@doc_user_html",
+      "@doc_user_pdf",
+      "@doc_user_epub"
+    ],
+    "doc_user_html": "cd docs; make html",
+    "doc_user_pdf": "cd docs; make xelatex",
+    "doc_user_epub": "cd docs; make epub",
+    "read_doc_dev": "xdg-open build/html/index.html",
+    "read_doc_user": "xdg-open docs/_build/html/index.html"
   }
 }
