@@ -2,7 +2,7 @@
 /*
  * ZenFusion OAuth - A Google OAuth authentication module for Dolibarr
  * Copyright (C) 2011 Sebastien Bodrero <sbodrero@gpcsolutions.fr>
- * Copyright (C) 2011-2016 Raphaël Doursenaud <rdoursenaud@gpcsolutions.fr>
+ * Copyright (C) 2011-2017 Raphaël Doursenaud <rdoursenaud@gpcsolutions.fr>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -74,7 +74,7 @@ $langs->Trans('Module105001Desc'),
 '</h3>';
 echo '<em>', $langs->trans("Version"), ' ',
 $module->version, '</em><br>';
-echo '<em>&copy;2011-2016 GPC.solutions<br><em>';
+echo '<em>&copy;2011-2017 GPC.solutions<br><em>';
 echo '<a target="_blank" href="http://www.zenfusion.net/">',
 '<img src="../img/logo_zf.png" alt="Logo ZenFusion"></a>';
 
@@ -105,18 +105,18 @@ echo '</ul>';
 echo '<h4>' . $langs->trans("Libraries") . '</h4>';
 echo '<ul>',
 '<li>',
-'<a href="https://code.google.com/p/google-api-php-client/" target="_blank">',
+'<a href="https://github.com/google/google-api-php-client" target="_blank">',
 'Google APIs Client Library for PHP',
 '</a>',
 '<br>',
-'©2008-2014 Google Inc.',
+'©2008-2016 Google Inc.',
 '<br>',
 'Apache License 2.0',
 '<br>',
 $langs->trans("Contains"),
 '<ul>',
 '<li>',
-'<a href="http://code.google.com/p/diso/" target="_blank">',
+'<a href="https://github.com/diso/diso" target="_blank">',
 'XRDS-Simple library',
 '</a>',
 '<br>',
@@ -129,7 +129,7 @@ $langs->trans("Contains"),
 'ZeroClipboard',
 '</a>',
 '<br>',
-'©2014 Jon Rohan, James M. Greene',
+'©2009-2016 Jon Rohan, James M. Greene',
 '<br>',
 'MIT License',
 '<br>',
@@ -153,7 +153,7 @@ echo '<ul>',
 'Trademark Pending',
 '</li>',
 '<li>GPC.solutions logo<br>',
-'&copy;2010-2014 GPC.solutions',
+'&copy;2010-2017 GPC.solutions',
 '</li>',
 '</ul>';
 

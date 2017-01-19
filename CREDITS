@@ -1,12 +1,12 @@
 Google APIs Client Library for PHP
-(C)2008-2014 Google Inc.
+(C)2008-2016 Google Inc.
 Apache License 2.0
 Contains:
 XRDS-Simple library
 Apache License 2.0
 
 ZeroClipboard
-(C)2014 Jon Rohan, James M. Greene
+(C)2009-2016 Jon Rohan, James M. Greene
 MIT License
 
 OAuth logo
@@ -22,4 +22,4 @@ ZenFusion logo
 Trade Mark Pending
 
 GPC.solutions logo
-(C)2010-2014 GPC.solutions
+(C)2010-2017 GPC.solutions
