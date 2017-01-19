@@ -17,7 +17,6 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-namespace GPCsolutions\ZenFusionOAuth;
 
 /**
  *  \file       core/boxes/OauthStatus.php
@@ -36,7 +35,9 @@ use \zenfusion\oauth\Oauth2Client;
  * \class OauthStatus
  * Display OAuth token status
  */
+// @codingStandardsIgnoreStart Dolibarr can't import namespaced classes (yet).
 class OauthStatus extends ModeleBoxes
+// @codingStandardsIgnoreEnd
 {
 
     public $boxcode = 'Tokenstatus'; ///< Box Codename
