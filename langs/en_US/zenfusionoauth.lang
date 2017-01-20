@@ -18,7 +18,9 @@ ClientId=Client ID
 ClientSecret=Client Secret
 ## Messages
 Saved=Saved
-BadFile=Bad file
+BadOrEmptyFile=Bad or empty file
+WrongOrMissingRedirectURI=The file's redirect URL is missing or does not match "%s"
+WrongOrMissingJSOrigin=The file's JavaScript origin is missing or does not match "%s"
 UnexpectedError=Unexpected error
 Instructions1=<p>To allow Dolibarr to communicate with Google, you need to register in the <a href="https://console.developers.google.com" target="_blank">Google Developers Console</a>.<br>Log in with your Google Account.<br>Create a new project.<br>Pick a project name (i.e. Dolibarr).<br>Any project ID will do.<br>Create the project.<br>Use "Enable an API" from the dashboard or the "API & AUTH", "APIs" menu.<br>Enable the APIs needed for your modules:</p>
 Instructions2=<p>Go to "APIS & AUTH, "Credentials".<br>Create a new Client ID with the following parameters:</p><ul><li>APPLICATION TYPE: Web application</li><li>AUTHORIZED JAVASCRIPT ORIGINS: copy/paste the Javascript origin below</li><li>AUTHORIZED REDIRECT URI: copy/paste the Redirect URL below</li></ul>
