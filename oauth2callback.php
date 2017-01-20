@@ -1,7 +1,7 @@
 <?php
 /*
  * ZenFusion OAuth - A Google OAuth authentication module for Dolibarr
- * Copyright (C) 2011-2014 Raphaël Doursenaud <rdoursenaud@gpcsolutions.fr>
+ * Copyright (C) 2011-2016 Raphaël Doursenaud <rdoursenaud@gpcsolutions.fr>
  * Copyright (C) 2012-2013 Cédric Salvador <csalvador@gpcsolutions.fr>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -52,7 +52,6 @@ function getRequest($uri, $client)
     } elseif ($val->getResponseHttpCode() == 404) {
         //404, no error message
         return null;
-
     } else {
         if ($val->getResponseHttpCode() != 401
             && $val->getResponseHttpCode() != 200
@@ -70,17 +69,9 @@ function getRequest($uri, $client)
     return $rep;
 }
 
-$res = 0;
-// from standard dolibarr install
-if (!$res && file_exists('../main.inc.php')) {
-    $res = @include '../main.inc.php';
-}
-// from custom dolibarr install
-if (!$res && file_exists('../../main.inc.php')) {
-    $res = @include '../../main.inc.php';
-}
-if (!$res) {
-    die("Main include failed");
+// Load Dolibarr environment
+if (false === (@include '../../main.inc.php')) {  // From htdocs directory
+    require '../../../main.inc.php'; // From "custom" directory
 }
 
 require_once DOL_DOCUMENT_ROOT . '/user/class/user.class.php';
@@ -163,7 +154,7 @@ if ((!$state || !$code || !$user->rights->zenfusionoauth->use) && !$user->admin)
             }
         } else {
             if (($dolibarr_version[0] == 3 && $dolibarr_version[1] >= 7) || $dolibarr_version[0] > 3) { // DOL_VERSION >= 3.7
-                setEventMessages($langs->trans('NotSameEmail'),'' ,'errors');
+                setEventMessages($langs->trans('NotSameEmail'), '', 'errors');
             } elseif ($dolibarr_version[0] == 3 && $dolibarr_version[1] >= 3) { // DOL_VERSION >= 3.3
                 /** @noinspection PhpDeprecationInspection */
                 setEventMessage($langs->trans('NotSameEmail'), 'errors');

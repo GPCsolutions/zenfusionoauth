@@ -1,0 +1,67 @@
+# Dolibarr language file - en_US - ZenFusion OAuth
+CHARSET=UTF-8
+# Module
+Module105001Name=ZenFusion OAuth
+Module105001Desc=Oauth2-verificatie voor Google API's
+# Admin
+Config=Instelwizard
+Support=Ondersteuning
+About=Over
+# Config
+GoogleApiConfig=Google API-configuratie
+ImportFrom=Importeren uit
+ManualConfiguration=Handmatige configuratie
+JavascriptOrigin=JavaScript-herkomst
+RedirectURL=DoorverwijzingsURL
+JSONConfigFile=JSON-configuratiebestand
+ClientId=Cliënt-ID
+ClientSecret=Cliënt-geheim
+## Messages
+Saved=Opgeslagen
+BadOrEmptyFile=Bad or empty file
+WrongOrMissingRedirectURI=The file's redirect URL is missing or does not match "%s"
+WrongOrMissingJSOrigin=The file's JavaScript origin is missing or does not match "%s"
+UnexpectedError=Onverwachte fout
+Instructions1=<p>To allow Dolibarr to communicate with Google, you need to register in the <a href="https://console.developers.google.com" target="_blank">Google Developers Console</a>.<br>Log in with your Google Account.<br>Create a new project.<br>Pick a project name (i.e. Dolibarr).<br>Any project ID will do.<br>Create the project.<br>Use "Enable an API" from the dashboard or the "API & AUTH", "APIs" menu.<br>Enable the APIs needed for your modules:</p>
+Instructions2=<p>Go to "APIS & AUTH, "Credentials".<br>Create a new Client ID with the following parameters:</p><ul><li>APPLICATION TYPE: Web application</li><li>AUTHORIZED JAVASCRIPT ORIGINS: copy/paste the Javascript origin below</li><li>AUTHORIZED REDIRECT URI: copy/paste the Redirect URL below</li></ul>
+Instructions3=<p>Download JSON <b>from the newly created "Client ID for web application"</b> and upload it using the form below.</p>
+Instructions4=<p>Congratulations, you just allowed Dolibarr to communicate with Google.<br>Now each user needs to authorize its Google Account to communicate with Dolibarr.<br>Tell them to go to their user\\'s card Google tab, click on "Enable" and follow the instructions.</p>
+# About
+Version=Versie
+Publisher=Uitgever
+License=Licentie
+Credits=Bedankt aan
+Development=Ontwikkeling
+ProjectManager=projectbeheerder
+SoftwareEngineer=software-ontwikkelaar
+Libraries=Bibliotheken
+Contains=Bevat:
+Ressources=Bronnen
+# User card tab
+EnabledServices=Actieve diensten
+AvailableServices=Beschikbare diensten
+AccessToken=Diensttoegang
+TokenOk=Actief
+TokenKo=Inactief
+RequestToken=Inschakelen
+DeleteToken=Uitschakelen
+Retry=Opnieuw proberen
+## Messages
+NoEmail=Vul uw Google-e-mailadres in op uw gebruikerskaart
+InvalidConfiguration=Uw configuratie is ongeldig<br>Neem contact op met uw systeembeheerder
+OperationSuccessful=Operatie succesvol
+OperationFailed=Operatie mislukt
+# Box
+TokenStatus=Google Apps-communicatiestatus
+NoUserFound=Gebruiker heeft geen abonnement
+ReadPermissionNotAllowed=Geen toegestane leesrechten
+NoToken=Niet verbonden
+StatusOk=Ingeschakeld
+StatusKo=Uitgeschakeld
+MissingCURL=php-curl ontbreekt
+NoScope=This module can't work on its own. See the list of compatibles modules on <a href="http://zenfusion.fr" target="_blank">zenfusion.fr</a>
+Permission7345701=ZenFusion OAuth gebruiken
+NotSameEmail=Het geverifieerde e-mailadres komt niet overeen met het gebruikers-e-mailadres
+# ZeroClipBoard
+CopyToClipboard=Kopiëren naar klembord
+CopiedToClipboard=Gekopieerd naar klembord

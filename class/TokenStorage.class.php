@@ -2,7 +2,7 @@
 /*
  * ZenFusion OAuth - A Google OAuth authentication module for Dolibarr
  * Copyright (C) 2011 Sebastien Bodrero <sbodrero@gpcsolutions.fr>
- * Copyright (C) 2011-2014 Raphaël Doursenaud <rdoursenaud@gpcsolutions.fr>
+ * Copyright (C) 2011-2015 Raphaël Doursenaud <rdoursenaud@gpcsolutions.fr>
  * Copyright (C) 2012 Cédric Salvador <csalvador@gpcsolutions.fr>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -267,7 +267,7 @@ class TokenStorage
      *
      * @return int <0 if KO, >0 if OK
      */
-    public function update($user = null, $notrigger = 0)
+    public function update(User $user = null, $notrigger = 0)
     {
         $error = 0;
         // Clean parameters
@@ -430,6 +430,35 @@ class TokenStorage
                     // Keep separated on two lines for PHP 5.3 compat
                     $tokenstorage = self::filterTokensByScope($scope, $tokenstorage);
                     return $tokenstorage[0];
+                }
+                // We didn't get the expected number of results, bail out
+                return false;
+            }
+        }
+        return false;
+    }
+
+    /**
+     * Retrieve a Dolibarr username from a Google ID
+     *
+     * @param DolibDB $db
+     * @param int $google_id Google ID
+     * @return bool|TokenStorage
+     */
+    public static function getGoogleIdUsername($db, $google_id)
+    {
+        $sql = 'SELECT login ';
+        $sql .= 'FROM ' . MAIN_DB_PREFIX . 'user u ';
+        $sql .= 'INNER JOIN ' . MAIN_DB_PREFIX . 'zenfusion_oauth o ';
+        $sql .= 'ON u.rowid = o.rowid ';
+        $sql .= 'WHERE o.oauth_id=' . $db->escape($google_id);
+        $resql = $db->query($sql);
+        if ($resql) {
+            if ($db->num_rows($resql)) {
+                $num = $db->num_rows($resql);
+                if ($num == 1) {
+                    $user_infos = $db->fetch_object($resql);
+                    return $user_infos->login;
                 }
                 // We didn't get the expected number of results, bail out
                 return false;

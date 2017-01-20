@@ -2,7 +2,7 @@
 /*
  * ZenFusion OAuth - A Google OAuth authentication module for Dolibarr
  * Copyright (C) 2011 Sebastien Bodrero <sbodrero@gpcsolutions.fr>
- * Copyright (C) 2011-2014 Raphaël Doursenaud <rdoursenaud@gpcsolutions.fr>
+ * Copyright (C) 2011-2017 Raphaël Doursenaud <rdoursenaud@gpcsolutions.fr>
  * Copyright (C) 2012 Cédric Salvador <csalvador@gpcsolutions.fr>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -52,7 +52,9 @@ dol_include_once('/zenfusionoauth/lib/scopes.lib.php');
  * \class modZenFusionOAuth
  * Describes and activates Google contacts OAuth module
  */
+// @codingStandardsIgnoreStart Dolibarr modules classes need to start with a lower case.
 class modZenFusionOAuth extends DolibarrModules
+// @codingStandardsIgnoreEnd
 {
 
     /**
@@ -66,9 +68,13 @@ class modZenFusionOAuth extends DolibarrModules
         $this->numero = 105001;
         $this->rights_class = 'zenfusionoauth';
         $this->family = "other";
+        $this->module_position = -1;
         $this->name = preg_replace('/^mod/i', '', get_class($this));
         $this->description = "OAuth 2 authentication for Google APIs";
-        $this->version = '3.0.2';
+        $this->descriptionlong = "Authenticate to Google APIs using secure OAuth 2.";
+        $this->editor_name = 'GPC.solutions';
+        $this->editor_url = 'https://www.gpcsolutions.fr';
+        $this->version = '4.0.0';
         $this->const_name = 'MAIN_MODULE_' . strtoupper($this->name);
         $this->special = 1;
         $this->picto = 'oauth@zenfusionoauth';
@@ -148,9 +154,12 @@ class modZenFusionOAuth extends DolibarrModules
      * (defined in constructor) into Dolibarr database.
      * It also creates data directories.
      *
+     * @param string $options Options when enabling module ('', 'newboxdefonly', 'noboxes')
+     *                        'noboxes' = Do not insert boxes
+     *                        'newboxdefonly' = For boxes, insert def of boxes only and not boxes activation
      * @return int 1 if OK, 0 if KO
      */
-    public function init()
+    public function init($options = '')
     {
         global $langs;
 
@@ -160,10 +169,10 @@ class modZenFusionOAuth extends DolibarrModules
         $dolibarr_version = versiondolibarrarray();
 
         $sql = array();
-        $this->load_tables();
+        $this->loadTables();
         if (function_exists('curl_init')) {
             addscope(GOOGLE_USERINFO_EMAIL_SCOPE);
-            $this->_init($sql);
+            $this->_init($sql, $options);
         } else {
             $langs->load('zenfusionoauth@zenfusionoauth');
             $mesg = $langs->trans("MissingCURL");
@@ -189,7 +198,7 @@ class modZenFusionOAuth extends DolibarrModules
      *
      * @return int <=0 if KO, >0 if OK
      */
-    public function load_tables()
+    public function loadTables()
     {
         return $this->_load_tables('/zenfusionoauth/sql/');
     }
@@ -200,12 +209,13 @@ class modZenFusionOAuth extends DolibarrModules
      * from Dolibarr database.
      * Data directories are not deleted.
      *
+     * @param string $options Options when enabling module ('', 'noboxes')
      * @return int 1 if OK, 0 if KO
      */
-    public function remove()
+    public function remove($options = '')
     {
         $sql = array();
 
-        return $this->_remove($sql);
+        return $this->_remove($sql, $options);
     }
 }

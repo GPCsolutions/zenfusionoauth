@@ -2,7 +2,7 @@
 /*
  * ZenFusion OAuth - A Google OAuth authentication module for Dolibarr
  * Copyright (C) 2011 Sebastien Bodrero <sbodrero@gpcsolutions.fr>
- * Copyright (C) 2011-2014 Raphaël Doursenaud <rdoursenaud@gpcsolutions.fr>
+ * Copyright (C) 2011-2016 Raphaël Doursenaud <rdoursenaud@gpcsolutions.fr>
  * Copyright (C) 2012-2013 Cédric Salvador <csalvador@gpcsolutions.fr>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -36,17 +36,9 @@
 
 // TODO: allow selecting services permissions
 
-$res = 0;
-// from standard dolibarr install
-if (!$res && file_exists('../main.inc.php')) {
-    $res = @include '../main.inc.php';
-}
-// from custom dolibarr install
-if (!$res && file_exists('../../main.inc.php')) {
-    $res = @include '../../main.inc.php';
-}
-if (!$res) {
-    die("Main include failed");
+// Load Dolibarr environment
+if (false === (@include '../../main.inc.php')) {  // From htdocs directory
+    require '../../../main.inc.php'; // From "custom" directory
 }
 
 require_once DOL_DOCUMENT_ROOT . '/user/class/user.class.php';
@@ -105,8 +97,8 @@ $tokenstorage = new TokenStorage($db);
 $tokenloaded = $tokenstorage->fetch($id);
 // Cleanup bad tokens
 if ($tokenloaded && is_null($tokenstorage->oauth_id)) {
-	$tokenstorage->delete($id);
-	$tokenloaded = false;
+    $tokenstorage->delete($id);
+    $tokenloaded = false;
 }
 // Google API client
 try {
@@ -118,11 +110,14 @@ try {
 // Actions
 switch ($action) {
     case 'delete_token':
-        try {
-            $client->revokeToken($tokenstorage->token->getRefreshToken());
-        } catch (Google_Auth_Exception $e) {
-            dol_syslog("Delete token " . $e->getMessage());
-            // TODO: print message and user panel URL to manually revoke access
+        if ($tokenloaded) {
+            try {
+                $client->revokeToken($tokenstorage->token->getRefreshToken());
+            } catch (Google_Auth_Exception $e) {
+                dol_syslog("Delete token " . $e->getMessage());
+                // TODO: print message and user panel URL to manually revoke access
+                // https://security.google.com/settings/security/permissions
+            }
         }
         // Delete token in database
         $result = $tokenstorage->delete($id);
@@ -169,7 +164,7 @@ $token_good = true;
 // Services for the form
 $enabledservices = array();
 if ($tokenloaded) {
-	$tokenstorage->token->getTokenBundle();
+    $tokenstorage->token->getTokenBundle();
     $enabledservices = readScopes(json_decode($tokenstorage->scopes));
 }
 $availableservices = array_diff(readScopes(json_decode($conf->global->ZF_OAUTH2_SCOPES)), $enabledservices);
@@ -346,5 +341,6 @@ if (!$lock) {
 // Messages
 dol_htmloutput_mesg($mesg);
 
-$db->close();
+dol_fiche_end();
 llxFooter();
+$db->close();

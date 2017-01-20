@@ -2,7 +2,7 @@
 /*
  * ZenFusion OAuth - A Google OAuth authentication module for Dolibarr
  * Copyright (C) 2011 Sebastien Bodrero <sbodrero@gpcsolutions.fr>
- * Copyright (C) 2011-2012 Raphaël Doursenaud <rdoursenaud@gpcsolutions.fr>
+ * Copyright (C) 2011-2016 Raphaël Doursenaud <rdoursenaud@gpcsolutions.fr>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -23,17 +23,10 @@
  * \ingroup zenfusionoauth
  * Module support page
  */
-$res = 0;
-// from standard dolibarr install
-if (!$res && file_exists('../../main.inc.php')) {
-    $res = @include '../../main.inc.php';
-}
-// from custom dolibarr install
-if (!$res && file_exists('../../../main.inc.php')) {
-    $res = @include '../../../main.inc.php';
-}
-if (!$res) {
-    die("Main include failed");
+
+// Load Dolibarr environment
+if (false === (@include '../../main.inc.php')) {  // From htdocs directory
+    require '../../../main.inc.php'; // From "custom" directory
 }
 
 require_once '../lib/admin.lib.php';
@@ -59,7 +52,7 @@ llxHeader();
 $linkback = '<a href="' . DOL_URL_ROOT . '/admin/modules.php">'
     . $langs->trans("BackToModuleList") . '</a>';
 // Folder icon title
-print_fiche_titre("ZenFusion", $linkback, 'setup');
+print load_fiche_titre("ZenFusion", $linkback, 'setup');
 
 $head = zfPrepareHead();
 
@@ -71,4 +64,5 @@ $langs->trans("Support"),
 '</a>',
 '<br>';
 
+dol_fiche_end();
 llxFooter();

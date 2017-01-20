@@ -25,7 +25,7 @@ UnexpectedError=Unexpected error
 Instructions1=<p>To allow Dolibarr to communicate with Google, you need to register in the <a href="https://console.developers.google.com" target="_blank">Google Developers Console</a>.<br>Log in with your Google Account.<br>Create a new project.<br>Pick a project name (i.e. Dolibarr).<br>Any project ID will do.<br>Create the project.<br>Use "Enable an API" from the dashboard or the "API & AUTH", "APIs" menu.<br>Enable the APIs needed for your modules:</p>
 Instructions2=<p>Go to "APIS & AUTH, "Credentials".<br>Create a new Client ID with the following parameters:</p><ul><li>APPLICATION TYPE: Web application</li><li>AUTHORIZED JAVASCRIPT ORIGINS: copy/paste the Javascript origin below</li><li>AUTHORIZED REDIRECT URI: copy/paste the Redirect URL below</li></ul>
 Instructions3=<p>Download JSON <b>from the newly created "Client ID for web application"</b> and upload it using the form below.</p>
-Instructions4=<p>Congratulations, you just allowed Dolibarr to communicate with Google.<br>Now each user needs to authorize its Google Account to communicate with Dolibarr.<br>Tell them to go to their user\'s card Google tab, click on "Enable" and follow the instructions.</p>
+Instructions4=<p>Congratulations, you just allowed Dolibarr to communicate with Google.<br>Now each user needs to authorize its Google Account to communicate with Dolibarr.<br>Tell them to go to their user\\'s card Google tab, click on "Enable" and follow the instructions.</p>
 # About
 Version=Version
 Publisher=Publisher
@@ -59,7 +59,7 @@ NoToken=Not connected
 StatusOk=Enabled
 StatusKo=Disabled
 MissingCURL=php-curl is missing
-NoScope=This module can't work on its own. See the list of compatibles modules on <a href="http://zenfusion.fr" target="_blank">zenfusion.fr</a>
+NoScope=This module can't work on its own. See the list of compatibles modules on zenfusion.fr
 Permission7345701=Use ZenFusion OAuth
 NotSameEmail=The authentified email doesn't match this user's email
 # ZeroClipBoard
