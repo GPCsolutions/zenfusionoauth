@@ -74,7 +74,7 @@ class modZenFusionOAuth extends DolibarrModules
         $this->descriptionlong = "Authenticate to Google APIs using secure OAuth 2.";
         $this->editor_name = 'GPC.solutions';
         $this->editor_url = 'https://www.gpcsolutions.fr';
-        $this->version = '4.0.0-alpha';
+        $this->version = '4.0.0';
         $this->const_name = 'MAIN_MODULE_' . strtoupper($this->name);
         $this->special = 1;
         $this->picto = 'oauth@zenfusionoauth';
