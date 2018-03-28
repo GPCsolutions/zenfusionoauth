@@ -145,28 +145,28 @@ if ((!$state || !$code || !$user->rights->zenfusionoauth->use) && !$user->admin)
         $info = json_decode($info);
         $tokenstorage->oauth_id = $info->user_id;
         $ok = false;
-        if ($info->verified_email && $info->email == $doluser->email) {
+//        if ($info->verified_email && $info->email == $doluser->email) {
             $db_id = $tokenstorage->update($doluser);
             if ($db_id < 0) {
                 dol_print_error($db, $tokenstorage->error);
             } else {
                 $ok = true;
             }
-        } else {
-            dol_syslog("The authenticated email (" . $info->email . ") does not match the user email (" . $doluser->email . ")", LOG_ERR);
-            if (($dolibarr_version[0] == 3 && $dolibarr_version[1] >= 7) || $dolibarr_version[0] > 3) { // DOL_VERSION >= 3.7
-                setEventMessages($langs->trans('NotSameEmail'), '', 'errors');
-            } elseif ($dolibarr_version[0] == 3 && $dolibarr_version[1] >= 3) { // DOL_VERSION >= 3.3
-                /** @noinspection PhpDeprecationInspection */
-                setEventMessage($langs->trans('NotSameEmail'), 'errors');
-            } else {
-                $mesg = '&mesg=' . urlencode(
-                    '<div class="error">' .
-                    $langs->trans('NotSameEmail') . '</div>'
-                );
-            }
-            $tokenstorage->delete($state);
-        }
+//        } else {
+//            dol_syslog("The authenticated email (" . $info->email . ") does not match the user email (" . $doluser->email . ")", LOG_ERR);
+//            if (($dolibarr_version[0] == 3 && $dolibarr_version[1] >= 7) || $dolibarr_version[0] > 3) { // DOL_VERSION >= 3.7
+//                setEventMessages($langs->trans('NotSameEmail'), '', 'errors');
+//            } elseif ($dolibarr_version[0] == 3 && $dolibarr_version[1] >= 3) { // DOL_VERSION >= 3.3
+//                /** @noinspection PhpDeprecationInspection */
+//                setEventMessage($langs->trans('NotSameEmail'), 'errors');
+//            } else {
+//                $mesg = '&mesg=' . urlencode(
+//                    '<div class="error">' .
+//                    $langs->trans('NotSameEmail') . '</div>'
+//                );
+//            }
+//            $tokenstorage->delete($state);
+//        }
         // Refresh the page to prevent multiple insertions
         header(
             'refresh:0;url=' . dol_buildpath(
