@@ -2,7 +2,7 @@
 /*
  * ZenFusion OAuth - A Google OAuth authentication module for Dolibarr
  * Copyright (C) 2011 Sebastien Bodrero <sbodrero@gpcsolutions.fr>
- * Copyright (C) 2011-2016 Raphaël Doursenaud <rdoursenaud@gpcsolutions.fr>
+ * Copyright (C) 2011-2018 Raphaël Doursenaud <rdoursenaud@gpcsolutions.fr>
  * Copyright (C) 2012-2013 Cédric Salvador <csalvador@gpcsolutions.fr>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -310,7 +310,7 @@ if (!$lock) {
             '<input type="hidden" name="id" value="', $id, '">',
             '<table class="border" width="100%">',
             '<tr><td colspan="2" align="center">',
-            '<input class="button" type="submit" value="', $langs->trans("DeleteToken"), '"></tr>';
+            '<input class="butActionDelete" type="submit" value="', $langs->trans("DeleteToken"), '"></tr>';
         } elseif (isValidEmail($doluser->email)
             && ($availableservices)
             && $conf->global->ZF_OAUTH2_CLIENT_ID
@@ -321,7 +321,7 @@ if (!$lock) {
             '<input type="hidden" name="id" value="', $id, '">',
             '<table class="border" width="100%">',
             '<tr><td colspan="2" align="center">',
-            '<input class="button" type="submit" value="', $langs->trans("RequestToken"), '"></tr>';
+            '<input class="butAction" type="submit" value="', $langs->trans("RequestToken"), '"></tr>';
         } else {
             $mesg = '<div class="warning">' . $langs->trans("InvalidConfiguration") . '</div>';
         }
@@ -333,7 +333,7 @@ if (!$lock) {
         '<input type="hidden" name="id" value="', $id, '">',
         '<table class="border" width="100%">',
         '<tr><td colspan="2" align="center">',
-        '<input class="button" type="submit" value="', $langs->trans("Retry"), '"></tr>';
+        '<input class="butAction" type="submit" value="', $langs->trans("Retry"), '"></tr>';
     }
     echo '</table></form>';
 }
